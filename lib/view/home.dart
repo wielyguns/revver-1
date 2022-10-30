@@ -40,101 +40,107 @@ class _HomeState extends State<Home> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Hi Revver",
-              style: CustomFont.heading24,
-            ),
-            Text("How are you today?", style: CustomFont.medium12),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hi Revver",
+                overflow: TextOverflow.ellipsis,
+                style: CustomFont.heading24,
+              ),
+              Text("How are you today?", style: CustomFont.medium12),
+            ],
+          ),
         ),
-        Row(
-          children: [
-            GestureDetector(
-              onTap: () {},
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: SvgPicture.asset(
-                      "assets/svg/cart-shopping-solid.svg",
-                      height: 20,
+        const SpacerWidth(w: 20),
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 3.3,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SvgPicture.asset(
+                        "assets/svg/cart-shopping-solid.svg",
+                        height: 20,
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(1),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 15,
-                        minHeight: 15,
-                      ),
-                      child: Center(
-                        child: Text(
-                          cartCounter,
-                          style: CustomFont.badge,
-                          textAlign: TextAlign.center,
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 15,
+                          minHeight: 15,
+                        ),
+                        child: Center(
+                          child: Text(
+                            cartCounter,
+                            style: CustomFont.badge,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SpacerWidth(w: 10),
-            GestureDetector(
-              onTap: () {},
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: SvgPicture.asset(
-                      "assets/svg/bell-solid.svg",
-                      height: 20,
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(1),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 15,
-                        minHeight: 15,
-                      ),
-                      child: Center(
-                        child: Text(
-                          '99',
-                          style: CustomFont.badge,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const SpacerWidth(w: 10),
-            GestureDetector(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(5),
-                child: SvgPicture.asset(
-                  "assets/svg/user-solid.svg",
-                  height: 20,
+                    )
+                  ],
                 ),
               ),
-            ),
-          ],
+              GestureDetector(
+                onTap: () {},
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SvgPicture.asset(
+                        "assets/svg/bell-solid.svg",
+                        height: 20,
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 15,
+                          minHeight: 15,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '99',
+                            style: CustomFont.badge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: SvgPicture.asset(
+                    "assets/svg/user-solid.svg",
+                    height: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

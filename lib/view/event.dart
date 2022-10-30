@@ -82,30 +82,41 @@ class _EventState extends State<Event> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SpacerHeight(h: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Text("Event", style: CustomFont.heading36),
-          ),
-          const SpacerHeight(h: 20),
-          Expanded(
-            child: SfCalendar(
-              showDatePickerButton: true,
-              dataSource: events,
-              view: CalendarView.schedule,
-              scheduleViewSettings: const ScheduleViewSettings(
-                hideEmptyScheduleWeek: false,
-                appointmentItemHeight: 50,
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SpacerHeight(h: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text("Event", style: CustomFont.heading24),
+            ),
+            const SpacerHeight(h: 20),
+            Expanded(
+              child: SfCalendar(
+                todayTextStyle: CustomFont.regular12,
+                headerStyle: CalendarHeaderStyle(
+                    backgroundColor: CustomColor.whiteColor,
+                    textStyle: CustomFont.regular12),
+                showDatePickerButton: true,
+                dataSource: events,
+                view: CalendarView.schedule,
+                scheduleViewSettings: ScheduleViewSettings(
+                  appointmentTextStyle: CustomFont.regular12,
+                  appointmentItemHeight: 60,
+                  monthHeaderSettings: MonthHeaderSettings(
+                      monthTextStyle: CustomFont.bold24,
+                      height: 120,
+                      backgroundColor: CustomColor.brownColor),
+                ),
               ),
             ),
-          ),
-        ],
+            const SpacerHeight(h: 5),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
 

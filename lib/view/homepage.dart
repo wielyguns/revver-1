@@ -32,6 +32,14 @@ class _HomepageState extends State<Homepage> {
           borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           color: CustomColor.goldColor,
+          boxShadow: [
+            BoxShadow(
+              color: CustomColor.blackColor,
+              spreadRadius: 20,
+              blurRadius: 50,
+              offset: const Offset(0, 50),
+            ),
+          ],
         ),
         child: SalomonBottomBar(
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
