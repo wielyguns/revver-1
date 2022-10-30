@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
-import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
@@ -24,9 +23,6 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
-        appBar: CustomHeader(
-          isPop: false,
-        ),
         body: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -116,6 +112,7 @@ class _LoginState extends State<Login> {
                   customSnackBar(context, true, "Complete the form first!");
                 } else {
                   customSnackBar(context, false, "Success!");
+                  GoRouter.of(context).go("/homepage");
                 }
               },
             )),

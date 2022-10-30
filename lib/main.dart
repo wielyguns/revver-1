@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:revver/globals.dart';
+import 'package:revver/view/account.dart';
+import 'package:revver/view/event.dart';
+import 'package:revver/view/home.dart';
+import 'package:revver/view/homepage.dart';
+import 'package:revver/view/leads.dart';
 import 'package:revver/view/login.dart';
 import 'package:revver/view/registration.dart';
 
@@ -15,7 +21,7 @@ class MyApp extends StatelessWidget {
     // ignore: missing_required_param
     return MaterialApp.router(
       title: 'Revver',
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      theme: ThemeData(scaffoldBackgroundColor: CustomColor.whiteColor),
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
     );
@@ -30,6 +36,26 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/registration',
         builder: (context, state) => const Registration(),
+      ),
+      GoRoute(
+        path: '/homepage',
+        builder: (context, state) => const Homepage(),
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) => const Home(),
+      ),
+      GoRoute(
+        path: '/event',
+        builder: (context, state) => const Event(),
+      ),
+      GoRoute(
+        path: '/leads',
+        builder: (context, state) => const Leads(),
+      ),
+      GoRoute(
+        path: '/account',
+        builder: (context, state) => const Account(),
       ),
     ],
   );

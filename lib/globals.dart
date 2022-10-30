@@ -85,4 +85,7 @@ class CustomFont {
   //Link
   static TextStyle link = TextStyle(
       fontSize: 12, fontFamily: "Poppins", color: CustomColor.goldColor);
+  //Link
+  static TextStyle badge = TextStyle(
+      fontSize: 8, fontFamily: "Poppins", color: CustomColor.whiteColor);
 }
