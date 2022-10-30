@@ -76,6 +76,9 @@ class CustomFont {
   //Hint
   static TextStyle hint = TextStyle(
       fontSize: 12, fontFamily: "Poppins", color: CustomColor.oldGreyColor);
+  //Filled
+  static TextStyle filled = TextStyle(
+      fontSize: 12, fontFamily: "Poppins", color: CustomColor.blackColor);
   //Sub Heading
   static TextStyle subheading = TextStyle(
       fontSize: 12, fontFamily: "Poppins", color: CustomColor.oldGreyColor);

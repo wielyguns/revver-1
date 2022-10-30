@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
+import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
@@ -22,6 +24,9 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
+        appBar: CustomHeader(
+          isPop: false,
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -45,13 +50,14 @@ class _LoginState extends State<Login> {
                     title: "Email",
                     hint: "Your Email",
                     isValidator: true,
+                    keyboardType: TextInputType.emailAddress,
                   ),
                   const SpacerHeight(h: 20),
                   PasswordForm(
                     title: "Password",
                     hint: "Your Password",
                     visible: password,
-                    isValidator: false,
+                    isValidator: true,
                   ),
                   const SpacerHeight(h: 20),
                   Row(
@@ -88,10 +94,13 @@ class _LoginState extends State<Login> {
                           "Register here!",
                           style: CustomFont.link,
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          GoRouter.of(context).go('/registration');
+                        },
                       ),
                     ],
                   ),
+                  const SpacerHeight(h: 20),
                 ],
               ),
             ),
@@ -103,11 +112,10 @@ class _LoginState extends State<Login> {
             child: CustomButton(
               title: "Login",
               func: () {
-                if (formKey.currentState.validate()) {
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(content: Text('Processing Data')),
-                  // );
-                  customSnackBar(context, false, "Login");
+                if (!formKey.currentState.validate()) {
+                  customSnackBar(context, true, "Complete the form first!");
+                } else {
+                  customSnackBar(context, false, "Success!");
                 }
               },
             )),

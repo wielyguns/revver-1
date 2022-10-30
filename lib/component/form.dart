@@ -4,11 +4,17 @@ import 'package:revver/globals.dart';
 // ignore: must_be_immutable
 class RegularForm extends StatelessWidget {
   RegularForm(
-      {Key key, this.title, this.hint, this.controller, this.isValidator})
+      {Key key,
+      this.title,
+      this.hint,
+      this.controller,
+      this.isValidator,
+      this.keyboardType})
       : super(key: key);
   final String title;
   final String hint;
   final TextEditingController controller;
+  final TextInputType keyboardType;
   bool isValidator;
 
   @override
@@ -19,6 +25,7 @@ class RegularForm extends StatelessWidget {
         Text(title, style: CustomFont.regular12),
         const SizedBox(height: 10),
         TextFormField(
+          keyboardType: keyboardType,
           style: CustomFont.regular12,
           controller: controller,
           decoration: InputDecoration(
@@ -159,6 +166,61 @@ class _PasswordFormState extends State<PasswordForm> {
           },
         ),
       ],
+    );
+  }
+}
+
+class StringDropdown extends StatefulWidget {
+  const StringDropdown({Key key}) : super(key: key);
+
+  @override
+  State<StringDropdown> createState() => _StringDropdownState();
+}
+
+class _StringDropdownState extends State<StringDropdown> {
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+      items:
+          ['Dog', 'Cat', 'Tiger', 'Lion'].map<DropdownMenuItem>((String value) {
+        return DropdownMenuItem(
+          value: value,
+          child: Text(
+            value,
+            style: CustomFont.filled,
+          ),
+        );
+      }).toList(),
+      onChanged: (value) {},
+      dropdownColor: CustomColor.whiteColor,
+      style: CustomFont.filled,
+      decoration: InputDecoration(
+        hintText: "Name",
+        hintStyle: CustomFont.hint,
+        contentPadding: const EdgeInsets.all(10),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 1,
+              style: BorderStyle.solid,
+              color: CustomColor.oldGreyColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 2, style: BorderStyle.solid, color: CustomColor.goldColor),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
+        ),
+      ),
     );
   }
 }

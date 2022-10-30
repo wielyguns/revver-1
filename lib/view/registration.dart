@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
@@ -31,13 +32,25 @@ class _RegistrationState extends State<Registration> {
                 children: [
                   const SpacerHeight(h: 20),
                   Text(
-                    "Login",
+                    "Registration",
                     style: CustomFont.heading36,
                   ),
                   const SpacerHeight(h: 10),
                   Text(
-                    "Already have an account? Please, login!",
+                    "Don't have an account yet? Register here!",
                     style: CustomFont.subheading,
+                  ),
+                  const SpacerHeight(h: 20),
+                  RegularForm(
+                    title: "Full Name",
+                    hint: "Your Full Name",
+                    isValidator: true,
+                  ),
+                  const SpacerHeight(h: 20),
+                  RegularForm(
+                    title: "Username",
+                    hint: "Your Username",
+                    isValidator: true,
                   ),
                   const SpacerHeight(h: 20),
                   RegularForm(
@@ -46,13 +59,31 @@ class _RegistrationState extends State<Registration> {
                     isValidator: true,
                   ),
                   const SpacerHeight(h: 20),
+                  RegularForm(
+                    title: "Phone",
+                    hint: "Your Phone",
+                    isValidator: true,
+                  ),
+                  const SpacerHeight(h: 20),
+                  RegularForm(
+                    title: "Sponsor ID",
+                    hint: "Your Sponsor ID",
+                    isValidator: true,
+                  ),
+                  const SpacerHeight(h: 20),
                   PasswordForm(
                     title: "Password",
                     hint: "Your Password",
                     visible: password,
-                    isValidator: false,
+                    isValidator: true,
                   ),
                   const SpacerHeight(h: 20),
+                  PasswordForm(
+                    title: "Confirm Password",
+                    hint: "Your Confirm Password",
+                    visible: password,
+                    isValidator: true,
+                  ),
                   const SpacerHeight(h: 20),
                   Row(
                     children: [
@@ -62,13 +93,16 @@ class _RegistrationState extends State<Registration> {
                       ),
                       GestureDetector(
                         child: Text(
-                          "Register here!",
+                          "Login here!",
                           style: CustomFont.link,
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          GoRouter.of(context).go('/');
+                        },
                       ),
                     ],
                   ),
+                  const SpacerHeight(h: 20),
                 ],
               ),
             ),
@@ -80,11 +114,10 @@ class _RegistrationState extends State<Registration> {
             child: CustomButton(
               title: "Login",
               func: () {
-                if (formKey.currentState.validate()) {
-                  // ScaffoldMessenger.of(context).showSnackBar(
-                  //   const SnackBar(content: Text('Processing Data')),
-                  // );
-                  customSnackBar(context, false, "Login");
+                if (!formKey.currentState.validate()) {
+                  customSnackBar(context, true, "Complete the form first!");
+                } else {
+                  customSnackBar(context, false, "Success!");
                 }
               },
             )),
