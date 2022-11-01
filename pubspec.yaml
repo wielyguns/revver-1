@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: 1.0.2
+  http: 0.13.5
+  shared_preferences: 2.0.15
   keyboard_dismisser: 2.0.0
   go_router: 3.1.1
   dropdown_search: 3.0.1
@@ -23,6 +25,7 @@ dependencies:
   syncfusion_flutter_datagrid: 19.4.56
   syncfusion_flutter_pdfviewer: 19.4.56-beta
   syncfusion_flutter_sliders: 19.4.56
+  advance_pdf_viewer: 2.0.1
 
 dev_dependencies:
   flutter_test:
