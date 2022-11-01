@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:revver/globals.dart';
-import 'package:revver/view/account.dart';
-import 'package:revver/view/event.dart';
-import 'package:revver/view/home.dart';
-import 'package:revver/view/leads.dart';
+import 'package:revver/view/accoount/account.dart';
+import 'package:revver/view/event/event.dart';
+import 'package:revver/view/home/home.dart';
+import 'package:revver/view/leads/leads.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class Homepage extends StatefulWidget {
