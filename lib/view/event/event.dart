@@ -6,7 +6,7 @@ import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Event extends StatefulWidget {
-  const Event({Key key}) : super(key: key);
+  Event({Key key}) : super(key: key);
 
   @override
   State<Event> createState() => _EventState();
@@ -34,21 +34,21 @@ class _EventState extends State<Event> {
     subjectCollection.add('Performance Check');
 
     final List<Color> colorCollection = <Color>[];
-    colorCollection.add(const Color(0xFF0F8644));
-    colorCollection.add(const Color(0xFF8B1FA9));
-    colorCollection.add(const Color(0xFFD20100));
-    colorCollection.add(const Color(0xFFFC571D));
-    colorCollection.add(const Color(0xFF36B37B));
-    colorCollection.add(const Color(0xFF01A1EF));
-    colorCollection.add(const Color(0xFF3D4FB5));
-    colorCollection.add(const Color(0xFFE47C73));
-    colorCollection.add(const Color(0xFF636363));
-    colorCollection.add(const Color(0xFF0A8043));
+    colorCollection.add(Color(0xFF0F8644));
+    colorCollection.add(Color(0xFF8B1FA9));
+    colorCollection.add(Color(0xFFD20100));
+    colorCollection.add(Color(0xFFFC571D));
+    colorCollection.add(Color(0xFF36B37B));
+    colorCollection.add(Color(0xFF01A1EF));
+    colorCollection.add(Color(0xFF3D4FB5));
+    colorCollection.add(Color(0xFFE47C73));
+    colorCollection.add(Color(0xFF636363));
+    colorCollection.add(Color(0xFF0A8043));
 
     final Random random = Random();
     final DateTime rangeStartDate =
-        DateTime.now().add(const Duration(days: -(365 ~/ 2)));
-    final DateTime rangeEndDate = DateTime.now().add(const Duration(days: 365));
+        DateTime.now().add(Duration(days: -(365 ~/ 2)));
+    final DateTime rangeEndDate = DateTime.now().add(Duration(days: 365));
     final List<Appointment> appointments = <Appointment>[];
     for (DateTime i = rangeStartDate;
         i.isBefore(rangeEndDate);
@@ -73,7 +73,7 @@ class _EventState extends State<Event> {
     appointments.add(Appointment(
         subject: 'Scrum',
         startTime: date,
-        endTime: date.add(const Duration(hours: 1)),
+        endTime: date.add(Duration(hours: 1)),
         color: colorCollection[random.nextInt(9)],
         recurrenceRule: 'FREQ=DAILY;INTERVAL=10'));
     return appointments;
@@ -87,12 +87,12 @@ class _EventState extends State<Event> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SpacerHeight(h: 20),
+            SpacerHeight(h: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text("Event", style: CustomFont.heading24),
             ),
-            const SpacerHeight(h: 20),
+            SpacerHeight(h: 20),
             Expanded(
               child: SfCalendar(
                 todayTextStyle: CustomFont.regular12,
@@ -112,7 +112,7 @@ class _EventState extends State<Event> {
                 ),
               ),
             ),
-            const SpacerHeight(h: 5),
+            SpacerHeight(h: 5),
           ],
         ),
       ),

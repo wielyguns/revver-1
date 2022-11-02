@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revver/globals.dart';
 
-// ignore: must_be_immutable
 class RegularForm extends StatelessWidget {
   RegularForm(
       {Key key,
@@ -15,7 +14,7 @@ class RegularForm extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final TextInputType keyboardType;
-  bool isValidator;
+  final bool isValidator;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class RegularForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: CustomFont.regular12),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         TextFormField(
           keyboardType: keyboardType,
           style: CustomFont.regular12,
@@ -31,7 +30,7 @@ class RegularForm extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: CustomFont.hint,
-            contentPadding: const EdgeInsets.all(10),
+            contentPadding: EdgeInsets.all(10),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
@@ -90,8 +89,8 @@ class PasswordForm extends StatefulWidget {
   final String title;
   final String hint;
   bool visible;
-  TextEditingController controller;
-  bool isValidator;
+  final TextEditingController controller;
+  final bool isValidator;
 
   @override
   State<PasswordForm> createState() => _PasswordFormState();
@@ -105,7 +104,7 @@ class _PasswordFormState extends State<PasswordForm> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.title, style: CustomFont.regular12),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         TextFormField(
           style: CustomFont.regular12,
           controller: widget.controller,
@@ -113,7 +112,7 @@ class _PasswordFormState extends State<PasswordForm> {
           decoration: InputDecoration(
             hintText: widget.hint,
             hintStyle: CustomFont.hint,
-            contentPadding: const EdgeInsets.all(10),
+            contentPadding: EdgeInsets.all(10),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
@@ -171,7 +170,8 @@ class _PasswordFormState extends State<PasswordForm> {
 }
 
 class StringDropdown extends StatefulWidget {
-  const StringDropdown({Key key}) : super(key: key);
+  // ignore: prefer_const_constructors_in_immutables
+  StringDropdown({Key key}) : super(key: key);
 
   @override
   State<StringDropdown> createState() => _StringDropdownState();
@@ -197,7 +197,7 @@ class _StringDropdownState extends State<StringDropdown> {
       decoration: InputDecoration(
         hintText: "Name",
         hintStyle: CustomFont.hint,
-        contentPadding: const EdgeInsets.all(10),
+        contentPadding: EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(

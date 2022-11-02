@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SpacerHeight extends StatelessWidget {
-  const SpacerHeight({Key key, this.h}) : super(key: key);
+  SpacerHeight({Key key, this.h}) : super(key: key);
   final double h;
 
   @override
@@ -11,7 +11,7 @@ class SpacerHeight extends StatelessWidget {
 }
 
 class SpacerWidth extends StatelessWidget {
-  const SpacerWidth({Key key, this.w}) : super(key: key);
+  SpacerWidth({Key key, this.w}) : super(key: key);
   final double w;
 
   @override

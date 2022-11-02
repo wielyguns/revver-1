@@ -26,6 +26,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: 19.4.56-beta
   syncfusion_flutter_sliders: 19.4.56
   advance_pdf_viewer: 2.0.1
+  smooth_page_indicator: 1.0.0
 
 dev_dependencies:
   flutter_test:

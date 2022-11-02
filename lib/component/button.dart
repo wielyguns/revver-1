@@ -1,25 +1,148 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 
 // ignore: must_be_immutable
-class CustomButton extends StatefulWidget {
-  CustomButton({Key key, this.title, this.func}) : super(key: key);
-  String title;
-  Function func;
+class CustomButton extends StatelessWidget {
+  CustomButton({Key key, this.title, this.func, this.color}) : super(key: key);
+  final String title;
+  final Function func;
+  Color color;
 
-  @override
-  State<CustomButton> createState() => _CustomButtonState();
-}
-
-class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
+    color ??= CustomColor.goldColor;
     return CupertinoButton(
-      onPressed: widget.func,
-      color: CustomColor.goldColor,
+      onPressed: func,
+      color: color,
       child: Text(
-        widget.title,
+        title,
         style: CustomFont.regular12,
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class IconTextButton extends StatelessWidget {
+  IconTextButton(
+      {Key key, this.title, this.iconTitle, this.func, this.buttonColor})
+      : super(key: key);
+  final String title;
+  final String iconTitle;
+  final Function func;
+  Color buttonColor;
+
+  @override
+  Widget build(BuildContext context) {
+    buttonColor ??= CustomColor.goldColor;
+    return CupertinoButton(
+      onPressed: func,
+      color: buttonColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset("assets/svg/$iconTitle"),
+          SpacerWidth(w: 10),
+          Text(
+            title,
+            style: CustomFont.medium16,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AddToCartButton extends StatelessWidget {
+  const AddToCartButton({Key key, this.title, this.func}) : super(key: key);
+  final String title;
+  final Function func;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            color: CustomColor.goldColor),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: Text(
+          "Add To Cart",
+          style: CustomFont.addToCart,
+        ),
+      ),
+      onTap: func,
+    );
+  }
+}
+
+class ChangePasswordButton extends StatelessWidget {
+  const ChangePasswordButton({Key key, this.title, this.func})
+      : super(key: key);
+  final String title;
+  final Function func;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            color: CustomColor.goldColor),
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        child: Text(
+          title,
+          style: CustomFont.changePassword,
+        ),
+      ),
+      onTap: func,
+    );
+  }
+}
+
+class AccountMenu extends StatelessWidget {
+  const AccountMenu({Key key, this.title, this.iconTitle, this.func})
+      : super(key: key);
+  final String title;
+  final String iconTitle;
+  final Function func;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: func,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: CustomColor.goldColor,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: SvgPicture.asset(
+                    "assets/svg/$iconTitle",
+                    color: CustomColor.whiteColor,
+                  ),
+                ),
+              ),
+              SpacerWidth(w: 20),
+              Text(
+                title,
+                style: CustomFont.regular16,
+              )
+            ],
+          ),
+          Icon(Icons.arrow_forward_ios)
+        ],
       ),
     );
   }

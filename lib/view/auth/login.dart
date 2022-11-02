@@ -8,7 +8,7 @@ import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 
 class Login extends StatefulWidget {
-  const Login({Key key}) : super(key: key);
+  Login({Key key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -25,37 +25,37 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Form(
               key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   Text(
                     "Login",
                     style: CustomFont.heading36,
                   ),
-                  const SpacerHeight(h: 10),
+                  SpacerHeight(h: 10),
                   Text(
                     "Already have an account? Please, login!",
                     style: CustomFont.subheading,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   RegularForm(
                     title: "Email",
                     hint: "Your Email",
                     isValidator: true,
                     keyboardType: TextInputType.emailAddress,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   PasswordForm(
                     title: "Password",
                     hint: "Your Password",
                     visible: password,
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   Row(
                     children: [
                       SizedBox(
@@ -71,14 +71,14 @@ class _LoginState extends State<Login> {
                           },
                         ),
                       ),
-                      const SpacerWidth(w: 5),
+                      SpacerWidth(w: 5),
                       Text(
                         "Remember Me?",
                         style: CustomFont.regular12,
                       ),
                     ],
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   Row(
                     children: [
                       Text(
@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                       ),
                     ],
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                 ],
               ),
             ),
@@ -104,14 +104,13 @@ class _LoginState extends State<Login> {
         ),
         bottomNavigationBar: Container(
             color: CustomColor.whiteColor,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: CustomButton(
               title: "Login",
               func: () {
                 if (!formKey.currentState.validate()) {
                   customSnackBar(context, true, "Complete the form first!");
                 } else {
-                  customSnackBar(context, false, "Success!");
                   GoRouter.of(context).go("/homepage");
                 }
               },

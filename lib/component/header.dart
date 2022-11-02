@@ -9,25 +9,26 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
   CustomHeader({Key key, this.isPop, this.svgName, this.title})
       : super(key: key);
   bool isPop;
-  String title;
-  String svgName;
+  final String title;
+  final String svgName;
 
   @override
   Widget build(BuildContext context) {
     isPop ??= false;
     return CupertinoNavigationBar(
         backgroundColor: CustomColor.whiteColor,
-        border: const Border(bottom: BorderSide.none),
+        border: Border(bottom: BorderSide.none),
         leading: (isPop)
             ? CupertinoNavigationBarBackButton(
                 onPressed: () => GoRouter.of(context).pop())
-            : const SizedBox(),
+            // ignore: prefer_const_constructors
+            : SizedBox(),
         middle: Text(title, style: CustomFont.heading18),
         trailing: (svgName == null || svgName == "")
-            ? const SizedBox()
+            ? SizedBox()
             : SvgPicture.asset('assets/svg/$svgName'));
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

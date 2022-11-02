@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 
 class Leads extends StatefulWidget {
-  const Leads({Key key}) : super(key: key);
+  Leads({Key key}) : super(key: key);
 
   @override
   State<Leads> createState() => _LeadsState();
@@ -15,8 +16,9 @@ class _LeadsState extends State<Leads> {
       body: SafeArea(
         child: Column(
           children: [
+            SpacerHeight(h: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text("Leads", style: CustomFont.heading24),
             ),
           ],

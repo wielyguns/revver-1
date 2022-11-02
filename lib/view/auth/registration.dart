@@ -8,7 +8,7 @@ import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 
 class Registration extends StatefulWidget {
-  const Registration({Key key}) : super(key: key);
+  Registration({Key key}) : super(key: key);
 
   @override
   State<Registration> createState() => _RegistrationState();
@@ -24,67 +24,67 @@ class _RegistrationState extends State<Registration> {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Form(
               key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   Text(
                     "Registration",
                     style: CustomFont.heading36,
                   ),
-                  const SpacerHeight(h: 10),
+                  SpacerHeight(h: 10),
                   Text(
                     "Don't have an account yet? Register here!",
                     style: CustomFont.subheading,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   RegularForm(
                     title: "Full Name",
                     hint: "Your Full Name",
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   RegularForm(
                     title: "Username",
                     hint: "Your Username",
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   RegularForm(
                     title: "Email",
                     hint: "Your Email",
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   RegularForm(
                     title: "Phone",
                     hint: "Your Phone",
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   RegularForm(
                     title: "Sponsor ID",
                     hint: "Your Sponsor ID",
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   PasswordForm(
                     title: "Password",
                     hint: "Your Password",
                     visible: password,
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   PasswordForm(
                     title: "Confirm Password",
                     hint: "Your Confirm Password",
                     visible: password,
                     isValidator: true,
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                   Row(
                     children: [
                       Text(
@@ -102,7 +102,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ],
                   ),
-                  const SpacerHeight(h: 20),
+                  SpacerHeight(h: 20),
                 ],
               ),
             ),
@@ -110,7 +110,7 @@ class _RegistrationState extends State<Registration> {
         ),
         bottomNavigationBar: Container(
             color: CustomColor.whiteColor,
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: CustomButton(
               title: "Login",
               func: () {

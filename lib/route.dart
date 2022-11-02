@@ -11,31 +11,31 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const Login(),
+      builder: (context, state) => Login(),
     ),
     GoRoute(
       path: '/registration',
-      builder: (context, state) => const Registration(),
+      builder: (context, state) => Registration(),
     ),
     GoRoute(
       path: '/homepage',
-      builder: (context, state) => const Homepage(),
+      builder: (context, state) => Homepage(),
     ),
     GoRoute(
       path: '/home',
-      builder: (context, state) => const Home(),
+      builder: (context, state) => Home(),
     ),
     GoRoute(
       path: '/event',
-      builder: (context, state) => const Event(),
+      builder: (context, state) => Event(),
     ),
     GoRoute(
       path: '/leads',
-      builder: (context, state) => const Leads(),
+      builder: (context, state) => Leads(),
     ),
     GoRoute(
       path: '/account',
-      builder: (context, state) => const Account(),
+      builder: (context, state) => Account(),
     ),
   ],
 );

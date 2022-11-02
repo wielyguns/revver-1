@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:revver/globals.dart';
@@ -8,7 +10,7 @@ import 'package:revver/view/leads/leads.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({Key key}) : super(key: key);
+  Homepage({Key key}) : super(key: key);
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -17,10 +19,10 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   var _currentIndex = 0;
   final List<Widget> _children = [
-    const Home(),
-    const Event(),
-    const Leads(),
-    const Account(),
+    Home(),
+    Event(),
+    Leads(),
+    Account(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class _HomepageState extends State<Homepage> {
       extendBody: true,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           color: CustomColor.goldColor,
           boxShadow: [
@@ -37,12 +39,12 @@ class _HomepageState extends State<Homepage> {
               color: CustomColor.blackColor,
               spreadRadius: 20,
               blurRadius: 50,
-              offset: const Offset(0, 50),
+              offset: Offset(0, 50),
             ),
           ],
         ),
         child: SalomonBottomBar(
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
           items: [
