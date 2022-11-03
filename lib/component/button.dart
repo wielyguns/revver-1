@@ -112,7 +112,7 @@ class AccountMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: func,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
