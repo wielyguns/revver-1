@@ -17,6 +17,7 @@ class CustomColor {
   static Color purpleColor = Color(0xffBB6BD9);
   static Color blueColor = Color(0xff2D9CDB);
   static Color redColor = Color(0xffFF0000);
+  static Color greenColor = Color(0xff8FFF00);
 }
 
 class CustomFont {
