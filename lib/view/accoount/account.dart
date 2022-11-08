@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/test.dart';
@@ -104,15 +105,16 @@ class _AccountState extends State<Account> {
                   ),
                   SpacerHeight(h: 40),
                   SizedBox(
-                      width: double.infinity,
-                      child: IconTextButton(
-                        title: "Logout",
-                        iconTitle: "right-from-bracket-solid.svg",
-                        buttonColor: CustomColor.redColor,
-                        func: () {
-                          test(context);
-                        },
-                      )),
+                    width: double.infinity,
+                    child: IconTextButton(
+                      title: "Logout",
+                      iconTitle: "right-from-bracket-solid.svg",
+                      buttonColor: CustomColor.redColor,
+                      func: () {
+                        GoRouter.of(context).go("/");
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),

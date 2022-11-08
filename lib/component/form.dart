@@ -76,6 +76,82 @@ class RegularForm extends StatelessWidget {
   }
 }
 
+class MultiLineForm extends StatelessWidget {
+  MultiLineForm(
+      {Key key,
+      this.title,
+      this.hint,
+      this.controller,
+      this.isValidator,
+      this.keyboardType})
+      : super(key: key);
+  final String title;
+  final String hint;
+  final TextEditingController controller;
+  final TextInputType keyboardType;
+  final bool isValidator;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        TextFormField(
+          keyboardType: keyboardType,
+          style: CustomFont.regular12,
+          maxLines: 5,
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: CustomFont.hint,
+            contentPadding: EdgeInsets.all(10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.goldColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+          ),
+          validator: (value) {
+            if (isValidator) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your $title';
+              }
+              return null;
+            } else {
+              return null;
+            }
+          },
+        ),
+      ],
+    );
+  }
+}
+
 // ignore: must_be_immutable
 class PasswordForm extends StatefulWidget {
   PasswordForm(
@@ -196,6 +272,47 @@ class _StringDropdownState extends State<StringDropdown> {
       style: CustomFont.filled,
       decoration: InputDecoration(
         hintText: "Name",
+        hintStyle: CustomFont.hint,
+        contentPadding: EdgeInsets.all(10),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 1,
+              style: BorderStyle.solid,
+              color: CustomColor.oldGreyColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 2, style: BorderStyle.solid, color: CustomColor.goldColor),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class SearchForm extends StatelessWidget {
+  SearchForm({Key key}) : super(key: key);
+  TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      style: CustomFont.regular12,
+      controller: controller,
+      decoration: InputDecoration(
+        hintText: "Search",
         hintStyle: CustomFont.hint,
         contentPadding: EdgeInsets.all(10),
         enabledBorder: OutlineInputBorder(

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -23,27 +24,12 @@ class _EventState extends State<Event> {
 
   List<Appointment> _getAppointments() {
     final List<String> subjectCollection = <String>[];
-    subjectCollection.add('General Meeting');
-    subjectCollection.add('Plan Execution');
-    subjectCollection.add('Project Plan');
-    subjectCollection.add('Consulting');
-    subjectCollection.add('Support');
-    subjectCollection.add('Development Meeting');
-    subjectCollection.add('Project Completion');
-    subjectCollection.add('Release updates');
-    subjectCollection.add('Performance Check');
+    subjectCollection.add('Global Event');
+    subjectCollection.add('Personal Event / Meeting');
 
     final List<Color> colorCollection = <Color>[];
-    colorCollection.add(Color(0xFF0F8644));
-    colorCollection.add(Color(0xFF8B1FA9));
-    colorCollection.add(Color(0xFFD20100));
-    colorCollection.add(Color(0xFFFC571D));
-    colorCollection.add(Color(0xFF36B37B));
-    colorCollection.add(Color(0xFF01A1EF));
-    colorCollection.add(Color(0xFF3D4FB5));
-    colorCollection.add(Color(0xFFE47C73));
-    colorCollection.add(Color(0xFF636363));
-    colorCollection.add(Color(0xFF0A8043));
+    colorCollection.add(CustomColor.goldColor);
+    colorCollection.add(CustomColor.oldGreyColor);
 
     final Random random = Random();
     final DateTime rangeStartDate =
@@ -58,24 +44,28 @@ class _EventState extends State<Event> {
       for (int j = 0; j < count; j++) {
         final DateTime startDate =
             DateTime(date.year, date.month, date.day, 8 + random.nextInt(8));
-        appointments.add(Appointment(
-          subject: subjectCollection[random.nextInt(7)],
-          startTime: startDate,
-          endTime: startDate.add(Duration(hours: random.nextInt(3))),
-          color: colorCollection[random.nextInt(9)],
-        ));
+        appointments.add(
+          Appointment(
+            id: random.nextInt(2).toString(),
+            subject: subjectCollection[random.nextInt(2)],
+            notes: "isMeeting",
+            startTime: startDate,
+            endTime: startDate,
+            color: colorCollection[random.nextInt(2)],
+          ),
+        );
       }
     }
 
     DateTime date = DateTime.now();
     date = DateTime(date.year, date.month, date.day, 11);
     // added recurrence appointment
-    appointments.add(Appointment(
-        subject: 'Scrum',
-        startTime: date,
-        endTime: date.add(Duration(hours: 1)),
-        color: colorCollection[random.nextInt(9)],
-        recurrenceRule: 'FREQ=DAILY;INTERVAL=10'));
+    // appointments.add(Appointment(
+    //     subject: 'Scrum',
+    //     startTime: date,
+    //     endTime: date.add(Duration(hours: 1)),
+    //     color: colorCollection[random.nextInt(9)],
+    //     recurrenceRule: 'FREQ=DAILY;INTERVAL=10'));
     return appointments;
   }
 
@@ -110,10 +100,29 @@ class _EventState extends State<Event> {
                       height: 120,
                       backgroundColor: CustomColor.brownColor),
                 ),
+                onTap: (CalendarTapDetails details) {
+                  Appointment appointment = details.appointments[0];
+                  int appointmentId = int.parse(appointment.id);
+                  if (appointmentId == 0) {
+                    GoRouter.of(context).push("/global-event/$appointmentId");
+                  } else {
+                    GoRouter.of(context).push("/personal-event/1");
+                  }
+                },
               ),
             ),
             SpacerHeight(h: 5),
           ],
+        ),
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 80),
+        child: FloatingActionButton(
+          onPressed: () {
+            GoRouter.of(context).push("/personal-event/0");
+          },
+          backgroundColor: CustomColor.goldColor,
+          child: Icon(Icons.add),
         ),
       ),
     );

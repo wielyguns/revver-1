@@ -26,7 +26,7 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
         middle: Text(title, style: CustomFont.heading18),
         trailing: (svgName == null || svgName == "")
             ? SizedBox()
-            : SvgPicture.asset('assets/svg/$svgName'));
+            : SvgPicture.asset('assets/svg/$svgName', height: 20));
   }
 
   @override

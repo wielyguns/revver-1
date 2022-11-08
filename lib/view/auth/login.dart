@@ -103,18 +103,19 @@ class _LoginState extends State<Login> {
           ),
         ),
         bottomNavigationBar: Container(
-            color: CustomColor.whiteColor,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: CustomButton(
-              title: "Login",
-              func: () {
-                if (!formKey.currentState.validate()) {
-                  customSnackBar(context, true, "Complete the form first!");
-                } else {
-                  GoRouter.of(context).go("/homepage");
-                }
-              },
-            )),
+          color: CustomColor.whiteColor,
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: CustomButton(
+            title: "Login",
+            func: () {
+              if (!formKey.currentState.validate()) {
+                customSnackBar(context, true, "Complete the form first!");
+              } else {
+                GoRouter.of(context).go("/homepage");
+              }
+            },
+          ),
+        ),
       ),
     );
   }
