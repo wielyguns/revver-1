@@ -82,7 +82,7 @@ class _AccountState extends State<Account> {
                   SpacerHeight(h: 20),
                   AccountMenu(
                     title: "Privacy Policy",
-                    iconTitle: "cart-shopping-solid.svg",
+                    iconTitle: "lock-solid.svg",
                     func: () {
                       test(context);
                     },
@@ -90,7 +90,7 @@ class _AccountState extends State<Account> {
                   SpacerHeight(h: 20),
                   AccountMenu(
                     title: "Refund Policy",
-                    iconTitle: "cart-shopping-solid.svg",
+                    iconTitle: "dollar-sign-solid.svg",
                     func: () {
                       test(context);
                     },
@@ -98,7 +98,7 @@ class _AccountState extends State<Account> {
                   SpacerHeight(h: 20),
                   AccountMenu(
                     title: "About Apps",
-                    iconTitle: "cart-shopping-solid.svg",
+                    iconTitle: "circle-info-solid.svg",
                     func: () {
                       test(context);
                     },

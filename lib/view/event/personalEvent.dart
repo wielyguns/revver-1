@@ -18,7 +18,7 @@ class PersonalEvent extends StatefulWidget {
 }
 
 class _PersonalEventState extends State<PersonalEvent> {
-  DateTime date = DateTime.now();
+  DateTime dateNow = DateTime.now();
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -49,9 +49,9 @@ class _PersonalEventState extends State<PersonalEvent> {
                         DateTimePickerForm(
                           title: "Date",
                           hint: "t",
-                          date: date,
+                          date: dateNow,
                           callback: (x) {
-                            setState(() => date = x);
+                            setState(() => dateNow = x);
                           },
                         ),
                         SpacerHeight(h: 20),
@@ -81,8 +81,7 @@ class _PersonalEventState extends State<PersonalEvent> {
               if (!formKey.currentState.validate()) {
                 customSnackBar(context, true, "Complete the form first!");
               } else {
-                // GoRouter.of(context).pop();
-                print(date);
+                GoRouter.of(context).pop();
               }
             },
           ),

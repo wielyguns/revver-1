@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
@@ -34,7 +35,7 @@ class NewsSlider extends StatelessWidget {
             style: CustomFont.link,
           ),
           onTap: () {
-            test(context);
+            GoRouter.of(context).push("/news");
           },
         ),
       ],

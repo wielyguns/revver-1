@@ -8,6 +8,8 @@ import 'package:revver/view/home/home.dart';
 import 'package:revver/view/homepage.dart';
 import 'package:revver/view/leads/leads.dart';
 import 'package:revver/view/auth/login.dart';
+import 'package:revver/view/news/news.dart';
+import 'package:revver/view/news/newsDetail.dart';
 
 final GoRouter router = GoRouter(
   routes: [
@@ -51,6 +53,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/account',
       builder: (context, state) => Account(),
+    ),
+    GoRoute(
+      path: '/news',
+      builder: (context, state) => News(),
+    ),
+    GoRoute(
+      path: '/news-detail',
+      builder: (context, state) => NewsDetail(),
     ),
   ],
 );
