@@ -18,6 +18,7 @@ class PersonalEvent extends StatefulWidget {
 }
 
 class _PersonalEventState extends State<PersonalEvent> {
+  DateTime date = DateTime.now();
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -31,31 +32,44 @@ class _PersonalEventState extends State<PersonalEvent> {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SpacerHeight(h: 20),
-              Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      RegularForm(
-                        title: "Event Name",
-                        hint: "eg: Meeting with new project",
-                        isValidator: true,
-                      ),
-                      SpacerHeight(h: 20),
-                      MultiLineForm(
-                        title: "Event Description",
-                        hint: "eg: Presentation to the new prospect",
-                      ),
-                      SpacerHeight(h: 20),
-                      MultiLineForm(
-                        title: "Event Location",
-                        hint: "eg: Coffee Shop Tunjungan Plaza",
-                      ),
-                    ],
-                  ))
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SpacerHeight(h: 20),
+                Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        RegularForm(
+                          title: "Event Name",
+                          hint: "eg: Meeting with new project",
+                          isValidator: true,
+                        ),
+                        SpacerHeight(h: 20),
+                        DateTimePickerForm(
+                          title: "Date",
+                          hint: "t",
+                          date: date,
+                          callback: (x) {
+                            setState(() => date = x);
+                          },
+                        ),
+                        SpacerHeight(h: 20),
+                        MultiLineForm(
+                          title: "Event Description",
+                          hint: "eg: Presentation to the new prospect",
+                          isValidator: true,
+                        ),
+                        SpacerHeight(h: 20),
+                        MultiLineForm(
+                          title: "Event Location",
+                          hint: "eg: Coffee Shop Tunjungan Plaza",
+                          isValidator: true,
+                        ),
+                      ],
+                    ))
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: Container(
@@ -67,7 +81,8 @@ class _PersonalEventState extends State<PersonalEvent> {
               if (!formKey.currentState.validate()) {
                 customSnackBar(context, true, "Complete the form first!");
               } else {
-                GoRouter.of(context).pop();
+                // GoRouter.of(context).pop();
+                print(date);
               }
             },
           ),
