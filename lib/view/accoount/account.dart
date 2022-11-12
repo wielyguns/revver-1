@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Account extends StatefulWidget {
   Account({Key key}) : super(key: key);
@@ -109,7 +110,10 @@ class _AccountState extends State<Account> {
                       title: "Logout",
                       iconTitle: "right-from-bracket-solid.svg",
                       buttonColor: CustomColor.redColor,
-                      func: () {
+                      func: () async {
+                        final prefs = await SharedPreferences.getInstance();
+                        await prefs.remove("email");
+                        await prefs.remove("password");
                         GoRouter.of(context).go("/login");
                       },
                     ),

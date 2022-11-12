@@ -16,27 +16,28 @@ class HomeMenu extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              detailMenu(
-                  context, "assets/svg/clipboard-solid 1.svg", "Note", "/"),
-              detailMenu(
-                  context, "assets/svg/book-solid.svg", "E-Learning", "/"),
-              detailMenu(
-                  context, "assets/svg/paper-plane-solid.svg", "Plan", "/"),
-              detailMenu(
-                  context, "assets/svg/stethoscope-solid.svg", "E-Health", "/"),
+              detailMenu(context, "assets/svg/clipboard-solid 1.svg", "Note",
+                  "/homepage"),
+              detailMenu(context, "assets/svg/book-solid.svg", "E-Learning",
+                  "/homepage"),
+              detailMenu(context, "assets/svg/paper-plane-solid.svg", "Plan",
+                  "/homepage"),
+              detailMenu(context, "assets/svg/stethoscope-solid.svg",
+                  "E-Health", "/homepage"),
             ],
           ),
           SpacerHeight(h: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              detailMenu(context, "assets/svg/trophy-solid.svg", "Goals", "/"),
               detailMenu(
-                  context, "assets/svg/people-group-solid.svg", "Support", "/"),
-              detailMenu(
-                  context, "assets/svg/chart-pie-solid.svg", "Report", "/"),
-              detailMenu(
-                  context, "assets/svg/chart-pie-solid.svg", "Revver", "/"),
+                  context, "assets/svg/trophy-solid.svg", "Goals", "/homepage"),
+              detailMenu(context, "assets/svg/people-group-solid.svg",
+                  "Support", "/homepage"),
+              detailMenu(context, "assets/svg/chart-pie-solid.svg", "Report",
+                  "/homepage"),
+              detailMenu(context, "assets/svg/chart-pie-solid.svg", "Revver",
+                  "/homepage"),
             ],
           ),
         ],

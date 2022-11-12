@@ -7,6 +7,7 @@ import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/login.dart';
 import 'package:revver/globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -119,8 +120,16 @@ class _LoginState extends State<Login> {
                 String email = emailController.text;
                 String password = passwordController.text;
                 await loginLoad(email, password).then(
-                  (val) {
+                  (val) async {
+                    final prefs = await SharedPreferences.getInstance();
                     if (val['status'] == 200) {
+                      if (rememberMe) {
+                        await prefs.setString('email', email);
+                        await prefs.setString('password', password);
+                      } else {
+                        await prefs.remove("email");
+                        await prefs.remove("password");
+                      }
                       GoRouter.of(context).go("/homepage");
                     } else {
                       customSnackBar(context, true, val['message']);

@@ -16,6 +16,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
