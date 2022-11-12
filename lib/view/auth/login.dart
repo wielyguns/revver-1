@@ -5,6 +5,7 @@ import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/login.dart';
 import 'package:revver/globals.dart';
 
 class Login extends StatefulWidget {
@@ -16,6 +17,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool password = false;
   bool rememberMe = false;
 
@@ -47,6 +50,7 @@ class _LoginState extends State<Login> {
                     hint: "Your Email",
                     isValidator: true,
                     keyboardType: TextInputType.emailAddress,
+                    controller: emailController,
                   ),
                   SpacerHeight(h: 20),
                   PasswordForm(
@@ -54,6 +58,7 @@ class _LoginState extends State<Login> {
                     hint: "Your Password",
                     visible: password,
                     isValidator: true,
+                    controller: passwordController,
                   ),
                   SpacerHeight(h: 20),
                   Row(
@@ -107,11 +112,21 @@ class _LoginState extends State<Login> {
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: CustomButton(
             title: "Login",
-            func: () {
+            func: () async {
               if (!formKey.currentState.validate()) {
                 customSnackBar(context, true, "Complete the form first!");
               } else {
-                GoRouter.of(context).go("/homepage");
+                String email = emailController.text;
+                String password = passwordController.text;
+                await loginLoad(email, password).then(
+                  (val) {
+                    if (val['status'] == 200) {
+                      GoRouter.of(context).go("/homepage");
+                    } else {
+                      customSnackBar(context, true, val['message']);
+                    }
+                  },
+                );
               }
             },
           ),

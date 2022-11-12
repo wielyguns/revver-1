@@ -97,7 +97,7 @@ class _RegistrationState extends State<Registration> {
                           style: CustomFont.link,
                         ),
                         onTap: () {
-                          GoRouter.of(context).go('/');
+                          GoRouter.of(context).go('/login');
                         },
                       ),
                     ],

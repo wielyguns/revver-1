@@ -1,18 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 
-class News extends StatefulWidget {
-  const News({Key key}) : super(key: key);
+class Product extends StatefulWidget {
+  const Product({Key key}) : super(key: key);
 
   @override
-  State<News> createState() => _NewsState();
+  State<Product> createState() => _ProductState();
 }
 
-class _NewsState extends State<News> {
+class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,16 +38,16 @@ class _NewsState extends State<News> {
   }
 
   newsWidget() {
-    return GestureDetector(
-      onTap: (() => GoRouter.of(context).push("/news-detail")),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: CustomColor.oldGreyColor)),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 150,
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: CustomColor.oldGreyColor)),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () => GoRouter.of(context).push("/product-detail"),
+            child: SizedBox(
+              width: 100,
               height: 100,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
@@ -55,7 +57,10 @@ class _NewsState extends State<News> {
                 ),
               ),
             ),
-            Expanded(
+          ),
+          Expanded(
+            child: GestureDetector(
+              onTap: () => GoRouter.of(context).push("/product-detail"),
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Column(
@@ -67,13 +72,32 @@ class _NewsState extends State<News> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Text("data", style: CustomFont.newsAuthor),
+                    Text("data", style: CustomFont.regular10),
                   ],
                 ),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () => test(context),
+            child: Container(
+              margin: EdgeInsets.all(10),
+              height: 30,
+              width: 30,
+              decoration: BoxDecoration(
+                color: CustomColor.goldColor,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: SvgPicture.asset(
+                  "assets/svg/cart-shopping-solid.svg",
+                  color: CustomColor.whiteColor,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 
 class Account extends StatefulWidget {
@@ -55,14 +54,14 @@ class _AccountState extends State<Account> {
                               ChangePasswordButton(
                                 title: "Profile",
                                 func: () {
-                                  test(context);
+                                  GoRouter.of(context).push("/profile");
                                 },
                               ),
                               SpacerWidth(w: 5),
                               ChangePasswordButton(
                                 title: "Change Password",
                                 func: () {
-                                  test(context);
+                                  GoRouter.of(context).push("/change-password");
                                 },
                               ),
                             ],
@@ -76,7 +75,7 @@ class _AccountState extends State<Account> {
                     title: "Order History",
                     iconTitle: "cart-shopping-solid.svg",
                     func: () {
-                      test(context);
+                      GoRouter.of(context).push("/order-history");
                     },
                   ),
                   SpacerHeight(h: 20),
@@ -84,7 +83,7 @@ class _AccountState extends State<Account> {
                     title: "Privacy Policy",
                     iconTitle: "lock-solid.svg",
                     func: () {
-                      test(context);
+                      GoRouter.of(context).push("/privacy-policy");
                     },
                   ),
                   SpacerHeight(h: 20),
@@ -92,7 +91,7 @@ class _AccountState extends State<Account> {
                     title: "Refund Policy",
                     iconTitle: "dollar-sign-solid.svg",
                     func: () {
-                      test(context);
+                      GoRouter.of(context).push("/refund-policy");
                     },
                   ),
                   SpacerHeight(h: 20),
@@ -100,7 +99,7 @@ class _AccountState extends State<Account> {
                     title: "About Apps",
                     iconTitle: "circle-info-solid.svg",
                     func: () {
-                      test(context);
+                      GoRouter.of(context).push("/about-apps");
                     },
                   ),
                   SpacerHeight(h: 40),
@@ -111,7 +110,7 @@ class _AccountState extends State<Account> {
                       iconTitle: "right-from-bracket-solid.svg",
                       buttonColor: CustomColor.redColor,
                       func: () {
-                        GoRouter.of(context).go("/");
+                        GoRouter.of(context).go("/login");
                       },
                     ),
                   ),

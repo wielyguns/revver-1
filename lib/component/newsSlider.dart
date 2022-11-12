@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 
 // ignore: must_be_immutable
@@ -73,10 +72,8 @@ class NewsSlider extends StatelessWidget {
 
   _sliderBox(BuildContext context, String gambar, String judul, String slug,
       String kategori) {
-    return InkWell(
-      onTap: () {
-        test(context);
-      },
+    return GestureDetector(
+      onTap: () => GoRouter.of(context).push("/news-detail"),
       child: Container(
         width: 200,
         decoration: BoxDecoration(

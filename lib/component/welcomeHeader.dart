@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 
 // ignore: must_be_immutable
@@ -36,7 +36,7 @@ class WelcomeHeader extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  test(context);
+                  GoRouter.of(context).push("/cart");
                 },
                 child: Stack(
                   children: [
@@ -73,7 +73,7 @@ class WelcomeHeader extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  test(context);
+                  GoRouter.of(context).push("/notification");
                 },
                 child: Stack(
                   children: [
@@ -110,7 +110,7 @@ class WelcomeHeader extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  test(context);
+                  GoRouter.of(context).push("/account");
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(5),
