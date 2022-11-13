@@ -114,35 +114,38 @@ class AccountMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: func,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: CustomColor.goldColor,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: SvgPicture.asset(
-                    "assets/svg/$iconTitle",
-                    color: CustomColor.whiteColor,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    color: CustomColor.goldColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: SvgPicture.asset(
+                      "assets/svg/$iconTitle",
+                      color: CustomColor.whiteColor,
+                    ),
                   ),
                 ),
-              ),
-              SpacerWidth(w: 20),
-              Text(
-                title,
-                style: CustomFont.regular16,
-              )
-            ],
-          ),
-          Icon(Icons.arrow_forward_ios)
-        ],
+                SpacerWidth(w: 20),
+                Text(
+                  title,
+                  style: CustomFont.regular16,
+                )
+              ],
+            ),
+            Icon(Icons.arrow_forward_ios)
+          ],
+        ),
       ),
     );
   }

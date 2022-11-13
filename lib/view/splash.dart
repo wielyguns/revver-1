@@ -20,13 +20,13 @@ class _SplashState extends State<Splash> {
     if (email != null && password != null) {
       loginLoad(email, password).then((val) {
         if (val['status'] == 200) {
-          GoRouter.of(context).push("/homepage");
+          GoRouter.of(context).go("/homepage");
         } else {
-          GoRouter.of(context).push("/login");
+          GoRouter.of(context).go("/login");
         }
       });
     } else {
-      GoRouter.of(context).push("/login");
+      GoRouter.of(context).go("/login");
     }
   }
 
@@ -38,6 +38,9 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SizedBox());
+    return Scaffold(
+        body: Center(
+      child: CircularProgressIndicator(),
+    ));
   }
 }

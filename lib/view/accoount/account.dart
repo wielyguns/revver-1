@@ -17,111 +17,111 @@ class _AccountState extends State<Account> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            SpacerHeight(h: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Account", style: CustomFont.heading24),
-                  SpacerHeight(h: 20),
-                  Row(
-                    children: [
-                      SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          fit: StackFit.expand,
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  "https://wallpaperaccess.com/full/733834.png"),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SpacerWidth(w: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Nama Lengkap", style: CustomFont.bold16),
-                          Text("Member", style: CustomFont.regular12),
-                          SpacerHeight(h: 10),
-                          Row(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SpacerHeight(h: 20),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Account", style: CustomFont.heading24),
+                    SpacerHeight(h: 20),
+                    Row(
+                      children: [
+                        SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            fit: StackFit.expand,
                             children: [
-                              ChangePasswordButton(
-                                title: "Profile",
-                                func: () {
-                                  GoRouter.of(context).push("/profile");
-                                },
-                              ),
-                              SpacerWidth(w: 5),
-                              ChangePasswordButton(
-                                title: "Change Password",
-                                func: () {
-                                  GoRouter.of(context).push("/change-password");
-                                },
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    "https://wallpaperaccess.com/full/733834.png"),
                               ),
                             ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SpacerHeight(h: 40),
-                  AccountMenu(
-                    title: "Order History",
-                    iconTitle: "cart-shopping-solid.svg",
-                    func: () {
-                      GoRouter.of(context).push("/order-history");
-                    },
-                  ),
-                  SpacerHeight(h: 20),
-                  AccountMenu(
-                    title: "Privacy Policy",
-                    iconTitle: "lock-solid.svg",
-                    func: () {
-                      GoRouter.of(context).push("/privacy-policy");
-                    },
-                  ),
-                  SpacerHeight(h: 20),
-                  AccountMenu(
-                    title: "Refund Policy",
-                    iconTitle: "dollar-sign-solid.svg",
-                    func: () {
-                      GoRouter.of(context).push("/refund-policy");
-                    },
-                  ),
-                  SpacerHeight(h: 20),
-                  AccountMenu(
-                    title: "About Apps",
-                    iconTitle: "circle-info-solid.svg",
-                    func: () {
-                      GoRouter.of(context).push("/about-apps");
-                    },
-                  ),
-                  SpacerHeight(h: 40),
-                  SizedBox(
-                    width: double.infinity,
-                    child: IconTextButton(
-                      title: "Logout",
-                      iconTitle: "right-from-bracket-solid.svg",
-                      buttonColor: CustomColor.redColor,
-                      func: () async {
-                        final prefs = await SharedPreferences.getInstance();
-                        await prefs.remove("email");
-                        await prefs.remove("password");
-                        GoRouter.of(context).go("/login");
+                          ),
+                        ),
+                        SpacerWidth(w: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Nama Lengkap", style: CustomFont.bold16),
+                            Text("Member", style: CustomFont.regular12),
+                            SpacerHeight(h: 10),
+                            Row(
+                              children: [
+                                ChangePasswordButton(
+                                  title: "Profile",
+                                  func: () {
+                                    GoRouter.of(context).push("/profile");
+                                  },
+                                ),
+                                SpacerWidth(w: 5),
+                                ChangePasswordButton(
+                                  title: "Change Password",
+                                  func: () {
+                                    GoRouter.of(context)
+                                        .push("/change-password");
+                                  },
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    SpacerHeight(h: 40),
+                    AccountMenu(
+                      title: "Order History",
+                      iconTitle: "cart-shopping-solid.svg",
+                      func: () {
+                        GoRouter.of(context).push("/order-history");
                       },
                     ),
-                  ),
-                ],
+                    AccountMenu(
+                      title: "Privacy Policy",
+                      iconTitle: "lock-solid.svg",
+                      func: () {
+                        GoRouter.of(context).push("/privacy-policy");
+                      },
+                    ),
+                    AccountMenu(
+                      title: "Refund Policy",
+                      iconTitle: "dollar-sign-solid.svg",
+                      func: () {
+                        GoRouter.of(context).push("/refund-policy");
+                      },
+                    ),
+                    AccountMenu(
+                      title: "About Apps",
+                      iconTitle: "circle-info-solid.svg",
+                      func: () {
+                        GoRouter.of(context).push("/about-apps");
+                      },
+                    ),
+                    SpacerHeight(h: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      child: IconTextButton(
+                        title: "Logout",
+                        iconTitle: "right-from-bracket-solid.svg",
+                        buttonColor: CustomColor.redColor,
+                        func: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.remove("email");
+                          await prefs.remove("password");
+                          GoRouter.of(context).go("/login");
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
