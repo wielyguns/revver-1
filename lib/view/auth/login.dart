@@ -130,7 +130,7 @@ class _LoginState extends State<Login> {
                         await prefs.remove("email");
                         await prefs.remove("password");
                       }
-                      GoRouter.of(context).go("/homepage");
+                      GoRouter.of(context).go("/homepage/0");
                     } else {
                       customSnackBar(context, true, val['message']);
                     }

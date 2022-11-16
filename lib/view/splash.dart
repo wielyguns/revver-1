@@ -20,7 +20,7 @@ class _SplashState extends State<Splash> {
     if (email != null && password != null) {
       loginLoad(email, password).then((val) {
         if (val['status'] == 200) {
-          GoRouter.of(context).go("/homepage");
+          GoRouter.of(context).go("/homepage/0");
         } else {
           GoRouter.of(context).go("/login");
         }

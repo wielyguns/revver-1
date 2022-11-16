@@ -9,8 +9,10 @@ import 'package:revver/view/home/home.dart';
 import 'package:revver/view/leads/leads.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
+// ignore: must_be_immutable
 class Homepage extends StatefulWidget {
-  Homepage({Key key}) : super(key: key);
+  Homepage({Key key, this.index}) : super(key: key);
+  int index;
 
   @override
   State<Homepage> createState() => _HomepageState();
@@ -24,11 +26,21 @@ class _HomepageState extends State<Homepage> {
     Leads(),
     Account(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.index != null) {
+      setState(() {
+        _currentIndex = widget.index;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _children[_currentIndex],
-      extendBody: true,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(

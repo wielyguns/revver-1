@@ -110,7 +110,7 @@ class WelcomeHeader extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push("/account");
+                  GoRouter.of(context).push("/homepage/3");
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(5),

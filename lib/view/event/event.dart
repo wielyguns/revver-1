@@ -115,15 +115,12 @@ class _EventState extends State<Event> {
           ],
         ),
       ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 80),
-        child: FloatingActionButton(
-          onPressed: () {
-            GoRouter.of(context).push("/personal-event/0");
-          },
-          backgroundColor: CustomColor.goldColor,
-          child: Icon(Icons.add),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          GoRouter.of(context).push("/personal-event/0");
+        },
+        backgroundColor: CustomColor.goldColor,
+        child: Icon(Icons.add),
       ),
     );
   }

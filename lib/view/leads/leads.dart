@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/form.dart';
 import 'package:revver/component/leadsOverview.dart';
@@ -19,8 +20,9 @@ class _LeadsState extends State<Leads> {
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
-          child: Padding(
+          child: SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,30 +43,36 @@ class _LeadsState extends State<Leads> {
                 SearchForm(),
                 SpacerHeight(h: 20),
                 leadsList(),
-                // SpacerHeight(h: 20),
+                SpacerHeight(h: 60),
               ],
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // GoRouter.of(context).push("/personal-event/0");
+            test(context);
+          },
+          backgroundColor: CustomColor.goldColor,
+          child: Icon(Icons.add),
         ),
       ),
     );
   }
 
   leadsList() {
-    return Expanded(
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: 10,
-        itemBuilder: ((context, index) {
-          return Column(
-            children: [
-              leadsListWidget(),
-              SpacerHeight(h: 10),
-            ],
-          );
-        }),
-      ),
+    return ListView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 10,
+      itemBuilder: ((context, index) {
+        return Column(
+          children: [
+            leadsListWidget(),
+            SpacerHeight(h: 10),
+          ],
+        );
+      }),
     );
   }
 
@@ -72,7 +80,7 @@ class _LeadsState extends State<Leads> {
     return Row(
       children: [
         GestureDetector(
-          onTap: (() => test(context)),
+          onTap: (() => GoRouter.of(context).push("/leads-detail")),
           child: SizedBox(
             height: 55,
             width: 55,
@@ -91,7 +99,7 @@ class _LeadsState extends State<Leads> {
         SpacerWidth(w: 10),
         Expanded(
           child: InkWell(
-            onTap: (() => test(context)),
+            onTap: (() => GoRouter.of(context).push("/leads-detail")),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

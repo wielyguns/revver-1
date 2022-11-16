@@ -107,4 +107,10 @@ class CustomFont {
   //Card News Date
   static TextStyle newsDate = TextStyle(
       fontSize: 8, fontFamily: "Poppins", color: CustomColor.oldGreyColor);
+//Tabbar Header
+  static TextStyle tabbarHeading = TextStyle(
+      fontSize: 18,
+      fontFamily: "Montserrat",
+      fontWeight: FontWeight.w700,
+      color: CustomColor.blackColor);
 }

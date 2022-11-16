@@ -13,8 +13,10 @@ import 'package:revver/view/event/globalEvent.dart';
 import 'package:revver/view/event/personalEvent.dart';
 import 'package:revver/view/home/home.dart';
 import 'package:revver/view/homepage.dart';
+import 'package:revver/view/leads/leadDetailMeetingForm.dart';
 import 'package:revver/view/leads/leads.dart';
 import 'package:revver/view/auth/login.dart';
+import 'package:revver/view/leads/leadsDetail.dart';
 import 'package:revver/view/news/news.dart';
 import 'package:revver/view/news/newsDetail.dart';
 import 'package:revver/view/notifications/notifications.dart';
@@ -37,8 +39,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => Registration(),
     ),
     GoRoute(
-      path: '/homepage',
-      builder: (context, state) => Homepage(),
+      path: '/homepage/:index',
+      builder: (context, state) {
+        int id = int.parse(state.params['index']);
+        return Homepage(index: id);
+      },
     ),
     GoRoute(
       path: '/home',
@@ -64,6 +69,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/leads',
       builder: (context, state) => Leads(),
+    ),
+    GoRoute(
+      path: '/leads-detail',
+      builder: (context, state) => LeadsDetail(),
+    ),
+    GoRoute(
+      path: '/leads-detail-meeting-form',
+      builder: (context, state) => LeadsDetailMeetingForm(),
     ),
     GoRoute(
       path: '/account',
