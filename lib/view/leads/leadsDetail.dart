@@ -14,7 +14,7 @@ class LeadsDetail extends StatefulWidget {
 
 class _LeadsDetailState extends State<LeadsDetail> {
   final List<Widget> _children = [
-    LeadsDetailForm(),
+    LeadsDetailForm(x: "x"),
     LeadsDetailMeeting(),
   ];
   @override

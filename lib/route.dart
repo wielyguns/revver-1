@@ -17,6 +17,7 @@ import 'package:revver/view/leads/leadDetailMeetingForm.dart';
 import 'package:revver/view/leads/leads.dart';
 import 'package:revver/view/auth/login.dart';
 import 'package:revver/view/leads/leadsDetail.dart';
+import 'package:revver/view/leads/leadsDetailForm.dart';
 import 'package:revver/view/news/news.dart';
 import 'package:revver/view/news/newsDetail.dart';
 import 'package:revver/view/notifications/notifications.dart';
@@ -73,6 +74,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/leads-detail',
       builder: (context, state) => LeadsDetail(),
+    ),
+    GoRoute(
+      path: '/leads-detail-form',
+      builder: (context, state) => LeadsDetailForm(),
     ),
     GoRoute(
       path: '/leads-detail-meeting-form',

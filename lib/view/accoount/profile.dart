@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
@@ -17,6 +20,16 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final formKey = GlobalKey<FormState>();
+  XFile image;
+  final ImagePicker picker = ImagePicker();
+
+  getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+
+    setState(() {
+      image = img;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +45,31 @@ class _ProfileState extends State<Profile> {
             key: formKey,
             child: Column(
               children: [
+                SpacerHeight(h: 20),
+                image != null
+                    ? Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.file(
+                            File(image.path),
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width,
+                            height: 300,
+                          ),
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {
+                          getImage(ImageSource.gallery);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.image),
+                            Text('From Gallery'),
+                          ],
+                        ),
+                      ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Full Name",

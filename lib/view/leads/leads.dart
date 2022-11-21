@@ -50,8 +50,7 @@ class _LeadsState extends State<Leads> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // GoRouter.of(context).push("/personal-event/0");
-            test(context);
+            GoRouter.of(context).push("/leads-detail-form");
           },
           backgroundColor: CustomColor.goldColor,
           child: Icon(Icons.add),
