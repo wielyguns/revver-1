@@ -9,22 +9,26 @@ class RegularForm extends StatelessWidget {
       this.hint,
       this.controller,
       this.isValidator,
-      this.keyboardType})
+      this.keyboardType,
+      this.readOnly})
       : super(key: key);
   final String title;
   final String hint;
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool isValidator;
+  bool readOnly;
 
   @override
   Widget build(BuildContext context) {
+    readOnly ??= false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         TextFormField(
+          readOnly: readOnly,
           keyboardType: keyboardType,
           style: CustomFont.regular12,
           controller: controller,

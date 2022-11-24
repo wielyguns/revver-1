@@ -33,13 +33,6 @@ class _ChangePasswordState extends State<ChangePassword> {
               children: [
                 SpacerHeight(h: 20),
                 PasswordForm(
-                  title: "Old Password",
-                  hint: "Your Old Password",
-                  visible: false,
-                  isValidator: true,
-                ),
-                SpacerHeight(h: 20),
-                PasswordForm(
                   title: "New Password",
                   hint: "Your New Password",
                   visible: false,

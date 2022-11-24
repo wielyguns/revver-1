@@ -6,7 +6,8 @@ import 'package:revver/globals.dart';
 
 // ignore: must_be_immutable
 class WelcomeHeader extends StatelessWidget {
-  WelcomeHeader({Key key}) : super(key: key);
+  WelcomeHeader({Key key, this.name}) : super(key: key);
+  String name;
   String cartCounter = "99";
   String notificationCounter = "99";
 
@@ -20,7 +21,7 @@ class WelcomeHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Hi Revver",
+                "Hi, $name",
                 overflow: TextOverflow.ellipsis,
                 style: CustomFont.heading24,
               ),

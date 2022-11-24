@@ -9,6 +9,7 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/profile.dart';
 import 'package:revver/globals.dart';
 
 class Profile extends StatefulWidget {
@@ -20,15 +21,39 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController sponsorIdController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController secondaryEmailController = TextEditingController();
   XFile image;
   final ImagePicker picker = ImagePicker();
 
   getImage(ImageSource media) async {
     var img = await picker.pickImage(source: media);
-
     setState(() {
       image = img;
     });
+  }
+
+  getData() {
+    getProfile().then((val) {
+      setState(() {
+        nameController.text = val['data']['name'];
+        usernameController.text = val['data']['username'];
+        sponsorIdController.text = val['data']['sponsor_id'];
+        phoneController.text = val['data']['phone'];
+        emailController.text = val['data']['email'];
+        secondaryEmailController.text = val['data']['secondary_email'];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
   }
 
   @override
@@ -75,42 +100,43 @@ class _ProfileState extends State<Profile> {
                   title: "Full Name",
                   hint: "Your Full Name",
                   isValidator: true,
+                  controller: nameController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Username",
                   hint: "Your Username",
                   isValidator: true,
-                ),
-                SpacerHeight(h: 20),
-                RegularForm(
-                  title: "Member ID",
-                  hint: "Your Member ID",
-                  isValidator: true,
+                  controller: usernameController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Sponsor ID",
                   hint: "Your Sponsor ID",
                   isValidator: true,
+                  controller: sponsorIdController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Phone",
                   hint: "Your Phone",
                   isValidator: true,
+                  controller: phoneController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Email",
                   hint: "Your Email",
                   isValidator: true,
+                  readOnly: true,
+                  controller: emailController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Secondary Email",
                   hint: "Your Secondary Email",
                   isValidator: true,
+                  controller: secondaryEmailController,
                 ),
                 SpacerHeight(h: 30),
                 Row(

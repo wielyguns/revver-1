@@ -122,13 +122,16 @@ class _LoginState extends State<Login> {
                 await loginLoad(email, password).then(
                   (val) async {
                     final prefs = await SharedPreferences.getInstance();
+                    String token = val['api_key'];
                     if (val['status'] == 200) {
                       if (rememberMe) {
-                        await prefs.setString('email', email);
                         await prefs.setString('password', password);
+                        await prefs.setString('email', email);
+                        await prefs.setString('token', token);
                       } else {
-                        await prefs.remove("email");
                         await prefs.remove("password");
+                        await prefs.remove('email');
+                        await prefs.setString('token', token);
                       }
                       GoRouter.of(context).go("/homepage/0");
                     } else {
