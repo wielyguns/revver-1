@@ -5,7 +5,7 @@ import 'package:revver/component/newsSlider.dart';
 import 'package:revver/component/productSlider.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/component/welcomeHeader.dart';
-import 'package:revver/controller/welcomeHeader.dart';
+import 'package:revver/controller/home.dart';
 import 'package:revver/globals.dart';
 
 class Home extends StatefulWidget {
@@ -18,11 +18,35 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
   String name;
+  List product = [];
 
   getDataHeader() async {
-    getHomeHeader().then((val) {
+    await getHomeHeader().then((val) {
       setState(() {
         name = val['data']['name'];
+        print(val);
+      });
+    });
+  }
+
+  getBanner() async {
+    await getHomeBanner().then((val) {
+      print(val);
+    });
+  }
+
+  getNewsList() async {
+    await getHomeNews().then((val) {
+      setState(() {
+        print(val);
+      });
+    });
+  }
+
+  getProductList() async {
+    await getHomeProduct().then((val) {
+      setState(() {
+        product = val;
       });
     });
   }
@@ -31,6 +55,9 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getDataHeader();
+    // getNewsList();
+    getProductList();
+    // getBanner();
   }
 
   @override

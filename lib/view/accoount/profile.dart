@@ -9,7 +9,7 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/profile.dart';
+import 'package:revver/controller/account.dart';
 import 'package:revver/globals.dart';
 
 class Profile extends StatefulWidget {
@@ -29,6 +29,7 @@ class _ProfileState extends State<Profile> {
   TextEditingController secondaryEmailController = TextEditingController();
   XFile image;
   final ImagePicker picker = ImagePicker();
+  String avatar;
 
   getImage(ImageSource media) async {
     var img = await picker.pickImage(source: media);
@@ -37,15 +38,16 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  getData() {
-    getProfile().then((val) {
+  getData() async {
+    await getAccountProfile().then((val) {
       setState(() {
         nameController.text = val['data']['name'];
         usernameController.text = val['data']['username'];
-        sponsorIdController.text = val['data']['sponsor_id'];
+        sponsorIdController.text = val['data']['sponsor']['name'];
         phoneController.text = val['data']['phone'];
         emailController.text = val['data']['email'];
         secondaryEmailController.text = val['data']['secondary_email'];
+        avatar = val['data']['avatar'];
       });
     });
   }
@@ -72,27 +74,41 @@ class _ProfileState extends State<Profile> {
               children: [
                 SpacerHeight(h: 20),
                 image != null
-                    ? Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.file(
-                            File(image.path),
-                            fit: BoxFit.cover,
-                            width: MediaQuery.of(context).size.width,
-                            height: 300,
+                    ? GestureDetector(
+                        onTap: () {
+                          getImage(ImageSource.gallery);
+                        },
+                        child: SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            fit: StackFit.expand,
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: FileImage(File(image.path)),
+                              ),
+                            ],
                           ),
                         ),
                       )
-                    : ElevatedButton(
-                        onPressed: () {
+                    : GestureDetector(
+                        onTap: () {
                           getImage(ImageSource.gallery);
                         },
-                        child: Row(
-                          children: [
-                            Icon(Icons.image),
-                            Text('From Gallery'),
-                          ],
+                        child: SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            fit: StackFit.expand,
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(avatar ??=
+                                    "https://wallpaperaccess.com/full/733834.png"),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                 SpacerHeight(h: 20),

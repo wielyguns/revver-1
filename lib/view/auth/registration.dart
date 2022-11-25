@@ -5,7 +5,7 @@ import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/registration.dart';
+import 'package:revver/controller/auth.dart';
 import 'package:revver/globals.dart';
 
 class Registration extends StatefulWidget {
@@ -135,21 +135,28 @@ class _RegistrationState extends State<Registration> {
                 } else {
                   String name = nameController.text;
                   String username = usernameController.text;
-                  String memberId = "000001";
                   String email = emailController.text;
                   String phone = phoneController.text;
                   String sponsorId = sponsorIdController.text;
                   String password = passwordController.text;
                   String confirmPassword = confirmPasswordController.text;
-                  await registrationPost(name, username, memberId, email, phone,
-                          sponsorId, password, confirmPassword)
-                      .then(
-                    (val) async {
-                      print(val['data'].toString());
-                      customSnackBar(context, true, val['data'].toString());
-                      // GoRouter.of(context).go("/homepage/0");
-                    },
-                  );
+                  if (password == confirmPassword) {
+                    await registrationPost(name, username, email, phone,
+                            sponsorId, password, confirmPassword)
+                        .then(
+                      (val) async {
+                        if (val['status'] == 200) {
+                          customSnackBar(
+                              context, false, val['message'].toString());
+                          GoRouter.of(context).go("/login");
+                        } else {
+                          customSnackBar(context, true, val['data'].toString());
+                        }
+                      },
+                    );
+                  } else {
+                    customSnackBar(context, true, 'Password not match!');
+                  }
                 }
               },
             )),

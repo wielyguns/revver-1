@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/event.dart';
 import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -16,9 +17,16 @@ class Event extends StatefulWidget {
 class _EventState extends State<Event> {
   _DataSource events;
 
+  getMeetingList() async {
+    await getMeeting().then((val) {
+      print(val);
+    });
+  }
+
   @override
   void initState() {
     events = _DataSource(_getAppointments());
+    getMeetingList();
     super.initState();
   }
 

@@ -5,7 +5,7 @@ import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/login.dart';
+import 'package:revver/controller/auth.dart';
 import 'package:revver/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

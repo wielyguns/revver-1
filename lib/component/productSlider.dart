@@ -5,11 +5,12 @@ import 'package:revver/component/button.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
+import 'package:revver/model/product.dart';
 
 // ignore: must_be_immutable
 class ProductSlider extends StatelessWidget {
-  ProductSlider({Key key}) : super(key: key);
-  int i = 3;
+  ProductSlider({Key key, this.product}) : super(key: key);
+  List<Product> product;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +54,9 @@ class ProductSlider extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: i,
+          itemCount: 3,
           itemBuilder: (BuildContext context, int index) {
+            // Product prod = product[index];
             return Row(
               children: [
                 _sliderBox(
@@ -63,7 +65,7 @@ class ProductSlider extends StatelessWidget {
                     "data",
                     "data",
                     "data"),
-                (i - 1 == index) ? SizedBox(width: 0) : SizedBox(width: 15),
+                (3 - 1 == index) ? SizedBox(width: 0) : SizedBox(width: 15),
               ],
             );
           },

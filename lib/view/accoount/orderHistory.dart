@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revver/component/header.dart';
+import 'package:revver/controller/account.dart';
 import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -13,9 +14,17 @@ class OrderHistory extends StatefulWidget {
 class _OrderHistoryState extends State<OrderHistory> {
   List<Employee> employees = <Employee>[];
   EmployeeDataSource employeeDataSource;
+
+  getOrderList() async {
+    await getAccountOrder().then((val) {
+      print(val);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    getOrderList();
     employees = getEmployeeData();
     employeeDataSource = EmployeeDataSource(employeeData: employees);
   }

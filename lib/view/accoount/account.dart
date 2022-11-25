@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/account.dart';
 import 'package:revver/globals.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,27 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  String image;
+  String name;
+  String stage;
+
+  getHeader() async {
+    await getAccountHeader().then((val) {
+      print(val);
+      setState(() {
+        name = val['data']['name'];
+        image = val['data']['avatar'];
+        stage = val['data']['stage_id'];
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getHeader();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +60,7 @@ class _AccountState extends State<Account> {
                             fit: StackFit.expand,
                             children: [
                               CircleAvatar(
-                                backgroundImage: NetworkImage(
+                                backgroundImage: NetworkImage(image ??=
                                     "https://wallpaperaccess.com/full/733834.png"),
                               ),
                             ],
@@ -48,8 +70,8 @@ class _AccountState extends State<Account> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Nama Lengkap", style: CustomFont.bold16),
-                            Text("Member", style: CustomFont.regular12),
+                            Text(name ??= "...", style: CustomFont.bold16),
+                            Text(stage ??= "...", style: CustomFont.regular12),
                             SpacerHeight(h: 10),
                             Row(
                               children: [

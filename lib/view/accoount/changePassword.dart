@@ -6,6 +6,7 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/account.dart';
 import 'package:revver/globals.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -16,6 +17,8 @@ class ChangePassword extends StatefulWidget {
 }
 
 class _ChangePasswordState extends State<ChangePassword> {
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   hint: "Your New Password",
                   visible: false,
                   isValidator: true,
+                  controller: passwordController,
                 ),
                 SpacerHeight(h: 20),
                 PasswordForm(
@@ -44,6 +48,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   hint: "Your New Password",
                   visible: false,
                   isValidator: true,
+                  controller: confirmPasswordController,
                 ),
               ],
             ),
@@ -58,7 +63,18 @@ class _ChangePasswordState extends State<ChangePassword> {
               if (!formKey.currentState.validate()) {
                 customSnackBar(context, true, "Complete the form first!");
               } else {
-                GoRouter.of(context).pop();
+                if (passwordController.text != confirmPasswordController.text) {
+                  customSnackBar(context, true, "Password not match!");
+                } else {
+                  await patchAccountChangePassword(passwordController.text)
+                      .then((val) {
+                    if (val['status'] == 200) {
+                      GoRouter.of(context).pop();
+                    } else {
+                      customSnackBar(context, true, val['data'].toString());
+                    }
+                  });
+                }
               }
             },
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/globals.dart';
 
+// ignore: must_be_immutable
 class RegularForm extends StatelessWidget {
   RegularForm(
       {Key key,
