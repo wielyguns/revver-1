@@ -115,35 +115,35 @@ class _ProfileState extends State<Profile> {
                 RegularForm(
                   title: "Full Name",
                   hint: "Your Full Name",
-                  isValidator: true,
+                  isValidator: false,
                   controller: nameController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Username",
                   hint: "Your Username",
-                  isValidator: true,
+                  isValidator: false,
                   controller: usernameController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Sponsor ID",
                   hint: "Your Sponsor ID",
-                  isValidator: true,
+                  isValidator: false,
                   controller: sponsorIdController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Phone",
                   hint: "Your Phone",
-                  isValidator: true,
+                  isValidator: false,
                   controller: phoneController,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
                   title: "Email",
                   hint: "Your Email",
-                  isValidator: true,
+                  isValidator: false,
                   readOnly: true,
                   controller: emailController,
                 ),
@@ -151,7 +151,7 @@ class _ProfileState extends State<Profile> {
                 RegularForm(
                   title: "Secondary Email",
                   hint: "Your Secondary Email",
-                  isValidator: true,
+                  isValidator: false,
                   controller: secondaryEmailController,
                 ),
                 SpacerHeight(h: 30),
@@ -177,14 +177,15 @@ class _ProfileState extends State<Profile> {
           child: CustomButton(
             title: "Save",
             func: () async {
-              await postImage(image.path, image.name).then((val) {
-                print(val);
+              patchAccountProfile(nameController.text, usernameController.text,
+                      phoneController.text, secondaryEmailController.text)
+                  .then((val) {
+                if (val['status'] == 200) {
+                  GoRouter.of(context).pop();
+                } else {
+                  customSnackBar(context, true, val['message']);
+                }
               });
-              // if (!formKey.currentState.validate()) {
-              //   customSnackBar(context, true, "Complete the form first!");
-              // } else {
-              //   GoRouter.of(context).pop();
-              // }
             },
           ),
         ),
