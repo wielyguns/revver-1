@@ -23,7 +23,7 @@ class WelcomeHeader extends StatelessWidget {
               Text(
                 "Hi, $name",
                 overflow: TextOverflow.ellipsis,
-                style: CustomFont.heading24,
+                style: CustomFont.heading18,
               ),
               Text("How are you today?", style: CustomFont.medium12),
             ],

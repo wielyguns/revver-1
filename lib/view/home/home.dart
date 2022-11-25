@@ -7,6 +7,7 @@ import 'package:revver/component/spacer.dart';
 import 'package:revver/component/welcomeHeader.dart';
 import 'package:revver/controller/home.dart';
 import 'package:revver/globals.dart';
+import 'package:revver/model/product.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -18,7 +19,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
   String name;
-  List product = [];
+  List product;
 
   getDataHeader() async {
     await getHomeHeader().then((val) {
@@ -84,7 +85,9 @@ class _HomeState extends State<Home> {
               SpacerHeight(h: 40),
               HomeMenu(),
               SpacerHeight(h: 40),
-              ProductSlider(),
+              ProductSlider(
+                product: product,
+              ),
               SpacerHeight(h: 40),
               NewsSlider(),
               SpacerHeight(h: 20),

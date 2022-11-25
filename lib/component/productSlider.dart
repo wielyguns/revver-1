@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/test.dart';
@@ -10,7 +11,7 @@ import 'package:revver/model/product.dart';
 // ignore: must_be_immutable
 class ProductSlider extends StatelessWidget {
   ProductSlider({Key key, this.product}) : super(key: key);
-  List<Product> product;
+  List product;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,9 @@ class ProductSlider extends StatelessWidget {
       children: [
         _titleWidget(context),
         SpacerHeight(h: 10),
-        _sliderWidget(context),
+        (product == null)
+            ? CircularProgressIndicator()
+            : _sliderWidget(context),
       ],
     );
   }
@@ -56,15 +59,16 @@ class ProductSlider extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: 3,
           itemBuilder: (BuildContext context, int index) {
-            // Product prod = product[index];
+            Product prod = product[index];
             return Row(
               children: [
                 _sliderBox(
                     context,
-                    "https://wallpaperaccess.com/full/733834.png",
-                    "data",
-                    "data",
-                    "data"),
+                    prod.product_image ??=
+                        "https://wallpaperaccess.com/full/733834.png",
+                    prod.name ??= "...",
+                    prod.price ??= 0,
+                    prod.id ??= 0),
                 (3 - 1 == index) ? SizedBox(width: 0) : SizedBox(width: 15),
               ],
             );
@@ -74,8 +78,9 @@ class ProductSlider extends StatelessWidget {
     );
   }
 
-  _sliderBox(BuildContext context, String gambar, String judul, String slug,
-      String kategori) {
+  _sliderBox(
+      BuildContext context, String gambar, String name, int price, int id) {
+    String sId = id.toString();
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -96,7 +101,7 @@ class ProductSlider extends StatelessWidget {
                 ),
               ),
             ),
-            onTap: () => GoRouter.of(context).push("/product-detail"),
+            onTap: () => GoRouter.of(context).push("/product-detail/$sId"),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
@@ -104,9 +109,9 @@ class ProductSlider extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SpacerHeight(h: 5),
-                Text("Product", style: CustomFont.bold12),
+                Text(name, style: CustomFont.bold12),
                 SpacerHeight(h: 5),
-                Text("Price", style: CustomFont.regular12),
+                Text(rupiah(price), style: CustomFont.regular12),
                 SpacerHeight(h: 5),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),

@@ -100,8 +100,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => Product(),
     ),
     GoRoute(
-      path: '/product-detail',
-      builder: (context, state) => ProductDetail(),
+      path: '/product-detail/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return ProductDetail(id: id);
+      },
     ),
     GoRoute(
       path: '/profile',

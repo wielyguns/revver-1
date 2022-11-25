@@ -60,7 +60,13 @@ getHomeProduct() async {
   List list = [];
 
   for (var data in res['data'] as List) {
-    list.add(Product.fromJson(jsonEncode(data)));
+    list.add(Product(
+      id: data['id'],
+      name: data['name'],
+      description: data['description'],
+      price: data['price'],
+      product_image: data['product_image'][0]['image'],
+    ));
   }
 
   return list;
