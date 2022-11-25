@@ -19,9 +19,7 @@ class ProductSlider extends StatelessWidget {
       children: [
         _titleWidget(context),
         SpacerHeight(h: 10),
-        (product == null)
-            ? CircularProgressIndicator()
-            : _sliderWidget(context),
+        _sliderWidget(context),
       ],
     );
   }
@@ -53,27 +51,31 @@ class ProductSlider extends StatelessWidget {
       child: SizedBox(
         width: CustomScreen(context).width,
         height: 251,
-        child: ListView.builder(
-          physics: BouncingScrollPhysics(),
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          itemBuilder: (BuildContext context, int index) {
-            Product prod = product[index];
-            return Row(
-              children: [
-                _sliderBox(
-                    context,
-                    prod.product_image ??=
-                        "https://wallpaperaccess.com/full/733834.png",
-                    prod.name ??= "...",
-                    prod.price ??= 0,
-                    prod.id ??= 0),
-                (3 - 1 == index) ? SizedBox(width: 0) : SizedBox(width: 15),
-              ],
-            );
-          },
-        ),
+        child: (product == null)
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                physics: BouncingScrollPhysics(),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (BuildContext context, int index) {
+                  Product prod = product[index];
+                  return Row(
+                    children: [
+                      _sliderBox(
+                          context,
+                          prod.product_image ??=
+                              "https://wallpaperaccess.com/full/733834.png",
+                          prod.name ??= "...",
+                          prod.price ??= 0,
+                          prod.id ??= 0),
+                      (3 - 1 == index)
+                          ? SizedBox(width: 0)
+                          : SizedBox(width: 15),
+                    ],
+                  );
+                },
+              ),
       ),
     );
   }

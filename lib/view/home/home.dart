@@ -20,6 +20,7 @@ class _HomeState extends State<Home> {
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
   String name;
   List product;
+  List banner;
 
   getDataHeader() async {
     await getHomeHeader().then((val) {
@@ -32,7 +33,9 @@ class _HomeState extends State<Home> {
 
   getBanner() async {
     await getHomeBanner().then((val) {
-      print(val);
+      setState(() {
+        banner = val;
+      });
     });
   }
 
@@ -58,7 +61,7 @@ class _HomeState extends State<Home> {
     getDataHeader();
     // getNewsList();
     getProductList();
-    // getBanner();
+    getBanner();
   }
 
   @override
@@ -81,13 +84,11 @@ class _HomeState extends State<Home> {
             children: [
               WelcomeHeader(name: name ??= "..."),
               SpacerHeight(h: 20),
-              HomeBanner(),
+              HomeBanner(list: banner),
               SpacerHeight(h: 40),
               HomeMenu(),
               SpacerHeight(h: 40),
-              ProductSlider(
-                product: product,
-              ),
+              ProductSlider(product: product),
               SpacerHeight(h: 40),
               NewsSlider(),
               SpacerHeight(h: 20),

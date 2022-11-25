@@ -1,18 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
+import 'package:revver/model/banner.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable
 class HomeBanner extends StatelessWidget {
-  HomeBanner({Key key}) : super(key: key);
-  int i = 10;
+  HomeBanner({Key key, this.list}) : super(key: key);
+  List list;
+  int i = 3;
   final controller = PageController(viewportFraction: 1, keepPage: true);
 
   @override
   Widget build(BuildContext context) {
+    if (list != null) {
+      i = list.length;
+    }
     return Stack(
       children: [
         ClipRRect(
@@ -20,20 +24,25 @@ class HomeBanner extends StatelessWidget {
           child: SizedBox(
             width: CustomScreen(context).width,
             height: CustomScreen(context).width / 2.5,
-            child: PageView.builder(
-              controller: controller,
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: i,
-              itemBuilder: (BuildContext context, int index) {
-                return Row(
-                  children: [
-                    _sliderWidget(context,
-                        "https://wallpaperaccess.com/full/733834.png", "Slug"),
-                  ],
-                );
-              },
-            ),
+            child: (list == null)
+                ? Center(child: CircularProgressIndicator())
+                : PageView.builder(
+                    controller: controller,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: i,
+                    itemBuilder: (BuildContext context, int index) {
+                      BannerModel banner = list[index];
+                      return Row(
+                        children: [
+                          _sliderWidget(
+                              context,
+                              banner.image ??=
+                                  "https://wallpaperaccess.com/full/733834.png")
+                        ],
+                      );
+                    },
+                  ),
           ),
         ),
         SpacerHeight(h: 20),
@@ -44,7 +53,7 @@ class HomeBanner extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 5),
               child: SmoothPageIndicator(
                   controller: controller,
-                  count: 10,
+                  count: i,
                   effect: ExpandingDotsEffect(
                       dotHeight: 8,
                       dotWidth: 8,
@@ -58,31 +67,26 @@ class HomeBanner extends StatelessWidget {
     );
   }
 
-  _sliderWidget(BuildContext context, String gambar, String slug) {
-    return InkWell(
-      child: Container(
-          width: CustomScreen(context).width - 40,
-          height: CustomScreen(context).width / 2.5,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-          ),
-          child: Stack(
-            children: [
-              SizedBox(
-                width: CustomScreen(context).width - 40,
-                height: CustomScreen(context).width / 2.5,
-                child: ClipRRect(
-                  child: CachedNetworkImage(
-                    imageUrl: gambar,
-                    fit: BoxFit.cover,
-                  ),
+  _sliderWidget(BuildContext context, String gambar) {
+    return Container(
+        width: CustomScreen(context).width - 40,
+        height: CustomScreen(context).width / 2.5,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        child: Stack(
+          children: [
+            SizedBox(
+              width: CustomScreen(context).width - 40,
+              height: CustomScreen(context).width / 2.5,
+              child: ClipRRect(
+                child: CachedNetworkImage(
+                  imageUrl: gambar,
+                  fit: BoxFit.cover,
                 ),
               ),
-            ],
-          )),
-      onTap: () {
-        test(context);
-      },
-    );
+            ),
+          ],
+        ));
   }
 }

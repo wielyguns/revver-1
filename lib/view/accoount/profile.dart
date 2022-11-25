@@ -177,11 +177,14 @@ class _ProfileState extends State<Profile> {
           child: CustomButton(
             title: "Save",
             func: () async {
-              if (!formKey.currentState.validate()) {
-                customSnackBar(context, true, "Complete the form first!");
-              } else {
-                GoRouter.of(context).pop();
-              }
+              await postImage(image.path, image.name).then((val) {
+                print(val);
+              });
+              // if (!formKey.currentState.validate()) {
+              //   customSnackBar(context, true, "Complete the form first!");
+              // } else {
+              //   GoRouter.of(context).pop();
+              // }
             },
           ),
         ),

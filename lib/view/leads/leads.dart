@@ -43,7 +43,7 @@ class _LeadsState extends State<Leads> {
                 SearchForm(),
                 SpacerHeight(h: 20),
                 leadsList(),
-                SpacerHeight(h: 60),
+                SpacerHeight(h: 80),
               ],
             ),
           ),

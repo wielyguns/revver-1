@@ -94,42 +94,84 @@ class _ProductDetailState extends State<ProductDetail> {
                   SpacerHeight(h: 20),
                   Text(
                     name ??= "...",
-                    style: CustomFont.regular18,
+                    style: CustomFont.regular24,
                   ),
                   Text(
                     harga ??= "...",
-                    style: CustomFont.bold18,
+                    style: CustomFont.bold24,
                   ),
                   SpacerHeight(h: 20),
                   Text(
                     "Description",
-                    style: CustomFont.medium12,
+                    style: CustomFont.bold16,
                   ),
                   Html(data: description ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "How To Use",
-                    style: CustomFont.medium12,
+                    style: CustomFont.bold16,
                   ),
                   Html(data: usage ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "Benefits",
-                    style: CustomFont.medium12,
+                    style: CustomFont.bold16,
                   ),
                   Html(data: benefits ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "ingredients",
-                    style: CustomFont.medium12,
+                    style: CustomFont.bold16,
                   ),
                   Html(data: ingredients ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "Reviews",
-                    style: CustomFont.medium12,
+                    style: CustomFont.bold16,
                   ),
-                  (review == null) ? Text("ss") : Text("xx"),
+                  SpacerHeight(h: 20),
+                  (review == null)
+                      ? Text("")
+                      : ListView.builder(
+                          itemCount: review.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            ProductReview list = review[index];
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 40,
+                                      height: 40,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(7)),
+                                        child: CachedNetworkImage(
+                                          imageUrl: list.image ??=
+                                              "https://wallpaperaccess.com/full/733834.png",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SpacerWidth(w: 10),
+                                    Text(
+                                      list.subject,
+                                      style: CustomFont.medium16,
+                                    ),
+                                  ],
+                                ),
+                                SpacerHeight(h: 10),
+                                Text(
+                                  list.testimonial,
+                                  style: CustomFont.regular12,
+                                ),
+                                SpacerHeight(h: 10),
+                              ],
+                            );
+                          },
+                        ),
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:revver/model/banner.dart';
 import 'package:revver/model/product.dart';
 import 'dart:convert';
 
@@ -21,15 +22,20 @@ getHomeHeader() async {
 getHomeBanner() async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/home/banner";
+  String url = "https://admin.revveracademy.com/api/v1/banner";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.get(parseUrl, headers: {
     "Authorization": "Bearer $token",
   });
   var res = jsonDecode(response.body);
+  List list = [];
 
-  return res;
+  for (var data in res['data'] as List) {
+    list.add(BannerModel.fromJson(jsonEncode(data)));
+  }
+
+  return list;
 }
 
 getHomeNews() async {
