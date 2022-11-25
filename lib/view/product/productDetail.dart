@@ -133,6 +133,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   (review == null)
                       ? Text("")
                       : ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: review.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
