@@ -32,7 +32,8 @@ class _ProfileState extends State<Profile> {
   String avatar;
 
   getImage(ImageSource media) async {
-    var img = await picker.pickImage(source: media);
+    var img =
+        await picker.pickImage(source: media, maxHeight: 480, maxWidth: 640);
     setState(() {
       image = img;
     });
@@ -177,15 +178,23 @@ class _ProfileState extends State<Profile> {
           child: CustomButton(
             title: "Save",
             func: () async {
-              patchAccountProfile(nameController.text, usernameController.text,
-                      phoneController.text, secondaryEmailController.text)
-                  .then((val) {
-                if (val['status'] == 200) {
-                  GoRouter.of(context).pop();
+              await postChangeAvatar(image.path, image.name).then((val) {
+                String res = val.toString();
+                if (val == 200) {
+                  customSnackBar(context, false, 'Succes: $res');
                 } else {
-                  customSnackBar(context, true, val['message']);
+                  customSnackBar(context, true, "Error: $res");
                 }
               });
+              // patchAccountProfile(nameController.text, usernameController.text,
+              //         phoneController.text, secondaryEmailController.text)
+              //     .then((val) {
+              //   if (val['status'] == 200) {
+              //     GoRouter.of(context).pop();
+              //   } else {
+              //     customSnackBar(context, true, val['message']);
+              //   }
+              // });
             },
           ),
         ),
