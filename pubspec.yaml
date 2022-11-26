@@ -24,10 +24,10 @@ dependencies:
   cached_network_image: 3.2.0
   flutter_svg: 1.0.3
   salomon_bottom_bar: 3.3.1
-  syncfusion_flutter_calendar: 19.4.56
-  syncfusion_flutter_datagrid: 19.4.56
-  syncfusion_flutter_pdfviewer: 19.4.56-beta
-  syncfusion_flutter_sliders: 19.4.56
+  syncfusion_flutter_calendar: 
+  syncfusion_flutter_datagrid: 
+  syncfusion_flutter_pdfviewer:
+  syncfusion_flutter_sliders:
   advance_pdf_viewer: 2.0.1
   smooth_page_indicator: 1.0.0
   image_picker: 0.8.4
