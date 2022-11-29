@@ -80,13 +80,12 @@ getAccountOrderDetail(String orderId) async {
   return res;
 }
 
-Future<int> postChangeAvatar(String image, String name) async {
+postChangeAvatar(String image, String name) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   int res;
 
-  // String url = "https://admin.revveracademy.com/api/v1/account/";
-  String url = "https://webhook.site/a80fd997-9a6b-4d57-9db2-958f90bb1b09";
+  String url = "https://admin.revveracademy.com/api/v1/account";
   Uri parseUrl = Uri.parse(url);
 
   var request = http.MultipartRequest('POST', parseUrl);
@@ -100,29 +99,6 @@ Future<int> postChangeAvatar(String image, String name) async {
   });
   return res;
 }
-
-// postChangeAvatar(io.File image, String name) async {
-//   final prefs = await SharedPreferences.getInstance();
-//   String token = prefs.getString('token');
-//   String url = "https://admin.revveracademy.com/api/v1/account/";
-//   // String url = "https://webhook.site/a80fd997-9a6b-4d57-9db2-958f90bb1b09";
-//   final dio = Dio();
-
-//   var formData = FormData.fromMap(
-//       {'avatar': await MultipartFile.fromFile(image.path, filename: name)});
-
-//   Response response = await dio.post(
-//     url,
-//     data: formData,
-//     options: Options(
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//         'Authorization': 'Bearer $token',
-//       },
-//     ),
-//   );
-//   print(response);
-// }
 
 patchAccountProfile(name, username, phone, secondary_email) async {
   final prefs = await SharedPreferences.getInstance();

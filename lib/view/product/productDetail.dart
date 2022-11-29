@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:revver/component/button.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/product.dart';
@@ -176,6 +177,14 @@ class _ProductDetailState extends State<ProductDetail> {
                 ],
               ),
             ),
+      bottomNavigationBar: Container(
+        color: CustomColor.whiteColor,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: CustomButton(
+          title: "+ Keranjang",
+          func: () {},
+        ),
+      ),
     );
   }
 }

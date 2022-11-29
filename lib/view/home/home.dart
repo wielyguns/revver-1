@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/bannerSlider.dart';
 import 'package:revver/component/menu.dart';
@@ -21,12 +22,13 @@ class _HomeState extends State<Home> {
   String name;
   List product;
   List banner;
+  List news;
 
   getDataHeader() async {
     await getHomeHeader().then((val) {
       setState(() {
         name = val['data']['name'];
-        print(val);
+        // print(val);
       });
     });
   }
@@ -42,7 +44,8 @@ class _HomeState extends State<Home> {
   getNewsList() async {
     await getHomeNews().then((val) {
       setState(() {
-        print(val);
+        news = val;
+        // print(val);
       });
     });
   }
@@ -59,7 +62,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getDataHeader();
-    // getNewsList();
+    getNewsList();
     getProductList();
     getBanner();
   }
@@ -69,9 +72,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          "Revver",
-          style: CustomFont.subheading,
+        title: Image.asset(
+          "assets/img/revver-horizontal.png",
+          width: CustomScreen(context).width / 3,
         ),
         backgroundColor: CustomColor.whiteColor,
         elevation: 0,
@@ -90,7 +93,7 @@ class _HomeState extends State<Home> {
               SpacerHeight(h: 40),
               ProductSlider(product: product),
               SpacerHeight(h: 40),
-              NewsSlider(),
+              NewsSlider(news: news),
               SpacerHeight(h: 20),
             ],
           ),

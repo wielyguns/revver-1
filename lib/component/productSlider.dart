@@ -63,12 +63,13 @@ class ProductSlider extends StatelessWidget {
                   return Row(
                     children: [
                       _sliderBox(
-                          context,
-                          prod.product_image ??=
-                              "https://wallpaperaccess.com/full/733834.png",
-                          prod.name ??= "...",
-                          prod.price ??= 0,
-                          prod.id ??= 0),
+                        context,
+                        prod.product_image ??=
+                            "https://wallpaperaccess.com/full/733834.png",
+                        prod.name ??= "...",
+                        prod.price ??= 0,
+                        prod.id ??= 0,
+                      ),
                       (3 - 1 == index)
                           ? SizedBox(width: 0)
                           : SizedBox(width: 15),

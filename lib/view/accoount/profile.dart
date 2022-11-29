@@ -178,23 +178,26 @@ class _ProfileState extends State<Profile> {
           child: CustomButton(
             title: "Save",
             func: () async {
-              await postChangeAvatar(image.path, image.name).then((val) {
-                String res = val.toString();
-                if (val == 200) {
-                  customSnackBar(context, false, 'Succes: $res');
+              if (image != null) {
+                await postChangeAvatar(image.path, image.name).then((val) {
+                  String res = val.toString();
+                  if (val == 200) {
+                    customSnackBar(
+                        context, false, 'Succes: Update Image ($res)');
+                  } else {
+                    customSnackBar(context, true, "Error: Update Image ($res)");
+                  }
+                });
+              }
+              patchAccountProfile(nameController.text, usernameController.text,
+                      phoneController.text, secondaryEmailController.text)
+                  .then((val) {
+                if (val['status'] == 200) {
+                  GoRouter.of(context).pop();
                 } else {
-                  customSnackBar(context, true, "Error: $res");
+                  customSnackBar(context, true, val['message']);
                 }
               });
-              // patchAccountProfile(nameController.text, usernameController.text,
-              //         phoneController.text, secondaryEmailController.text)
-              //     .then((val) {
-              //   if (val['status'] == 200) {
-              //     GoRouter.of(context).pop();
-              //   } else {
-              //     customSnackBar(context, true, val['message']);
-              //   }
-              // });
             },
           ),
         ),

@@ -311,6 +311,7 @@ class _StringDropdownState extends State<StringDropdown> {
 class SearchForm extends StatelessWidget {
   SearchForm({Key key}) : super(key: key);
   TextEditingController controller;
+  VoidCallback callback;
 
   @override
   Widget build(BuildContext context) {
@@ -344,6 +345,9 @@ class SearchForm extends StatelessWidget {
               width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
         ),
       ),
+      onEditingComplete: () {
+        callback();
+      },
     );
   }
 }

@@ -92,8 +92,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => News(),
     ),
     GoRoute(
-      path: '/news-detail',
-      builder: (context, state) => NewsDetail(),
+      path: '/news-detail/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return NewsDetail(id: id);
+      },
     ),
     GoRoute(
       path: '/product',
