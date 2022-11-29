@@ -309,7 +309,7 @@ class _StringDropdownState extends State<StringDropdown> {
 
 // ignore: must_be_immutable
 class SearchForm extends StatelessWidget {
-  SearchForm({Key key}) : super(key: key);
+  SearchForm({Key key, this.controller, this.callback}) : super(key: key);
   TextEditingController controller;
   VoidCallback callback;
 

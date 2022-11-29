@@ -18,10 +18,10 @@ getProductDetail(String id) async {
   return res;
 }
 
-getProduct() async {
+getProduct(String name) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/product";
+  String url = "https://admin.revveracademy.com/api/v1/product?name=$name";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.get(parseUrl, headers: {

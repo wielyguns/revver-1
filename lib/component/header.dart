@@ -6,11 +6,12 @@ import 'package:revver/globals.dart';
 
 // ignore: must_be_immutable
 class CustomHeader extends StatelessWidget with PreferredSizeWidget {
-  CustomHeader({Key key, this.isPop, this.svgName, this.title})
+  CustomHeader({Key key, this.isPop, this.svgName, this.title, this.route})
       : super(key: key);
   bool isPop;
   final String title;
   final String svgName;
+  final String route;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,11 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
         middle: Text(title, style: CustomFont.heading18),
         trailing: (svgName == null || svgName == "")
             ? SizedBox()
-            : SvgPicture.asset('assets/svg/$svgName', height: 20));
+            : GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push(route);
+                },
+                child: SvgPicture.asset('assets/svg/$svgName', height: 20)));
   }
 
   @override

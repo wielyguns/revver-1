@@ -70,6 +70,8 @@ class _ProductDetailState extends State<ProductDetail> {
     return Scaffold(
       appBar: CustomHeader(
         title: name ??= "",
+        svgName: "cart-shopping-solid.svg",
+        route: "/cart",
         isPop: true,
       ),
       body: (isLoad)

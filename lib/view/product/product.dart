@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
@@ -19,12 +20,18 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
+  TextEditingController searchController = TextEditingController();
   List product;
+  bool isLoad = true;
 
   getData() async {
-    await getProduct().then((val) {
+    setState(() {
+      isLoad = true;
+    });
+    await getProduct(searchController.text).then((val) {
       setState(() {
         product = val;
+        isLoad = false;
       });
     });
   }
@@ -37,39 +44,48 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomHeader(
-        title: "Product",
-        isPop: true,
+    return KeyboardDismisser(
+      child: Scaffold(
+        appBar: CustomHeader(
+          title: "Product",
+          svgName: "cart-shopping-solid.svg",
+          route: "/cart",
+          isPop: true,
+        ),
+        body: SingleChildScrollView(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: Column(
+              children: [
+                SearchForm(
+                  controller: searchController,
+                  callback: () {
+                    getData();
+                  },
+                ),
+                SpacerHeight(h: 20),
+                (isLoad)
+                    ? Center(child: CircularProgressIndicator())
+                    : ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: ((context, index) {
+                          return SpacerHeight(h: 10);
+                        }),
+                        itemCount: product.length,
+                        itemBuilder: (context, index) {
+                          p.Product prod = product[index];
+                          return productWidget(
+                            prod.product_image ??=
+                                "https://wallpaperaccess.com/full/733834.png",
+                            prod.name ??= "...",
+                            prod.price ??= 0,
+                            prod.id ??= 0,
+                          );
+                        },
+                      ),
+              ],
+            )),
       ),
-      body: (product == null)
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-              child: Column(
-                children: [
-                  SearchForm(),
-                  SpacerHeight(h: 20),
-                  ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    separatorBuilder: ((context, index) {
-                      return SpacerHeight(h: 10);
-                    }),
-                    itemCount: product.length,
-                    itemBuilder: (context, index) {
-                      p.Product prod = product[index];
-                      return productWidget(
-                        prod.product_image ??=
-                            "https://wallpaperaccess.com/full/733834.png",
-                        prod.name ??= "...",
-                        prod.price ??= 0,
-                        prod.id ??= 0,
-                      );
-                    },
-                  ),
-                ],
-              )),
     );
   }
 
