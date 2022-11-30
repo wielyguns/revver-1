@@ -4,6 +4,7 @@ import 'dart:io' as io;
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:revver/model/order.dart';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,8 +63,13 @@ getAccountOrder() async {
     "Authorization": "Bearer $token",
   });
   var res = jsonDecode(response.body);
+  List<Order> list = [];
 
-  return res;
+  for (var data in res['data'] as List) {
+    list.add(Order.fromJson(jsonEncode(data)));
+  }
+
+  return list;
 }
 
 getAccountOrderDetail(String orderId) async {
