@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
@@ -162,7 +163,16 @@ class _ProfileState extends State<Profile> {
                       child: CustomButton(
                         title: "Delete Account",
                         color: CustomColor.redColor,
-                        func: () {},
+                        func: () async {
+                          await deleteAccount().then((val) {
+                            print(val);
+                            if (val['status'] == 200) {
+                              GoRouter.of(context).go('/login');
+                            } else {
+                              customSnackBar(context, true, val['message']);
+                            }
+                          });
+                        },
                       ),
                     ),
                   ],

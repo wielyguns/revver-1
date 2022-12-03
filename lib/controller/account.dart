@@ -1,8 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:io' as io;
-
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:revver/model/order.dart';
 import 'dart:convert';
@@ -120,6 +117,19 @@ patchAccountProfile(name, username, phone, secondary_email) async {
     'phone': phone,
     'secondary_email': secondary_email,
   });
+  var res = jsonDecode(response.body);
+
+  return res;
+}
+
+deleteAccount() async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/account/7";
+
+  Uri parseUrl = Uri.parse(url);
+  final response =
+      await http.delete(parseUrl, headers: {"Authorization": "Bearer $token"});
   var res = jsonDecode(response.body);
 
   return res;
