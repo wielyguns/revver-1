@@ -74,12 +74,19 @@ class _ProductState extends State<Product> {
                         itemCount: product.length,
                         itemBuilder: (context, index) {
                           p.Product prod = product[index];
-                          return productWidget(
-                            prod.product_image ??=
-                                "https://wallpaperaccess.com/full/733834.png",
-                            prod.name ??= "...",
-                            prod.price ??= 0,
-                            prod.id ??= 0,
+                          return Column(
+                            children: [
+                              productWidget(
+                                prod.product_image ??=
+                                    "https://wallpaperaccess.com/full/733834.png",
+                                prod.name ??= "...",
+                                prod.price ??= 0,
+                                prod.id ??= 0,
+                              ),
+                              (product.length - 1 == index)
+                                  ? SpacerHeight(h: 10)
+                                  : SizedBox(),
+                            ],
                           );
                         },
                       ),

@@ -51,11 +51,19 @@ class _NewsState extends State<News> {
                 itemCount: news.length,
                 itemBuilder: (context, index) {
                   n.News nws = news[index];
-                  return newsWidget(
-                    nws.image ??= "https://wallpaperaccess.com/full/733834.png",
-                    nws.title ??= "...",
-                    nws.created_at ??= "...",
-                    nws.id ??= 0,
+                  return Column(
+                    children: [
+                      newsWidget(
+                        nws.image ??=
+                            "https://wallpaperaccess.com/full/733834.png",
+                        nws.title ??= "...",
+                        nws.created_at ??= "...",
+                        nws.id ??= 0,
+                      ),
+                      (news.length - 1 == index)
+                          ? SpacerHeight(h: 10)
+                          : SizedBox(),
+                    ],
                   );
                 },
               ),
