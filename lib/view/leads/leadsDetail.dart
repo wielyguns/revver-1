@@ -6,17 +6,25 @@ import 'package:revver/view/leads/leadsDetailForm.dart';
 import 'package:revver/view/leads/leadsDetailMeeting.dart';
 
 class LeadsDetail extends StatefulWidget {
-  const LeadsDetail({Key key}) : super(key: key);
+  LeadsDetail({Key key, this.id}) : super(key: key);
+  int id;
 
   @override
   State<LeadsDetail> createState() => _LeadsDetailState();
 }
 
 class _LeadsDetailState extends State<LeadsDetail> {
-  final List<Widget> _children = [
-    LeadsDetailForm(x: "x"),
-    LeadsDetailMeeting(),
-  ];
+  List<Widget> _children = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _children = [
+      LeadsDetailForm(x: "x", id: widget.id),
+      LeadsDetailMeeting(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

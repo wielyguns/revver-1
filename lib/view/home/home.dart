@@ -73,8 +73,8 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         centerTitle: true,
         title: Image.asset(
-          "assets/img/revver-horizontal.png",
-          width: CustomScreen(context).width / 3,
+          "assets/img/logo-header.png",
+          width: CustomScreen(context).width / 3.5,
         ),
         backgroundColor: CustomColor.whiteColor,
         elevation: 0,

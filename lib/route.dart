@@ -7,7 +7,6 @@ import 'package:revver/view/accoount/privacyPolicy.dart';
 import 'package:revver/view/accoount/profile.dart';
 import 'package:revver/view/accoount/refundPolicy.dart';
 import 'package:revver/view/auth/registration.dart';
-import 'package:revver/view/cart/cart.dart';
 import 'package:revver/view/event/event.dart';
 import 'package:revver/view/event/globalEvent.dart';
 import 'package:revver/view/event/personalEvent.dart';
@@ -21,6 +20,8 @@ import 'package:revver/view/leads/leadsDetailForm.dart';
 import 'package:revver/view/news/news.dart';
 import 'package:revver/view/news/newsDetail.dart';
 import 'package:revver/view/notifications/notifications.dart';
+import 'package:revver/view/order/cart.dart';
+import 'package:revver/view/order/invoice.dart';
 import 'package:revver/view/product/product.dart';
 import 'package:revver/view/product/productDetail.dart';
 import 'package:revver/view/splash.dart';
@@ -72,8 +73,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => Leads(),
     ),
     GoRoute(
-      path: '/leads-detail',
-      builder: (context, state) => LeadsDetail(),
+      path: '/leads-detail/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return LeadsDetail(id: id);
+      },
     ),
     GoRoute(
       path: '/leads-detail-form',
@@ -136,6 +140,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/cart',
       builder: (context, state) => Cart(),
+    ),
+    GoRoute(
+      path: '/invoice/:id/:isHistory',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        bool isHistory = state.params['isHistory'] == 'true';
+        return Invoice(id: id, isHistory: isHistory);
+      },
     ),
     GoRoute(
       path: '/notification',

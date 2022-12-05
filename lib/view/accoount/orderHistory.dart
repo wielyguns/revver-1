@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/controller/account.dart';
@@ -49,40 +50,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                   int selectedRowIndex = details.rowColumnIndex.rowIndex - 1;
                   var row =
                       dataSource.effectiveRows.elementAt(selectedRowIndex);
-                  showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(32.0))),
-                          content: SizedBox(
-                            height: 300,
-                            width: 300,
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(children: [
-                                    const Text('Order ID'),
-                                    const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 25)),
-                                    const Text(':'),
-                                    const Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10)),
-                                    Text(row.getCells()[0].value.toString()),
-                                  ]),
-                                  SizedBox(
-                                    width: 300,
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("OK")),
-                                  )
-                                ]),
-                          )));
+                  String val = row.getCells()[0].value.toString();
+                  GoRouter.of(context).push('/invoice/$val/true');
                 }
               }),
               frozenColumnsCount: 1,
@@ -95,7 +64,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                         padding: EdgeInsets.all(8.0),
                         alignment: Alignment.center,
                         child: Text(
-                          'Order ID',
+                          'ID',
                           style: CustomFont.bold12,
                           overflow: TextOverflow.ellipsis,
                         ))),
@@ -139,7 +108,7 @@ class OrderDataSource extends DataGridSource {
   OrderDataSource({List<Order> order}) {
     _dataSource = order
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell(columnName: 'orderId', value: e.no_receipt),
+              DataGridCell(columnName: 'orderId', value: e.id),
               DataGridCell(columnName: 'tPrice', value: rupiah(e.total_price)),
               DataGridCell(columnName: 'date', value: e.created_at),
               DataGridCell(columnName: 'status', value: e.payment_status),

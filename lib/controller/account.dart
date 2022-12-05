@@ -122,10 +122,10 @@ patchAccountProfile(name, username, phone, secondary_email) async {
   return res;
 }
 
-deleteAccount() async {
+deleteAccount(id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/account/7";
+  String url = "https://admin.revveracademy.com/api/v1/account/$id";
 
   Uri parseUrl = Uri.parse(url);
   final response =

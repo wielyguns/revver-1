@@ -1,8 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/globals.dart';
 
-// ignore: must_be_immutable
 class RegularForm extends StatelessWidget {
   RegularForm(
       {Key key,
@@ -158,7 +159,6 @@ class MultiLineForm extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class PasswordForm extends StatefulWidget {
   PasswordForm(
       {Key key,
@@ -252,62 +252,84 @@ class _PasswordFormState extends State<PasswordForm> {
 }
 
 class StringDropdown extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  StringDropdown({Key key}) : super(key: key);
+  StringDropdown({Key key, this.list, this.title, this.hint}) : super(key: key);
+  List<String> list;
+  String title;
+  String hint;
 
   @override
   State<StringDropdown> createState() => _StringDropdownState();
 }
 
 class _StringDropdownState extends State<StringDropdown> {
+  List<String> lst;
+  @override
+  void initState() {
+    lst = widget.list;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField(
-      items:
-          ['Dog', 'Cat', 'Tiger', 'Lion'].map<DropdownMenuItem>((String value) {
-        return DropdownMenuItem(
-          value: value,
-          child: Text(
-            value,
-            style: CustomFont.filled,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        DropdownButtonFormField(
+          items: lst.map<DropdownMenuItem>((String value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(
+                value,
+                style: CustomFont.filled,
+              ),
+            );
+          }).toList(),
+          onChanged: (value) {
+            print(value);
+          },
+          dropdownColor: CustomColor.whiteColor,
+          style: CustomFont.filled,
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            hintStyle: CustomFont.hint,
+            contentPadding: EdgeInsets.all(10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.goldColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
           ),
-        );
-      }).toList(),
-      onChanged: (value) {},
-      dropdownColor: CustomColor.whiteColor,
-      style: CustomFont.filled,
-      decoration: InputDecoration(
-        hintText: "Name",
-        hintStyle: CustomFont.hint,
-        contentPadding: EdgeInsets.all(10),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 1,
-              style: BorderStyle.solid,
-              color: CustomColor.oldGreyColor),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.goldColor),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
-        ),
-      ),
+      ],
     );
   }
 }
 
-// ignore: must_be_immutable
 class SearchForm extends StatelessWidget {
   SearchForm({Key key, this.controller, this.callback}) : super(key: key);
   TextEditingController controller;
@@ -352,7 +374,6 @@ class SearchForm extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class DateTimePickerForm extends StatefulWidget {
   DateTimePickerForm({Key key, this.title, this.hint, this.date, this.callback})
       : super(key: key);

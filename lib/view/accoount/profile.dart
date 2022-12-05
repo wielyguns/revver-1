@@ -22,6 +22,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final formKey = GlobalKey<FormState>();
+  int id;
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController sponsorIdController = TextEditingController();
@@ -43,6 +44,7 @@ class _ProfileState extends State<Profile> {
   getData() async {
     await getAccountProfile().then((val) {
       setState(() {
+        id = val['data']['id'];
         nameController.text = val['data']['name'];
         usernameController.text = val['data']['username'];
         sponsorIdController.text = val['data']['sponsor']['name'];
@@ -164,7 +166,7 @@ class _ProfileState extends State<Profile> {
                         title: "Delete Account",
                         color: CustomColor.redColor,
                         func: () async {
-                          await deleteAccount().then((val) {
+                          await deleteAccount(id).then((val) {
                             print(val);
                             if (val['status'] == 200) {
                               GoRouter.of(context).go('/login');

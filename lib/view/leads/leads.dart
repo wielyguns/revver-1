@@ -23,7 +23,6 @@ class _LeadsState extends State<Leads> {
 
   getData() async {
     await getLead().then((val) {
-      print(val);
       setState(() {
         lead = val;
         isLoad = false;
@@ -130,7 +129,7 @@ class _LeadsState extends State<Leads> {
         SpacerWidth(w: 10),
         Expanded(
           child: InkWell(
-            onTap: (() => GoRouter.of(context).push("/leads-detail")),
+            onTap: (() => GoRouter.of(context).push("/leads-detail/1")),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

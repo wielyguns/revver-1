@@ -54,3 +54,39 @@ class Order {
   factory Order.fromJson(String source) =>
       Order.fromMap(json.decode(source) as Map<String, dynamic>);
 }
+
+class OrderItemDetail {
+  int id;
+  String description;
+  String qty;
+  String amount;
+  OrderItemDetail({
+    this.id,
+    this.description,
+    this.qty,
+    this.amount,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'description': description,
+      'qty': qty,
+      'amount': amount,
+    };
+  }
+
+  factory OrderItemDetail.fromMap(Map<String, dynamic> map) {
+    return OrderItemDetail(
+      id: map['id'] as int,
+      description: map['description'] as String,
+      qty: map['qty'] as String,
+      amount: map['amount'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory OrderItemDetail.fromJson(String source) =>
+      OrderItemDetail.fromMap(json.decode(source) as Map<String, dynamic>);
+}
