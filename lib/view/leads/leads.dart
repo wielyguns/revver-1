@@ -9,6 +9,7 @@ import 'package:revver/controller/leads.dart';
 import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/leads.dart' as l;
+import 'package:url_launcher/url_launcher.dart';
 
 class Leads extends StatefulWidget {
   Leads({Key key}) : super(key: key);
@@ -107,6 +108,9 @@ class _LeadsState extends State<Leads> {
   }
 
   leadsListWidget(id, name, city_id, status, phone) {
+    final Uri smsUri = Uri(scheme: 'sms', path: phone);
+    final Uri telUri = Uri(scheme: 'tel', path: phone);
+    final Uri waUri = Uri.parse("whatsapp://send?phone=$phone");
     return Row(
       children: [
         GestureDetector(
@@ -178,8 +182,8 @@ class _LeadsState extends State<Leads> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: () {
-                  test(context);
+                onTap: () async {
+                  await launch(telUri.toString());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(5),
@@ -191,8 +195,8 @@ class _LeadsState extends State<Leads> {
               ),
               SpacerWidth(w: 5),
               GestureDetector(
-                onTap: () {
-                  test(context);
+                onTap: () async {
+                  await launch(smsUri.toString());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(5),
@@ -204,8 +208,8 @@ class _LeadsState extends State<Leads> {
               ),
               SpacerWidth(w: 5),
               GestureDetector(
-                onTap: () {
-                  test(context);
+                onTap: () async {
+                  await launch(waUri.toString());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(5),
