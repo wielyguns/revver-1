@@ -252,10 +252,12 @@ class _PasswordFormState extends State<PasswordForm> {
 }
 
 class StringDropdown extends StatefulWidget {
-  StringDropdown({Key key, this.list, this.title, this.hint}) : super(key: key);
+  StringDropdown({Key key, this.list, this.title, this.hint, this.value})
+      : super(key: key);
   List<String> list;
   String title;
   String hint;
+  String value;
 
   @override
   State<StringDropdown> createState() => _StringDropdownState();
@@ -277,6 +279,7 @@ class _StringDropdownState extends State<StringDropdown> {
         Text(widget.title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          value: widget.value,
           items: lst.map<DropdownMenuItem>((String value) {
             return DropdownMenuItem(
               value: value,

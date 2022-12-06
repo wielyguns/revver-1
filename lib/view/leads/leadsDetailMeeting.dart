@@ -14,7 +14,7 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("Meeting"),
+        child: listWidget(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -22,6 +22,33 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
         },
         backgroundColor: CustomColor.goldColor,
         child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  listWidget() {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return listItem();
+      },
+    );
+  }
+
+  listItem() {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 50,
+            width: 50,
+            color: Colors.red,
+          ),
+          Text("data"),
+        ],
       ),
     );
   }
