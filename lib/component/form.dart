@@ -3,7 +3,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/globals.dart';
-import 'package:revver/model/etc.dart';
 
 class RegularForm extends StatelessWidget {
   RegularForm(
@@ -286,7 +285,6 @@ class _StringDropdownState extends State<StringDropdown> {
             );
           }).toList(),
           onChanged: (value) {
-            print(value);
             widget.callback(value);
           },
           dropdownColor: CustomColor.whiteColor,
@@ -337,7 +335,7 @@ class DynamicDropdown extends StatefulWidget {
   String title;
   String hint;
   List list;
-  int value;
+  Object value;
   Function(String val) callback;
 
   @override
@@ -353,7 +351,6 @@ class _DynamicDropdownState extends State<DynamicDropdown> {
         Text(widget.title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
-          value: widget.value,
           items: widget.list.map((value) {
             return DropdownMenuItem(
               value: value,

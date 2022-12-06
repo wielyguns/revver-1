@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/bannerSlider.dart';
 import 'package:revver/component/menu.dart';
@@ -8,7 +7,6 @@ import 'package:revver/component/spacer.dart';
 import 'package:revver/component/welcomeHeader.dart';
 import 'package:revver/controller/home.dart';
 import 'package:revver/globals.dart';
-import 'package:revver/model/product.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);

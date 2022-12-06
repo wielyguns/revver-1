@@ -42,6 +42,12 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
   String supel;
   String teachable;
 
+  String initProvince;
+  String initCity;
+
+  String initProvinceName;
+  String initCityName;
+
   XFile image;
   final ImagePicker picker = ImagePicker();
   String avatar;
@@ -57,8 +63,11 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
   }
 
   getData() async {
-    await getLeadDetail(widget.id).then((val) {
+    await getLeadDetail(widget.id).then((val) async {
       setState(() {
+        initProvince = val['data']['province_id'].toString();
+        initCity = val['data']['city_id'].toString();
+
         nameController.text = val['data']['name'];
         heightController.text = val['data']['height'];
         weightController.text = val['data']['weight'];
@@ -72,7 +81,12 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         ambition = val['data']['status_ambition'];
         supel = val['data']['status_supel'];
         teachable = val['data']['status_teachable'];
-        isLoad = false;
+      });
+
+      await getCityList(initCity).then((val) async {
+        await getProvince().then((val) {
+          isLoad = false;
+        });
       });
     });
   }
@@ -90,17 +104,17 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
     await getCity(id).then((val) {
       setState(() {
         city = val;
-        print(city);
       });
     });
   }
 
   @override
   void initState() {
-    getProvinceList();
     super.initState();
     if (widget.x != null) {
       getData();
+    } else {
+      getProvinceList();
     }
   }
 
@@ -260,18 +274,18 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                     ),
                     SpacerHeight(h: 20),
                     DynamicDropdown(
-                      title: "Province",
-                      hint: "Your Province",
                       list: province,
+                      title: "Province",
+                      hint: initProvince ??= "Your Province",
                       callback: (val) async {
                         await getCityList(val);
                       },
                     ),
                     SpacerHeight(h: 20),
                     DynamicDropdown(
-                      title: "City",
-                      hint: "Your City",
                       list: city,
+                      title: "City",
+                      hint: initCityName ??= "Your City",
                     ),
                     SpacerHeight(h: 20),
                     RegularForm(

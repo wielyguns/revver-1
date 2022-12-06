@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +8,6 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/leadsOverview.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/leads.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/leads.dart' as l;
 import 'package:url_launcher/url_launcher.dart';
