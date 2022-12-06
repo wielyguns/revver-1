@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/globals.dart';
+import 'package:revver/model/etc.dart';
 
 class RegularForm extends StatelessWidget {
   RegularForm(
@@ -252,25 +253,20 @@ class _PasswordFormState extends State<PasswordForm> {
 }
 
 class StringDropdown extends StatefulWidget {
-  StringDropdown({Key key, this.list, this.title, this.hint, this.value})
+  StringDropdown(
+      {Key key, this.list, this.title, this.hint, this.value, this.callback})
       : super(key: key);
   List<String> list;
   String title;
   String hint;
   String value;
+  Function(String val) callback;
 
   @override
   State<StringDropdown> createState() => _StringDropdownState();
 }
 
 class _StringDropdownState extends State<StringDropdown> {
-  List<String> lst;
-  @override
-  void initState() {
-    lst = widget.list;
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -280,7 +276,7 @@ class _StringDropdownState extends State<StringDropdown> {
         SizedBox(height: 10),
         DropdownButtonFormField(
           value: widget.value,
-          items: lst.map<DropdownMenuItem>((String value) {
+          items: widget.list.map<DropdownMenuItem>((String value) {
             return DropdownMenuItem(
               value: value,
               child: Text(
@@ -291,6 +287,84 @@ class _StringDropdownState extends State<StringDropdown> {
           }).toList(),
           onChanged: (value) {
             print(value);
+            widget.callback(value);
+          },
+          dropdownColor: CustomColor.whiteColor,
+          style: CustomFont.filled,
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            hintStyle: CustomFont.hint,
+            contentPadding: EdgeInsets.all(10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.goldColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class DynamicDropdown extends StatefulWidget {
+  DynamicDropdown(
+      {Key key, this.hint, this.list, this.title, this.value, this.callback})
+      : super(key: key);
+  String title;
+  String hint;
+  List list;
+  int value;
+  Function(String val) callback;
+
+  @override
+  State<DynamicDropdown> createState() => _DynamicDropdownState();
+}
+
+class _DynamicDropdownState extends State<DynamicDropdown> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        DropdownButtonFormField(
+          value: widget.value,
+          items: widget.list.map((value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(
+                value.name,
+                style: CustomFont.filled,
+              ),
+            );
+          }).toList(),
+          onChanged: (value) {
+            widget.callback(value.id);
           },
           dropdownColor: CustomColor.whiteColor,
           style: CustomFont.filled,

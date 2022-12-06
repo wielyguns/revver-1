@@ -1,16 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
-import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/account.dart';
+import 'package:revver/controller/etc.dart';
 import 'package:revver/controller/leads.dart';
 import 'package:revver/globals.dart';
+import 'package:revver/model/etc.dart';
 
 // ignore: must_be_immutable
 class LeadsDetailForm extends StatefulWidget {
@@ -25,6 +24,8 @@ class LeadsDetailForm extends StatefulWidget {
 class _LeadsDetailFormState extends State<LeadsDetailForm> {
   List<String> leadStatus = ['Cold', 'Warm', 'Hot', 'Converted'];
   List<String> score = ['1', '2', '3'];
+  List<Province> province = [];
+  List<City> city = [];
   final formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
@@ -57,7 +58,6 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
 
   getData() async {
     await getLeadDetail(widget.id).then((val) {
-      print(val);
       setState(() {
         nameController.text = val['data']['name'];
         heightController.text = val['data']['height'];
@@ -77,13 +77,30 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
     });
   }
 
+  getProvinceList() async {
+    await getProvince().then((val) {
+      setState(() {
+        province = val;
+        isLoad = false;
+      });
+    });
+  }
+
+  getCityList(id) async {
+    await getCity(id).then((val) {
+      setState(() {
+        city = val;
+        print(city);
+      });
+    });
+  }
+
   @override
   void initState() {
+    getProvinceList();
     super.initState();
     if (widget.x != null) {
       getData();
-    } else {
-      isLoad = false;
     }
   }
 
@@ -242,16 +259,19 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       controller: phoneController,
                     ),
                     SpacerHeight(h: 20),
-                    StringDropdown(
+                    DynamicDropdown(
                       title: "Province",
                       hint: "Your Province",
-                      list: leadStatus,
+                      list: province,
+                      callback: (val) async {
+                        await getCityList(val);
+                      },
                     ),
                     SpacerHeight(h: 20),
-                    StringDropdown(
+                    DynamicDropdown(
                       title: "City",
                       hint: "Your City",
-                      list: leadStatus,
+                      list: city,
                     ),
                     SpacerHeight(h: 20),
                     RegularForm(
