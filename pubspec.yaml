@@ -32,6 +32,9 @@ dependencies:
   smooth_page_indicator: 1.0.0
   image_picker: 0.8.4
   url_launcher: 6.0.10
+  chewie: 1.0.0
+  video_player: 2.2.3
+  webview_flutter: 2.0.13
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +49,7 @@ flutter:
   assets:
     - assets/svg/
     - assets/img/
+    - assets/pdf/
 
   fonts:
     - family: Montserrat

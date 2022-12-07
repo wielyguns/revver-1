@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:revver/view/ELearning/ELearning.dart';
+import 'package:revver/view/ELearning/ELearningDetail.dart';
 import 'package:revver/view/accoount/aboutApps.dart';
 import 'package:revver/view/accoount/account.dart';
 import 'package:revver/view/accoount/changePassword.dart';
@@ -8,6 +9,7 @@ import 'package:revver/view/accoount/privacyPolicy.dart';
 import 'package:revver/view/accoount/profile.dart';
 import 'package:revver/view/accoount/refundPolicy.dart';
 import 'package:revver/view/auth/registration.dart';
+import 'package:revver/view/companyProfile/companyProfile.dart';
 import 'package:revver/view/event/event.dart';
 import 'package:revver/view/event/globalEvent.dart';
 import 'package:revver/view/event/personalEvent.dart';
@@ -23,8 +25,10 @@ import 'package:revver/view/news/newsDetail.dart';
 import 'package:revver/view/notifications/notifications.dart';
 import 'package:revver/view/order/cart.dart';
 import 'package:revver/view/order/invoice.dart';
+import 'package:revver/view/plan/plan.dart';
 import 'package:revver/view/product/product.dart';
 import 'package:revver/view/product/productDetail.dart';
+import 'package:revver/view/report/report.dart';
 import 'package:revver/view/splash.dart';
 
 final GoRouter router = GoRouter(
@@ -157,6 +161,25 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/e-learning',
       builder: (context, state) => ELearning(),
+    ),
+    GoRoute(
+      path: '/e-learning-detail/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return ELearningDetail(id: id);
+      },
+    ),
+    GoRoute(
+      path: '/plan',
+      builder: (context, state) => Plan(),
+    ),
+    GoRoute(
+      path: '/report',
+      builder: (context, state) => Report(),
+    ),
+    GoRoute(
+      path: '/company-profile',
+      builder: (context, state) => CompanyProfile(),
     ),
   ],
 );

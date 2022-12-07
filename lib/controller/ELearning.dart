@@ -22,3 +22,17 @@ getELearning() async {
 
   return list;
 }
+
+getELearningDetail(id) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/e-learning/$id";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.get(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  });
+  var res = jsonDecode(response.body);
+
+  return res;
+}

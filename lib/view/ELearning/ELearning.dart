@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/ELearning.dart';
@@ -61,19 +62,19 @@ class _ELearningState extends State<ELearning> {
           return Column(
             children: [
               (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
-              listItem(list.thumbnail, list.name),
+              listItem(list.thumbnail, list.name, list.id),
               SpacerHeight(h: 20),
             ],
           );
         });
   }
 
-  listItem(
-    String image,
-    String name,
-  ) {
+  listItem(String image, String name, int id) {
     return IntrinsicHeight(
       child: GestureDetector(
+        onTap: (() {
+          GoRouter.of(context).push('/e-learning-detail/$id');
+        }),
         child: Container(
           width: CustomScreen(context).width,
           padding: EdgeInsets.symmetric(horizontal: 20),
