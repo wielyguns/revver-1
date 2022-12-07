@@ -7,6 +7,7 @@ import 'package:revver/globals.dart';
 class RegularForm extends StatelessWidget {
   RegularForm(
       {Key key,
+      this.icon,
       this.title,
       this.hint,
       this.controller,
@@ -14,6 +15,7 @@ class RegularForm extends StatelessWidget {
       this.keyboardType,
       this.readOnly})
       : super(key: key);
+  IconData icon;
   final String title;
   final String hint;
   final TextEditingController controller;
@@ -35,6 +37,12 @@ class RegularForm extends StatelessWidget {
           style: CustomFont.regular12,
           controller: controller,
           decoration: InputDecoration(
+            prefixIcon: (icon == null)
+                ? null
+                : Icon(
+                    icon,
+                    color: CustomColor.goldColor,
+                  ),
             hintText: hint,
             hintStyle: CustomFont.hint,
             contentPadding: EdgeInsets.all(10),
@@ -162,12 +170,14 @@ class MultiLineForm extends StatelessWidget {
 class PasswordForm extends StatefulWidget {
   PasswordForm(
       {Key key,
+      this.icon,
       this.title,
       this.hint,
       this.visible,
       this.controller,
       this.isValidator})
       : super(key: key);
+  IconData icon;
   final String title;
   final String hint;
   bool visible;
@@ -192,6 +202,12 @@ class _PasswordFormState extends State<PasswordForm> {
           controller: widget.controller,
           obscureText: !widget.visible,
           decoration: InputDecoration(
+            prefixIcon: (widget.icon == null)
+                ? null
+                : Icon(
+                    widget.icon,
+                    color: CustomColor.goldColor,
+                  ),
             hintText: widget.hint,
             hintStyle: CustomFont.hint,
             contentPadding: EdgeInsets.all(10),
@@ -285,6 +301,7 @@ class _StringDropdownState extends State<StringDropdown> {
             );
           }).toList(),
           onChanged: (value) {
+            // print(value);
             widget.callback(value);
           },
           dropdownColor: CustomColor.whiteColor,
@@ -328,45 +345,38 @@ class _StringDropdownState extends State<StringDropdown> {
   }
 }
 
-class DynamicDropdown extends StatefulWidget {
-  DynamicDropdown(
-      {Key key, this.hint, this.list, this.title, this.value, this.callback})
+class DynamicDropdown extends StatelessWidget {
+  DynamicDropdown({Key key, this.hint, this.list, this.title, this.callback})
       : super(key: key);
   String title;
   String hint;
   List list;
-  Object value;
   Function(String val) callback;
 
-  @override
-  State<DynamicDropdown> createState() => _DynamicDropdownState();
-}
-
-class _DynamicDropdownState extends State<DynamicDropdown> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.title, style: CustomFont.regular12),
+        Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
-          items: widget.list.map((value) {
+          items: list.map((val) {
             return DropdownMenuItem(
-              value: value,
+              value: val,
               child: Text(
-                value.name,
+                val.name,
                 style: CustomFont.filled,
               ),
             );
           }).toList(),
-          onChanged: (value) {
-            widget.callback(value.id);
+          onChanged: (val) {
+            callback(val.id);
           },
           dropdownColor: CustomColor.whiteColor,
           style: CustomFont.filled,
           decoration: InputDecoration(
-            hintText: widget.hint,
+            hintText: hint,
             hintStyle: CustomFont.hint,
             contentPadding: EdgeInsets.all(10),
             enabledBorder: OutlineInputBorder(

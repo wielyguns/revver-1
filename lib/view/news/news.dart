@@ -42,73 +42,82 @@ class _NewsState extends State<News> {
       ),
       body: (news == null)
           ? Center(child: CircularProgressIndicator())
-          : Padding(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-              child: ListView.separated(
-                separatorBuilder: ((context, index) {
-                  return SpacerHeight(h: 10);
-                }),
-                itemCount: news.length,
-                itemBuilder: (context, index) {
-                  n.News nws = news[index];
-                  return Column(
-                    children: [
-                      newsWidget(
-                        nws.image ??=
-                            "https://wallpaperaccess.com/full/733834.png",
-                        nws.title ??= "...",
-                        nws.created_at ??= "...",
-                        nws.id ??= 0,
-                      ),
-                      (news.length - 1 == index)
-                          ? SpacerHeight(h: 10)
-                          : SizedBox(),
-                    ],
-                  );
-                },
-              ),
+          : ListView.builder(
+              itemCount: news.length,
+              itemBuilder: (context, index) {
+                n.News nws = news[index];
+                return Column(
+                  children: [
+                    (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
+                    newsWidget(
+                      nws.image ??=
+                          "https://wallpaperaccess.com/full/733834.png",
+                      nws.title ??= "...",
+                      nws.created_at ??= "...",
+                      nws.id ??= 0,
+                    ),
+                    SpacerHeight(h: 20),
+                  ],
+                );
+              },
             ),
     );
   }
 
   newsWidget(String image, String title, String created_at, int id) {
-    return GestureDetector(
-      onTap: (() => GoRouter.of(context).push("/news-detail/$id")),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            border: Border.all(color: CustomColor.oldGreyColor)),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 150,
-              height: 100,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
+    return IntrinsicHeight(
+      child: GestureDetector(
+        onTap: (() => GoRouter.of(context).push("/news-detail/$id")),
+        child: Container(
+          width: CustomScreen(context).width,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 child: CachedNetworkImage(
-                  imageUrl: image,
+                  imageUrl: image ??=
+                      "https://wallpaperaccess.com/full/733834.png",
                   fit: BoxFit.cover,
+                  height: 120,
+                  width: 120,
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: CustomFont.bold12,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(created_at, style: CustomFont.newsAuthor),
-                  ],
+              SpacerWidth(w: 20),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        title ??= "...",
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: CustomFont.bold16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(created_at, style: CustomFont.newsAuthor),
+                          Row(
+                            children: [
+                              Text("Read More", style: CustomFont.bold10),
+                              Icon(
+                                Icons.arrow_right_alt,
+                                color: CustomColor.oldGreyColor,
+                              ),
+                            ],
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

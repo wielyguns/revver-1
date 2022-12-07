@@ -85,8 +85,10 @@ class NewsSlider extends StatelessWidget {
       child: Container(
         width: 200,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            border: Border.all(color: CustomColor.oldGreyColor)),
+          color: CustomColor.whiteColor,
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          // border: Border.all(color: CustomColor.oldGreyColor),
+        ),
         child: Column(
           children: [
             SizedBox(

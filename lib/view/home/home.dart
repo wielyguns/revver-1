@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/bannerSlider.dart';
 import 'package:revver/component/menu.dart';
 import 'package:revver/component/newsSlider.dart';
@@ -16,6 +18,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String cartCounter = "99";
+  String notificationCounter = "99";
+
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
   String name;
   List product;
@@ -69,12 +74,106 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: Image.asset(
           "assets/img/logo-header.png",
-          width: CustomScreen(context).width / 3.5,
+          width: CustomScreen(context).width / 2.5,
         ),
-        backgroundColor: CustomColor.whiteColor,
+        actions: [
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push("/cart");
+                },
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SvgPicture.asset(
+                        "assets/svg/cart-shopping-solid.svg",
+                        height: 20,
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 15,
+                          minHeight: 15,
+                        ),
+                        child: Center(
+                          child: Text(
+                            cartCounter,
+                            style: CustomFont.badge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SpacerWidth(w: 5),
+              GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push("/notification");
+                },
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SvgPicture.asset(
+                        "assets/svg/bell-solid.svg",
+                        height: 20,
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 15,
+                          minHeight: 15,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '99',
+                            style: CustomFont.badge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SpacerWidth(w: 5),
+              GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push("/homepage/3");
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: SvgPicture.asset(
+                    "assets/svg/user-solid.svg",
+                    height: 20,
+                  ),
+                ),
+              ),
+              SpacerWidth(w: 20),
+            ],
+          ),
+        ],
+        backgroundColor: CustomColor.backgroundColor,
         elevation: 0,
       ),
       body: SafeArea(
@@ -82,7 +181,9 @@ class _HomeState extends State<Home> {
           physics: BouncingScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SpacerHeight(h: 20),
               WelcomeHeader(name: name ??= "..."),
               SpacerHeight(h: 20),
               HomeBanner(list: banner),

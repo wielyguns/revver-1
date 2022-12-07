@@ -23,7 +23,7 @@ class HomeBanner extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
           child: SizedBox(
             width: CustomScreen(context).width,
-            height: CustomScreen(context).width / 2.5,
+            height: CustomScreen(context).width / 1.5,
             child: (list == null)
                 ? Center(child: CircularProgressIndicator())
                 : PageView.builder(
@@ -70,7 +70,7 @@ class HomeBanner extends StatelessWidget {
   _sliderWidget(BuildContext context, String gambar) {
     return Container(
         width: CustomScreen(context).width - 40,
-        height: CustomScreen(context).width / 2.5,
+        height: CustomScreen(context).width / 1.5,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
@@ -78,7 +78,7 @@ class HomeBanner extends StatelessWidget {
           children: [
             SizedBox(
               width: CustomScreen(context).width - 40,
-              height: CustomScreen(context).width / 2.5,
+              height: CustomScreen(context).width / 1.5,
               child: ClipRRect(
                 child: CachedNetworkImage(
                   imageUrl: gambar,

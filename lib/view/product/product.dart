@@ -44,6 +44,11 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
     return KeyboardDismisser(
       child: Scaffold(
         appBar: CustomHeader(
@@ -53,61 +58,46 @@ class _ProductState extends State<Product> {
           isPop: true,
         ),
         body: SingleChildScrollView(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: Column(
-              children: [
-                SearchForm(
-                  controller: searchController,
-                  callback: () {
-                    getData();
-                  },
-                ),
-                SpacerHeight(h: 20),
-                (isLoad)
-                    ? Center(child: CircularProgressIndicator())
-                    : ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: ((context, index) {
-                          return SpacerHeight(h: 10);
-                        }),
-                        itemCount: product.length,
-                        itemBuilder: (context, index) {
-                          p.Product prod = product[index];
-                          return Column(
-                            children: [
-                              productWidget(
-                                prod.product_image ??=
-                                    "https://wallpaperaccess.com/full/733834.png",
-                                prod.name ??= "...",
-                                prod.price ??= 0,
-                                prod.id ??= 0,
-                              ),
-                              (product.length - 1 == index)
-                                  ? SpacerHeight(h: 10)
-                                  : SizedBox(),
-                            ],
-                          );
-                        },
-                      ),
-              ],
-            )),
+          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+          child: Column(
+            children: [
+              SearchForm(
+                controller: searchController,
+                callback: () {
+                  getData();
+                },
+              ),
+              SpacerHeight(h: 20),
+              (isLoad)
+                  ? Center(child: CircularProgressIndicator())
+                  : GridView.count(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                      childAspectRatio: (itemWidth / itemHeight),
+                      children: List.generate(product.length, (index) {
+                        p.Product prod = product[index];
+                        return productWidget(
+                            prod.product_image, prod.name, prod.price, prod.id);
+                      }),
+                    ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
   productWidget(String image, String name, int price, int id) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: CustomColor.oldGreyColor)),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => GoRouter.of(context).push("/product-detail/$id"),
-            child: SizedBox(
-              width: 100,
-              height: 100,
+    return GestureDetector(
+      onTap: (() => GoRouter.of(context).push("/product-detail/$id")),
+      child: SizedBox(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: CachedNetworkImage(
@@ -116,50 +106,23 @@ class _ProductState extends State<Product> {
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                // GoRouter.of(context).push("/product-detail/$id");
-                test(context);
-              },
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: CustomFont.bold12,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(rupiah(price), style: CustomFont.regular10),
-                  ],
-                ),
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: CustomFont.medium12,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(rupiah(price), style: CustomFont.bold12),
+                ],
               ),
             ),
-          ),
-          GestureDetector(
-            onTap: () => test(context),
-            child: Container(
-              margin: EdgeInsets.all(10),
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: CustomColor.goldColor,
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: SvgPicture.asset(
-                  "assets/svg/cart-shopping-solid.svg",
-                  color: CustomColor.whiteColor,
-                ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

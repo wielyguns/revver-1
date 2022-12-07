@@ -86,8 +86,10 @@ class ProductSlider extends StatelessWidget {
     String sId = id.toString();
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-          border: Border.all(color: CustomColor.oldGreyColor)),
+        color: CustomColor.whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        // border: Border.all(color: CustomColor.oldGreyColor),
+      ),
       child: Column(
         children: [
           InkWell(
@@ -116,13 +118,10 @@ class ProductSlider extends StatelessWidget {
                 SpacerHeight(h: 5),
                 Text(rupiah(price), style: CustomFont.regular12),
                 SpacerHeight(h: 5),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: AddToCartButton(
-                    func: () {
-                      test(context);
-                    },
-                  ),
+                AddToCartButton(
+                  func: () {
+                    test(context);
+                  },
                 ),
                 SpacerHeight(h: 10),
               ],

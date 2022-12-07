@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:revver/view/ELearning/ELearning.dart';
 import 'package:revver/view/accoount/aboutApps.dart';
 import 'package:revver/view/accoount/account.dart';
 import 'package:revver/view/accoount/changePassword.dart';
@@ -152,6 +153,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/notification',
       builder: (context, state) => Notifications(),
+    ),
+    GoRoute(
+      path: '/e-learning',
+      builder: (context, state) => ELearning(),
     ),
   ],
 );

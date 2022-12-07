@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
@@ -17,27 +18,27 @@ class HomeMenu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               detailMenu(context, "assets/svg/clipboard-solid 1.svg", "Note",
-                  "/homepage"),
+                  "/e-learning"),
               detailMenu(context, "assets/svg/book-solid.svg", "E-Learning",
-                  "/homepage"),
+                  "/e-learning"),
               detailMenu(context, "assets/svg/paper-plane-solid.svg", "Plan",
-                  "/homepage"),
+                  "/e-learning"),
               detailMenu(context, "assets/svg/stethoscope-solid.svg",
-                  "E-Health", "/homepage"),
+                  "E-Health", "/e-learning"),
             ],
           ),
           SpacerHeight(h: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              detailMenu(
-                  context, "assets/svg/trophy-solid.svg", "Goals", "/homepage"),
+              detailMenu(context, "assets/svg/trophy-solid.svg", "Goals",
+                  "/e-learning"),
               detailMenu(context, "assets/svg/people-group-solid.svg",
-                  "Support", "/homepage"),
+                  "Support", "/e-learning"),
               detailMenu(context, "assets/svg/chart-pie-solid.svg", "Report",
-                  "/homepage"),
+                  "/e-learning"),
               detailMenu(context, "assets/svg/chart-pie-solid.svg", "Revver",
-                  "/homepage"),
+                  "/e-learning"),
             ],
           ),
         ],
@@ -48,8 +49,7 @@ class HomeMenu extends StatelessWidget {
   detailMenu(BuildContext context, String image, String title, String goTo) {
     return GestureDetector(
       onTap: () {
-        // GoRouter.of(context).go(goTo);
-        test(context);
+        GoRouter.of(context).push(goTo);
       },
       child: Column(
         children: [

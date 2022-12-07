@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
+import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/etc.dart';
 import 'package:revver/controller/leads.dart';
@@ -27,6 +29,8 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
   List<Province> province = [];
   List<City> city = [];
   final formKey = GlobalKey<FormState>();
+
+  String id;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController heightController = TextEditingController();
@@ -68,6 +72,8 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         initProvince = val['data']['province_id'].toString();
         initCity = val['data']['city_id'].toString();
 
+        id = val['data']['id'].toString();
+
         nameController.text = val['data']['name'];
         heightController.text = val['data']['height'];
         weightController.text = val['data']['weight'];
@@ -83,9 +89,20 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         teachable = val['data']['status_teachable'];
       });
 
-      await getCityList(initCity).then((val) async {
+      await getCity(initProvince).then((val) async {
+        List<City> c = val.where((element) => element.id == initCity).toList();
+        setState(() {
+          city = val;
+          initCityName = c[0].name;
+        });
         await getProvince().then((val) {
-          isLoad = false;
+          List<Province> p =
+              val.where((element) => element.id == initProvince).toList();
+          setState(() {
+            province = val;
+            initProvinceName = p[0].name;
+            isLoad = false;
+          });
         });
       });
     });
@@ -120,212 +137,265 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: (widget.x == null)
-          ? CustomHeader(
-              title: "Leads",
-              isPop: true,
-            )
-          : PreferredSize(child: SizedBox(), preferredSize: Size(0, 0)),
-      body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    SpacerHeight(h: 20),
-                    image != null
-                        ? GestureDetector(
-                            onTap: () {
-                              getImage(ImageSource.gallery);
-                            },
-                            child: SizedBox(
-                              height: 80,
-                              width: 80,
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                fit: StackFit.expand,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        FileImage(File(image.path)),
-                                  ),
-                                ],
-                              ),
+    return KeyboardDismisser(
+      child: Scaffold(
+        appBar: (widget.x == null)
+            ? CustomHeader(
+                title: "Leads",
+                isPop: true,
+              )
+            : PreferredSize(child: SizedBox(), preferredSize: Size(0, 0)),
+        body: (isLoad)
+            ? Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      // SpacerHeight(h: 20),
+                      // image != null
+                      //     ? GestureDetector(
+                      //         onTap: () {
+                      //           getImage(ImageSource.gallery);
+                      //         },
+                      //         child: SizedBox(
+                      //           height: 80,
+                      //           width: 80,
+                      //           child: Stack(
+                      //             clipBehavior: Clip.none,
+                      //             fit: StackFit.expand,
+                      //             children: [
+                      //               CircleAvatar(
+                      //                 backgroundImage:
+                      //                     FileImage(File(image.path)),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       )
+                      //     : GestureDetector(
+                      //         onTap: () {
+                      //           getImage(ImageSource.gallery);
+                      //         },
+                      //         child: SizedBox(
+                      //           height: 80,
+                      //           width: 80,
+                      //           child: Stack(
+                      //             clipBehavior: Clip.none,
+                      //             fit: StackFit.expand,
+                      //             children: [
+                      //               CircleAvatar(
+                      //                 backgroundImage: NetworkImage(avatar ??=
+                      //                     "https://wallpaperaccess.com/full/733834.png"),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      SpacerHeight(h: 20),
+                      RegularForm(
+                        title: "Full Name",
+                        hint: "Your Full Name",
+                        controller: nameController,
+                      ),
+                      SpacerHeight(h: 20),
+                      StringDropdown(
+                        title: "Lead Status",
+                        hint: "Lead Status",
+                        list: leadStatus,
+                        value: status,
+                      ),
+                      SpacerHeight(h: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: CustomScreen(context).width / 5,
+                            child: StringDropdown(
+                              title: "Financial",
+                              hint: "Set",
+                              list: score,
+                              value: financial,
+                              callback: (val) {
+                                setState(() {
+                                  financial = val;
+                                });
+                              },
                             ),
-                          )
-                        : GestureDetector(
-                            onTap: () {
-                              getImage(ImageSource.gallery);
-                            },
-                            child: SizedBox(
-                              height: 80,
-                              width: 80,
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                fit: StackFit.expand,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundImage: NetworkImage(avatar ??=
-                                        "https://wallpaperaccess.com/full/733834.png"),
-                                  ),
-                                ],
-                              ),
+                          ),
+                          SizedBox(
+                            width: CustomScreen(context).width / 5,
+                            child: StringDropdown(
+                              title: "Ambition",
+                              hint: "Set",
+                              list: score,
+                              value: ambition,
+                              callback: (val) {
+                                setState(() {
+                                  ambition = val;
+                                });
+                              },
                             ),
                           ),
-                    SpacerHeight(h: 20),
-                    RegularForm(
-                      title: "Full Name",
-                      hint: "Your Full Name",
-                      controller: nameController,
-                    ),
-                    SpacerHeight(h: 20),
-                    StringDropdown(
-                      title: "Lead Status",
-                      hint: "Lead Status",
-                      list: leadStatus,
-                      value: status,
-                    ),
-                    SpacerHeight(h: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: CustomScreen(context).width / 5,
-                          child: StringDropdown(
-                            title: "Financial",
-                            hint: "Set",
-                            list: score,
-                            value: financial,
+                          SizedBox(
+                            width: CustomScreen(context).width / 5,
+                            child: StringDropdown(
+                              title: "Supel",
+                              hint: "Set",
+                              list: score,
+                              value: supel,
+                              callback: (val) {
+                                setState(() {
+                                  supel = val;
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: CustomScreen(context).width / 5,
-                          child: StringDropdown(
-                            title: "Ambition",
-                            hint: "Set",
-                            list: score,
-                            value: ambition,
+                          SizedBox(
+                            width: CustomScreen(context).width / 5,
+                            child: StringDropdown(
+                              title: "Teachable",
+                              hint: "Set",
+                              list: score,
+                              value: teachable,
+                              callback: (val) {
+                                setState(() {
+                                  teachable = val;
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: CustomScreen(context).width / 5,
-                          child: StringDropdown(
-                            title: "Supel",
-                            hint: "Set",
-                            list: score,
-                            value: supel,
+                        ],
+                      ),
+                      SpacerHeight(h: 20),
+                      StringDropdown(
+                        title: "Medical Record",
+                        hint: "Your Medical Record",
+                        list: leadStatus,
+                      ),
+                      SpacerHeight(h: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: CustomScreen(context).width / 4,
+                            child: RegularForm(
+                              title: "Height",
+                              hint: "eg: 160",
+                              controller: heightController,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: CustomScreen(context).width / 5,
-                          child: StringDropdown(
-                            title: "Teachable",
-                            hint: "Set",
-                            list: score,
-                            value: teachable,
+                          SizedBox(
+                            width: CustomScreen(context).width / 4,
+                            child: RegularForm(
+                              title: "Weight",
+                              hint: "eg: 60",
+                              controller: weightController,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SpacerHeight(h: 20),
-                    StringDropdown(
-                      title: "Medical Record",
-                      hint: "Your Medical Record",
-                      list: leadStatus,
-                    ),
-                    SpacerHeight(h: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: CustomScreen(context).width / 4,
-                          child: RegularForm(
-                            title: "Height",
-                            hint: "eg: 160",
-                            controller: heightController,
+                          SizedBox(
+                            width: CustomScreen(context).width / 4,
+                            child: RegularForm(
+                              title: "Age",
+                              hint: "eg: 20",
+                              controller: ageController,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: CustomScreen(context).width / 4,
-                          child: RegularForm(
-                            title: "Weight",
-                            hint: "eg: 60",
-                            controller: weightController,
-                          ),
-                        ),
-                        SizedBox(
-                          width: CustomScreen(context).width / 4,
-                          child: RegularForm(
-                            title: "Age",
-                            hint: "eg: 20",
-                            controller: ageController,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SpacerHeight(h: 20),
-                    RegularForm(
-                      title: "Phone",
-                      hint: "Your Phone",
-                      controller: phoneController,
-                    ),
-                    SpacerHeight(h: 20),
-                    DynamicDropdown(
-                      list: province,
-                      title: "Province",
-                      hint: initProvince ??= "Your Province",
-                      callback: (val) async {
-                        await getCityList(val);
-                      },
-                    ),
-                    SpacerHeight(h: 20),
-                    DynamicDropdown(
-                      list: city,
-                      title: "City",
-                      hint: initCityName ??= "Your City",
-                    ),
-                    SpacerHeight(h: 20),
-                    RegularForm(
-                      title: "Address",
-                      hint: "Your Address",
-                      controller: addressController,
-                    ),
-                    SpacerHeight(h: 20),
-                    MultiLineForm(
-                      title: "Note",
-                      hint: "Your Note",
-                      controller: noteController,
-                    ),
-                    SpacerHeight(h: 30),
-                    (widget.x == null)
-                        ? SizedBox()
-                        : Row(
-                            children: [
-                              Expanded(
-                                child: CustomButton(
-                                  title: "Delete Account",
-                                  color: CustomColor.redColor,
-                                  func: () async {},
+                        ],
+                      ),
+                      SpacerHeight(h: 20),
+                      RegularForm(
+                        title: "Phone",
+                        hint: "Your Phone",
+                        controller: phoneController,
+                      ),
+                      SpacerHeight(h: 20),
+                      DynamicDropdown(
+                        list: province,
+                        title: "Province",
+                        hint: initProvinceName ??= "Your Province",
+                        callback: (val) async {
+                          await getCityList(val);
+                          setState(() {
+                            initProvince = val;
+                          });
+                        },
+                      ),
+                      SpacerHeight(h: 20),
+                      DynamicDropdown(
+                        list: city,
+                        title: "City",
+                        hint: initCityName ??= "Your City",
+                        callback: (val) {
+                          setState(() {
+                            initCity = val;
+                          });
+                        },
+                      ),
+                      SpacerHeight(h: 20),
+                      RegularForm(
+                        title: "Address",
+                        hint: "Your Address",
+                        controller: addressController,
+                      ),
+                      SpacerHeight(h: 20),
+                      MultiLineForm(
+                        title: "Note",
+                        hint: "Your Note",
+                        controller: noteController,
+                      ),
+                      SpacerHeight(h: 30),
+                      (widget.x == null)
+                          ? SizedBox()
+                          : Row(
+                              children: [
+                                Expanded(
+                                  child: CustomButton(
+                                    title: "Delete Account",
+                                    color: CustomColor.redColor,
+                                    func: () async {},
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                    SpacerHeight(h: 20),
-                  ],
+                              ],
+                            ),
+                      SpacerHeight(h: 20),
+                    ],
+                  ),
                 ),
               ),
-            ),
-      bottomNavigationBar: Container(
-        color: CustomColor.whiteColor,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: CustomButton(
-          title: "Save",
-          func: () async {
-            if (image != null) {}
-          },
+        bottomNavigationBar: Container(
+          color: CustomColor.whiteColor,
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: CustomButton(
+            title: "Save",
+            func: () async {
+              await patchLeadDetail(
+                      id,
+                      nameController.text,
+                      phoneController.text,
+                      status,
+                      financial,
+                      ambition,
+                      supel,
+                      teachable,
+                      heightController.text,
+                      weightController.text,
+                      ageController.text,
+                      initProvince,
+                      initCity,
+                      addressController.text,
+                      noteController.text)
+                  .then((val) {
+                if (val['status'] == 200) {
+                  customSnackBar(context, false, val['message'].toString());
+                } else {
+                  customSnackBar(context, true, val['message'].toString());
+                }
+              });
+              // if (image != null) {}
+            },
+          ),
         ),
       ),
     );
