@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
@@ -205,6 +206,11 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                         hint: "Lead Status",
                         list: leadStatus,
                         value: status,
+                        callback: (val) {
+                          setState(() {
+                            status = val;
+                          });
+                        },
                       ),
                       SpacerHeight(h: 20),
                       Row(
@@ -370,29 +376,56 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           child: CustomButton(
             title: "Save",
             func: () async {
-              await patchLeadDetail(
-                      id,
-                      nameController.text,
-                      phoneController.text,
-                      status,
-                      financial,
-                      ambition,
-                      supel,
-                      teachable,
-                      heightController.text,
-                      weightController.text,
-                      ageController.text,
-                      initProvince,
-                      initCity,
-                      addressController.text,
-                      noteController.text)
-                  .then((val) {
-                if (val['status'] == 200) {
-                  customSnackBar(context, false, val['message'].toString());
-                } else {
-                  customSnackBar(context, true, val['message'].toString());
-                }
-              });
+              if (widget.x == null) {
+                await postLeadDetail(
+                        nameController.text,
+                        phoneController.text,
+                        status,
+                        financial,
+                        ambition,
+                        supel,
+                        teachable,
+                        heightController.text,
+                        weightController.text,
+                        ageController.text,
+                        initProvince,
+                        initCity,
+                        addressController.text,
+                        noteController.text)
+                    .then((val) {
+                  if (val['status'] == 200) {
+                    customSnackBar(context, false, val['message'].toString());
+                    GoRouter.of(context).pop();
+                  } else {
+                    customSnackBar(context, true, val['data'].toString());
+                  }
+                });
+              } else {
+                await patchLeadDetail(
+                        id,
+                        nameController.text,
+                        phoneController.text,
+                        status,
+                        financial,
+                        ambition,
+                        supel,
+                        teachable,
+                        heightController.text,
+                        weightController.text,
+                        ageController.text,
+                        initProvince,
+                        initCity,
+                        addressController.text,
+                        noteController.text)
+                    .then((val) {
+                  if (val['status'] == 200) {
+                    customSnackBar(context, false, val['message'].toString());
+                  } else {
+                    customSnackBar(context, true, val['data'].toString());
+                  }
+                });
+              }
+
               // if (image != null) {}
             },
           ),

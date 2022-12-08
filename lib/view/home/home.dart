@@ -179,16 +179,24 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SpacerHeight(h: 20),
-              WelcomeHeader(name: name ??= "..."),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: WelcomeHeader(name: name ??= "..."),
+              ),
               SpacerHeight(h: 20),
-              HomeBanner(list: banner),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: HomeBanner(list: banner),
+              ),
               SpacerHeight(h: 40),
-              HomeMenu(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: HomeMenu(),
+              ),
               SpacerHeight(h: 40),
               ProductSlider(product: product),
               SpacerHeight(h: 40),

@@ -25,59 +25,59 @@ class ProductSlider extends StatelessWidget {
   }
 
   _titleWidget(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "Product",
-          style: CustomFont.widgetTitle,
-        ),
-        GestureDetector(
-          child: Text(
-            "View All",
-            style: CustomFont.link,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Product",
+            style: CustomFont.widgetTitle,
           ),
-          onTap: () {
-            GoRouter.of(context).push("/product");
-          },
-        ),
-      ],
+          GestureDetector(
+            child: Text(
+              "View All",
+              style: CustomFont.link,
+            ),
+            onTap: () {
+              GoRouter.of(context).push("/product");
+            },
+          ),
+        ],
+      ),
     );
   }
 
   _sliderWidget(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.0),
-      child: SizedBox(
-        width: CustomScreen(context).width,
-        height: 251,
-        child: (product == null)
-            ? Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                physics: BouncingScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                itemBuilder: (BuildContext context, int index) {
-                  Product prod = product[index];
-                  return Row(
-                    children: [
-                      _sliderBox(
-                        context,
-                        prod.product_image ??=
-                            "https://wallpaperaccess.com/full/733834.png",
-                        prod.name ??= "...",
-                        prod.price ??= 0,
-                        prod.id ??= 0,
-                      ),
-                      (3 - 1 == index)
-                          ? SizedBox(width: 0)
-                          : SizedBox(width: 15),
-                    ],
-                  );
-                },
-              ),
-      ),
+    return SizedBox(
+      width: CustomScreen(context).width,
+      height: 251,
+      child: (product == null)
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: 3,
+              clipBehavior: Clip.none,
+              itemBuilder: (BuildContext context, int index) {
+                Product prod = product[index];
+                return Row(
+                  children: [
+                    (0 == index) ? SizedBox(width: 20) : SizedBox(width: 0),
+                    _sliderBox(
+                      context,
+                      prod.product_image ??=
+                          "https://wallpaperaccess.com/full/733834.png",
+                      prod.name ??= "...",
+                      prod.price ??= 0,
+                      prod.id ??= 0,
+                    ),
+                    SizedBox(width: 20),
+                  ],
+                );
+              },
+            ),
     );
   }
 
@@ -88,18 +88,34 @@ class ProductSlider extends StatelessWidget {
       decoration: BoxDecoration(
         color: CustomColor.whiteColor,
         borderRadius: BorderRadius.all(Radius.circular(15)),
-        // border: Border.all(color: CustomColor.oldGreyColor),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 0,
+            blurRadius: 13,
+            offset: Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         children: [
           InkWell(
-            child: SizedBox(
+            child: Container(
               width: 200,
               height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 0,
+                    blurRadius: 13,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
               child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15)),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 child: CachedNetworkImage(
                   imageUrl: gambar,
                   fit: BoxFit.cover,
