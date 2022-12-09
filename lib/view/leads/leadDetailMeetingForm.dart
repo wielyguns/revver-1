@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:revver/component/header.dart';
 
 class LeadsDetailMeetingForm extends StatefulWidget {
-  const LeadsDetailMeetingForm({Key key}) : super(key: key);
+  LeadsDetailMeetingForm({Key key, this.id}) : super(key: key);
+  int id;
 
   @override
   State<LeadsDetailMeetingForm> createState() => _LeadsDetailMeetingFormState();
@@ -15,6 +16,11 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
       appBar: CustomHeader(
         title: "Meeting Form",
         isPop: true,
+      ),
+      body: Center(
+        child: Text(
+          ((widget.id == 000) ? "isForms" : "isUser"),
+        ),
       ),
     );
   }

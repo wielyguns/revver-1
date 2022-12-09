@@ -27,10 +27,11 @@ class CustomFont {
   FontWeight weight;
   CustomFont(this.color, this.size, this.weight);
   TextStyle get font => TextStyle(
-      fontSize: size ??= 16,
-      fontFamily: "Poppins",
-      fontWeight: weight,
-      color: color ??= Colors.black);
+        fontSize: size ??= 16,
+        fontFamily: "Poppins",
+        fontWeight: weight,
+        color: color ??= Colors.black,
+      );
 
   //Heading
   static TextStyle heading48 = TextStyle(

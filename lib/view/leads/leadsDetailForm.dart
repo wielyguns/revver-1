@@ -9,9 +9,11 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/EHealth.dart';
 import 'package:revver/controller/etc.dart';
 import 'package:revver/controller/leads.dart';
 import 'package:revver/globals.dart';
+import 'package:revver/model/EHealth.dart';
 import 'package:revver/model/etc.dart';
 
 // ignore: must_be_immutable
@@ -53,6 +55,10 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
   City selectedCity;
   Province selectedProvince;
 
+  //Disease
+  List<Disease> disease = [];
+  Disease selectedDisease;
+
   XFile image;
   final ImagePicker picker = ImagePicker();
   String avatar;
@@ -71,9 +77,11 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
     await getLeadDetail(widget.id).then((val) async {
       String initProvince;
       String initCity;
+      String initDisease;
       setState(() {
         initProvince = val['data']['province_id'].toString();
         initCity = val['data']['city_id'].toString();
+        initDisease = val['data']['disease_id'].toString();
 
         id = val['data']['id'].toString();
 
@@ -111,11 +119,16 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
     });
   }
 
-  getProvinceList() async {
-    await getProvince().then((val) {
+  getInitForm() async {
+    await getProvince().then((val) async {
       setState(() {
         province = val;
-        isLoad = false;
+      });
+      await getDisease().then((val) {
+        setState(() {
+          disease = val;
+          isLoad = false;
+        });
       });
     });
   }
@@ -128,13 +141,15 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
     });
   }
 
+  getDiseaseList() async {}
+
   @override
   void initState() {
     super.initState();
     if (widget.x != null) {
       getData();
     } else {
-      getProvinceList();
+      getInitForm();
     }
   }
 
@@ -277,11 +292,8 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                         ],
                       ),
                       SpacerHeight(h: 20),
-                      StringDropdown(
-                        title: "Medical Record",
-                        hint: "Your Medical Record",
-                        list: leadStatus,
-                      ),
+                      diseaseDropdown("Medical Record", "Your Medical Record",
+                          disease, selectedDisease),
                       SpacerHeight(h: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -321,7 +333,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       SpacerHeight(h: 20),
                       provinceDropdown("Province", "Your Province", province,
                           selectedProvince),
-                      SpacerHeight(h: 20),
+                      (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
                       (city.isEmpty)
                           ? SizedBox()
                           : cityDropdown(
@@ -369,21 +381,22 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
             func: () async {
               if (widget.x == null) {
                 await postLeadDetail(
-                        nameController.text,
-                        phoneController.text,
-                        status,
-                        financial,
-                        ambition,
-                        supel,
-                        teachable,
-                        heightController.text,
-                        weightController.text,
-                        ageController.text,
-                        selectedProvince.id.toString(),
-                        selectedCity.id.toString(),
-                        addressController.text,
-                        noteController.text)
-                    .then((val) {
+                  nameController.text,
+                  phoneController.text,
+                  status,
+                  financial,
+                  ambition,
+                  supel,
+                  teachable,
+                  heightController.text,
+                  weightController.text,
+                  ageController.text,
+                  selectedProvince.id.toString(),
+                  selectedCity.id.toString(),
+                  addressController.text,
+                  noteController.text,
+                  selectedDisease.id.toString(),
+                ).then((val) {
                   if (val['status'] == 200) {
                     customSnackBar(context, false, val['message'].toString());
                     GoRouter.of(context).pop();
@@ -393,22 +406,23 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                 });
               } else {
                 await patchLeadDetail(
-                        id,
-                        nameController.text,
-                        phoneController.text,
-                        status,
-                        financial,
-                        ambition,
-                        supel,
-                        teachable,
-                        heightController.text,
-                        weightController.text,
-                        ageController.text,
-                        selectedProvince.id.toString(),
-                        selectedCity.id.toString(),
-                        addressController.text,
-                        noteController.text)
-                    .then((val) {
+                  id,
+                  nameController.text,
+                  phoneController.text,
+                  status,
+                  financial,
+                  ambition,
+                  supel,
+                  teachable,
+                  heightController.text,
+                  weightController.text,
+                  ageController.text,
+                  selectedProvince.id.toString(),
+                  selectedCity.id.toString(),
+                  addressController.text,
+                  noteController.text,
+                  selectedDisease.id.toString(),
+                ).then((val) {
                   if (val['status'] == 200) {
                     customSnackBar(context, false, val['message'].toString());
                   } else {
@@ -500,6 +514,73 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
     String hint,
     List<City> list,
     City selectedItem,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        DropdownButtonFormField(
+          value: selectedItem,
+          items: list.map((v) {
+            return DropdownMenuItem(
+              value: v,
+              child: Text(
+                v.name,
+                style: CustomFont.filled,
+              ),
+            );
+          }).toList(),
+          onChanged: (val) {
+            setState(() {
+              selectedItem = val;
+            });
+          },
+          dropdownColor: CustomColor.whiteColor,
+          style: CustomFont.filled,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: CustomFont.hint,
+            contentPadding: EdgeInsets.all(10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.goldColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget diseaseDropdown(
+    String title,
+    String hint,
+    List<Disease> list,
+    Disease selectedItem,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

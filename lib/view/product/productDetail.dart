@@ -71,10 +71,13 @@ class _ProductDetailState extends State<ProductDetail> {
     String harga = rupiah(price);
     return Scaffold(
       appBar: CustomHeader(
-        title: name ??= "",
+        // title: name ??= "",
         svgName: "cart-shopping-solid.svg",
         route: "/cart",
         isPop: true,
+        offMiddleLogo: true,
+        image: image ??= "https://wallpaperaccess.com/full/733834.png",
+        height: 300,
       ),
       body: (isLoad)
           ? Center(child: CircularProgressIndicator())
@@ -83,19 +86,19 @@ class _ProductDetailState extends State<ProductDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SpacerHeight(h: 20),
-                  SizedBox(
-                    width: CustomScreen(context).width,
-                    height: 200,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(32)),
-                      child: CachedNetworkImage(
-                        imageUrl: image ??=
-                            "https://wallpaperaccess.com/full/733834.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
+                  // SpacerHeight(h: 20),
+                  // SizedBox(
+                  //   width: CustomScreen(context).width,
+                  //   height: 200,
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.all(Radius.circular(32)),
+                  //     child: CachedNetworkImage(
+                  //       imageUrl: image ??=
+                  //           "https://wallpaperaccess.com/full/733834.png",
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //   ),
+                  // ),
                   SpacerHeight(h: 20),
                   Text(
                     name ??= "...",
@@ -103,37 +106,42 @@ class _ProductDetailState extends State<ProductDetail> {
                   ),
                   Text(
                     harga ??= "...",
-                    style: CustomFont.bold24,
+                    style: CustomFont.bold18,
                   ),
                   SpacerHeight(h: 20),
                   Text(
                     "Description",
                     style: CustomFont.bold16,
                   ),
+                  Divider(thickness: 1, color: CustomColor.brownColor),
                   Html(data: description ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "How To Use",
                     style: CustomFont.bold16,
                   ),
+                  Divider(thickness: 1, color: CustomColor.brownColor),
                   Html(data: usage ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "Benefits",
                     style: CustomFont.bold16,
                   ),
+                  Divider(thickness: 1, color: CustomColor.brownColor),
                   Html(data: benefits ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "ingredients",
                     style: CustomFont.bold16,
                   ),
+                  Divider(thickness: 1, color: CustomColor.brownColor),
                   Html(data: ingredients ??= "..."),
                   SpacerHeight(h: 20),
                   Text(
                     "Reviews",
                     style: CustomFont.bold16,
                   ),
+                  Divider(thickness: 1, color: CustomColor.brownColor),
                   SpacerHeight(h: 20),
                   (review == null)
                       ? Text("")

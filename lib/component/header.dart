@@ -2,17 +2,29 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/globals.dart';
 
 class CustomHeader extends StatelessWidget with PreferredSizeWidget {
-  CustomHeader({Key key, this.isPop, this.svgName, this.title, this.route})
+  CustomHeader(
+      {Key key,
+      this.isPop,
+      this.svgName,
+      this.title,
+      this.route,
+      this.image,
+      this.height,
+      this.offMiddleLogo})
       : super(key: key);
   bool isPop;
-  final String title;
-  final String svgName;
-  final String route;
+  String title;
+  String svgName;
+  String route;
+  String image;
+  double height;
+  bool offMiddleLogo;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +33,18 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
       elevation: 0,
       backgroundColor: Colors.transparent,
       centerTitle: true,
-      title: Image.asset(
-        "assets/img/revver-white.png",
-        width: 100,
-      ),
+      title: (offMiddleLogo == null)
+          ? Image.asset(
+              "assets/img/revver-white.png",
+              width: 100,
+            )
+          : SizedBox(),
       flexibleSpace: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/img/background-resize.png'),
+            image: (image == null)
+                ? AssetImage('assets/img/background-resize.png')
+                : NetworkImage(image),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.only(
@@ -50,9 +66,11 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
             children: [
               SizedBox(height: kToolbarHeight),
               Text(
-                title,
+                title ??= "",
                 style: CustomFont(CustomColor.whiteColor, 24, FontWeight.bold)
                     .font,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -103,5 +121,5 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
   // }
 
   @override
-  Size get preferredSize => Size.fromHeight(150);
+  Size get preferredSize => Size.fromHeight(height ??= 150);
 }

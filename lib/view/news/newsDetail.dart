@@ -47,8 +47,11 @@ class _NewsDetailState extends State<NewsDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomHeader(
-        title: "News Detail",
+        title: title ??= "",
         isPop: true,
+        offMiddleLogo: true,
+        image: image ??= "https://wallpaperaccess.com/full/733834.png",
+        height: 300,
       ),
       body: (isLoad)
           ? Center(child: CircularProgressIndicator())
@@ -57,24 +60,24 @@ class _NewsDetailState extends State<NewsDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SpacerHeight(h: 20),
-                  SizedBox(
-                    width: CustomScreen(context).width,
-                    height: 200,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(32)),
-                      child: CachedNetworkImage(
-                        imageUrl: image ??=
-                            "https://wallpaperaccess.com/full/733834.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  SpacerHeight(h: 20),
-                  Text(
-                    title ??= "...",
-                    style: CustomFont.regular24,
-                  ),
+                  // SpacerHeight(h: 20),
+                  // SizedBox(
+                  //   width: CustomScreen(context).width,
+                  //   height: 200,
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.all(Radius.circular(32)),
+                  //     child: CachedNetworkImage(
+                  //       imageUrl: image ??=
+                  //           "https://wallpaperaccess.com/full/733834.png",
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //   ),
+                  // ),
+                  // SpacerHeight(h: 20),
+                  // Text(
+                  //   title ??= "...",
+                  //   style: CustomFont.regular24,
+                  // ),
                   SpacerHeight(h: 20),
                   Html(data: content ??= "..."),
                   SpacerHeight(h: 20),

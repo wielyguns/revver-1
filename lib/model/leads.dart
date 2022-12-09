@@ -4,6 +4,7 @@ import 'dart:convert';
 // ignore_for_file: non_constant_identifier_names
 
 class Leads {
+  int id;
   int user_id;
   String name;
   String phone;
@@ -21,6 +22,7 @@ class Leads {
   String address;
   String note;
   Leads({
+    this.id,
     this.user_id,
     this.name,
     this.phone,
@@ -41,6 +43,7 @@ class Leads {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'user_id': user_id,
       'name': name,
       'phone': phone,
@@ -62,6 +65,7 @@ class Leads {
 
   factory Leads.fromMap(Map<String, dynamic> map) {
     return Leads(
+      id: map['id'] as int,
       user_id: map['user_id'] as int,
       name: map['name'] as String,
       phone: map['phone'] as String,

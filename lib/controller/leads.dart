@@ -53,6 +53,7 @@ postLeadDetail(
   city_id,
   address,
   note,
+  disease,
 ) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
@@ -99,6 +100,7 @@ patchLeadDetail(
   city_id,
   address,
   note,
+  disease,
 ) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');

@@ -23,7 +23,7 @@ class _LeadsDetailState extends State<LeadsDetail> {
     super.initState();
     _children = [
       LeadsDetailForm(x: "x", id: widget.id),
-      LeadsDetailMeeting(),
+      LeadsDetailMeeting(id: widget.id),
     ];
   }
 

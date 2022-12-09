@@ -89,8 +89,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => LeadsDetailForm(),
     ),
     GoRoute(
-      path: '/leads-detail-meeting-form',
-      builder: (context, state) => LeadsDetailMeetingForm(),
+      path: '/leads-detail-meeting-form/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return LeadsDetailMeetingForm(id: id);
+      },
     ),
     GoRoute(
       path: '/account',

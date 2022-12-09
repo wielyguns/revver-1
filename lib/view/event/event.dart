@@ -18,7 +18,7 @@ class _EventState extends State<Event> {
   _DataSource events;
 
   getMeetingList() async {
-    await getMeeting().then((val) {
+    await getEvent().then((val) {
       print(val);
     });
   }

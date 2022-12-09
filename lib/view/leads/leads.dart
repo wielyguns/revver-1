@@ -95,7 +95,7 @@ class _LeadsState extends State<Leads> {
         return Column(
           children: [
             leadsListWidget(
-              ld.user_id,
+              ld.id,
               ld.name,
               ld.city_id,
               ld.status,
@@ -115,7 +115,7 @@ class _LeadsState extends State<Leads> {
     return Row(
       children: [
         GestureDetector(
-          onTap: (() => GoRouter.of(context).push("/leads-detail")),
+          onTap: (() => GoRouter.of(context).push("/leads-detail/$id")),
           child: SizedBox(
             height: 55,
             width: 55,
@@ -134,7 +134,7 @@ class _LeadsState extends State<Leads> {
         SpacerWidth(w: 10),
         Expanded(
           child: InkWell(
-            onTap: (() => GoRouter.of(context).push("/leads-detail/1")),
+            onTap: (() => GoRouter.of(context).push("/leads-detail/$id")),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
