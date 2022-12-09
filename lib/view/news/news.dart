@@ -66,7 +66,7 @@ class _NewsState extends State<News> {
 
   newsWidget(String image, String title, String created_at, int id) {
     return IntrinsicHeight(
-      child: GestureDetector(
+      child: InkWell(
         onTap: (() => GoRouter.of(context).push("/news-detail/$id")),
         child: Container(
           width: CustomScreen(context).width,
@@ -91,16 +91,35 @@ class _NewsState extends State<News> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        title ??= "...",
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: CustomFont.bold16,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_month,
+                                color: CustomColor.brownColor,
+                                size: 12,
+                              ),
+                              SpacerWidth(w: 5),
+                              Text(created_at,
+                                  style: CustomFont(
+                                          CustomColor.brownColor, 8, null)
+                                      .font),
+                            ],
+                          ),
+                          SpacerHeight(h: 5),
+                          Text(
+                            title ??= "...",
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: CustomFont.bold16,
+                          ),
+                        ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(created_at, style: CustomFont.newsAuthor),
                           Row(
                             children: [
                               Text("Read More", style: CustomFont.bold10),

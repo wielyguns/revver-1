@@ -2,7 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:revver/controller/etc.dart';
 import 'package:revver/globals.dart';
+import 'package:revver/model/etc.dart';
 
 class RegularForm extends StatelessWidget {
   RegularForm(
@@ -425,6 +427,13 @@ class SearchForm extends StatelessWidget {
       style: CustomFont.regular12,
       controller: controller,
       decoration: InputDecoration(
+        suffixIcon: IconButton(
+          onPressed: (() {
+            controller.clear();
+            callback();
+          }),
+          icon: Icon(Icons.clear),
+        ),
         hintText: "Search",
         hintStyle: CustomFont.hint,
         contentPadding: EdgeInsets.all(10),
@@ -453,6 +462,7 @@ class SearchForm extends StatelessWidget {
       ),
       onEditingComplete: () {
         callback();
+        FocusScope.of(context).unfocus();
       },
     );
   }

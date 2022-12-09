@@ -32,12 +32,12 @@ class ProductSlider extends StatelessWidget {
         children: [
           Text(
             "Product",
-            style: CustomFont.widgetTitle,
+            style: CustomFont(CustomColor.brownColor, 16, FontWeight.bold).font,
           ),
           GestureDetector(
             child: Text(
               "View All",
-              style: CustomFont.link,
+              style: CustomFont(CustomColor.blackColor, 12, null).font,
             ),
             onTap: () {
               GoRouter.of(context).push("/product");
@@ -51,7 +51,7 @@ class ProductSlider extends StatelessWidget {
   _sliderWidget(BuildContext context) {
     return SizedBox(
       width: CustomScreen(context).width,
-      height: 251,
+      height: 210,
       child: (product == null)
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
@@ -85,6 +85,8 @@ class ProductSlider extends StatelessWidget {
       BuildContext context, String gambar, String name, int price, int id) {
     String sId = id.toString();
     return Container(
+      width: 200,
+      height: 220,
       decoration: BoxDecoration(
         color: CustomColor.whiteColor,
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -124,23 +126,43 @@ class ProductSlider extends StatelessWidget {
             ),
             onTap: () => GoRouter.of(context).push("/product-detail/$sId"),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SpacerHeight(h: 5),
-                Text(name, style: CustomFont.bold12),
-                SpacerHeight(h: 5),
-                Text(rupiah(price), style: CustomFont.regular12),
-                SpacerHeight(h: 5),
-                AddToCartButton(
-                  func: () {
-                    test(context);
-                  },
-                ),
-                SpacerHeight(h: 10),
-              ],
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: CustomFont.bold12,
+                        ),
+                        SpacerHeight(h: 5),
+                        Text(rupiah(price), style: CustomFont.regular12),
+                      ],
+                    ),
+                  ),
+                  SpacerWidth(w: 20),
+                  InkWell(
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: CustomColor.brownColor,
+                      ),
+                      child: Icon(Icons.add, color: CustomColor.whiteColor),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

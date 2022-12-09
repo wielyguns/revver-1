@@ -28,7 +28,7 @@ class CustomFont {
   CustomFont(this.color, this.size, this.weight);
   TextStyle get font => TextStyle(
       fontSize: size ??= 16,
-      fontFamily: "Montserrat",
+      fontFamily: "Poppins",
       fontWeight: weight,
       color: color ??= Colors.black);
 

@@ -27,8 +27,7 @@ class LeadsDetailForm extends StatefulWidget {
 class _LeadsDetailFormState extends State<LeadsDetailForm> {
   List<String> leadStatus = ['Cold', 'Warm', 'Hot', 'Converted'];
   List<String> score = ['1', '2', '3'];
-  List<Province> province = [];
-  List<City> city = [];
+
   final formKey = GlobalKey<FormState>();
 
   String id;
@@ -47,11 +46,12 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
   String supel;
   String teachable;
 
-  String initProvince;
-  String initCity;
+  //Province&City
+  List<Province> province = [];
+  List<City> city = [];
 
-  String initProvinceName;
-  String initCityName;
+  City selectedCity;
+  Province selectedProvince;
 
   XFile image;
   final ImagePicker picker = ImagePicker();
@@ -69,6 +69,8 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
 
   getData() async {
     await getLeadDetail(widget.id).then((val) async {
+      String initProvince;
+      String initCity;
       setState(() {
         initProvince = val['data']['province_id'].toString();
         initCity = val['data']['city_id'].toString();
@@ -91,17 +93,17 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
       });
 
       await getCity(initProvince).then((val) async {
-        List<City> c = val.where((element) => element.id == initCity).toList();
         setState(() {
           city = val;
-          initCityName = c[0].name;
+          List<City> x = city.where((e) => e.id == initCity).toList();
+          selectedCity = x[0];
         });
         await getProvince().then((val) {
-          List<Province> p =
-              val.where((element) => element.id == initProvince).toList();
           setState(() {
             province = val;
-            initProvinceName = p[0].name;
+            List<Province> x =
+                province.where((e) => e.id == initProvince).toList();
+            selectedProvince = x[0];
             isLoad = false;
           });
         });
@@ -317,28 +319,17 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                         controller: phoneController,
                       ),
                       SpacerHeight(h: 20),
-                      DynamicDropdown(
-                        list: province,
-                        title: "Province",
-                        hint: initProvinceName ??= "Your Province",
-                        callback: (val) async {
-                          await getCityList(val);
-                          setState(() {
-                            initProvince = val;
-                          });
-                        },
-                      ),
+                      provinceDropdown("Province", "Your Province", province,
+                          selectedProvince),
                       SpacerHeight(h: 20),
-                      DynamicDropdown(
-                        list: city,
-                        title: "City",
-                        hint: initCityName ??= "Your City",
-                        callback: (val) {
-                          setState(() {
-                            initCity = val;
-                          });
-                        },
-                      ),
+                      (city.isEmpty)
+                          ? SizedBox()
+                          : cityDropdown(
+                              "City",
+                              "Your City",
+                              city,
+                              selectedCity,
+                            ),
                       SpacerHeight(h: 20),
                       RegularForm(
                         title: "Address",
@@ -388,8 +379,8 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                         heightController.text,
                         weightController.text,
                         ageController.text,
-                        initProvince,
-                        initCity,
+                        selectedProvince.id.toString(),
+                        selectedCity.id.toString(),
                         addressController.text,
                         noteController.text)
                     .then((val) {
@@ -413,8 +404,8 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                         heightController.text,
                         weightController.text,
                         ageController.text,
-                        initProvince,
-                        initCity,
+                        selectedProvince.id.toString(),
+                        selectedCity.id.toString(),
                         addressController.text,
                         noteController.text)
                     .then((val) {
@@ -431,6 +422,143 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget provinceDropdown(
+    String title,
+    String hint,
+    List<Province> list,
+    Province selectedItem,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        DropdownButtonFormField(
+          value: selectedItem,
+          items: list.map((v) {
+            return DropdownMenuItem(
+              value: v,
+              child: Text(
+                v.name,
+                style: CustomFont.filled,
+              ),
+            );
+          }).toList(),
+          onChanged: (val) async {
+            setState(() {
+              selectedItem = val;
+              selectedCity = null;
+              city = [];
+            });
+            await getCityList(selectedItem.id);
+          },
+          dropdownColor: CustomColor.whiteColor,
+          style: CustomFont.filled,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: CustomFont.hint,
+            contentPadding: EdgeInsets.all(10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.goldColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget cityDropdown(
+    String title,
+    String hint,
+    List<City> list,
+    City selectedItem,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        DropdownButtonFormField(
+          value: selectedItem,
+          items: list.map((v) {
+            return DropdownMenuItem(
+              value: v,
+              child: Text(
+                v.name,
+                style: CustomFont.filled,
+              ),
+            );
+          }).toList(),
+          onChanged: (val) {
+            setState(() {
+              selectedItem = val;
+            });
+          },
+          dropdownColor: CustomColor.whiteColor,
+          style: CustomFont.filled,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: CustomFont.hint,
+            contentPadding: EdgeInsets.all(10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.goldColor),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(
+                  width: 2,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
