@@ -56,6 +56,7 @@ class _NewsDetailState extends State<NewsDetail> {
       body: (isLoad)
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -82,6 +82,7 @@ class _ProductDetailState extends State<ProductDetail> {
       body: (isLoad)
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +173,9 @@ class _ProductDetailState extends State<ProductDetail> {
                                     SpacerWidth(w: 10),
                                     Text(
                                       list.subject,
-                                      style: CustomFont.medium16,
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.bold)
+                                          .font,
                                     ),
                                   ],
                                 ),
