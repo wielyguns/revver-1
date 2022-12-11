@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -8,7 +7,6 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/product.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/product.dart' as p;
 
