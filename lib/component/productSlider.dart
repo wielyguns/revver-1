@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
-import 'package:revver/component/button.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/product.dart';
 

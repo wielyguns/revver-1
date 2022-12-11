@@ -2,9 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:revver/controller/etc.dart';
 import 'package:revver/globals.dart';
-import 'package:revver/model/etc.dart';
 
 class RegularForm extends StatelessWidget {
   RegularForm(
