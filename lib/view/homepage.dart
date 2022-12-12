@@ -62,11 +62,11 @@ class _HomepageState extends State<Homepage> {
             /// Home
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/house-solid.svg",
+                "assets/svg/home.svg",
                 height: 24,
               ),
               activeIcon: SvgPicture.asset(
-                "assets/svg/house-solid.svg",
+                "assets/svg/home.svg",
                 height: 24,
                 color: CustomColor.whiteColor,
               ),
@@ -78,14 +78,14 @@ class _HomepageState extends State<Homepage> {
               selectedColor: CustomColor.brownColor,
             ),
 
-            /// Likes
+            /// Event
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/calendar-days-solid.svg",
+                "assets/svg/event.svg",
                 height: 24,
               ),
               activeIcon: SvgPicture.asset(
-                "assets/svg/calendar-days-solid.svg",
+                "assets/svg/event.svg",
                 height: 24,
                 color: CustomColor.whiteColor,
               ),
@@ -97,14 +97,14 @@ class _HomepageState extends State<Homepage> {
               selectedColor: CustomColor.brownColor,
             ),
 
-            /// Search
+            /// Leads
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/clipboard-solid.svg",
+                "assets/svg/leads.svg",
                 height: 24,
               ),
               activeIcon: SvgPicture.asset(
-                "assets/svg/clipboard-solid.svg",
+                "assets/svg/leads.svg",
                 height: 24,
                 color: CustomColor.whiteColor,
               ),
@@ -116,14 +116,14 @@ class _HomepageState extends State<Homepage> {
               selectedColor: CustomColor.brownColor,
             ),
 
-            /// Profile
+            /// Account
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/user-solid.svg",
+                "assets/svg/account.svg",
                 height: 24,
               ),
               activeIcon: SvgPicture.asset(
-                "assets/svg/user-solid.svg",
+                "assets/svg/account.svg",
                 height: 24,
                 color: CustomColor.whiteColor,
               ),

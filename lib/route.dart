@@ -22,6 +22,8 @@ import 'package:revver/view/leads/leadsDetail.dart';
 import 'package:revver/view/leads/leadsDetailForm.dart';
 import 'package:revver/view/news/news.dart';
 import 'package:revver/view/news/newsDetail.dart';
+import 'package:revver/view/note/note.dart';
+import 'package:revver/view/note/noteDetail.dart';
 import 'package:revver/view/notifications/notifications.dart';
 import 'package:revver/view/order/cart.dart';
 import 'package:revver/view/order/invoice.dart';
@@ -183,6 +185,17 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/company-profile',
       builder: (context, state) => CompanyProfile(),
+    ),
+    GoRoute(
+      path: '/note',
+      builder: (context, state) => Note(),
+    ),
+    GoRoute(
+      path: '/note/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return NoteDetail(id: id);
+      },
     ),
   ],
 );
