@@ -191,9 +191,9 @@ final GoRouter router = GoRouter(
       builder: (context, state) => Note(),
     ),
     GoRoute(
-      path: '/note/:id',
+      path: '/note-detail/:id',
       builder: (context, state) {
-        int id = int.parse(state.params['id']);
+        String id = state.params['id'];
         return NoteDetail(id: id);
       },
     ),

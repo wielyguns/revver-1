@@ -100,26 +100,38 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   isPop ??= false;
-  //   return CupertinoNavigationBar(
-  //       backgroundColor: CustomColor.backgroundColor,
-  //       border: Border(bottom: BorderSide.none),
-  //       leading: (isPop)
-  //           ? CupertinoNavigationBarBackButton(
-  //               onPressed: () => GoRouter.of(context).pop())
-  //           : SizedBox(),
-  //       middle: Text(title, style: CustomFont.heading18),
-  //       trailing: (svgName == null || svgName == "")
-  //           ? SizedBox()
-  //           : GestureDetector(
-  //               onTap: () {
-  //                 GoRouter.of(context).push(route);
-  //               },
-  //               child: SvgPicture.asset('assets/svg/$svgName', height: 20)));
-  // }
-
   @override
   Size get preferredSize => Size.fromHeight(height ??= 150);
+}
+
+class StandartHeader extends StatelessWidget with PreferredSizeWidget {
+  StandartHeader({Key key, this.isPop, this.route, this.svgName, this.title})
+      : super(key: key);
+  bool isPop;
+  String title;
+  String svgName;
+  String route;
+
+  @override
+  Widget build(BuildContext context) {
+    isPop ??= false;
+    return CupertinoNavigationBar(
+        backgroundColor: CustomColor.backgroundColor,
+        border: Border(bottom: BorderSide.none),
+        leading: (isPop)
+            ? CupertinoNavigationBarBackButton(
+                onPressed: () => GoRouter.of(context).pop())
+            : SizedBox(),
+        middle: Text(title, style: CustomFont.heading18),
+        trailing: (svgName == null || svgName == "")
+            ? SizedBox()
+            : GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push(route);
+                },
+                child: SvgPicture.asset('assets/svg/$svgName', height: 20)));
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
