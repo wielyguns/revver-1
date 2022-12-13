@@ -166,7 +166,6 @@ class _ProfileState extends State<Profile> {
                         color: CustomColor.redColor,
                         func: () async {
                           await deleteAccount(id).then((val) {
-                            print(val);
                             if (val['status'] == 200) {
                               GoRouter.of(context).go('/login');
                             } else {

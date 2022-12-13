@@ -20,7 +20,6 @@ class _AccountState extends State<Account> {
 
   getHeader() async {
     await getAccountHeader().then((val) {
-      print(val);
       setState(() {
         name = val['data']['name'];
         image = val['data']['avatar'];
