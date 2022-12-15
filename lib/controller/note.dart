@@ -113,3 +113,18 @@ patchNote(String id, title, type, text, List<NoteList> note_list) async {
 
   return res;
 }
+
+deleteNote(id) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/note/$id";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.delete(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  });
+
+  var res = jsonDecode(response.body);
+
+  return res;
+}

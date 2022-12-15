@@ -7,6 +7,7 @@ import 'package:revver/controller/note.dart';
 import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/note.dart' as n;
+import 'package:revver/view/note/noteDetail.dart';
 
 class Note extends StatefulWidget {
   const Note({Key key}) : super(key: key);
@@ -25,6 +26,13 @@ class _NoteState extends State<Note> {
         isLoad = false;
       });
     });
+  }
+
+  callback() {
+    if (!GoRouter.of(context).location.contains("/note-detail")) {
+      getData();
+      GoRouter.of(context).removeListener(callback);
+    }
   }
 
   @override
@@ -151,8 +159,9 @@ class _NoteState extends State<Note> {
               color: CustomColor.whiteColor,
             ),
             backgroundColor: CustomColor.brownColor,
-            onTap: () {
+            onTap: () async {
               GoRouter.of(context).push("/note-detail/text");
+              GoRouter.of(context).addListener(callback);
             },
             label: 'Note',
             labelStyle:
@@ -164,8 +173,9 @@ class _NoteState extends State<Note> {
               color: CustomColor.whiteColor,
             ),
             backgroundColor: CustomColor.brownColor,
-            onTap: () {
+            onTap: () async {
               GoRouter.of(context).push("/note-detail/checkbox");
+              GoRouter.of(context).addListener(callback);
             },
             label: 'Checklist',
             labelStyle:
@@ -200,7 +210,10 @@ class _NoteState extends State<Note> {
           ],
         ),
       ),
-      onTap: () => GoRouter.of(context).push("/note-detail/$id"),
+      onTap: () async {
+        GoRouter.of(context).push("/note-detail/$id");
+        GoRouter.of(context).addListener(callback);
+      },
     );
   }
 }

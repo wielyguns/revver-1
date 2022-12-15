@@ -105,12 +105,12 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
 }
 
 class StandartHeader extends StatelessWidget with PreferredSizeWidget {
-  StandartHeader({Key key, this.isPop, this.route, this.svgName, this.title})
+  StandartHeader({Key key, this.isPop, this.func, this.svgName, this.title})
       : super(key: key);
   bool isPop;
   String title;
   String svgName;
-  String route;
+  Function func;
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +126,7 @@ class StandartHeader extends StatelessWidget with PreferredSizeWidget {
         trailing: (svgName == null || svgName == "")
             ? SizedBox()
             : GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).push(route);
-                },
+                onTap: func,
                 child: SvgPicture.asset('assets/svg/$svgName', height: 20)));
   }
 

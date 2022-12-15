@@ -67,12 +67,27 @@ class _NoteDetailState extends State<NoteDetail> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: StandartHeader(
           title: type ??= "",
           isPop: true,
+          svgName: "trash-can-solid.svg",
+          func: () async {
+            await deleteNote(id).then((val) {
+              if (val['status'] == 200) {
+                GoRouter.of(context).pop();
+              } else {
+                customSnackBar(context, true, val['status']);
+              }
+            });
+          },
         ),
         body: (isLoad)
             ? Center(child: CircularProgressIndicator())
@@ -289,12 +304,17 @@ class _NoteDetailState extends State<NoteDetail> {
                 });
               } else {
                 // add
-                if (note_list.isEmpty) {
+                if (type == "checkbox" && note_list.isEmpty) {
                   customSnackBar(context, true, "Add Item First!");
                 } else {
                   int len = note_list.length;
-                  await postNote(titleController.text, type.toLowerCase(),
-                          "$len Items", note_list)
+                  await postNote(
+                          titleController.text,
+                          type.toLowerCase(),
+                          (type == "checkbox")
+                              ? "$len Items"
+                              : descriptionController.text,
+                          note_list)
                       .then((val) {
                     if (val["status"] == 200) {
                       GoRouter.of(context).pop();
