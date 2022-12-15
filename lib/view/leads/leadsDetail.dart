@@ -43,7 +43,7 @@ class _LeadsDetailState extends State<LeadsDetail> {
           bottom: PreferredSize(
             preferredSize: Size(0, 50),
             child: Container(
-              color: CustomColor.goldColor,
+              color: CustomColor.brownColor,
               child: TabBar(
                 indicatorColor: CustomColor.blackColor,
                 indicatorWeight: 3,

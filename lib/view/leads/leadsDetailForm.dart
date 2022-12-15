@@ -485,7 +485,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -552,7 +552,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -619,7 +619,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),

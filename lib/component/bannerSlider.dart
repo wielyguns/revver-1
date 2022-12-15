@@ -58,7 +58,7 @@ class HomeBanner extends StatelessWidget {
                       dotHeight: 8,
                       dotWidth: 8,
                       dotColor: CustomColor.greyColor,
-                      activeDotColor: CustomColor.goldColor),
+                      activeDotColor: CustomColor.brownColor),
                   onDotClicked: (index) {}),
             ),
           ),

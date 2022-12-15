@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    color ??= CustomColor.goldColor;
+    color ??= CustomColor.brownColor;
     return CupertinoButton(
       onPressed: func,
       color: color,
@@ -37,7 +37,7 @@ class IconTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    buttonColor ??= CustomColor.goldColor;
+    buttonColor ??= CustomColor.brownColor;
     return CupertinoButton(
       onPressed: func,
       color: buttonColor,
@@ -67,7 +67,7 @@ class AddToCartButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
-            color: CustomColor.goldColor),
+            color: CustomColor.brownColor),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Text(
           "Add To Cart",
@@ -91,7 +91,7 @@ class ChangePasswordButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(50)),
-            color: CustomColor.goldColor),
+            color: CustomColor.brownColor),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         child: Text(
           title,
@@ -125,7 +125,7 @@ class AccountMenu extends StatelessWidget {
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(
-                    color: CustomColor.goldColor,
+                    color: CustomColor.brownColor,
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
                   child: Padding(

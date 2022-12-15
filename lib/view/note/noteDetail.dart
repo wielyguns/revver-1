@@ -32,16 +32,6 @@ class _NoteDetailState extends State<NoteDetail> {
   TextEditingController descriptionController = TextEditingController();
   final List<TextEditingController> _controllers = [];
 
-  postData(title, type, text) async {
-    await postNote(title, type, text).then((val) {
-      if (val['status'] == 200) {
-        GoRouter.of(context).pop();
-      } else {
-        customSnackBar(context, true, val['status'].toString());
-      }
-    });
-  }
-
   getData(i) async {
     await getNoteDetail(i).then((val) {
       setState(() {
@@ -176,6 +166,11 @@ class _NoteDetailState extends State<NoteDetail> {
                                                 SpacerWidth(w: 5),
                                                 Expanded(
                                                   child: TextField(
+                                                    onChanged: (val) {
+                                                      setState(() {
+                                                        nl.text = val;
+                                                      });
+                                                    },
                                                     controller:
                                                         _controllers[index],
                                                     decoration: InputDecoration(
@@ -214,35 +209,58 @@ class _NoteDetailState extends State<NoteDetail> {
                                   SpacerHeight(h: 10),
                                   Row(
                                     children: [
-                                      SpacerWidth(w: 33),
-                                      Text(
-                                        "+ Add Item",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                14,
-                                                null)
-                                            .font,
-                                      )
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            note_list.add(NoteList(
+                                              text: "New Item",
+                                              is_check: 0,
+                                            ));
+                                          });
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SpacerWidth(w: 33),
+                                            Text(
+                                              "+ Add Item",
+                                              style: CustomFont(
+                                                      CustomColor.oldGreyColor,
+                                                      14,
+                                                      null)
+                                                  .font,
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   )
                                 ],
                               )
                             : Column(
                                 children: [
-                                  SpacerHeight(h: 10),
-                                  Row(
-                                    children: [
-                                      SpacerWidth(w: 33),
-                                      Text(
-                                        "+ Add Item",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                14,
-                                                null)
-                                            .font,
-                                      )
-                                    ],
-                                  )
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        note_list.add(NoteList(
+                                          text: "New Item",
+                                          is_check: 0,
+                                        ));
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SpacerWidth(w: 33),
+                                        Text(
+                                          "+ Add Item",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  14,
+                                                  null)
+                                              .font,
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               )
                   ],
@@ -266,12 +284,25 @@ class _NoteDetailState extends State<NoteDetail> {
                   if (val["status"] == 200) {
                     GoRouter.of(context).pop();
                   } else {
-                    customSnackBar(context, false, val['status']);
+                    customSnackBar(context, true, val['status']);
                   }
                 });
               } else {
                 // add
-                customSnackBar(context, false, "add");
+                if (note_list.isEmpty) {
+                  customSnackBar(context, true, "Add Item First!");
+                } else {
+                  int len = note_list.length;
+                  await postNote(titleController.text, type.toLowerCase(),
+                          "$len Items", note_list)
+                      .then((val) {
+                    if (val["status"] == 200) {
+                      GoRouter.of(context).pop();
+                    } else {
+                      customSnackBar(context, true, val['status']);
+                    }
+                  });
+                }
               }
             },
           ),

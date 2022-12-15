@@ -41,7 +41,7 @@ class RegularForm extends StatelessWidget {
                 ? null
                 : Icon(
                     icon,
-                    color: CustomColor.goldColor,
+                    color: CustomColor.brownColor,
                   ),
             hintText: hint,
             hintStyle: CustomFont.hint,
@@ -58,7 +58,7 @@ class RegularForm extends StatelessWidget {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -134,7 +134,7 @@ class MultiLineForm extends StatelessWidget {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -206,7 +206,7 @@ class _PasswordFormState extends State<PasswordForm> {
                 ? null
                 : Icon(
                     widget.icon,
-                    color: CustomColor.goldColor,
+                    color: CustomColor.brownColor,
                   ),
             hintText: widget.hint,
             hintStyle: CustomFont.hint,
@@ -223,7 +223,7 @@ class _PasswordFormState extends State<PasswordForm> {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -242,7 +242,7 @@ class _PasswordFormState extends State<PasswordForm> {
             suffixIcon: IconButton(
               icon: Icon(
                 widget.visible ? Icons.visibility : Icons.visibility_off,
-                color: CustomColor.goldColor,
+                color: CustomColor.brownColor,
               ),
               onPressed: () {
                 setState(() {
@@ -322,7 +322,7 @@ class _StringDropdownState extends State<StringDropdown> {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -391,7 +391,7 @@ class DynamicDropdown extends StatelessWidget {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -445,7 +445,9 @@ class SearchForm extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.goldColor),
+              width: 2,
+              style: BorderStyle.solid,
+              color: CustomColor.brownColor),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -506,7 +508,7 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
               borderSide: BorderSide(
                   width: 2,
                   style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
+                  color: CustomColor.brownColor),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),

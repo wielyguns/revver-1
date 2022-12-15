@@ -227,7 +227,7 @@ class _InvoiceState extends State<Invoice> {
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15)),
-                              color: CustomColor.goldColor,
+                              color: CustomColor.brownColor,
                             ),
                             child: Row(
                               children: [

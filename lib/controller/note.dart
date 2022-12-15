@@ -40,24 +40,41 @@ getNoteDetail(id) async {
   return res;
 }
 
-postNote(String title, type, text) async {
-  // final prefs = await SharedPreferences.getInstance();
-  // String token = prefs.getString('token');
-  // String url = "https://admin.revveracademy.com/api/v1/note";
+postNote(String title, type, text, List<NoteList> note_list) async {
+  Map<String, String> data;
 
-  // Uri parseUrl = Uri.parse(url);
-  // final response = await http.post(parseUrl, headers: {
-  //   "Authorization": "Bearer $token",
-  // }, body: {
-  //   "title": title,
-  //   "type": type,
-  //   "text": text,
-  // });
+  data = {
+    "title": title,
+    "type": type,
+    "text": text,
+  };
 
-  // var res = jsonDecode(response.body);
+  if (type == "checkbox") {
+    for (int i = 0; i < note_list.length; i++) {
+      data.addAll({"list_text[$i]": note_list[i].text});
+    }
+    for (int i = 0; i < note_list.length; i++) {
+      bool x = note_list[i].is_check.toString() == "1";
+      data.addAll({"is_check[$i]": x.toString()});
+    }
+  }
 
-  // return res;
-  print("post");
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/note";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.post(
+    parseUrl,
+    headers: {
+      "Authorization": "Bearer $token",
+    },
+    body: data,
+  );
+
+  var res = jsonDecode(response.body);
+
+  return res;
 }
 
 patchNote(String id, title, type, text, List<NoteList> note_list) async {

@@ -34,7 +34,7 @@ class _EventState extends State<Event> {
     subjectCollection.add('Personal Event / Meeting');
 
     final List<Color> colorCollection = <Color>[];
-    colorCollection.add(CustomColor.goldColor);
+    colorCollection.add(CustomColor.brownColor);
     colorCollection.add(CustomColor.oldGreyColor);
 
     final Random random = Random();
@@ -93,7 +93,7 @@ class _EventState extends State<Event> {
               child: SfCalendar(
                 todayTextStyle: CustomFont.regular12,
                 headerStyle: CalendarHeaderStyle(
-                    backgroundColor: CustomColor.whiteColor,
+                    backgroundColor: CustomColor.backgroundColor,
                     textStyle: CustomFont.regular12),
                 showDatePickerButton: true,
                 dataSource: events,
@@ -125,7 +125,7 @@ class _EventState extends State<Event> {
         onPressed: () {
           GoRouter.of(context).push("/personal-event/0");
         },
-        backgroundColor: CustomColor.goldColor,
+        backgroundColor: CustomColor.brownColor,
         child: Icon(Icons.add),
       ),
     );

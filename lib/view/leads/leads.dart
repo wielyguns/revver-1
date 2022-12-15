@@ -78,7 +78,7 @@ class _LeadsState extends State<Leads> {
           onPressed: () {
             GoRouter.of(context).push("/leads-detail-form");
           },
-          backgroundColor: CustomColor.goldColor,
+          backgroundColor: CustomColor.brownColor,
           child: Icon(Icons.add),
         ),
       ),
@@ -161,7 +161,7 @@ class _LeadsState extends State<Leads> {
                       children: [
                         Icon(
                           Icons.circle,
-                          color: CustomColor.goldColor,
+                          color: CustomColor.brownColor,
                           size: 15,
                         ),
                         Text(

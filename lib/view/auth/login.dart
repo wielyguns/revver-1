@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
                                 fontSize: 24,
                                 fontFamily: "Montserrat",
                                 fontWeight: FontWeight.w700,
-                                color: CustomColor.goldColor),
+                                color: CustomColor.brownColor),
                           ),
                         ],
                       ),
@@ -86,8 +86,9 @@ class _LoginState extends State<Login> {
                             SpacerHeight(h: 20),
                             Text(
                               "Login",
-                              style: CustomFont(CustomColor.goldColor, 36, null)
-                                  .font,
+                              style:
+                                  CustomFont(CustomColor.brownColor, 36, null)
+                                      .font,
                             ),
                             SpacerHeight(h: 10),
                             Text(
@@ -120,7 +121,7 @@ class _LoginState extends State<Login> {
                                   width: 24.0,
                                   child: Checkbox(
                                     value: rememberMe,
-                                    activeColor: CustomColor.goldColor,
+                                    activeColor: CustomColor.brownColor,
                                     onChanged: (value) {
                                       setState(() {
                                         rememberMe = !rememberMe;

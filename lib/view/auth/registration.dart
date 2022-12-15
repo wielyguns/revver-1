@@ -65,7 +65,7 @@ class _RegistrationState extends State<Registration> {
                               fontSize: 24,
                               fontFamily: "Montserrat",
                               fontWeight: FontWeight.w700,
-                              color: CustomColor.goldColor),
+                              color: CustomColor.brownColor),
                         ),
                       ],
                     ),
@@ -86,7 +86,7 @@ class _RegistrationState extends State<Registration> {
                           SpacerHeight(h: 20),
                           Text(
                             "Registration",
-                            style: CustomFont(CustomColor.goldColor, 36, null)
+                            style: CustomFont(CustomColor.brownColor, 36, null)
                                 .font,
                           ),
                           SpacerHeight(h: 10),
