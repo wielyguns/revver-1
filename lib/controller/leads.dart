@@ -15,7 +15,7 @@ getLead() async {
     "Authorization": "Bearer $token",
   });
   var res = jsonDecode(response.body);
-  List list = [];
+  List<Leads> list = [];
 
   for (var data in res['data'] as List) {
     list.add(Leads.fromJson(jsonEncode(data)));
@@ -54,15 +54,14 @@ postLeadDetail(
   address,
   note,
   disease,
+  image,
+  image_name,
 ) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/lead";
 
-  Uri parseUrl = Uri.parse(url);
-  final response = await http.post(parseUrl, headers: {
-    "Authorization": "Bearer $token",
-  }, body: {
+  Map<String, String> data;
+  data = {
     'name': name,
     'phone': phone,
     'status': status,
@@ -77,10 +76,25 @@ postLeadDetail(
     'city_id': city_id,
     'address': address,
     'note': note,
-    "disease_id[]": "1"
-  });
-  var res = jsonDecode(response.body);
+    "disease_id[]": disease,
+  };
 
+  int res;
+  // String url = "https://webhook.site/52d71698-7f8b-498f-ad49-d2dc47cfe714";
+  String url = "https://admin.revveracademy.com/api/v1/lead";
+  Uri parseUrl = Uri.parse(url);
+  var request = http.MultipartRequest('POST', parseUrl);
+  request.headers['Authorization'] = "Bearer $token";
+  if (image != "") {
+    var file =
+        await http.MultipartFile.fromPath("image", image, filename: image_name);
+    request.files.add(file);
+  }
+  request.fields.addAll(data);
+
+  await request.send().then((response) {
+    res = response.statusCode;
+  });
   return res;
 }
 
@@ -101,15 +115,14 @@ patchLeadDetail(
   address,
   note,
   disease,
+  image,
+  image_name,
 ) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/lead/$id";
 
-  Uri parseUrl = Uri.parse(url);
-  final response = await http.patch(parseUrl, headers: {
-    "Authorization": "Bearer $token",
-  }, body: {
+  Map<String, String> data;
+  data = {
     'name': name,
     'phone': phone,
     'status': status,
@@ -124,8 +137,37 @@ patchLeadDetail(
     'city_id': city_id,
     'address': address,
     'note': note,
-    "disease_id[]": "1"
+    "disease_id[]": disease,
+  };
+
+  int res;
+  String url = "https://admin.revveracademy.com/api/v1/lead/$id";
+  // String url = "https://webhook.site/52d71698-7f8b-498f-ad49-d2dc47cfe714";
+
+  Uri parseUrl = Uri.parse(url);
+  var request = http.MultipartRequest('PATCH', parseUrl);
+  request.headers['Authorization'] = "Bearer $token";
+  request.fields.addAll(data);
+  if (image != "") {
+    var file =
+        await http.MultipartFile.fromPath("image", image, filename: image_name);
+    request.files.add(file);
+  }
+
+  await request.send().then((response) async {
+    res = response.statusCode;
   });
+  return res;
+}
+
+deleteLeads(id) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/lead/$id";
+
+  Uri parseUrl = Uri.parse(url);
+  final response =
+      await http.delete(parseUrl, headers: {"Authorization": "Bearer $token"});
   var res = jsonDecode(response.body);
 
   return res;

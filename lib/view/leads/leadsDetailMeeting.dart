@@ -1,11 +1,11 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/EHealth.dart';
+import 'package:revver/controller/meeting.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/meeting.dart';
 
@@ -20,20 +20,33 @@ class LeadsDetailMeeting extends StatefulWidget {
 class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
   bool isLoad = true;
   List<Meeting> meeting = [];
+  String lead_id;
 
   getData() async {
     await getMeeting().then((val) {
       setState(() {
         List<Meeting> x = val.where((e) => e.lead_id == widget.id).toList();
         meeting = x;
+
         isLoad = false;
       });
     });
   }
 
+  callback() {
+    if (!GoRouter.of(context).location.contains("/leads-detail-meeting-form")) {
+      getData();
+      GoRouter.of(context).removeListener(callback);
+    }
+  }
+
   @override
   void initState() {
     getData();
+    setState(() {
+      lead_id = widget.id.toString();
+      print(lead_id);
+    });
     super.initState();
   }
 
@@ -51,7 +64,8 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           String x = "000";
-          GoRouter.of(context).push("/leads-detail-meeting-form/$x");
+          GoRouter.of(context).push("/leads-detail-meeting-form/$x/$lead_id");
+          GoRouter.of(context).addListener(callback);
         },
         backgroundColor: CustomColor.brownColor,
         child: Icon(Icons.add),
@@ -78,8 +92,10 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
 
   listItem(id, name, date) {
     return InkWell(
-      onTap: (() =>
-          GoRouter.of(context).push("/leads-detail-meeting-form/$id")),
+      onTap: (() {
+        GoRouter.of(context).push("/leads-detail-meeting-form/$id/$lead_id");
+        GoRouter.of(context).addListener(callback);
+      }),
       child: Row(
         children: [
           Container(

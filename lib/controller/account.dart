@@ -93,7 +93,6 @@ postChangeAvatar(String image, String name) async {
 
   var request = http.MultipartRequest('POST', parseUrl);
   request.headers['Authorization'] = "Bearer $token";
-  // request.headers['Content-Type'] = "multipart/form-data";
   var file = await http.MultipartFile.fromPath("avatar", image, filename: name);
   request.files.add(file);
 

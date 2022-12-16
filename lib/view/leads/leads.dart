@@ -21,15 +21,32 @@ class Leads extends StatefulWidget {
 
 class _LeadsState extends State<Leads> {
   bool isLoad = true;
-  List lead = [];
+  TextEditingController searchController = TextEditingController();
+  List<l.Leads> lead = [];
+  List<l.Leads> cold = [];
+  List<l.Leads> warm = [];
+  List<l.Leads> hot = [];
+  List<l.Leads> converted = [];
 
   getData() async {
     await getLead().then((val) {
       setState(() {
         lead = val;
+        cold = val.where((e) => e.status == "Cold").toList();
+        warm = val.where((e) => e.status == "Warm").toList();
+        hot = val.where((e) => e.status == "Hot").toList();
+        converted = val.where((e) => e.status == "Converted").toList();
+
         isLoad = false;
       });
     });
+  }
+
+  callback() {
+    if (!GoRouter.of(context).location.contains("/leads-detail")) {
+      getData();
+      GoRouter.of(context).removeListener(callback);
+    }
   }
 
   @override
@@ -57,16 +74,21 @@ class _LeadsState extends State<Leads> {
                           Text("Leads", style: CustomFont.heading24),
                           SpacerHeight(h: 20),
                           LeadsOverview(
-                            cold: 1,
+                            cold: cold.length.toDouble(),
                             avarage: 1,
-                            converted: 1,
-                            hot: 1,
+                            converted: converted.length.toDouble(),
+                            hot: hot.length.toDouble(),
                             potential: 1,
                             underAvarage: 1,
-                            warm: 1,
+                            warm: warm.length.toDouble(),
                           ),
                           SpacerHeight(h: 20),
-                          SearchForm(),
+                          SearchForm(
+                            controller: searchController,
+                            callback: () {
+                              getData();
+                            },
+                          ),
                           SpacerHeight(h: 20),
                           leadsList(),
                           SpacerHeight(h: 80),
@@ -77,6 +99,7 @@ class _LeadsState extends State<Leads> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             GoRouter.of(context).push("/leads-detail-form");
+            GoRouter.of(context).addListener(callback);
           },
           backgroundColor: CustomColor.brownColor,
           child: Icon(Icons.add),
@@ -115,7 +138,10 @@ class _LeadsState extends State<Leads> {
     return Row(
       children: [
         GestureDetector(
-          onTap: (() => GoRouter.of(context).push("/leads-detail/$id")),
+          onTap: (() {
+            GoRouter.of(context).push("/leads-detail/$id");
+            GoRouter.of(context).addListener(callback);
+          }),
           child: SizedBox(
             height: 55,
             width: 55,
@@ -134,7 +160,10 @@ class _LeadsState extends State<Leads> {
         SpacerWidth(w: 10),
         Expanded(
           child: InkWell(
-            onTap: (() => GoRouter.of(context).push("/leads-detail/$id")),
+            onTap: (() {
+              GoRouter.of(context).push("/leads-detail/$id");
+              GoRouter.of(context).addListener(callback);
+            }),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

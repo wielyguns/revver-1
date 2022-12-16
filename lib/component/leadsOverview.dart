@@ -67,7 +67,7 @@ class _LeadsOverviewState extends State<LeadsOverview> {
               SizedBox(
                 width: (d / allStats) * widget.hot,
                 child: Divider(
-                  color: CustomColor.brownColor,
+                  color: CustomColor.redColor,
                   thickness: 10,
                 ),
               ),
@@ -114,7 +114,7 @@ class _LeadsOverviewState extends State<LeadsOverview> {
               children: [
                 Icon(
                   Icons.circle,
-                  color: CustomColor.brownColor,
+                  color: CustomColor.redColor,
                   size: 15,
                 ),
                 Text(

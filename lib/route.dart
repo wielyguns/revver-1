@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:go_router/go_router.dart';
 import 'package:revver/view/ELearning/ELearning.dart';
 import 'package:revver/view/ELearning/ELearningDetail.dart';
@@ -91,10 +93,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => LeadsDetailForm(),
     ),
     GoRoute(
-      path: '/leads-detail-meeting-form/:id',
+      path: '/leads-detail-meeting-form/:id/:lead_id',
       builder: (context, state) {
         int id = int.parse(state.params['id']);
-        return LeadsDetailMeetingForm(id: id);
+        int lead_id = int.parse(state.params['lead_id']);
+        return LeadsDetailMeetingForm(id: id, lead_id: lead_id);
       },
     ),
     GoRoute(

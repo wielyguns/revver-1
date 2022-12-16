@@ -1,3 +1,7 @@
+// ignore_for_file: unrelated_type_equality_checks
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -79,7 +83,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
       setState(() {
         initProvince = val['data']['province_id'].toString();
         initCity = val['data']['city_id'].toString();
-        initDisease = val['data']['disease_id'].toString();
+        initDisease = val['data']['medical_record'][0]['disease_id'].toString();
 
         id = val['data']['id'].toString();
 
@@ -96,6 +100,8 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         ambition = val['data']['status_ambition'];
         supel = val['data']['status_supel'];
         teachable = val['data']['status_teachable'];
+
+        avatar = val['data']['image'];
       });
 
       await getCity(initProvince).then((val) async {
@@ -104,13 +110,21 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           List<City> x = city.where((e) => e.id == initCity).toList();
           selectedCity = x[0];
         });
-        await getProvince().then((val) {
+        await getProvince().then((val) async {
           setState(() {
             province = val;
             List<Province> x =
                 province.where((e) => e.id == initProvince).toList();
             selectedProvince = x[0];
-            isLoad = false;
+          });
+          await getDisease().then((val) {
+            setState(() {
+              disease = val;
+              List<Disease> x =
+                  disease.where((e) => e.id == int.parse(initDisease)).toList();
+              selectedDisease = x[0];
+              isLoad = false;
+            });
           });
         });
       });
@@ -169,46 +183,46 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                   key: formKey,
                   child: Column(
                     children: [
-                      // SpacerHeight(h: 20),
-                      // image != null
-                      //     ? GestureDetector(
-                      //         onTap: () {
-                      //           getImage(ImageSource.gallery);
-                      //         },
-                      //         child: SizedBox(
-                      //           height: 80,
-                      //           width: 80,
-                      //           child: Stack(
-                      //             clipBehavior: Clip.none,
-                      //             fit: StackFit.expand,
-                      //             children: [
-                      //               CircleAvatar(
-                      //                 backgroundImage:
-                      //                     FileImage(File(image.path)),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       )
-                      //     : GestureDetector(
-                      //         onTap: () {
-                      //           getImage(ImageSource.gallery);
-                      //         },
-                      //         child: SizedBox(
-                      //           height: 80,
-                      //           width: 80,
-                      //           child: Stack(
-                      //             clipBehavior: Clip.none,
-                      //             fit: StackFit.expand,
-                      //             children: [
-                      //               CircleAvatar(
-                      //                 backgroundImage: NetworkImage(avatar ??=
-                      //                     "https://wallpaperaccess.com/full/733834.png"),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       ),
+                      SpacerHeight(h: 20),
+                      image != null
+                          ? GestureDetector(
+                              onTap: () {
+                                getImage(ImageSource.gallery);
+                              },
+                              child: SizedBox(
+                                height: 80,
+                                width: 80,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  fit: StackFit.expand,
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage:
+                                          FileImage(File(image.path)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : GestureDetector(
+                              onTap: () {
+                                getImage(ImageSource.gallery);
+                              },
+                              child: SizedBox(
+                                height: 80,
+                                width: 80,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  fit: StackFit.expand,
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage: NetworkImage(avatar ??=
+                                          "https://wallpaperaccess.com/full/733834.png"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                       SpacerHeight(h: 20),
                       RegularForm(
                         title: "Full Name",
@@ -290,8 +304,12 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                         ],
                       ),
                       SpacerHeight(h: 20),
-                      diseaseDropdown("Medical Record", "Your Medical Record",
-                          disease, selectedDisease),
+                      diseaseDropdown(
+                        "Medical Record",
+                        "Your Medical Record",
+                        disease,
+                        selectedDisease,
+                      ),
                       SpacerHeight(h: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -361,7 +379,18 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                                   child: CustomButton(
                                     title: "Delete Account",
                                     color: CustomColor.redColor,
-                                    func: () async {},
+                                    func: () async {
+                                      await deleteLeads(id).then((val) {
+                                        if (val['status'] == 200) {
+                                          customSnackBar(context, false,
+                                              val['status'].toString());
+                                          GoRouter.of(context).pop();
+                                        } else {
+                                          customSnackBar(context, true,
+                                              val['status'].toString());
+                                        }
+                                      });
+                                    },
                                   ),
                                 ),
                               ],
@@ -372,11 +401,14 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                 ),
               ),
         bottomNavigationBar: Container(
-          color: CustomColor.whiteColor,
+          color: CustomColor.backgroundColor,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: CustomButton(
             title: "Save",
             func: () async {
+              String imgpath = image?.path ?? "";
+              String imgname = image?.name ?? "";
+
               if (widget.x == null) {
                 await postLeadDetail(
                   nameController.text,
@@ -394,12 +426,14 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                   addressController.text,
                   noteController.text,
                   selectedDisease.id.toString(),
+                  imgpath,
+                  imgname,
                 ).then((val) {
-                  if (val['status'] == 200) {
-                    customSnackBar(context, false, val['message'].toString());
+                  if (val == 200) {
+                    customSnackBar(context, false, val.toString());
                     GoRouter.of(context).pop();
                   } else {
-                    customSnackBar(context, true, val['data'].toString());
+                    customSnackBar(context, true, val.toString());
                   }
                 });
               } else {
@@ -420,11 +454,13 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                   addressController.text,
                   noteController.text,
                   selectedDisease.id.toString(),
+                  imgpath,
+                  imgname,
                 ).then((val) {
-                  if (val['status'] == 200) {
-                    customSnackBar(context, false, val['message'].toString());
+                  if (val == 200) {
+                    customSnackBar(context, false, val.toString());
                   } else {
-                    customSnackBar(context, true, val['data'].toString());
+                    customSnackBar(context, true, val.toString());
                   }
                 });
               }
@@ -462,6 +498,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           onChanged: (val) async {
             setState(() {
               selectedItem = val;
+              selectedProvince = val;
               selectedCity = null;
               city = [];
             });
@@ -532,6 +569,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           onChanged: (val) {
             setState(() {
               selectedItem = val;
+              selectedCity = val;
             });
           },
           dropdownColor: CustomColor.whiteColor,
@@ -599,6 +637,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           onChanged: (val) {
             setState(() {
               selectedItem = val;
+              selectedDisease = val;
             });
           },
           dropdownColor: CustomColor.whiteColor,
