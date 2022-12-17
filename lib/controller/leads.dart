@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:revver/model/leads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-getLead() async {
+getLead(name) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/lead";
+  String url = "https://admin.revveracademy.com/api/v1/lead?name=$name";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.get(parseUrl, headers: {
@@ -80,7 +80,6 @@ postLeadDetail(
   };
 
   int res;
-  // String url = "https://webhook.site/52d71698-7f8b-498f-ad49-d2dc47cfe714";
   String url = "https://admin.revveracademy.com/api/v1/lead";
   Uri parseUrl = Uri.parse(url);
   var request = http.MultipartRequest('POST', parseUrl);
@@ -141,11 +140,10 @@ patchLeadDetail(
   };
 
   int res;
-  String url = "https://admin.revveracademy.com/api/v1/lead/$id";
-  // String url = "https://webhook.site/52d71698-7f8b-498f-ad49-d2dc47cfe714";
+  String url = "https://admin.revveracademy.com/api/v1/lead/$id?_method=PATCH";
 
   Uri parseUrl = Uri.parse(url);
-  var request = http.MultipartRequest('PATCH', parseUrl);
+  var request = http.MultipartRequest('POST', parseUrl);
   request.headers['Authorization'] = "Bearer $token";
   request.fields.addAll(data);
   if (image != "") {

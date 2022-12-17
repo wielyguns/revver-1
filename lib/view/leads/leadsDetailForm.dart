@@ -459,6 +459,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                 ).then((val) {
                   if (val == 200) {
                     customSnackBar(context, false, val.toString());
+                    GoRouter.of(context).pop();
                   } else {
                     customSnackBar(context, true, val.toString());
                   }

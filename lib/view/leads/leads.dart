@@ -29,7 +29,10 @@ class _LeadsState extends State<Leads> {
   List<l.Leads> converted = [];
 
   getData() async {
-    await getLead().then((val) {
+    setState(() {
+      isLoad = true;
+    });
+    await getLead(searchController.text).then((val) {
       setState(() {
         lead = val;
         cold = val.where((e) => e.status == "Cold").toList();
@@ -123,6 +126,7 @@ class _LeadsState extends State<Leads> {
               ld.city_id,
               ld.status,
               ld.phone,
+              ld.image,
             ),
             SpacerHeight(h: 10),
           ],
@@ -131,7 +135,7 @@ class _LeadsState extends State<Leads> {
     );
   }
 
-  leadsListWidget(id, name, city_id, status, phone) {
+  leadsListWidget(id, name, city_id, status, phone, image) {
     final Uri smsUri = Uri(scheme: 'sms', path: phone);
     final Uri telUri = Uri(scheme: 'tel', path: phone);
     final Uri waUri = Uri.parse("whatsapp://send?phone=$phone");
@@ -151,7 +155,7 @@ class _LeadsState extends State<Leads> {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "https://wallpaperaccess.com/full/733834.png"),
+                      image ??= "https://wallpaperaccess.com/full/733834.png"),
                 ),
               ],
             ),

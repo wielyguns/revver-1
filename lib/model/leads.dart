@@ -21,6 +21,7 @@ class Leads {
   int city_id;
   String address;
   String note;
+  String image;
   Leads({
     this.id,
     this.user_id,
@@ -39,6 +40,7 @@ class Leads {
     this.city_id,
     this.address,
     this.note,
+    this.image,
   });
 
   Map<String, dynamic> toMap() {
@@ -60,6 +62,7 @@ class Leads {
       'city_id': city_id,
       'address': address,
       'note': note,
+      'image': image,
     };
   }
 
@@ -82,6 +85,7 @@ class Leads {
       city_id: map['city_id'] as int,
       address: map['address'] as String,
       note: map['note'] as String,
+      image: map['image'] as String,
     );
   }
 
