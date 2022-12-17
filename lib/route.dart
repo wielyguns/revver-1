@@ -208,25 +208,37 @@ final GoRouter router = GoRouter(
       builder: (context, state) => EHealthForm(),
     ),
     GoRoute(
-      path: '/e-health-list/:name/:height/:weight/:ages',
+      path: '/e-health-list/:name/:height/:weight/:gender/:ages',
       builder: (context, state) {
         String name = state.params['name'];
         String height = state.params['height'];
         String weight = state.params['weight'];
+        String gender = state.params['gender'];
         String age = state.params['age'];
         return EHealthList(
-            name: name, height: height, weight: weight, age: age);
+            name: name,
+            height: height,
+            weight: weight,
+            gender: gender,
+            age: age);
       },
     ),
     GoRoute(
-      path: '/e-health-detail',
+      path: '/e-health-detail/:name/:height/:weight/:gender/:ages/:id',
       builder: (context, state) {
         String name = state.params['name'];
         String height = state.params['height'];
         String weight = state.params['weight'];
         String age = state.params['age'];
+        String gender = state.params['gender'];
+        String id = state.params['id'];
         return EHealthDetail(
-            name: name, height: height, weight: weight, age: age);
+            name: name,
+            height: height,
+            weight: weight,
+            gender: gender,
+            age: age,
+            id: id);
       },
     ),
   ],

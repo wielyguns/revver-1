@@ -24,6 +24,7 @@ class _EHealthFormState extends State<EHealthForm> {
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
   TextEditingController ageController = TextEditingController();
+  String selectedGender;
   @override
   Widget build(BuildContext context) {
     return KeyboardDismisser(
@@ -50,6 +51,10 @@ class _EHealthFormState extends State<EHealthForm> {
                   title: "Gender",
                   hint: "Male / Female",
                   list: gender,
+                  value: selectedGender,
+                  callback: (val) {
+                    selectedGender = val;
+                  },
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
@@ -90,10 +95,11 @@ class _EHealthFormState extends State<EHealthForm> {
                     (heightController.text != "") ? heightController.text : "0";
                 String weight =
                     (weightController.text != "") ? weightController.text : "0";
+                String gender = (selectedGender != null) ? selectedGender : "0";
                 String age =
                     (ageController.text != "") ? ageController.text : "0";
                 GoRouter.of(context)
-                    .push("/e-health-list/$name/$height/$weight/$age");
+                    .push("/e-health-list/$name/$height/$weight/$gender/$age");
               }
             },
           ),

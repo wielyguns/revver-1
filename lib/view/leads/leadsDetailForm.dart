@@ -117,7 +117,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                 province.where((e) => e.id == initProvince).toList();
             selectedProvince = x[0];
           });
-          await getDisease().then((val) {
+          await getDisease("", "").then((val) {
             setState(() {
               disease = val;
               List<Disease> x =
@@ -136,7 +136,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
       setState(() {
         province = val;
       });
-      await getDisease().then((val) {
+      await getDisease("", "").then((val) {
         setState(() {
           disease = val;
           isLoad = false;
