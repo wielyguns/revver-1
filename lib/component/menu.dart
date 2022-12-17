@@ -21,7 +21,7 @@ class HomeMenu extends StatelessWidget {
                   "/e-learning"),
               detailMenu(context, "assets/svg/plan-new.svg", "Plan", "/plan"),
               detailMenu(context, "assets/svg/e-health-new.svg", "E-Health",
-                  "/e-learning"),
+                  "/e-health-form"),
             ],
           ),
           SpacerHeight(h: 20),

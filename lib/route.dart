@@ -1,6 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:go_router/go_router.dart';
+import 'package:revver/view/EHealth/EHealthDetail.dart';
+import 'package:revver/view/EHealth/EHealthForm.dart';
+import 'package:revver/view/EHealth/EHealthList.dart';
 import 'package:revver/view/ELearning/ELearning.dart';
 import 'package:revver/view/ELearning/ELearningDetail.dart';
 import 'package:revver/view/accoount/aboutApps.dart';
@@ -198,6 +201,32 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         String id = state.params['id'];
         return NoteDetail(id: id);
+      },
+    ),
+    GoRoute(
+      path: '/e-health-form',
+      builder: (context, state) => EHealthForm(),
+    ),
+    GoRoute(
+      path: '/e-health-list/:name/:height/:weight/:ages',
+      builder: (context, state) {
+        String name = state.params['name'];
+        String height = state.params['height'];
+        String weight = state.params['weight'];
+        String age = state.params['age'];
+        return EHealthList(
+            name: name, height: height, weight: weight, age: age);
+      },
+    ),
+    GoRoute(
+      path: '/e-health-detail',
+      builder: (context, state) {
+        String name = state.params['name'];
+        String height = state.params['height'];
+        String weight = state.params['weight'];
+        String age = state.params['age'];
+        return EHealthDetail(
+            name: name, height: height, weight: weight, age: age);
       },
     ),
   ],
