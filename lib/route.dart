@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:revver/view/EHealth/EHealthDetail.dart';
 import 'package:revver/view/EHealth/EHealthForm.dart';
 import 'package:revver/view/EHealth/EHealthList.dart';
+import 'package:revver/view/EHealth/saveToLead.dart';
 import 'package:revver/view/ELearning/ELearning.dart';
 import 'package:revver/view/ELearning/ELearningDetail.dart';
 import 'package:revver/view/accoount/aboutApps.dart';
@@ -208,7 +209,7 @@ final GoRouter router = GoRouter(
       builder: (context, state) => EHealthForm(),
     ),
     GoRoute(
-      path: '/e-health-list/:name/:height/:weight/:gender/:ages',
+      path: '/e-health-list/:name/:height/:weight/:gender/:age',
       builder: (context, state) {
         String name = state.params['name'];
         String height = state.params['height'];
@@ -224,7 +225,7 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/e-health-detail/:name/:height/:weight/:gender/:ages/:id',
+      path: '/e-health-detail/:name/:height/:weight/:gender/:age/:id',
       builder: (context, state) {
         String name = state.params['name'];
         String height = state.params['height'];
@@ -239,6 +240,24 @@ final GoRouter router = GoRouter(
             gender: gender,
             age: age,
             id: id);
+      },
+    ),
+    GoRoute(
+      path: '/save-to-lead/:name/:height/:weight/:gender/:age/:disease_id',
+      builder: (context, state) {
+        String name = state.params['name'];
+        String height = state.params['height'];
+        String weight = state.params['weight'];
+        String age = state.params['age'];
+        String gender = state.params['gender'];
+        String disease_id = state.params['disease_id'];
+        return SaveToLead(
+            name: name,
+            height: height,
+            weight: weight,
+            gender: gender,
+            age: age,
+            disease_id: disease_id);
       },
     ),
   ],

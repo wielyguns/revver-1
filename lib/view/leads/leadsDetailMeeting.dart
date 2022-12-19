@@ -45,7 +45,6 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
     getData();
     setState(() {
       lead_id = widget.id.toString();
-      print(lead_id);
     });
     super.initState();
   }

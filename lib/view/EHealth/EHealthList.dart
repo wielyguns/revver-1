@@ -7,7 +7,6 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/EHealth.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/EHealth.dart';
 
@@ -180,8 +179,8 @@ class _EHealthListState extends State<EHealthList> {
             String gender = widget.gender;
             String age = widget.age;
             String id = ds.id.toString();
-            GoRouter.of(context)
-                .push("/e-health-list/$name/$height/$weight/$gender/$age/$id");
+            GoRouter.of(context).push(
+                "/e-health-detail/$name/$height/$weight/$gender/$age/$id");
           },
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 5),

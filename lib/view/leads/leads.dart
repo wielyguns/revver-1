@@ -28,6 +28,10 @@ class _LeadsState extends State<Leads> {
   List<l.Leads> hot = [];
   List<l.Leads> converted = [];
 
+  double potential = 0;
+  double avarage = 0;
+  double underAvarage = 0;
+
   getData() async {
     setState(() {
       isLoad = true;
@@ -39,6 +43,24 @@ class _LeadsState extends State<Leads> {
         warm = val.where((e) => e.status == "Warm").toList();
         hot = val.where((e) => e.status == "Hot").toList();
         converted = val.where((e) => e.status == "Converted").toList();
+
+        for (var i = 0; i < lead.length; i++) {
+          double x = double.parse(lead[i].status_ambition) +
+              double.parse(lead[i].status_financial) +
+              double.parse(lead[i].status_supel) +
+              double.parse(lead[i].status_teachable);
+          if (x <= 4) {
+            underAvarage++;
+          }
+
+          if (x > 4 && x <= 8) {
+            avarage++;
+          }
+
+          if (x > 8) {
+            potential++;
+          }
+        }
 
         isLoad = false;
       });
@@ -78,11 +100,11 @@ class _LeadsState extends State<Leads> {
                           SpacerHeight(h: 20),
                           LeadsOverview(
                             cold: cold.length.toDouble(),
-                            avarage: 1,
+                            avarage: avarage,
                             converted: converted.length.toDouble(),
                             hot: hot.length.toDouble(),
-                            potential: 1,
-                            underAvarage: 1,
+                            potential: potential,
+                            underAvarage: underAvarage,
                             warm: warm.length.toDouble(),
                           ),
                           SpacerHeight(h: 20),
