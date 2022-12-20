@@ -4,10 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/note.dart';
-import 'package:revver/controller/test.dart';
+
 import 'package:revver/globals.dart';
 import 'package:revver/model/note.dart' as n;
-import 'package:revver/view/note/noteDetail.dart';
 
 class Note extends StatefulWidget {
   const Note({Key key}) : super(key: key);
