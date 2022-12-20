@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:indonesia/indonesia.dart';
@@ -101,99 +102,325 @@ class _ProductDetailState extends State<ProductDetail> {
                   //   ),
                   // ),
                   SpacerHeight(h: 20),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Description",
+                        style:
+                            CustomFont(CustomColor.oldGreyColor, 14, null).font,
+                      ),
+                      Text(
+                        harga ??= "...",
+                        style: CustomFont(
+                                CustomColor.brownColor, 24, FontWeight.w700)
+                            .font,
+                      ),
+                    ],
+                  ),
+                  SpacerHeight(h: 10),
                   Text(
                     name ??= "...",
-                    style: CustomFont.regular24,
-                  ),
-                  Text(
-                    harga ??= "...",
-                    style: CustomFont.bold18,
+                    style:
+                        CustomFont(CustomColor.blackColor, 30, FontWeight.w700)
+                            .font,
                   ),
                   SpacerHeight(h: 20),
-                  Text(
-                    "Description",
-                    style: CustomFont.bold16,
-                  ),
-                  Divider(thickness: 1, color: CustomColor.brownColor),
                   Html(data: description ??= "..."),
                   SpacerHeight(h: 20),
-                  Text(
-                    "How To Use",
-                    style: CustomFont.bold16,
-                  ),
-                  Divider(thickness: 1, color: CustomColor.brownColor),
-                  Html(data: usage ??= "..."),
-                  SpacerHeight(h: 20),
-                  Text(
-                    "Benefits",
-                    style: CustomFont.bold16,
-                  ),
-                  Divider(thickness: 1, color: CustomColor.brownColor),
-                  Html(data: benefits ??= "..."),
-                  SpacerHeight(h: 20),
-                  Text(
-                    "ingredients",
-                    style: CustomFont.bold16,
-                  ),
-                  Divider(thickness: 1, color: CustomColor.brownColor),
-                  Html(data: ingredients ??= "..."),
-                  SpacerHeight(h: 20),
-                  Text(
-                    "Reviews",
-                    style: CustomFont.bold16,
-                  ),
-                  Divider(thickness: 1, color: CustomColor.brownColor),
-                  SpacerHeight(h: 20),
-                  (review == null)
-                      ? Text("")
-                      : ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: review.length,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            ProductReview list = review[index];
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 40,
-                                      height: 40,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(7)),
-                                        child: CachedNetworkImage(
-                                          imageUrl: list.image ??=
-                                              "https://wallpaperaccess.com/full/733834.png",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                    SpacerWidth(w: 10),
-                                    Text(
-                                      list.subject,
+                  ExpandableNotifier(
+                    child: Column(
+                      children: [
+                        Expandable(
+                          collapsed: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("How To Use",
                                       style: CustomFont(CustomColor.blackColor,
-                                              14, FontWeight.bold)
-                                          .font,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 20,
                                     ),
-                                  ],
-                                ),
-                                SpacerHeight(h: 10),
-                                Text(
-                                  list.testimonial,
-                                  style: CustomFont.regular12,
-                                ),
-                                SpacerHeight(h: 10),
-                              ],
-                            );
-                          },
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              )
+                            ],
+                          ),
+                          expanded: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("How To Use",
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              ),
+                              Html(data: usage ??= "..."),
+                            ],
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                  SpacerHeight(h: 10),
+
+                  ExpandableNotifier(
+                    child: Column(
+                      children: [
+                        Expandable(
+                          collapsed: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Benefits",
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              )
+                            ],
+                          ),
+                          expanded: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Benefits",
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              ),
+                              Html(data: benefits ??= "..."),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SpacerHeight(h: 10),
+
+                  ExpandableNotifier(
+                    child: Column(
+                      children: [
+                        Expandable(
+                          collapsed: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Ingredients",
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              )
+                            ],
+                          ),
+                          expanded: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Ingredients",
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              ),
+                              Html(data: ingredients ??= "..."),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SpacerHeight(h: 10),
+                  ExpandableNotifier(
+                    child: Column(
+                      children: [
+                        Expandable(
+                          collapsed: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Reviews",
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              )
+                            ],
+                          ),
+                          expanded: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text("Reviews",
+                                      style: CustomFont(CustomColor.blackColor,
+                                              14, FontWeight.w400)
+                                          .font),
+                                  ExpandableButton(
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: CustomColor.brownColor.withOpacity(0.5),
+                              ),
+                              (review == null)
+                                  ? Text("")
+                                  : ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: review.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        ProductReview list = review[index];
+                                        return Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                SizedBox(
+                                                  width: 40,
+                                                  height: 40,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(7)),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: list.image ??=
+                                                          "https://wallpaperaccess.com/full/733834.png",
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SpacerWidth(w: 10),
+                                                Text(
+                                                  list.subject,
+                                                  style: CustomFont(
+                                                          CustomColor
+                                                              .blackColor,
+                                                          14,
+                                                          FontWeight.bold)
+                                                      .font,
+                                                ),
+                                              ],
+                                            ),
+                                            SpacerHeight(h: 10),
+                                            Text(
+                                              list.testimonial,
+                                              style: CustomFont.regular12,
+                                            ),
+                                            SpacerHeight(h: 10),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
       bottomNavigationBar: Container(
-        color: CustomColor.whiteColor,
+        color: CustomColor.backgroundColor,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: CustomButton(
           title: "+ Keranjang",

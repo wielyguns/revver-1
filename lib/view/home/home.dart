@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
-          "assets/img/logo-header.png",
+          "assets/img/revver-horizontal.png",
           width: CustomScreen(context).width / 2.5,
         ),
         actions: [

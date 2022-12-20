@@ -5,6 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/news.dart';
+import 'package:revver/globals.dart';
 
 class NewsDetail extends StatefulWidget {
   NewsDetail({Key key, this.id}) : super(key: key);
@@ -20,6 +21,7 @@ class _NewsDetailState extends State<NewsDetail> {
   String content;
   String url;
   int status;
+  String date;
 
   bool isLoad = true;
 
@@ -30,6 +32,7 @@ class _NewsDetailState extends State<NewsDetail> {
         image = val['data']['image'];
         content = val['data']['content'];
         url = val['data']['url'];
+        date = val['data']['updated_at'];
         isLoad = false;
       });
     });
@@ -45,7 +48,7 @@ class _NewsDetailState extends State<NewsDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomHeader(
-        title: title ??= "",
+        title: "",
         isPop: true,
         offMiddleLogo: true,
         image: image ??= "https://wallpaperaccess.com/full/733834.png",
@@ -77,6 +80,30 @@ class _NewsDetailState extends State<NewsDetail> {
                   //   title ??= "...",
                   //   style: CustomFont.regular24,
                   // ),
+                  SpacerHeight(h: 20),
+                  Text(
+                    title ??= "",
+                    style:
+                        CustomFont(CustomColor.blackColor, 30, FontWeight.w700)
+                            .font,
+                  ),
+                  SpacerHeight(h: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
+                        color: CustomColor.brownColor,
+                        size: 12,
+                      ),
+                      SpacerWidth(w: 5),
+                      Text(
+                        date ??= "",
+                        style: CustomFont(
+                                CustomColor.brownColor, 9, FontWeight.w400)
+                            .font,
+                      ),
+                    ],
+                  ),
                   SpacerHeight(h: 20),
                   Html(data: content ??= "..."),
                   SpacerHeight(h: 20),

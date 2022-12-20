@@ -36,6 +36,7 @@ dependencies:
   video_player: 2.2.3
   webview_flutter: 2.0.13
   flutter_speed_dial: 6.2.0
+  expandable: 5.0.1
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Montserrat-Bold.ttf
           weight: 700
+        - asset: assets/fonts/Montserrat-Regular.ttf
     
     - family: Poppins
       fonts:

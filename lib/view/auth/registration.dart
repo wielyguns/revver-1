@@ -55,7 +55,7 @@ class _RegistrationState extends State<Registration> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          "assets/img/revver-horizontal.png",
+                          "assets/img/revver-white.png",
                           width: CustomScreen(context).width / 2,
                         ),
                         SpacerHeight(h: 20),
@@ -64,8 +64,8 @@ class _RegistrationState extends State<Registration> {
                           style: TextStyle(
                               fontSize: 24,
                               fontFamily: "Montserrat",
-                              fontWeight: FontWeight.w700,
-                              color: CustomColor.brownColor),
+                              fontWeight: FontWeight.w600,
+                              color: CustomColor.whiteColor),
                         ),
                       ],
                     ),
@@ -86,13 +86,16 @@ class _RegistrationState extends State<Registration> {
                           SpacerHeight(h: 20),
                           Text(
                             "Registration",
-                            style: CustomFont(CustomColor.brownColor, 36, null)
+                            style: CustomFont(
+                                    CustomColor.brownColor, 36, FontWeight.w700)
                                 .font,
                           ),
                           SpacerHeight(h: 10),
                           Text(
                             "Don't have an account yet? Register here!",
-                            style: CustomFont.subheading,
+                            style: CustomFont(CustomColor.oldGreyColor, 12,
+                                    FontWeight.w400)
+                                .font,
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
@@ -150,12 +153,16 @@ class _RegistrationState extends State<Registration> {
                             children: [
                               Text(
                                 "Don't have an account yet? ",
-                                style: CustomFont.regular12,
+                                style: CustomFont(CustomColor.blackColor, 12,
+                                        FontWeight.w400)
+                                    .font,
                               ),
                               GestureDetector(
                                 child: Text(
                                   "Login here!",
-                                  style: CustomFont.link,
+                                  style: CustomFont(CustomColor.brownColor, 12,
+                                          FontWeight.w400)
+                                      .font,
                                 ),
                                 onTap: () {
                                   GoRouter.of(context).go('/login');

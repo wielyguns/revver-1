@@ -42,7 +42,7 @@ class _NewsState extends State<News> {
       ),
       body: (news == null)
           ? Center(child: CircularProgressIndicator())
-          : ListView.builder(
+          : ListView.separated(
               itemCount: news.length,
               itemBuilder: (context, index) {
                 n.News nws = news[index];
@@ -56,8 +56,19 @@ class _NewsState extends State<News> {
                       nws.created_at ??= "...",
                       nws.id ??= 0,
                     ),
-                    SpacerHeight(h: 20),
+                    (index == news.length - 1)
+                        ? SpacerHeight(h: 20)
+                        : SizedBox(),
                   ],
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Divider(
+                    thickness: 2,
+                    color: CustomColor.brownColor.withOpacity(0.5),
+                  ),
                 );
               },
             ),
@@ -104,7 +115,7 @@ class _NewsState extends State<News> {
                               SpacerWidth(w: 5),
                               Text(created_at,
                                   style: CustomFont(
-                                          CustomColor.brownColor, 8, null)
+                                          CustomColor.brownColor, 9, null)
                                       .font),
                             ],
                           ),

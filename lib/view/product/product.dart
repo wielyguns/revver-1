@@ -43,7 +43,6 @@ class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
     return KeyboardDismisser(
       child: Scaffold(
@@ -72,13 +71,14 @@ class _ProductState extends State<Product> {
                       crossAxisCount: 2,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
-                      childAspectRatio: (itemWidth / itemHeight),
+                      childAspectRatio: (itemWidth / 300),
                       children: List.generate(product.length, (index) {
                         p.Product prod = product[index];
-                        return productWidget(
+                        return _sliderBox(
                             prod.product_image, prod.name, prod.price, prod.id);
                       }),
                     ),
+              SpacerHeight(h: 20),
             ],
           ),
         ),
@@ -97,6 +97,7 @@ class _ProductState extends State<Product> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: CachedNetworkImage(
+                  width: MediaQuery.of(context).size.width / 2,
                   imageUrl: image,
                   fit: BoxFit.cover,
                 ),
@@ -119,6 +120,103 @@ class _ProductState extends State<Product> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  _sliderBox(String image, String name, int price, int id) {
+    var size = MediaQuery.of(context).size;
+    final double itemWidth = size.width / 2;
+    return Container(
+      width: itemWidth,
+      decoration: BoxDecoration(
+        color: CustomColor.whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 0,
+            blurRadius: 13,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: (() => GoRouter.of(context).push("/product-detail/$id")),
+            child: Container(
+              width: itemWidth,
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 0,
+                    blurRadius: 13,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      name,
+                      style: CustomFont(
+                              CustomColor.blackColor, 14, FontWeight.w700)
+                          .font,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SpacerHeight(h: 5),
+                  Text(
+                    rupiah(price),
+                    style:
+                        CustomFont(CustomColor.brownColor, 14, FontWeight.w400)
+                            .font,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            child: Container(
+              height: 30,
+              decoration: BoxDecoration(
+                color: CustomColor.brownColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  "Add to Cart",
+                  style: CustomFont(CustomColor.whiteColor, 10, FontWeight.w600)
+                      .font,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

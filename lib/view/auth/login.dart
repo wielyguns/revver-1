@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
-                            "assets/img/revver-horizontal.png",
+                            "assets/img/revver-white.png",
                             width: CustomScreen(context).width / 2,
                           ),
                           SpacerHeight(h: 20),
@@ -63,8 +63,8 @@ class _LoginState extends State<Login> {
                             style: TextStyle(
                                 fontSize: 24,
                                 fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w700,
-                                color: CustomColor.brownColor),
+                                fontWeight: FontWeight.w600,
+                                color: CustomColor.whiteColor),
                           ),
                         ],
                       ),
@@ -86,14 +86,16 @@ class _LoginState extends State<Login> {
                             SpacerHeight(h: 20),
                             Text(
                               "Login",
-                              style:
-                                  CustomFont(CustomColor.brownColor, 36, null)
-                                      .font,
+                              style: CustomFont(CustomColor.brownColor, 36,
+                                      FontWeight.w700)
+                                  .font,
                             ),
                             SpacerHeight(h: 10),
                             Text(
                               "Already have an account? Please, login!",
-                              style: CustomFont.subheading,
+                              style: CustomFont(CustomColor.oldGreyColor, 12,
+                                      FontWeight.w400)
+                                  .font,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
@@ -132,7 +134,9 @@ class _LoginState extends State<Login> {
                                 SpacerWidth(w: 5),
                                 Text(
                                   "Remember Me?",
-                                  style: CustomFont.regular12,
+                                  style: CustomFont(CustomColor.blackColor, 12,
+                                          FontWeight.w400)
+                                      .font,
                                 ),
                               ],
                             ),
@@ -141,12 +145,16 @@ class _LoginState extends State<Login> {
                               children: [
                                 Text(
                                   "Don't have an account yet? ",
-                                  style: CustomFont.regular12,
+                                  style: CustomFont(CustomColor.blackColor, 12,
+                                          FontWeight.w400)
+                                      .font,
                                 ),
                                 GestureDetector(
                                   child: Text(
                                     "Register here!",
-                                    style: CustomFont.link,
+                                    style: CustomFont(CustomColor.brownColor,
+                                            12, FontWeight.w400)
+                                        .font,
                                   ),
                                   onTap: () {
                                     GoRouter.of(context).go('/registration');

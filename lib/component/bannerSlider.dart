@@ -19,30 +19,43 @@ class HomeBanner extends StatelessWidget {
     }
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child: SizedBox(
-            width: CustomScreen(context).width,
-            height: CustomScreen(context).width / 1.5,
-            child: (list == null)
-                ? Center(child: CircularProgressIndicator())
-                : PageView.builder(
-                    controller: controller,
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: i,
-                    itemBuilder: (BuildContext context, int index) {
-                      BannerModel banner = list[index];
-                      return Row(
-                        children: [
-                          _sliderWidget(
-                              context,
-                              banner.image ??=
-                                  "https://wallpaperaccess.com/full/733834.png")
-                        ],
-                      );
-                    },
-                  ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 0,
+                blurRadius: 13,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(15.0),
+            child: SizedBox(
+              width: CustomScreen(context).width,
+              height: CustomScreen(context).width / 1.5,
+              child: (list == null)
+                  ? Center(child: CircularProgressIndicator())
+                  : PageView.builder(
+                      controller: controller,
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: i,
+                      itemBuilder: (BuildContext context, int index) {
+                        BannerModel banner = list[index];
+                        return Row(
+                          children: [
+                            _sliderWidget(
+                                context,
+                                banner.image ??=
+                                    "https://wallpaperaccess.com/full/733834.png")
+                          ],
+                        );
+                      },
+                    ),
+            ),
           ),
         ),
         SpacerHeight(h: 20),

@@ -30,12 +30,12 @@ class ProductSlider extends StatelessWidget {
         children: [
           Text(
             "Product",
-            style: CustomFont(CustomColor.brownColor, 16, FontWeight.bold).font,
+            style: CustomFont(CustomColor.brownColor, 20, FontWeight.bold).font,
           ),
           GestureDetector(
             child: Text(
               "View All",
-              style: CustomFont(CustomColor.blackColor, 12, null).font,
+              style: CustomFont(CustomColor.blackColor, 14, null).font,
             ),
             onTap: () {
               GoRouter.of(context).push("/product");

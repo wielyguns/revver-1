@@ -30,6 +30,7 @@ class _EventState extends State<Event> {
               subject: val[i].name,
               startTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
               endTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
+              color: CustomColor.brownColor,
             ),
           );
         }
@@ -48,23 +49,24 @@ class _EventState extends State<Event> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SpacerHeight(h: 20),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text("Event", style: CustomFont.heading24),
-            ),
-            SpacerHeight(h: 20),
-            (isLoad)
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Expanded(
+      body: (isLoad)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SafeArea(
+              bottom: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SpacerHeight(h: 20),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text("Event", style: CustomFont.heading24),
+                  ),
+                  SpacerHeight(h: 20),
+                  Expanded(
                     child: SfCalendar(
+                      todayHighlightColor: CustomColor.brownColor,
                       todayTextStyle: CustomFont.regular12,
                       headerStyle: CalendarHeaderStyle(
                           backgroundColor: CustomColor.backgroundColor,
@@ -93,10 +95,10 @@ class _EventState extends State<Event> {
                       },
                     ),
                   ),
-            SpacerHeight(h: 5),
-          ],
-        ),
-      ),
+                  SpacerHeight(h: 5),
+                ],
+              ),
+            ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           GoRouter.of(context).push("/personal-event/0");
