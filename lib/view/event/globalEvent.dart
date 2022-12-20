@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 
@@ -59,7 +60,7 @@ class _GlobalEventState extends State<GlobalEvent> {
         height: 300,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(

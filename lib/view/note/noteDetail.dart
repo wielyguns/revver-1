@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -90,7 +91,7 @@ class _NoteDetailState extends State<NoteDetail> {
           },
         ),
         body: (isLoad)
-            ? Center(child: CircularProgressIndicator())
+            ? Center(child: CupertinoActivityIndicator())
             : Padding(
                 padding: EdgeInsets.all(20),
                 child: Column(

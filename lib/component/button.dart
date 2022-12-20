@@ -19,7 +19,7 @@ class CustomButton extends StatelessWidget {
       color: color,
       child: Text(
         title,
-        style: CustomFont.regular12,
+        style: CustomFont(CustomColor.whiteColor, 16, FontWeight.w600).font,
       ),
     );
   }
@@ -71,7 +71,7 @@ class AddToCartButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Text(
           "Add To Cart",
-          style: CustomFont.addToCart,
+          style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w600).font,
         ),
       ),
       onTap: func,
@@ -95,7 +95,7 @@ class ChangePasswordButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         child: Text(
           title,
-          style: CustomFont.changePassword,
+          style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w600).font,
         ),
       ),
       onTap: func,
@@ -139,7 +139,8 @@ class AccountMenu extends StatelessWidget {
                 SpacerWidth(w: 20),
                 Text(
                   title,
-                  style: CustomFont.regular16,
+                  style: CustomFont(CustomColor.blackColor, 18, FontWeight.w600)
+                      .font,
                 )
               ],
             ),

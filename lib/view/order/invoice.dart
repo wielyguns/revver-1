@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/button.dart';
@@ -71,7 +72,7 @@ class _InvoiceState extends State<Invoice> {
         isPop: widget.isHistory,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               padding: EdgeInsets.all(20),
               child: Container(

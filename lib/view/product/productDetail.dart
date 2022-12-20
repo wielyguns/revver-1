@@ -2,6 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:indonesia/indonesia.dart';
@@ -81,7 +82,7 @@ class _ProductDetailState extends State<ProductDetail> {
         height: 300,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20),

@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:revver/component/header.dart';
@@ -55,7 +56,7 @@ class _NewsDetailState extends State<NewsDetail> {
         height: 300,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20),

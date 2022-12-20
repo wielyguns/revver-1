@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
@@ -51,7 +52,7 @@ class ProductSlider extends StatelessWidget {
       width: CustomScreen(context).width,
       height: 210,
       child: (product == null)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : ListView.builder(
               physics: BouncingScrollPhysics(),
               shrinkWrap: true,

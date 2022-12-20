@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -135,7 +136,7 @@ class _SaveToLeadState extends State<SaveToLead> {
           isPop: true,
         ),
         body: (isLoad)
-            ? Center(child: CircularProgressIndicator())
+            ? Center(child: CupertinoActivityIndicator())
             : SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Form(
@@ -393,7 +394,8 @@ class _SaveToLeadState extends State<SaveToLead> {
               value: v,
               child: Text(
                 v.name,
-                style: CustomFont.filled,
+                style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400)
+                    .font,
               ),
             );
           }).toList(),
@@ -407,38 +409,47 @@ class _SaveToLeadState extends State<SaveToLead> {
             await getCityList(selectedItem.id);
           },
           dropdownColor: CustomColor.whiteColor,
-          style: CustomFont.filled,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: CustomFont.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 1,
-                  style: BorderStyle.solid,
-                  color: CustomColor.oldGreyColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
             ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
             ),
           ),
         ),
@@ -464,7 +475,8 @@ class _SaveToLeadState extends State<SaveToLead> {
               value: v,
               child: Text(
                 v.name,
-                style: CustomFont.filled,
+                style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400)
+                    .font,
               ),
             );
           }).toList(),
@@ -475,38 +487,47 @@ class _SaveToLeadState extends State<SaveToLead> {
             });
           },
           dropdownColor: CustomColor.whiteColor,
-          style: CustomFont.filled,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: CustomFont.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 1,
-                  style: BorderStyle.solid,
-                  color: CustomColor.oldGreyColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
             ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
             ),
           ),
         ),
@@ -532,7 +553,8 @@ class _SaveToLeadState extends State<SaveToLead> {
               value: v,
               child: Text(
                 v.name,
-                style: CustomFont.filled,
+                style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400)
+                    .font,
               ),
             );
           }).toList(),
@@ -543,38 +565,47 @@ class _SaveToLeadState extends State<SaveToLead> {
             });
           },
           dropdownColor: CustomColor.whiteColor,
-          style: CustomFont.filled,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: CustomFont.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 1,
-                  style: BorderStyle.solid,
-                  color: CustomColor.oldGreyColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
             ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            focusedErrorBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 2,
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
             ),
           ),
         ),

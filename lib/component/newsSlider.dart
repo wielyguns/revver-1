@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
@@ -50,7 +51,7 @@ class NewsSlider extends StatelessWidget {
       width: CustomScreen(context).width,
       height: 258,
       child: (news == null)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : ListView.builder(
               physics: BouncingScrollPhysics(),
               shrinkWrap: true,
@@ -162,7 +163,8 @@ class NewsSlider extends StatelessWidget {
               child: Center(
                 child: Text(
                   "Read More",
-                  style: CustomFont(CustomColor.whiteColor, 12, null).font,
+                  style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w600)
+                      .font,
                 ),
               ),
             ),

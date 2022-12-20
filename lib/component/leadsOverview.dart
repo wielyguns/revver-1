@@ -44,8 +44,8 @@ class _LeadsOverviewState extends State<LeadsOverview> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Leads Overview", style: CustomFont.bold16),
-        SpacerHeight(h: 20),
+        // Text("Leads Overview", style: CustomFont.bold16),
+        // SpacerHeight(h: 20),
         ClipRRect(
           borderRadius: BorderRadius.circular(50.0),
           child: Row(

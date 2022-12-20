@@ -67,7 +67,7 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
               SizedBox(height: kToolbarHeight),
               Text(
                 title ??= "",
-                style: CustomFont(CustomColor.whiteColor, 24, FontWeight.bold)
+                style: CustomFont(CustomColor.whiteColor, 32, FontWeight.bold)
                     .font,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,

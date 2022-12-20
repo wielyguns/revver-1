@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
           isPop: true,
         ),
         body: (isLoad)
-            ? Center(child: CircularProgressIndicator())
+            ? Center(child: CupertinoActivityIndicator())
             : SingleChildScrollView(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Form(

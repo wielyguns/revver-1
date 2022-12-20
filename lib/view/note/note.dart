@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
@@ -48,7 +49,7 @@ class _NoteState extends State<Note> {
         isPop: true,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(

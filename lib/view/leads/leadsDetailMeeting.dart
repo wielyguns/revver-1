@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -55,7 +56,7 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: (isLoad)
-            ? Center(child: CircularProgressIndicator())
+            ? Center(child: CupertinoActivityIndicator())
             : (meeting.isEmpty)
                 ? Center(child: Text("Not Found!"))
                 : listWidget(),

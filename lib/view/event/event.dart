@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class _EventState extends State<Event> {
     return Scaffold(
       body: (isLoad)
           ? Center(
-              child: CircularProgressIndicator(),
+              child: CupertinoActivityIndicator(),
             )
           : SafeArea(
               bottom: false,
@@ -63,7 +64,7 @@ class _EventState extends State<Event> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Text("Event", style: CustomFont.heading24),
                   ),
-                  SpacerHeight(h: 20),
+                  SpacerHeight(h: 10),
                   Expanded(
                     child: SfCalendar(
                       todayHighlightColor: CustomColor.brownColor,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
@@ -43,7 +44,7 @@ class _OrderHistoryState extends State<OrderHistory> {
         isPop: true,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SfDataGrid(
               onCellTap: ((details) {
                 if (details.rowColumnIndex.rowIndex != 0) {

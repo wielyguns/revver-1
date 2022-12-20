@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/controller/plan.dart';
@@ -36,7 +37,7 @@ class _PlanState extends State<Plan> {
         isPop: true,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SfPdfViewer.asset(
               "assets/pdf/sample.pdf",
             ),

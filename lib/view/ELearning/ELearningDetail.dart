@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/controller/ELearning.dart';
@@ -68,7 +69,7 @@ class _ELearningDetailState extends State<ELearningDetail> {
         isPop: true,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : (file.contains(".pdf"))
               ? SfPdfViewer.network(file)
               : (file.contains(".mp4"))

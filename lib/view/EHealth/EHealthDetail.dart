@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:go_router/go_router.dart';
@@ -92,7 +93,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
         isPop: true,
       ),
       body: (isLoad)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: [
@@ -247,7 +248,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
                 width: CustomScreen(context).width,
                 height: 210,
                 child: (product == null)
-                    ? Center(child: CircularProgressIndicator())
+                    ? Center(child: CupertinoActivityIndicator())
                     : ListView.builder(
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,

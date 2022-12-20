@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -87,7 +88,7 @@ class _LeadsState extends State<Leads> {
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: (isLoad)
-              ? Center(child: CircularProgressIndicator())
+              ? Center(child: CupertinoActivityIndicator())
               : (lead.isEmpty)
                   ? Center(child: Text("Data lead tidak tersedia."))
                   : SingleChildScrollView(

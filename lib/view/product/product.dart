@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
@@ -64,7 +65,7 @@ class _ProductState extends State<Product> {
               ),
               SpacerHeight(h: 20),
               (isLoad)
-                  ? Center(child: CircularProgressIndicator())
+                  ? Center(child: CupertinoActivityIndicator())
                   : GridView.count(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),

@@ -99,6 +99,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
+                            icon: Icons.person,
                             title: "Full Name",
                             hint: "Your Full Name",
                             isValidator: true,
@@ -106,6 +107,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
+                            icon: Icons.person,
                             title: "Username",
                             hint: "Your Username",
                             isValidator: true,
@@ -113,6 +115,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
+                            icon: Icons.email,
                             title: "Email",
                             hint: "Your Email",
                             isValidator: true,
@@ -120,6 +123,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
+                            icon: Icons.phone,
                             title: "Phone",
                             hint: "Your Phone",
                             isValidator: true,
@@ -127,6 +131,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
+                            icon: Icons.card_travel,
                             title: "Sponsor ID",
                             hint: "Your Sponsor ID",
                             isValidator: false,
@@ -134,6 +139,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           PasswordForm(
+                            icon: Icons.key,
                             title: "Password",
                             hint: "Your Password",
                             visible: password,
@@ -142,6 +148,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           PasswordForm(
+                            icon: Icons.key,
                             title: "Confirm Password",
                             hint: "Your Confirm Password",
                             visible: password,

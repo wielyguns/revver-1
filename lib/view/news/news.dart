@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/header.dart';
@@ -41,7 +42,7 @@ class _NewsState extends State<News> {
         isPop: true,
       ),
       body: (news == null)
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: CupertinoActivityIndicator())
           : ListView.separated(
               itemCount: news.length,
               itemBuilder: (context, index) {
