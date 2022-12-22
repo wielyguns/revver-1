@@ -140,37 +140,34 @@ class _SetDreamState extends State<SetDream> {
                 String date = DateFormat('yyyy-MM-dd').format(dateNow);
                 if (isContain) {
                   //patch
-                  print("patch");
-
-                  // await patchGoal(
-                  //   nameController.text,
-                  //   priceController.text,
-                  //   date,
-                  //   descriptionController.text,
-                  // ).then((val) {
-                  //   if (val['status'] == 200) {
-                  //     customSnackBar(context, false, val['status'].toString());
-                  //     GoRouter.of(context).pop();
-                  //   } else {
-                  //     customSnackBar(context, true, val['status'].toString());
-                  //   }
-                  // });
+                  await patchGoal(
+                    nameController.text,
+                    priceController.text,
+                    date,
+                    descriptionController.text,
+                  ).then((val) {
+                    if (val['status'] == 200) {
+                      customSnackBar(context, false, val['status'].toString());
+                      GoRouter.of(context).pop();
+                    } else {
+                      customSnackBar(context, true, val['status'].toString());
+                    }
+                  });
                 } else {
                   // post
-                  print("post");
-                  // await postGoal(
-                  //   nameController.text,
-                  //   priceController.text,
-                  //   date,
-                  //   descriptionController.text,
-                  // ).then((val) {
-                  //   if (val['status'] == 200) {
-                  //     customSnackBar(context, false, val['status'].toString());
-                  //     GoRouter.of(context).pop();
-                  //   } else {
-                  //     customSnackBar(context, true, val['status'].toString());
-                  //   }
-                  // });
+                  await postGoal(
+                    nameController.text,
+                    priceController.text,
+                    date,
+                    descriptionController.text,
+                  ).then((val) {
+                    if (val['status'] == 200) {
+                      customSnackBar(context, false, val['status'].toString());
+                      GoRouter.of(context).pop();
+                    } else {
+                      customSnackBar(context, true, val['status'].toString());
+                    }
+                  });
                 }
               }
             },
