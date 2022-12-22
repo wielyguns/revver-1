@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/banner.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 // ignore: must_be_immutable

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/event.dart';
+import 'package:revver/controller/meeting.dart';
 import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -20,13 +21,22 @@ class _EventState extends State<Event> {
   _DataSource events;
   List<Appointment> appointment = [];
 
+  // 0: Peronal Event
+  // 1: Lead Meeting
+  // 2: Global Event
+
   getData() async {
-    await getEvent().then((val) {
+    setState(() {
+      appointment = [];
+      events = _DataSource(appointment);
+      isLoad = true;
+    });
+    await getEvent().then((val) async {
       setState(() {
         for (var i = 0; i < val.length; i++) {
           appointment.add(
             Appointment(
-              notes: "0",
+              notes: "2",
               id: val[i].id,
               subject: val[i].name,
               startTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
@@ -35,10 +45,42 @@ class _EventState extends State<Event> {
             ),
           );
         }
-        events = _DataSource(appointment);
-        isLoad = false;
+      });
+      await getMeeting().then((val) {
+        setState(() {
+          for (var i = 0; i < val.length; i++) {
+            appointment.add(
+              Appointment(
+                  notes: val[i].is_meeting.toString(),
+                  id: val[i].id,
+                  subject: val[i].name,
+                  startTime:
+                      DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
+                  endTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
+                  color: (val[i].is_meeting == 0)
+                      ? CustomColor.goldColor
+                      : CustomColor.oldGreyColor),
+            );
+          }
+          events = _DataSource(appointment);
+          isLoad = false;
+        });
       });
     });
+  }
+
+  callbackPE() {
+    if (!GoRouter.of(context).location.contains("/personal-event")) {
+      getData();
+      GoRouter.of(context).removeListener(callbackPE);
+    }
+  }
+
+  callbackLM() {
+    if (!GoRouter.of(context).location.contains("/lead-meeting")) {
+      getData();
+      GoRouter.of(context).removeListener(callbackLM);
+    }
   }
 
   @override
@@ -89,9 +131,17 @@ class _EventState extends State<Event> {
                         int appointmentId = appointment.id;
                         if (appointmentNote == "0") {
                           GoRouter.of(context)
+                              .push("/personal-event/$appointmentId");
+                          GoRouter.of(context).addListener(callbackPE);
+                        }
+                        if (appointmentNote == "1") {
+                          GoRouter.of(context)
+                              .push("/lead-meeting/$appointmentId");
+                          GoRouter.of(context).addListener(callbackLM);
+                        }
+                        if (appointmentNote == "2") {
+                          GoRouter.of(context)
                               .push("/global-event/$appointmentId");
-                        } else {
-                          GoRouter.of(context).push("/personal-event/1");
                         }
                       },
                     ),
@@ -102,7 +152,8 @@ class _EventState extends State<Event> {
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          GoRouter.of(context).push("/personal-event/0");
+          GoRouter.of(context).push("/personal-event/000");
+          GoRouter.of(context).addListener(callbackPE);
         },
         backgroundColor: CustomColor.brownColor,
         child: Icon(Icons.add),

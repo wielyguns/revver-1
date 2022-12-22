@@ -38,7 +38,8 @@ getMeetingDetail(id) async {
   return res;
 }
 
-postMeeting(String lead_id, name, date, description, location) async {
+postMeeting(
+    String lead_id, name, date, description, location, is_meeting) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   String url = "https://admin.revveracademy.com/api/v1/meeting";
@@ -52,13 +53,15 @@ postMeeting(String lead_id, name, date, description, location) async {
     "date": date,
     "description": description,
     "location": location,
+    "is_meeting": is_meeting,
   });
   var res = jsonDecode(response.body);
 
   return res;
 }
 
-patchMeeting(String id, lead_id, name, date, description, location) async {
+patchMeeting(
+    String id, lead_id, name, date, description, location, is_meeting) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   String url = "https://admin.revveracademy.com/api/v1/meeting/$id";
@@ -72,6 +75,7 @@ patchMeeting(String id, lead_id, name, date, description, location) async {
     "date": date,
     "description": description,
     "location": location,
+    "is_meeting": is_meeting,
   });
   var res = jsonDecode(response.body);
 

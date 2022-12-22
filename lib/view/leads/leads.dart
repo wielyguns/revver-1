@@ -144,13 +144,16 @@ class _LeadsState extends State<Leads> {
         return Column(
           children: [
             leadsListWidget(
-              ld.id,
-              ld.name,
-              ld.city_id,
-              ld.status,
-              ld.phone,
-              ld.image,
-            ),
+                ld.id,
+                ld.name,
+                ld.city_id,
+                ld.status,
+                ld.phone,
+                ld.image,
+                ld.status_ambition,
+                ld.status_financial,
+                ld.status_supel,
+                ld.status_teachable),
             SpacerHeight(h: 10),
           ],
         );
@@ -158,10 +161,27 @@ class _LeadsState extends State<Leads> {
     );
   }
 
-  leadsListWidget(id, name, city_id, status, phone, image) {
+  leadsListWidget(id, name, city_id, status, phone, image, ambition, financial,
+      supel, teachable) {
     final Uri smsUri = Uri(scheme: 'sms', path: phone);
     final Uri telUri = Uri(scheme: 'tel', path: phone);
     final Uri waUri = Uri.parse("whatsapp://send?phone=$phone");
+    String statusX;
+    double x = double.parse(ambition) +
+        double.parse(financial) +
+        double.parse(supel) +
+        double.parse(teachable);
+    if (x <= 4) {
+      statusX = "Under Avarage";
+    }
+
+    if (x > 4 && x <= 8) {
+      statusX = "Avarage";
+    }
+
+    if (x > 8) {
+      statusX = "Potential";
+    }
     return Row(
       children: [
         GestureDetector(
@@ -206,13 +226,14 @@ class _LeadsState extends State<Leads> {
                           color: CustomColor.blueColor,
                           size: 15,
                         ),
+                        SpacerWidth(w: 2),
                         Text(
                           status ??= "Cold",
                           style: CustomFont.regular10,
                         ),
                       ],
                     ),
-                    SpacerWidth(w: 5),
+                    SpacerWidth(w: 10),
                     Row(
                       children: [
                         Icon(
@@ -220,8 +241,9 @@ class _LeadsState extends State<Leads> {
                           color: CustomColor.brownColor,
                           size: 15,
                         ),
+                        SpacerWidth(w: 2),
                         Text(
-                          "Warm",
+                          statusX,
                           style: CustomFont.regular10,
                         ),
                       ],

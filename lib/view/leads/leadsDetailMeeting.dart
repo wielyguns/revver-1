@@ -24,9 +24,10 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
   String lead_id;
 
   getData() async {
-    await getMeeting().then((val) {
+    await getMeeting().then((val) async {
       setState(() {
-        List<Meeting> x = val.where((e) => e.lead_id == widget.id).toList();
+        List<Meeting> y = val.where((e) => e.is_meeting == 1).toList();
+        List<Meeting> x = y.where((e) => e.lead_id == widget.id).toList();
         meeting = x;
 
         isLoad = false;

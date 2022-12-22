@@ -11,6 +11,7 @@ class Meeting {
   String date;
   String description;
   String location;
+  int is_meeting;
   Meeting({
     this.id,
     this.lead_id,
@@ -19,6 +20,7 @@ class Meeting {
     this.date,
     this.description,
     this.location,
+    this.is_meeting,
   });
 
   @override
@@ -35,6 +37,7 @@ class Meeting {
       'date': date,
       'description': description,
       'location': location,
+      'is_meeting': is_meeting,
     };
   }
 
@@ -47,6 +50,7 @@ class Meeting {
       date: map['date'] as String,
       description: map['description'] as String,
       location: map['location'] as String,
+      is_meeting: map['is_meeting'] as int,
     );
   }
 

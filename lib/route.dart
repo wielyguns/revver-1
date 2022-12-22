@@ -18,6 +18,7 @@ import 'package:revver/view/auth/registration.dart';
 import 'package:revver/view/companyProfile/companyProfile.dart';
 import 'package:revver/view/event/event.dart';
 import 'package:revver/view/event/globalEvent.dart';
+import 'package:revver/view/event/leadMeeting.dart';
 import 'package:revver/view/event/personalEvent.dart';
 import 'package:revver/view/home/home.dart';
 import 'package:revver/view/homepage.dart';
@@ -76,11 +77,19 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-        path: '/personal-event/:id',
-        builder: (context, state) {
-          int id = int.parse(state.params['id']);
-          return PersonalEvent(id: id);
-        }),
+      path: '/personal-event/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return PersonalEvent(id: id);
+      },
+    ),
+    GoRoute(
+      path: '/lead-meeting/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return LeadMeeting(id: id);
+      },
+    ),
     GoRoute(
       path: '/leads',
       builder: (context, state) => Leads(),

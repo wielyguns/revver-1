@@ -14,16 +14,15 @@ import 'package:revver/controller/leads.dart';
 import 'package:revver/controller/meeting.dart';
 import 'package:revver/globals.dart';
 
-class LeadsDetailMeetingForm extends StatefulWidget {
-  LeadsDetailMeetingForm({Key key, this.id, this.lead_id}) : super(key: key);
+class LeadMeeting extends StatefulWidget {
+  LeadMeeting({Key key, this.id}) : super(key: key);
   int id;
-  int lead_id;
 
   @override
-  State<LeadsDetailMeetingForm> createState() => _LeadsDetailMeetingFormState();
+  State<LeadMeeting> createState() => _LeadMeetingState();
 }
 
-class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
+class _LeadMeetingState extends State<LeadMeeting> {
   bool isLoad = true;
   final formKey = GlobalKey<FormState>();
   DateTime dateNow = DateTime.now();
@@ -44,6 +43,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
         dateNow = DateFormat("yyyy-MM-dd hh:mm:ss").parse(val['data']['date']);
         eventDescriptionController.text = val['data']['description'];
         eventLocationController.text = val['data']['location'];
+        lead_id = val['data']['lead_id'].toString();
       });
       await getLeadDetail(lead_id).then((val) {
         setState(() {
@@ -65,9 +65,6 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
 
   @override
   void initState() {
-    setState(() {
-      lead_id = widget.lead_id.toString();
-    });
     if (widget.id != 000) {
       getData(widget.id);
     } else {
