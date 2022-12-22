@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:http/http.dart' as http;
 import 'package:revver/model/goal.dart';
 import 'dart:convert';
@@ -34,4 +36,58 @@ getReferralRate() async {
   }
 
   return list;
+}
+
+deleteGoal() async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/goal/1";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.delete(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  });
+  var res = jsonDecode(response.body);
+
+  return res;
+}
+
+postGoal(
+    String target_title, target_point, target_date, target_description) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/goal";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.post(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  }, body: {
+    "target_title": target_title,
+    "target_point": target_point,
+    "target_date": target_date,
+    "target_description": target_description,
+  });
+  var res = jsonDecode(response.body);
+
+  return res;
+}
+
+patchGoal(
+    String target_title, target_point, target_date, target_description) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/goal/1";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.patch(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  }, body: {
+    "target_title": target_title,
+    "target_point": target_point,
+    "target_date": target_date,
+    "target_description": target_description,
+  });
+  var res = jsonDecode(response.body);
+
+  return res;
 }

@@ -16,7 +16,8 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
       this.route,
       this.image,
       this.height,
-      this.offMiddleLogo})
+      this.offMiddleLogo,
+      this.callback})
       : super(key: key);
   bool isPop;
   String title;
@@ -25,6 +26,7 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
   String image;
   double height;
   bool offMiddleLogo;
+  Function callback;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +89,7 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
             : GestureDetector(
                 onTap: () {
                   GoRouter.of(context).push(route);
+                  callback;
                 },
                 child: Padding(
                   padding: EdgeInsets.only(right: 10),

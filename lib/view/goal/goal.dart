@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -32,30 +33,61 @@ class _GoalState extends State<Goal> {
 
   DateTime dnow = DateFormat('yyyy-MM-dd').parse(DateTime.now().toString());
   Duration duration;
-  String tdate;
+  String tdate = "0";
 
   getData() async {
+    setState(() {
+      isLoad = true;
+    });
     await getReferralRate().then((val) async {
       setState(() {
         rrate = val;
       });
       await getGoal().then((val) {
-        setState(() {
-          target_title = val['data']['target_title'];
-          target_point = val['data']['target_point'];
-          target_date =
-              DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
-          target_description = val['data']['target_description'];
-          percentage = val['data']['percentage'];
-          for (var data in val['data']['goal_history'] as List) {
-            goal.add(g.Goal.fromJson(jsonEncode(data)));
-          }
-          duration = target_date.difference(dnow);
-          tdate = duration.inDays.toString();
-          isLoad = false;
-        });
+        if (val['status'] == 200) {
+          setState(() {
+            target_title = val['data']['target_title'];
+            target_point = val['data']['target_point'];
+            target_date =
+                DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
+            target_description = val['data']['target_description'];
+            percentage = val['data']['percentage'];
+            for (var data in val['data']['goal_history'] as List) {
+              goal.add(g.Goal.fromJson(jsonEncode(data)));
+            }
+            duration = target_date.difference(dnow);
+            tdate = duration.inDays.toString();
+            isLoad = false;
+          });
+        } else {
+          setState(() {
+            target_title = "";
+            target_point = 0;
+            target_date = dnow;
+            target_description = "";
+            percentage = 0;
+            goal = [];
+            duration = target_date.difference(dnow);
+            tdate = duration.inDays.toString();
+            isLoad = false;
+          });
+        }
       });
     });
+  }
+
+  callbackSD() {
+    if (!GoRouter.of(context).location.contains("/set-dream")) {
+      getData();
+      GoRouter.of(context).removeListener(callbackSD);
+    }
+  }
+
+  callbackRP() {
+    if (!GoRouter.of(context).location.contains("/record-progress")) {
+      getData();
+      GoRouter.of(context).removeListener(callbackRP);
+    }
   }
 
   @override
@@ -72,6 +104,7 @@ class _GoalState extends State<Goal> {
         isPop: true,
         svgName: "pen-to-square-solid.svg",
         route: '/set-dream',
+        callback: callbackSD(),
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
@@ -116,7 +149,7 @@ class _GoalState extends State<Goal> {
                     ],
                   ),
                   Text(
-                    target_title ??= "",
+                    target_title ??= "Your Dream",
                     style:
                         CustomFont(CustomColor.blackColor, 20, FontWeight.w700)
                             .font,
@@ -287,7 +320,10 @@ class _GoalState extends State<Goal> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: CustomButton(
           title: "Record Progress",
-          func: () async {},
+          func: () async {
+            GoRouter.of(context).push("/record-progress");
+            callbackRP();
+          },
         ),
       ),
     );
