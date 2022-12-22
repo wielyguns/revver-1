@@ -93,9 +93,7 @@ class _EventState extends State<Event> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: (isLoad)
-          ? Center(
-              child: CupertinoActivityIndicator(),
-            )
+          ? Center(child: CupertinoActivityIndicator())
           : SafeArea(
               bottom: false,
               child: Column(

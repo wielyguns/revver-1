@@ -44,7 +44,8 @@ class IconTextButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset("assets/svg/$iconTitle"),
+          SvgPicture.asset("assets/svg/$iconTitle",
+              color: CustomColor.whiteColor),
           SpacerWidth(w: 10),
           Text(
             title,
