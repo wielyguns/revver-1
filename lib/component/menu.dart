@@ -28,8 +28,7 @@ class HomeMenu extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              detailMenu(
-                  context, "assets/svg/goals-new.svg", "Goals", "/e-learning"),
+              detailMenu(context, "assets/svg/goals-new.svg", "Goals", "/goal"),
               detailMenu(context, "assets/svg/support-new.svg", "Support",
                   "/e-learning"),
               detailMenu(

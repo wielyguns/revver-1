@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
           ),
         ),
         bottomNavigationBar: Container(
-          color: CustomColor.whiteColor,
+          color: CustomColor.backgroundColor,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: CustomButton(
             title: "Save",

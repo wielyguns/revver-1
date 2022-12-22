@@ -20,6 +20,7 @@ import 'package:revver/view/event/event.dart';
 import 'package:revver/view/event/globalEvent.dart';
 import 'package:revver/view/event/leadMeeting.dart';
 import 'package:revver/view/event/personalEvent.dart';
+import 'package:revver/view/goal/goal.dart';
 import 'package:revver/view/home/home.dart';
 import 'package:revver/view/homepage.dart';
 import 'package:revver/view/leads/leadDetailMeetingForm.dart';
@@ -268,6 +269,10 @@ final GoRouter router = GoRouter(
             age: age,
             disease_id: disease_id);
       },
+    ),
+    GoRoute(
+      path: '/goal',
+      builder: (context, state) => Goal(),
     ),
   ],
 );
