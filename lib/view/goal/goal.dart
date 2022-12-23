@@ -188,8 +188,11 @@ class _GoalState extends State<Goal> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: 5,
+                    itemCount: rrate.length,
                     itemBuilder: ((context, index) {
+                      g.ReferralRate rate = rrate[index];
+                      double x = rate.price * (rate.rate / 100);
+                      print(x);
                       return Stack(
                         alignment: AlignmentDirectional.centerEnd,
                         children: [
