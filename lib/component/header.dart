@@ -89,7 +89,9 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
             : GestureDetector(
                 onTap: () {
                   GoRouter.of(context).push(route);
-                  callback;
+                  if (callback != null) {
+                    GoRouter.of(context).addListener(callback);
+                  }
                 },
                 child: Padding(
                   padding: EdgeInsets.only(right: 10),

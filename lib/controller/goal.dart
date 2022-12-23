@@ -91,3 +91,20 @@ patchGoal(
 
   return res;
 }
+
+postRecordProgress(String rrate_id, qty) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/goal/progress/1";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.post(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  }, body: {
+    "referral_rate_id[0]": rrate_id,
+    "qty[0]": qty,
+  });
+  var res = jsonDecode(response.body);
+
+  return res;
+}

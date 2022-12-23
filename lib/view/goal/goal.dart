@@ -23,6 +23,7 @@ class Goal extends StatefulWidget {
 
 class _GoalState extends State<Goal> {
   bool isLoad = true;
+  bool isDream = false;
   String target_title;
   int target_point;
   DateTime target_date;
@@ -37,6 +38,8 @@ class _GoalState extends State<Goal> {
 
   getData() async {
     setState(() {
+      goal.clear();
+      isDream = false;
       isLoad = true;
     });
     await getReferralRate().then((val) async {
@@ -57,14 +60,16 @@ class _GoalState extends State<Goal> {
             }
             duration = target_date.difference(dnow);
             tdate = duration.inDays.toString();
+            isDream = true;
             isLoad = false;
           });
-        } else {
+        }
+        if (val['status'] == 500) {
           setState(() {
-            target_title = "";
-            target_point = 0;
+            target_title = null;
+            target_point = null;
+            target_description = null;
             target_date = dnow;
-            target_description = "";
             percentage = 0;
             goal = [];
             duration = target_date.difference(dnow);
@@ -104,7 +109,7 @@ class _GoalState extends State<Goal> {
         isPop: true,
         svgName: "pen-to-square-solid.svg",
         route: '/set-dream',
-        callback: callbackSD(),
+        callback: () => callbackSD(),
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
@@ -262,7 +267,10 @@ class _GoalState extends State<Goal> {
                   ),
                   SpacerHeight(h: 10),
                   (goal.isEmpty)
-                      ? Text("No Record Progress!")
+                      ? Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text("No Record Progress!"),
+                        )
                       : ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
@@ -315,17 +323,19 @@ class _GoalState extends State<Goal> {
                 ],
               ),
             ),
-      bottomNavigationBar: Container(
-        color: CustomColor.backgroundColor,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: CustomButton(
-          title: "Record Progress",
-          func: () async {
-            GoRouter.of(context).push("/record-progress");
-            callbackRP();
-          },
-        ),
-      ),
+      bottomNavigationBar: (!isDream)
+          ? SizedBox()
+          : Container(
+              color: CustomColor.backgroundColor,
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: CustomButton(
+                title: "Record Progress",
+                func: () async {
+                  GoRouter.of(context).push("/record-progress");
+                  GoRouter.of(context).addListener(callbackRP);
+                },
+              ),
+            ),
     );
   }
 }
