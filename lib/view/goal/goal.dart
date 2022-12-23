@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -170,13 +171,13 @@ class _GoalState extends State<Goal> {
                     color: CustomColor.brownColor,
                     height: 40,
                   ),
-                  Text(
-                    "Target jaringan: 2800 kanan | 2800 kiri",
-                    style:
-                        CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
-                            .font,
-                  ),
-                  SpacerHeight(h: 10),
+                  // Text(
+                  //   "Target jaringan: 2800 kanan | 2800 kiri",
+                  //   style:
+                  //       CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
+                  //           .font,
+                  // ),
+                  // SpacerHeight(h: 10),
                   Text(
                     "Perhitungan dibawah hanya diambil dari bonus referral (Sponsor):",
                     textAlign: TextAlign.center,
@@ -192,20 +193,29 @@ class _GoalState extends State<Goal> {
                     itemBuilder: ((context, index) {
                       g.ReferralRate rate = rrate[index];
                       double x = rate.price * (rate.rate / 100);
-                      print(x);
+                      double y = target_point / x;
+                      double z = y / double.parse(tdate);
+                      if (z < 1) {
+                        z = 1;
+                      }
+                      String u = z.toStringAsFixed(0);
+                      String nameRate = rate.name;
+                      Color cl =
+                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+                              .withOpacity(1.0);
                       return Stack(
                         alignment: AlignmentDirectional.centerEnd,
                         children: [
                           Divider(
                             endIndent: 5,
                             thickness: 10,
-                            color: Colors.red,
+                            color: cl,
                           ),
                           Container(
                             height: 35,
                             width: 35,
                             decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: cl,
                                 borderRadius: BorderRadius.circular(50)),
                             child: Center(
                               child: Text(
@@ -221,14 +231,15 @@ class _GoalState extends State<Goal> {
                               Row(
                                 children: [
                                   Text(
-                                    "1000 Platinum",
+                                    "$u $nameRate",
+                                    // "",
                                     style: CustomFont(CustomColor.blackColor,
                                             18, FontWeight.w700)
                                         .font,
                                   ),
                                   SpacerWidth(w: 10),
                                   Text(
-                                    "per Bulan",
+                                    "per Days",
                                     style: CustomFont(CustomColor.blackColor,
                                             16, FontWeight.w300)
                                         .font,
