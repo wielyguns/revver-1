@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/flutter_cart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -19,6 +20,7 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
+  var cart = FlutterCart();
   TextEditingController searchController = TextEditingController();
   List product;
   bool isLoad = true;
@@ -202,17 +204,24 @@ class _ProductState extends State<Product> {
           ),
           Padding(
             padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            child: Container(
-              height: 30,
-              decoration: BoxDecoration(
-                color: CustomColor.brownColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(
-                  "Add to Cart",
-                  style: CustomFont(CustomColor.whiteColor, 10, FontWeight.w600)
-                      .font,
+            child: InkWell(
+              onTap: () {
+                cart.addToCart(
+                    productId: id, unitPrice: price, productName: name);
+              },
+              child: Container(
+                height: 30,
+                decoration: BoxDecoration(
+                  color: CustomColor.brownColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    "Add to Cart",
+                    style:
+                        CustomFont(CustomColor.whiteColor, 10, FontWeight.w600)
+                            .font,
+                  ),
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/flutter_cart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/spacer.dart';
@@ -9,8 +10,12 @@ import 'package:revver/model/product.dart';
 
 // ignore: must_be_immutable
 class ProductSlider extends StatelessWidget {
-  ProductSlider({Key key, this.product}) : super(key: key);
+  ProductSlider({Key key, this.product, this.callback, this.callbackPop})
+      : super(key: key);
   List product;
+  var cart = FlutterCart();
+  Function(String x) callback;
+  Function callbackPop;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,7 @@ class ProductSlider extends StatelessWidget {
             ),
             onTap: () {
               GoRouter.of(context).push("/product");
+              GoRouter.of(context).addListener(callbackPop);
             },
           ),
         ],
@@ -150,6 +156,11 @@ class ProductSlider extends StatelessWidget {
                   ),
                   SpacerWidth(w: 20),
                   InkWell(
+                    onTap: () {
+                      cart.addToCart(
+                          productId: id, unitPrice: price, productName: name);
+                      callback("x");
+                    },
                     child: Container(
                       height: 30,
                       width: 30,

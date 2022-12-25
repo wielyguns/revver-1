@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/component/bannerSlider.dart';
@@ -20,6 +21,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String cartCounter = "99";
   String notificationCounter = "99";
+  var cart = FlutterCart();
 
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
   String name;
@@ -61,6 +63,13 @@ class _HomeState extends State<Home> {
     });
   }
 
+  callback() {
+    if (!GoRouter.of(context).location.contains("xxx")) {
+      setState(() {});
+      GoRouter.of(context).removeListener(callback);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -83,7 +92,9 @@ class _HomeState extends State<Home> {
             children: [
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context).push("/cart");
+                  // GoRouter.of(context).push("/cart");
+                  cart.deleteAllCart();
+                  setState(() {});
                 },
                 child: Stack(
                   children: [
@@ -108,7 +119,7 @@ class _HomeState extends State<Home> {
                         ),
                         child: Center(
                           child: Text(
-                            cartCounter,
+                            cart.getCartItemCount().toString(),
                             style: CustomFont.badge,
                             textAlign: TextAlign.center,
                           ),
@@ -198,7 +209,13 @@ class _HomeState extends State<Home> {
                 child: HomeMenu(),
               ),
               SpacerHeight(h: 40),
-              ProductSlider(product: product),
+              ProductSlider(
+                product: product,
+                callback: (x) {
+                  setState(() {});
+                },
+                callbackPop: () => callback(),
+              ),
               SpacerHeight(h: 40),
               NewsSlider(news: news),
               SpacerHeight(h: 20),

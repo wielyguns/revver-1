@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/button.dart';
@@ -22,6 +23,8 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  var cart = FlutterCart();
+
   int product_id;
   String image;
   String name;
@@ -424,8 +427,11 @@ class _ProductDetailState extends State<ProductDetail> {
         color: CustomColor.backgroundColor,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: CustomButton(
-          title: "+ Keranjang",
-          func: () {},
+          title: "+ Add to Cart",
+          func: () {
+            cart.addToCart(
+                productId: product_id, unitPrice: price, productName: name);
+          },
         ),
       ),
     );
