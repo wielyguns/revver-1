@@ -186,73 +186,80 @@ class _GoalState extends State<Goal> {
                             .font,
                   ),
                   SpacerHeight(h: 20),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: rrate.length,
-                    itemBuilder: ((context, index) {
-                      g.ReferralRate rate = rrate[index];
-                      double x = rate.price * (rate.rate / 100);
-                      double y = target_point / x;
-                      double z = y / double.parse(tdate);
-                      if (z < 1) {
-                        z = 1;
-                      }
-                      String u = z.toStringAsFixed(0);
-                      String nameRate = rate.name;
-                      Color cl =
-                          Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-                              .withOpacity(1.0);
-                      return Stack(
-                        alignment: AlignmentDirectional.centerEnd,
-                        children: [
-                          Divider(
-                            endIndent: 5,
-                            thickness: 10,
-                            color: cl,
-                          ),
-                          Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                                color: cl,
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Center(
-                              child: Text(
-                                "or",
-                                style: CustomFont(CustomColor.whiteColor, 12,
-                                        FontWeight.w700)
-                                    .font,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "$u $nameRate",
-                                    // "",
-                                    style: CustomFont(CustomColor.blackColor,
-                                            18, FontWeight.w700)
-                                        .font,
+                  (!isDream)
+                      ? SizedBox()
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: rrate.length,
+                          itemBuilder: ((context, index) {
+                            g.ReferralRate rate = rrate[index];
+                            double x = rate.price * (rate.rate / 100);
+                            double y = target_point / x;
+                            double z = y / double.parse(tdate);
+                            if (z < 1) {
+                              z = 1;
+                            }
+                            String u = z.toStringAsFixed(0);
+                            String nameRate = rate.name;
+                            Color cl = Color(
+                                    (math.Random().nextDouble() * 0xFFFFFF)
+                                        .toInt())
+                                .withOpacity(1.0);
+                            return Stack(
+                              alignment: AlignmentDirectional.centerEnd,
+                              children: [
+                                Divider(
+                                  endIndent: 5,
+                                  thickness: 10,
+                                  color: cl,
+                                ),
+                                Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                      color: cl,
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Text(
+                                      "or",
+                                      style: CustomFont(CustomColor.whiteColor,
+                                              12, FontWeight.w700)
+                                          .font,
+                                    ),
                                   ),
-                                  SpacerWidth(w: 10),
-                                  Text(
-                                    "per Days",
-                                    style: CustomFont(CustomColor.blackColor,
-                                            16, FontWeight.w300)
-                                        .font,
-                                  )
-                                ],
-                              ),
-                              SpacerHeight(h: 35),
-                            ],
-                          ),
-                        ],
-                      );
-                    }),
-                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "$u $nameRate",
+                                          // "",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  18,
+                                                  FontWeight.w700)
+                                              .font,
+                                        ),
+                                        SpacerWidth(w: 10),
+                                        Text(
+                                          "per Days",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  16,
+                                                  FontWeight.w300)
+                                              .font,
+                                        )
+                                      ],
+                                    ),
+                                    SpacerHeight(h: 35),
+                                  ],
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
                   SpacerHeight(h: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
