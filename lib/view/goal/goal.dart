@@ -170,13 +170,13 @@ class _GoalState extends State<Goal> {
                     color: CustomColor.brownColor,
                     height: 40,
                   ),
-                  Text(
-                    "Target jaringan: 2800 kanan | 2800 kiri",
-                    style:
-                        CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
-                            .font,
-                  ),
-                  SpacerHeight(h: 10),
+                  // Text(
+                  //   "Target jaringan: 2800 kanan | 2800 kiri",
+                  //   style:
+                  //       CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
+                  //           .font,
+                  // ),
+                  // SpacerHeight(h: 10),
                   Text(
                     "Perhitungan dibawah hanya diambil dari bonus referral (Sponsor):",
                     textAlign: TextAlign.center,
@@ -185,63 +185,68 @@ class _GoalState extends State<Goal> {
                             .font,
                   ),
                   SpacerHeight(h: 20),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: rrate.length,
-                    itemBuilder: ((context, index) {
-                      g.ReferralRate rate = rrate[index];
-                      double x = rate.price * (rate.rate / 100);
-                      print(x);
-                      return Stack(
-                        alignment: AlignmentDirectional.centerEnd,
-                        children: [
-                          Divider(
-                            endIndent: 5,
-                            thickness: 10,
-                            color: Colors.red,
-                          ),
-                          Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Center(
-                              child: Text(
-                                "or",
-                                style: CustomFont(CustomColor.whiteColor, 12,
-                                        FontWeight.w700)
-                                    .font,
-                              ),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "1000 Platinum",
-                                    style: CustomFont(CustomColor.blackColor,
-                                            18, FontWeight.w700)
-                                        .font,
+                  (!isDream)
+                      ? SizedBox()
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: rrate.length,
+                          itemBuilder: ((context, index) {
+                            g.ReferralRate rate = rrate[index];
+                            double x = rate.price * (rate.rate / 100);
+                            return Stack(
+                              alignment: AlignmentDirectional.centerEnd,
+                              children: [
+                                Divider(
+                                  endIndent: 5,
+                                  thickness: 10,
+                                  color: Colors.red,
+                                ),
+                                Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(50)),
+                                  child: Center(
+                                    child: Text(
+                                      "or",
+                                      style: CustomFont(CustomColor.whiteColor,
+                                              12, FontWeight.w700)
+                                          .font,
+                                    ),
                                   ),
-                                  SpacerWidth(w: 10),
-                                  Text(
-                                    "per Bulan",
-                                    style: CustomFont(CustomColor.blackColor,
-                                            16, FontWeight.w300)
-                                        .font,
-                                  )
-                                ],
-                              ),
-                              SpacerHeight(h: 35),
-                            ],
-                          ),
-                        ],
-                      );
-                    }),
-                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "1000 Platinum",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  18,
+                                                  FontWeight.w700)
+                                              .font,
+                                        ),
+                                        SpacerWidth(w: 10),
+                                        Text(
+                                          "per Bulan",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  16,
+                                                  FontWeight.w300)
+                                              .font,
+                                        )
+                                      ],
+                                    ),
+                                    SpacerHeight(h: 35),
+                                  ],
+                                ),
+                              ],
+                            );
+                          }),
+                        ),
                   SpacerHeight(h: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
