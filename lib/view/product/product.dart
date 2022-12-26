@@ -56,6 +56,7 @@ class _ProductState extends State<Product> {
           isPop: true,
         ),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Column(
             children: [
@@ -207,7 +208,10 @@ class _ProductState extends State<Product> {
             child: InkWell(
               onTap: () {
                 cart.addToCart(
-                    productId: id, unitPrice: price, productName: name);
+                    productId: id,
+                    unitPrice: price,
+                    productName: name,
+                    productDetailsObject: image);
               },
               child: Container(
                 height: 30,

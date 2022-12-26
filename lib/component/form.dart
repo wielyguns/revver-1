@@ -486,16 +486,28 @@ class SearchForm extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           fillColor: CustomColor.whiteColor,
-          suffixIcon: IconButton(
-            onPressed: (() {
-              controller.clear();
-              callback();
-            }),
-            icon: Icon(
-              Icons.clear,
-              color: CustomColor.brownColor,
-            ),
-          ),
+          suffixIcon: (controller.text != "")
+              ? IconButton(
+                  onPressed: (() {
+                    controller.clear();
+                    callback();
+                    FocusScope.of(context).unfocus();
+                  }),
+                  icon: Icon(
+                    Icons.clear,
+                    color: CustomColor.brownColor,
+                  ),
+                )
+              : IconButton(
+                  onPressed: (() {
+                    callback();
+                    FocusScope.of(context).unfocus();
+                  }),
+                  icon: Icon(
+                    Icons.search,
+                    color: CustomColor.brownColor,
+                  ),
+                ),
           hintText: "Search",
           hintStyle:
               CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,

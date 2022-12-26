@@ -158,7 +158,10 @@ class ProductSlider extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       cart.addToCart(
-                          productId: id, unitPrice: price, productName: name);
+                          productId: id,
+                          unitPrice: price,
+                          productName: name,
+                          productDetailsObject: gambar);
                       callback("x");
                     },
                     child: Container(

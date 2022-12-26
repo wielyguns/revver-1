@@ -93,6 +93,7 @@ class _LeadsState extends State<Leads> {
               : (lead.isEmpty)
                   ? Center(child: Text("Data lead tidak tersedia."))
                   : SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

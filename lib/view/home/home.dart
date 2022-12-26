@@ -104,27 +104,27 @@ class _HomeState extends State<Home> {
                         height: 20,
                       ),
                     ),
-                    Positioned(
-                      right: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 15,
-                          minHeight: 15,
-                        ),
-                        child: Center(
-                          child: Text(
-                            cart.getCartItemCount().toString(),
-                            style: CustomFont.badge,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    )
+                    // Positioned(
+                    //   right: 0,
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(1),
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.red,
+                    //       borderRadius: BorderRadius.circular(10),
+                    //     ),
+                    //     constraints: const BoxConstraints(
+                    //       minWidth: 15,
+                    //       minHeight: 15,
+                    //     ),
+                    //     child: Center(
+                    //       child: Text(
+                    //         cart.getCartItemCount().toString(),
+                    //         style: CustomFont.badge,
+                    //         textAlign: TextAlign.center,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -142,27 +142,27 @@ class _HomeState extends State<Home> {
                         height: 20,
                       ),
                     ),
-                    Positioned(
-                      right: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 15,
-                          minHeight: 15,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '99',
-                            style: CustomFont.badge,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    )
+                    // Positioned(
+                    //   right: 0,
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(1),
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.red,
+                    //       borderRadius: BorderRadius.circular(10),
+                    //     ),
+                    //     constraints: const BoxConstraints(
+                    //       minWidth: 15,
+                    //       minHeight: 15,
+                    //     ),
+                    //     child: Center(
+                    //       child: Text(
+                    //         '99',
+                    //         style: CustomFont.badge,
+                    //         textAlign: TextAlign.center,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),

@@ -36,6 +36,7 @@ import 'package:revver/view/note/note.dart';
 import 'package:revver/view/note/noteDetail.dart';
 import 'package:revver/view/notifications/notifications.dart';
 import 'package:revver/view/order/cart.dart';
+import 'package:revver/view/order/checkout.dart';
 import 'package:revver/view/order/invoice.dart';
 import 'package:revver/view/plan/plan.dart';
 import 'package:revver/view/product/product.dart';
@@ -169,6 +170,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/cart',
       builder: (context, state) => Cart(),
+    ),
+    GoRoute(
+      path: '/checkout',
+      builder: (context, state) => Checkout(),
     ),
     GoRoute(
       path: '/invoice/:id/:isHistory',

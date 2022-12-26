@@ -430,7 +430,10 @@ class _ProductDetailState extends State<ProductDetail> {
           title: "+ Add to Cart",
           func: () {
             cart.addToCart(
-                productId: product_id, unitPrice: price, productName: name);
+                productId: product_id,
+                unitPrice: price,
+                productName: name,
+                productDetailsObject: image);
           },
         ),
       ),

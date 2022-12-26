@@ -28,30 +28,51 @@ class CustomButton extends StatelessWidget {
 // ignore: must_be_immutable
 class IconTextButton extends StatelessWidget {
   IconTextButton(
-      {Key key, this.title, this.iconTitle, this.func, this.buttonColor})
+      {Key key,
+      this.title,
+      this.iconTitle,
+      this.func,
+      this.buttonColor,
+      this.borderColor,
+      this.textColor})
       : super(key: key);
   final String title;
   final String iconTitle;
   final Function func;
   Color buttonColor;
+  Color borderColor;
+  Color textColor;
 
   @override
   Widget build(BuildContext context) {
     buttonColor ??= CustomColor.brownColor;
-    return CupertinoButton(
-      onPressed: func,
-      color: buttonColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset("assets/svg/$iconTitle",
-              color: CustomColor.whiteColor),
-          SpacerWidth(w: 10),
-          Text(
-            title,
-            style: CustomFont.medium16,
-          ),
-        ],
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: (borderColor != null)
+              ? Border.all(color: borderColor)
+              : Border.all(width: 0, color: buttonColor)),
+      child: CupertinoButton(
+        onPressed: func,
+        color: buttonColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (iconTitle != null)
+                ? SvgPicture.asset("assets/svg/$iconTitle",
+                    color: CustomColor.whiteColor)
+                : SizedBox(),
+            (iconTitle != null) ? SpacerWidth(w: 10) : SizedBox(),
+            Text(
+              title,
+              style: CustomFont(
+                      (textColor != null) ? textColor : CustomColor.whiteColor,
+                      16,
+                      FontWeight.w600)
+                  .font,
+            ),
+          ],
+        ),
       ),
     );
   }
