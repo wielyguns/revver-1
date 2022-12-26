@@ -26,6 +26,7 @@ class _EventState extends State<Event> {
   // 2: Global Event
 
   getData() async {
+    if (!mounted) return;
     setState(() {
       appointment = [];
       events = _DataSource(appointment);

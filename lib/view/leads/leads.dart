@@ -34,6 +34,7 @@ class _LeadsState extends State<Leads> {
   double underAvarage = 0;
 
   getData() async {
+    if (!mounted) return;
     setState(() {
       isLoad = true;
     });

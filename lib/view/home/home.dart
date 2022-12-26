@@ -92,9 +92,8 @@ class _HomeState extends State<Home> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // GoRouter.of(context).push("/cart");
-                  cart.deleteAllCart();
-                  setState(() {});
+                  GoRouter.of(context).push("/cart");
+                  GoRouter.of(context).addListener(callback());
                 },
                 child: Stack(
                   children: [
