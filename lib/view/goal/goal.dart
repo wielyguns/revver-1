@@ -3,7 +3,6 @@
 import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +37,7 @@ class _GoalState extends State<Goal> {
   String tdate = "0";
 
   getData() async {
+    if (!mounted) return;
     setState(() {
       goal.clear();
       isDream = false;
@@ -82,17 +82,10 @@ class _GoalState extends State<Goal> {
     });
   }
 
-  callbackSD() {
-    if (!GoRouter.of(context).location.contains("/set-dream")) {
+  callback() {
+    if (!GoRouter.of(context).location.contains("xxx")) {
       getData();
-      GoRouter.of(context).removeListener(callbackSD);
-    }
-  }
-
-  callbackRP() {
-    if (!GoRouter.of(context).location.contains("/record-progress")) {
-      getData();
-      GoRouter.of(context).removeListener(callbackRP);
+      GoRouter.of(context).removeListener(callback);
     }
   }
 
@@ -110,7 +103,7 @@ class _GoalState extends State<Goal> {
         isPop: true,
         svgName: "pen-to-square-solid.svg",
         route: '/set-dream',
-        callback: () => callbackSD(),
+        callback: () => callback(),
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
@@ -193,32 +186,39 @@ class _GoalState extends State<Goal> {
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: rrate.length,
                           itemBuilder: ((context, index) {
+                            double a = target_point * (percentage / 100);
+                            double b = target_point - a;
                             g.ReferralRate rate = rrate[index];
                             double x = rate.price * (rate.rate / 100);
-                            double y = target_point / x;
+                            double y = b / x;
                             double z = y / double.parse(tdate);
                             if (z < 1) {
                               z = 1;
                             }
                             String u = z.toStringAsFixed(0);
                             String nameRate = rate.name;
-                            Color cl = Color(
-                                    (math.Random().nextDouble() * 0xFFFFFF)
-                                        .toInt())
-                                .withOpacity(1.0);
+
+                            List<Color> cl = [
+                              CustomColor.greyColor,
+                              CustomColor.goldColor,
+                              CustomColor.oldGreyColor,
+                              CustomColor.brownColor,
+                              CustomColor.blueColor,
+                              CustomColor.blackColor,
+                            ];
                             return Stack(
                               alignment: AlignmentDirectional.centerEnd,
                               children: [
                                 Divider(
                                   endIndent: 5,
                                   thickness: 10,
-                                  color: cl,
+                                  color: cl[index],
                                 ),
                                 Container(
                                   height: 35,
                                   width: 35,
                                   decoration: BoxDecoration(
-                                      color: cl,
+                                      color: cl[index],
                                       borderRadius: BorderRadius.circular(50)),
                                   child: Center(
                                     child: Text(
@@ -353,7 +353,7 @@ class _GoalState extends State<Goal> {
                 title: "Record Progress",
                 func: () async {
                   GoRouter.of(context).push("/record-progress");
-                  GoRouter.of(context).addListener(callbackRP);
+                  GoRouter.of(context).addListener(callback);
                 },
               ),
             ),

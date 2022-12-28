@@ -80,7 +80,7 @@ class _RecordProgressState extends State<RecordProgress> {
           color: CustomColor.backgroundColor,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: CustomButton(
-            title: "Save Your Dream",
+            title: "Record Progress",
             func: () async {
               if (!formKey.currentState.validate()) {
                 customSnackBar(context, true, "Complete the form first!");

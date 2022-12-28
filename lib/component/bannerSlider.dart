@@ -40,6 +40,7 @@ class HomeBanner extends StatelessWidget {
               )
             : Container(
                 decoration: BoxDecoration(
+                  color: CustomColor.backgroundColor,
                   borderRadius: BorderRadius.circular(15.0),
                   boxShadow: [
                     BoxShadow(
@@ -57,7 +58,7 @@ class HomeBanner extends StatelessWidget {
                     height: CustomScreen(context).width / 1.5,
                     child: PageView.builder(
                       controller: controller,
-                      physics: BouncingScrollPhysics(),
+                      // physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemCount: i,
                       itemBuilder: (BuildContext context, int index) {

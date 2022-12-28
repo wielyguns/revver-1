@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
@@ -22,11 +21,8 @@ generateTokenMidtrans(String orderId, double totalPrice) async {
   var response = await http.post(uri, headers: headers, body: jsonEncode(body));
 
   var resBody = await jsonDecode(response.body);
-  print(response.statusCode);
-  print(resBody);
 
   if (response.statusCode == 201) {
-    print(resBody['token']);
     return resBody['token'];
   } else {
     return;

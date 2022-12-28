@@ -1,7 +1,3 @@
-import 'dart:developer';
-import 'dart:math' as math;
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:go_router/go_router.dart';
@@ -28,89 +24,92 @@ class _CartState extends State<Cart> {
         title: "",
         isPop: true,
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SpacerHeight(h: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "My Cart",
-                  style: CustomFont(CustomColor.brownColor, 32, FontWeight.w600)
-                      .font,
-                ),
-              ],
-            ),
-            SpacerHeight(h: 40),
-            (cart.getCartItemCount() == 0)
-                ? Center(
-                    child: Text(
-                    "Empty Cart!",
-                    style: CustomFont(
-                            CustomColor.oldGreyColor, 14, FontWeight.w500)
-                        .font,
-                  ))
-                : listWidget(),
-            Divider(
-              height: 60,
-              thickness: 1.5,
-              color: CustomColor.brownColor,
-            ),
-            Text(
-              "Payment Summary",
-              style:
-                  CustomFont(CustomColor.blackColor, 20, FontWeight.w600).font,
-            ),
-            SpacerHeight(h: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Total",
-                  style:
-                      CustomFont(CustomColor.oldGreyColor, 16, FontWeight.w400)
-                          .font,
-                ),
-                Text(
-                  rupiah(cart.getTotalAmount()),
-                  style: CustomFont(CustomColor.brownColor, 24, FontWeight.w700)
-                      .font,
-                ),
-              ],
-            ),
-            SpacerHeight(h: 40),
-            SizedBox(
-              width: double.infinity,
-              child: IconTextButton(
-                title: "Checkout",
-                buttonColor: CustomColor.brownColor,
-                func: () {
-                  GoRouter.of(context).push("/checkout");
-                },
+      body: (cart.getCartItemCount() == 0)
+          ? Center(
+              child: Text(
+                "Empty Cart!",
+                style: CustomFont(CustomColor.oldGreyColor, 14, FontWeight.w500)
+                    .font,
+              ),
+            )
+          : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SpacerHeight(h: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "My Cart",
+                        style: CustomFont(
+                                CustomColor.brownColor, 32, FontWeight.w600)
+                            .font,
+                      ),
+                    ],
+                  ),
+                  SpacerHeight(h: 40),
+                  listWidget(),
+                  Divider(
+                    height: 60,
+                    thickness: 1.5,
+                    color: CustomColor.brownColor,
+                  ),
+                  Text(
+                    "Payment Summary",
+                    style:
+                        CustomFont(CustomColor.blackColor, 20, FontWeight.w600)
+                            .font,
+                  ),
+                  SpacerHeight(h: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Total",
+                        style: CustomFont(
+                                CustomColor.oldGreyColor, 16, FontWeight.w400)
+                            .font,
+                      ),
+                      Text(
+                        rupiah(cart.getTotalAmount()),
+                        style: CustomFont(
+                                CustomColor.brownColor, 24, FontWeight.w700)
+                            .font,
+                      ),
+                    ],
+                  ),
+                  SpacerHeight(h: 40),
+                  SizedBox(
+                    width: double.infinity,
+                    child: IconTextButton(
+                      title: "Checkout",
+                      buttonColor: CustomColor.brownColor,
+                      func: () {
+                        GoRouter.of(context).push("/checkout");
+                      },
+                    ),
+                  ),
+                  SpacerHeight(h: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: IconTextButton(
+                      title: "Continue Shopping",
+                      buttonColor: CustomColor.backgroundColor,
+                      borderColor: CustomColor.brownColor,
+                      textColor: CustomColor.brownColor,
+                      func: () {
+                        GoRouter.of(context).go("/homepage/0");
+                        GoRouter.of(context).push("/product");
+                      },
+                    ),
+                  ),
+                  SpacerHeight(h: 20),
+                ],
               ),
             ),
-            SpacerHeight(h: 20),
-            SizedBox(
-              width: double.infinity,
-              child: IconTextButton(
-                title: "Continue Shopping",
-                buttonColor: CustomColor.backgroundColor,
-                borderColor: CustomColor.brownColor,
-                textColor: CustomColor.brownColor,
-                func: () {
-                  GoRouter.of(context).go("/homepage/0");
-                  GoRouter.of(context).push("/product");
-                },
-              ),
-            ),
-            SpacerHeight(h: 20),
-          ],
-        ),
-      ),
     );
   }
 

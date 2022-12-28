@@ -30,6 +30,7 @@ class _LoginState extends State<Login> {
         body: Stack(
           children: [
             Container(
+              padding: EdgeInsets.only(left: 20),
               height: CustomScreen(context).height,
               width: CustomScreen(context).width,
               decoration: BoxDecoration(
@@ -37,6 +38,26 @@ class _LoginState extends State<Login> {
                   image: AssetImage('assets/img/background.jpeg'),
                   fit: BoxFit.cover,
                 ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SpacerHeight(h: 100),
+                  Image.asset(
+                    "assets/img/revver-white.png",
+                    width: CustomScreen(context).width / 2,
+                  ),
+                  SpacerHeight(h: 20),
+                  Text(
+                    "Hello!",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w600,
+                        color: CustomColor.whiteColor),
+                  ),
+                ],
               ),
             ),
             SingleChildScrollView(
@@ -49,25 +70,6 @@ class _LoginState extends State<Login> {
                     Expanded(
                         child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/img/revver-white.png",
-                            width: CustomScreen(context).width / 2,
-                          ),
-                          SpacerHeight(h: 20),
-                          Text(
-                            "Hello!",
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                                color: CustomColor.whiteColor),
-                          ),
-                        ],
-                      ),
                     )),
                     Container(
                       width: CustomScreen(context).width,

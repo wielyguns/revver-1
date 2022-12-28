@@ -34,6 +34,7 @@ class _RegistrationState extends State<Registration> {
         body: Stack(
           children: [
             Container(
+              padding: EdgeInsets.only(left: 20),
               height: CustomScreen(context).height,
               width: CustomScreen(context).width,
               decoration: BoxDecoration(
@@ -42,34 +43,31 @@ class _RegistrationState extends State<Registration> {
                   fit: BoxFit.cover,
                 ),
               ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SpacerHeight(h: 100),
+                  Image.asset(
+                    "assets/img/revver-white.png",
+                    width: CustomScreen(context).width / 2,
+                  ),
+                  SpacerHeight(h: 20),
+                  Text(
+                    "Hello!",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w600,
+                        color: CustomColor.whiteColor),
+                  ),
+                ],
+              ),
             ),
             SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    height: CustomScreen(context).height / 3,
-                    width: CustomScreen(context).width,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/img/revver-white.png",
-                          width: CustomScreen(context).width / 2,
-                        ),
-                        SpacerHeight(h: 20),
-                        Text(
-                          "Hello!",
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontFamily: "Montserrat",
-                              fontWeight: FontWeight.w600,
-                              color: CustomColor.whiteColor),
-                        ),
-                      ],
-                    ),
-                  ),
+                  SpacerHeight(h: 250),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
@@ -212,7 +210,7 @@ class _RegistrationState extends State<Registration> {
                                           GoRouter.of(context).go("/login");
                                         } else {
                                           customSnackBar(context, true,
-                                              val['data'].toString());
+                                              val['message'].toString());
                                         }
                                       },
                                     );

@@ -20,6 +20,7 @@ class _ELearningState extends State<ELearning> {
   List<e.ELearning> eLearning;
 
   getData() async {
+    if (!mounted) return;
     await getELearning().then((val) {
       setState(() {
         eLearning = val;
