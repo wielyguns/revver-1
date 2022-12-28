@@ -43,6 +43,7 @@ import 'package:revver/view/product/product.dart';
 import 'package:revver/view/product/productDetail.dart';
 import 'package:revver/view/report/report.dart';
 import 'package:revver/view/splash.dart';
+import 'package:revver/view/support/downlineDetail.dart';
 import 'package:revver/view/support/support.dart';
 
 final GoRouter router = GoRouter(
@@ -293,6 +294,13 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/support',
       builder: (context, state) => Support(),
+    ),
+    GoRoute(
+      path: '/downline-detail/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return DownlineDetail(id: id);
+      },
     ),
   ],
 );

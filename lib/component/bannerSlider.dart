@@ -16,7 +16,11 @@ class HomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (list != null) {
-      i = list.length;
+      if (list.length >= 5) {
+        i = 5;
+      } else {
+        i = list.length;
+      }
     }
     return Stack(
       children: [
@@ -58,7 +62,6 @@ class HomeBanner extends StatelessWidget {
                     height: CustomScreen(context).width / 1.5,
                     child: PageView.builder(
                       controller: controller,
-                      // physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemCount: i,
                       itemBuilder: (BuildContext context, int index) {

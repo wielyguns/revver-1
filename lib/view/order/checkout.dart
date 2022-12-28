@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:midtrans_sdk/midtrans_sdk.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
@@ -98,235 +99,239 @@ class _CheckoutState extends State<Checkout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: StandartHeader(
-        title: "",
-        isPop: true,
-      ),
-      body: (isLoad)
-          ? Center(child: CupertinoActivityIndicator())
-          : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SpacerHeight(h: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Checkout",
-                        style: CustomFont(
-                                CustomColor.brownColor, 32, FontWeight.w600)
-                            .font,
-                      ),
-                    ],
-                  ),
-                  SpacerHeight(h: 40),
-                  Form(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          RegularForm(
-                            title: "First Name",
-                            hint: "Your First Name",
-                            controller: firstNameController,
-                            isValidator: true,
-                          ),
-                          SpacerHeight(h: 20),
-                          RegularForm(
-                            title: "Last Name",
-                            hint: "Your Last Name",
-                            controller: lastNameController,
-                            isValidator: true,
-                          ),
-                          SpacerHeight(h: 20),
-                          RegularForm(
-                            title: "Address",
-                            hint: "Your Address",
-                            controller: addressController,
-                            isValidator: true,
-                          ),
-                          SpacerHeight(h: 20),
-                          RegularForm(
-                            title: "Contact",
-                            hint: "Your Contact",
-                            controller: contactController,
-                            isValidator: true,
-                          ),
-                          SpacerHeight(h: 20),
-                          provinceDropdown("Province", "Your Province",
-                              province, selectedProvince),
-                          (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
-                          (city.isEmpty)
-                              ? SizedBox()
-                              : cityDropdown(
-                                  "City",
-                                  "Your City",
-                                  city,
-                                  selectedCity,
-                                ),
-                          SpacerHeight(h: 20),
-                          RegularForm(
-                            title: "Zip Code",
-                            hint: "Your Zip Code",
-                            controller: zipCodeController,
-                            isValidator: true,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SpacerHeight(h: 60),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: CustomColor.whiteColor,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          spreadRadius: 0,
-                          blurRadius: 13,
-                          offset: Offset(0, 3),
+    return KeyboardDismisser(
+      child: Scaffold(
+        appBar: StandartHeader(
+          title: "",
+          isPop: true,
+        ),
+        body: (isLoad)
+            ? Center(child: CupertinoActivityIndicator())
+            : SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SpacerHeight(h: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Checkout",
+                          style: CustomFont(
+                                  CustomColor.brownColor, 32, FontWeight.w600)
+                              .font,
                         ),
                       ],
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SpacerHeight(h: 20),
-                          Text(
-                            "Your Order Summary",
-                            style: CustomFont(
-                                    CustomColor.blackColor, 20, FontWeight.w600)
-                                .font,
-                          ),
-                          SpacerHeight(h: 20),
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: cart.getCartItemCount(),
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  Text(
-                                    "x" +
-                                        cart.cartItem[index].quantity
-                                            .toString(),
-                                    style: CustomFont(CustomColor.oldGreyColor,
-                                            16, FontWeight.w400)
-                                        .font,
-                                  ),
-                                  SpacerWidth(w: 5),
-                                  Expanded(
-                                    child: Text(
-                                      cart.cartItem[index].productName
-                                          .toString(),
-                                      style: CustomFont(CustomColor.blackColor,
-                                              16, FontWeight.w400)
-                                          .font,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  SpacerWidth(w: 5),
-                                  Text(
-                                    rupiah(cart.cartItem[index].subTotal),
-                                    style: CustomFont(CustomColor.blackColor,
-                                            16, FontWeight.w600)
-                                        .font,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                          SpacerHeight(h: 20),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Total",
-                                style: CustomFont(CustomColor.oldGreyColor, 16,
-                                        FontWeight.w400)
-                                    .font,
-                              ),
-                              Text(
-                                rupiah(cart.getTotalAmount()),
-                                style: CustomFont(CustomColor.brownColor, 24,
-                                        FontWeight.w700)
-                                    .font,
-                              ),
-                            ],
-                          ),
-                          SpacerHeight(h: 40),
-                          SizedBox(
-                            width: double.infinity,
-                            child: IconTextButton(
-                                title: "Checkout",
-                                buttonColor: CustomColor.brownColor,
-                                func: () async {
-                                  if (!formKey.currentState.validate()) {
-                                    customSnackBar(context, true,
-                                        "Complete the form first!");
-                                  } else {
-                                    math.Random random = math.Random();
-                                    int randomNumber = random.nextInt(999999);
-                                    await generateTokenMidtrans(
-                                            randomNumber.toString(),
-                                            cart.getTotalAmount())
-                                        .then((val) {
-                                      if (val != null) {
-                                        _midtrans?.startPaymentUiFlow(
-                                            token: val);
-                                      } else {
-                                        customSnackBar(context, true, "Gagal");
-                                      }
-                                    });
-                                  }
-                                }),
-                          ),
-                          SpacerHeight(h: 20),
-                          SizedBox(
-                            width: double.infinity,
-                            child: IconTextButton(
-                              title: "Back To Cart",
-                              buttonColor: CustomColor.whiteColor,
-                              borderColor: CustomColor.brownColor,
-                              textColor: CustomColor.brownColor,
-                              func: () {
-                                GoRouter.of(context).pop();
-                              },
+                    SpacerHeight(h: 40),
+                    Form(
+                      key: formKey,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            RegularForm(
+                              title: "First Name",
+                              hint: "Your First Name",
+                              controller: firstNameController,
+                              isValidator: true,
                             ),
-                          ),
-                          SpacerHeight(h: 40),
-                        ],
+                            SpacerHeight(h: 20),
+                            RegularForm(
+                              title: "Last Name",
+                              hint: "Your Last Name",
+                              controller: lastNameController,
+                              isValidator: true,
+                            ),
+                            SpacerHeight(h: 20),
+                            RegularForm(
+                              title: "Address",
+                              hint: "Your Address",
+                              controller: addressController,
+                              isValidator: true,
+                            ),
+                            SpacerHeight(h: 20),
+                            RegularForm(
+                              title: "Contact",
+                              hint: "Your Contact",
+                              controller: contactController,
+                              isValidator: true,
+                            ),
+                            SpacerHeight(h: 20),
+                            provinceDropdown("Province", "Your Province",
+                                province, selectedProvince, true),
+                            (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
+                            (city.isEmpty)
+                                ? SizedBox()
+                                : cityDropdown("City", "Your City", city,
+                                    selectedCity, true),
+                            SpacerHeight(h: 20),
+                            RegularForm(
+                              title: "Zip Code",
+                              hint: "Your Zip Code",
+                              controller: zipCodeController,
+                              isValidator: true,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  )
-                ],
+                    SpacerHeight(h: 60),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: CustomColor.whiteColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            spreadRadius: 0,
+                            blurRadius: 13,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SpacerHeight(h: 20),
+                            Text(
+                              "Your Order Summary",
+                              style: CustomFont(CustomColor.blackColor, 20,
+                                      FontWeight.w600)
+                                  .font,
+                            ),
+                            SpacerHeight(h: 20),
+                            ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: cart.getCartItemCount(),
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  children: [
+                                    Text(
+                                      "x" +
+                                          cart.cartItem[index].quantity
+                                              .toString(),
+                                      style: CustomFont(
+                                              CustomColor.oldGreyColor,
+                                              16,
+                                              FontWeight.w400)
+                                          .font,
+                                    ),
+                                    SpacerWidth(w: 5),
+                                    Expanded(
+                                      child: Text(
+                                        cart.cartItem[index].productName
+                                            .toString(),
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                16,
+                                                FontWeight.w400)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    SpacerWidth(w: 5),
+                                    Text(
+                                      rupiah(cart.cartItem[index].subTotal),
+                                      style: CustomFont(CustomColor.blackColor,
+                                              16, FontWeight.w600)
+                                          .font,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                            SpacerHeight(h: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Total",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          16, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  rupiah(cart.getTotalAmount()),
+                                  style: CustomFont(CustomColor.brownColor, 24,
+                                          FontWeight.w700)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            SpacerHeight(h: 40),
+                            SizedBox(
+                              width: double.infinity,
+                              child: IconTextButton(
+                                  title: "Checkout",
+                                  buttonColor: CustomColor.brownColor,
+                                  func: () async {
+                                    if (!formKey.currentState.validate()) {
+                                      customSnackBar(context, true,
+                                          "Complete the form first!");
+                                    } else {
+                                      math.Random random = math.Random();
+                                      int randomNumber = random.nextInt(999999);
+                                      await generateTokenMidtrans(
+                                              randomNumber.toString(),
+                                              cart.getTotalAmount())
+                                          .then((val) {
+                                        if (val != null) {
+                                          _midtrans.startPaymentUiFlow(
+                                              token: val);
+                                        } else {
+                                          customSnackBar(
+                                              context, true, "Gagal");
+                                        }
+                                      });
+                                    }
+                                  }),
+                            ),
+                            SpacerHeight(h: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              child: IconTextButton(
+                                title: "Back To Cart",
+                                buttonColor: CustomColor.whiteColor,
+                                borderColor: CustomColor.brownColor,
+                                textColor: CustomColor.brownColor,
+                                func: () {
+                                  GoRouter.of(context).pop();
+                                },
+                              ),
+                            ),
+                            SpacerHeight(h: 40),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
 
-      // ElevatedButton(
-      //   child: Text("data"),
-      //   onPressed: (() async {
-      //     math.Random random = math.Random();
-      //     int randomNumber = random.nextInt(999999);
-      //     await generateTokenMidtrans(randomNumber.toString(), 10000)
-      //         .then((val) {
-      //       if (val != null) {
-      //         _midtrans?.startPaymentUiFlow(token: val);
-      //       } else {
-      //         customSnackBar(context, true, "Gagal");
-      //       }
-      //     });
-      //   }),
-      // ),
+        // ElevatedButton(
+        //   child: Text("data"),
+        //   onPressed: (() async {
+        //     math.Random random = math.Random();
+        //     int randomNumber = random.nextInt(999999);
+        //     await generateTokenMidtrans(randomNumber.toString(), 10000)
+        //         .then((val) {
+        //       if (val != null) {
+        //         _midtrans?.startPaymentUiFlow(token: val);
+        //       } else {
+        //         customSnackBar(context, true, "Gagal");
+        //       }
+        //     });
+        //   }),
+        // ),
+      ),
     );
   }
 
@@ -335,6 +340,7 @@ class _CheckoutState extends State<Checkout> {
     String hint,
     List<Province> list,
     Province selectedItem,
+    bool isValidator,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -361,6 +367,16 @@ class _CheckoutState extends State<Checkout> {
               city = [];
             });
             await getCityList(selectedItem.id);
+          },
+          validator: (value) {
+            if (isValidator) {
+              if (value == null) {
+                return 'Please enter your $title';
+              }
+              return null;
+            } else {
+              return null;
+            }
           },
           dropdownColor: CustomColor.whiteColor,
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
@@ -416,6 +432,7 @@ class _CheckoutState extends State<Checkout> {
     String hint,
     List<City> list,
     City selectedItem,
+    bool isValidator,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -439,6 +456,16 @@ class _CheckoutState extends State<Checkout> {
               selectedItem = val;
               selectedCity = val;
             });
+          },
+          validator: (value) {
+            if (isValidator) {
+              if (value == null) {
+                return 'Please enter your $title';
+              }
+              return null;
+            } else {
+              return null;
+            }
           },
           dropdownColor: CustomColor.whiteColor,
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,

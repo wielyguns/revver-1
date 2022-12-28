@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/func.dart';
 import 'package:revver/controller/support.dart';
@@ -61,10 +62,12 @@ class _MyDownlineState extends State<MyDownline> {
                           itemCount: member.length,
                           itemBuilder: ((context, index) {
                             Member mem = member[index];
+                            String id = mem.id.toString();
                             return Column(
                               children: [
                                 InkWell(
-                                  onTap: () => test(context),
+                                  onTap: () => GoRouter.of(context)
+                                      .push('/downline-detail/$id'),
                                   child: Container(
                                     height: 70,
                                     decoration: BoxDecoration(
@@ -101,7 +104,7 @@ class _MyDownlineState extends State<MyDownline> {
                                         SpacerWidth(w: 10),
                                         Expanded(
                                           child: Text(
-                                            mem.name ??= "name",
+                                            mem.name ??= "",
                                             style: CustomFont(
                                                     CustomColor.blackColor,
                                                     18,
@@ -110,6 +113,17 @@ class _MyDownlineState extends State<MyDownline> {
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                           ),
+                                        ),
+                                        SpacerWidth(w: 10),
+                                        Text(
+                                          mem.stage_name ??= "",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
                                         ),
                                         SpacerWidth(w: 10),
                                       ],

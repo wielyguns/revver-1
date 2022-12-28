@@ -46,3 +46,47 @@ class Member {
   factory Member.fromJson(String source) =>
       Member.fromMap(json.decode(source) as Map<String, dynamic>);
 }
+
+class Indicator {
+  int id;
+  int stage_id;
+  String title;
+  String content;
+  int status;
+  int vital_indicator_progress_id;
+  Indicator({
+    this.id,
+    this.stage_id,
+    this.title,
+    this.content,
+    this.status,
+    this.vital_indicator_progress_id,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'stage_id': stage_id,
+      'title': title,
+      'content': content,
+      'status': status,
+      'vital_indicator_progress_id': status,
+    };
+  }
+
+  factory Indicator.fromMap(Map<String, dynamic> map) {
+    return Indicator(
+      id: map['id'] as int,
+      stage_id: map['stage_id'] as int,
+      title: map['title'] as String,
+      content: map['content'] as String,
+      status: map['status'] as int,
+      vital_indicator_progress_id: map['vital_indicator_progress_id'] as int,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Indicator.fromJson(String source) =>
+      Indicator.fromMap(json.decode(source) as Map<String, dynamic>);
+}

@@ -2,12 +2,14 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:indonesia/indonesia.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/event.dart';
+import 'package:revver/globals.dart';
 
 // ignore: must_be_immutable
 class GlobalEvent extends StatefulWidget {
@@ -22,6 +24,7 @@ class _GlobalEventState extends State<GlobalEvent> {
   bool isLoad = true;
   String name;
   DateTime date;
+  String time;
   String description;
   String long_description;
   String slug;
@@ -38,6 +41,7 @@ class _GlobalEventState extends State<GlobalEvent> {
         slug = val['data']['slug'];
         address = val['data']['address'];
         image = val['data']['image'];
+        time = DateFormat.jm().format(date);
         isLoad = false;
       });
     });
@@ -53,7 +57,7 @@ class _GlobalEventState extends State<GlobalEvent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomHeader(
-        title: name ??= "",
+        title: "",
         isPop: true,
         offMiddleLogo: true,
         image: image ??= "https://wallpaperaccess.com/full/733834.png",
@@ -62,9 +66,63 @@ class _GlobalEventState extends State<GlobalEvent> {
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SpacerHeight(h: 20),
+                  Text(
+                    name,
+                    style:
+                        CustomFont(CustomColor.brownColor, 20, FontWeight.w700)
+                            .font,
+                  ),
+                  SpacerHeight(h: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
+                        size: 24,
+                        color: CustomColor.brownColor,
+                      ),
+                      SpacerWidth(w: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tanggal(date),
+                            style: CustomFont(
+                                    CustomColor.blackColor, 14, FontWeight.w600)
+                                .font,
+                          ),
+                          Text(
+                            time,
+                            style: CustomFont(CustomColor.oldGreyColor, 11,
+                                    FontWeight.w400)
+                                .font,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SpacerHeight(h: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
+                        size: 24,
+                        color: CustomColor.brownColor,
+                      ),
+                      SpacerWidth(w: 10),
+                      Text(
+                        address,
+                        style: CustomFont(
+                                CustomColor.blackColor, 14, FontWeight.w600)
+                            .font,
+                      ),
+                    ],
+                  ),
                   SpacerHeight(h: 20),
                   (description != null)
                       ? Html(data: description ??= "")

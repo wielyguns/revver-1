@@ -67,9 +67,7 @@ class _ProfileState extends State<Profile> {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: AppBar(
-          leading: CupertinoNavigationBarBackButton(
-            color: CustomColor.brownColor,
-          ),
+          leading: CupertinoNavigationBarBackButton(),
           centerTitle: true,
           title: Image.asset(
             "assets/img/revver-horizontal.png",
@@ -99,7 +97,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       child: Center(
                         child: Text(
-                          "My Account",
+                          "Profile",
                           style: CustomFont(
                                   CustomColor.whiteColor, 32, FontWeight.w600)
                               .font,

@@ -67,12 +67,15 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: kToolbarHeight),
-              Text(
-                title ??= "",
-                style: CustomFont(CustomColor.whiteColor, 32, FontWeight.bold)
-                    .font,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  title ??= "",
+                  style: CustomFont(CustomColor.whiteColor, 32, FontWeight.bold)
+                      .font,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

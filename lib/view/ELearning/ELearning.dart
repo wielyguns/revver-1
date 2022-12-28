@@ -55,20 +55,30 @@ class _ELearningState extends State<ELearning> {
   }
 
   listWidget() {
-    return ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: eLearning.length,
-        itemBuilder: (context, index) {
-          e.ELearning list = eLearning[index];
-          return Column(
-            children: [
-              (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
-              listItem(list.thumbnail, list.name, list.id),
-              SpacerHeight(h: 20),
-            ],
-          );
-        });
+    return ListView.separated(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: eLearning.length,
+      itemBuilder: (context, index) {
+        e.ELearning list = eLearning[index];
+        return Column(
+          children: [
+            (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
+            listItem(list.thumbnail, list.name, list.id),
+            // SpacerHeight(h: 20),
+          ],
+        );
+      },
+      separatorBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Divider(
+            thickness: 2,
+            color: CustomColor.brownColor.withOpacity(0.5),
+          ),
+        );
+      },
+    );
   }
 
   listItem(String image, String name, int id) {

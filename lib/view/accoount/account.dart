@@ -114,14 +114,14 @@ class _AccountState extends State<Account> {
                   ),
                   SpacerHeight(h: 10),
                   Text(
-                    "Full Name",
+                    name,
                     style:
                         CustomFont(CustomColor.brownColor, 20, FontWeight.w600)
                             .font,
                   ),
                   SpacerHeight(h: 5),
                   Text(
-                    "Member",
+                    stage,
                     style: CustomFont(
                             CustomColor.oldGreyColor, 13, FontWeight.w400)
                         .font,

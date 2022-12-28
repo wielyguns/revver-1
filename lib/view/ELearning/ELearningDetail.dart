@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/controller/ELearning.dart';
+import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -56,17 +57,25 @@ class _ELearningDetailState extends State<ELearningDetail> {
 
   @override
   void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
+    if (file.contains(".mp4")) {
+      videoPlayerController.dispose();
+      chewieController.dispose();
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomHeader(
-        title: name ??= "",
-        isPop: true,
+      appBar: AppBar(
+        leading: CupertinoNavigationBarBackButton(),
+        centerTitle: true,
+        title: Image.asset(
+          "assets/img/revver-horizontal.png",
+          width: CustomScreen(context).width / 3,
+        ),
+        backgroundColor: CustomColor.backgroundColor,
+        elevation: 0,
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
