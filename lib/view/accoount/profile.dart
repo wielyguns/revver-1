@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -65,56 +66,158 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
-        appBar: CustomHeader(
-          title: "Profile",
-          isPop: true,
+        appBar: AppBar(
+          leading: CupertinoNavigationBarBackButton(
+            color: CustomColor.brownColor,
+          ),
+          centerTitle: true,
+          title: Image.asset(
+            "assets/img/revver-horizontal.png",
+            width: CustomScreen(context).width / 3,
+          ),
+          backgroundColor: CustomColor.backgroundColor,
+          elevation: 0,
         ),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: formKey,
             child: Column(
               children: [
                 SpacerHeight(h: 20),
-                image != null
-                    ? GestureDetector(
-                        onTap: () {
-                          getImage(ImageSource.gallery);
-                        },
-                        child: SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            fit: StackFit.expand,
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: FileImage(File(image.path)),
-                              ),
-                            ],
-                          ),
+                Stack(
+                  children: [
+                    Container(
+                      height: 140,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/img/background-resize.png'),
+                          fit: BoxFit.cover,
                         ),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          getImage(ImageSource.gallery);
-                        },
-                        child: SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            fit: StackFit.expand,
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: NetworkImage(avatar ??=
-                                    "https://wallpaperaccess.com/full/733834.png"),
-                              ),
-                            ],
-                          ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "My Account",
+                          style: CustomFont(
+                                  CustomColor.whiteColor, 32, FontWeight.w600)
+                              .font,
                         ),
                       ),
-                SpacerHeight(h: 20),
+                    ),
+                    Column(
+                      children: [
+                        SpacerHeight(h: 100),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: CustomColor.whiteColor,
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                              padding: EdgeInsets.all(5),
+                              height: 80,
+                              width: 80,
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                fit: StackFit.expand,
+                                children: [
+                                  image != null
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            getImage(ImageSource.gallery);
+                                          },
+                                          child: SizedBox(
+                                            height: 80,
+                                            width: 80,
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              fit: StackFit.expand,
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundImage: FileImage(
+                                                      File(image.path)),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : GestureDetector(
+                                          onTap: () {
+                                            getImage(ImageSource.gallery);
+                                          },
+                                          child: SizedBox(
+                                            height: 80,
+                                            width: 80,
+                                            child: Stack(
+                                              clipBehavior: Clip.none,
+                                              fit: StackFit.expand,
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundImage: NetworkImage(
+                                                      avatar ??=
+                                                          "https://wallpaperaccess.com/full/733834.png"),
+                                                ),
+                                                Icon(
+                                                  Icons.edit,
+                                                  size: 20,
+                                                  color: CustomColor.whiteColor,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                // SpacerHeight(h: 20),
+                // image != null
+                //     ? GestureDetector(
+                //         onTap: () {
+                //           getImage(ImageSource.gallery);
+                //         },
+                //         child: SizedBox(
+                //           height: 80,
+                //           width: 80,
+                //           child: Stack(
+                //             clipBehavior: Clip.none,
+                //             fit: StackFit.expand,
+                //             children: [
+                //               CircleAvatar(
+                //                 backgroundImage: FileImage(File(image.path)),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       )
+                //     : GestureDetector(
+                //         onTap: () {
+                //           getImage(ImageSource.gallery);
+                //         },
+                //         child: SizedBox(
+                //           height: 80,
+                //           width: 80,
+                //           child: Stack(
+                //             clipBehavior: Clip.none,
+                //             fit: StackFit.expand,
+                //             children: [
+                //               CircleAvatar(
+                //                 backgroundImage: NetworkImage(avatar ??=
+                //                     "https://wallpaperaccess.com/full/733834.png"),
+                //               ),
+                //             ],
+                //           ),
+                //         ),
+                //       ),
+                SpacerHeight(h: 5),
                 RegularForm(
                   title: "Full Name",
                   hint: "Your Full Name",
@@ -161,9 +264,11 @@ class _ProfileState extends State<Profile> {
                 Row(
                   children: [
                     Expanded(
-                      child: CustomButton(
+                      child: IconTextButton(
+                        buttonColor: CustomColor.backgroundColor,
+                        borderColor: CustomColor.brownColor,
+                        textColor: CustomColor.brownColor,
                         title: "Delete Account",
-                        color: CustomColor.redColor,
                         func: () async {
                           await deleteAccount(id).then((val) {
                             if (val['status'] == 200) {
@@ -185,7 +290,8 @@ class _ProfileState extends State<Profile> {
         bottomNavigationBar: Container(
           color: CustomColor.backgroundColor,
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: CustomButton(
+          child: IconTextButton(
+            buttonColor: CustomColor.brownColor,
             title: "Save",
             func: () async {
               if (image != null) {

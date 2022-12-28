@@ -35,6 +35,8 @@ class _ProductDetailState extends State<ProductDetail> {
   int price;
   List review;
 
+  int qty = 1;
+
   bool isLoad = true;
 
   getData() async {
@@ -424,19 +426,91 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
             ),
       bottomNavigationBar: Container(
-        color: CustomColor.backgroundColor,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: CustomButton(
-          title: "+ Add to Cart",
-          func: () {
-            cart.addToCart(
-                productId: product_id,
-                unitPrice: price,
-                productName: name,
-                productDetailsObject: image);
-          },
-        ),
-      ),
+          color: CustomColor.backgroundColor,
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    if (qty == 1) {
+                      qty = 1;
+                    } else {
+                      qty -= 1;
+                    }
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: CustomColor.oldGreyColor,
+                  ),
+                  child: Icon(
+                    Icons.remove,
+                    size: 18,
+                    color: CustomColor.whiteColor,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 30,
+                child: Text(
+                  "$qty",
+                  // "1",
+                  style: CustomFont(CustomColor.blackColor, 15, FontWeight.w600)
+                      .font,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    qty += 1;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: CustomColor.brownColor,
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    size: 18,
+                    color: CustomColor.whiteColor,
+                  ),
+                ),
+              ),
+              SpacerWidth(w: 20),
+              Expanded(
+                child: CupertinoButton(
+                  padding: EdgeInsets.all(10),
+                  minSize: 50,
+                  onPressed: () {
+                    cart.addToCart(
+                        productId: product_id,
+                        unitPrice: price,
+                        productName: name,
+                        productDetailsObject: image,
+                        quantity: qty);
+                  },
+                  color: CustomColor.brownColor,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Add To Cart",
+                        style: CustomFont(
+                                CustomColor.whiteColor, 16, FontWeight.w600)
+                            .font,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

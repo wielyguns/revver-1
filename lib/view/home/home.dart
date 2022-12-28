@@ -64,6 +64,7 @@ class _HomeState extends State<Home> {
   }
 
   callback() {
+    if (!mounted) return;
     if (!GoRouter.of(context).location.contains("xxx")) {
       setState(() {});
       GoRouter.of(context).removeListener(callback);

@@ -46,6 +46,8 @@ class _OrderHistoryState extends State<OrderHistory> {
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
           : SfDataGrid(
+              verticalScrollPhysics: BouncingScrollPhysics(),
+              horizontalScrollPhysics: BouncingScrollPhysics(),
               onCellTap: ((details) {
                 if (details.rowColumnIndex.rowIndex != 0) {
                   int selectedRowIndex = details.rowColumnIndex.rowIndex - 1;

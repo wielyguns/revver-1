@@ -41,8 +41,6 @@ registrationPost(
     'confirm_password': confirmPassword,
   });
 
-  print(response.body);
-
   var res = jsonDecode(response.body);
 
   return res;

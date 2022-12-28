@@ -112,12 +112,14 @@ class ChangePasswordButton extends StatelessWidget {
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-            color: CustomColor.brownColor),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            color: CustomColor.oldGreyColor),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-        child: Text(
-          title,
-          style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w600).font,
+        child: Center(
+          child: Text(
+            title,
+            style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w400).font,
+          ),
         ),
       ),
       onTap: func,
@@ -137,18 +139,18 @@ class AccountMenu extends StatelessWidget {
     return InkWell(
       onTap: func,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Container(
-                  height: 40,
-                  width: 40,
+                  height: 35,
+                  width: 35,
                   decoration: BoxDecoration(
                     color: CustomColor.brownColor,
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(10),
@@ -161,12 +163,16 @@ class AccountMenu extends StatelessWidget {
                 SpacerWidth(w: 20),
                 Text(
                   title,
-                  style: CustomFont(CustomColor.blackColor, 18, FontWeight.w600)
+                  style: CustomFont(CustomColor.blackColor, 14, FontWeight.w600)
                       .font,
                 )
               ],
             ),
-            Icon(Icons.arrow_forward_ios)
+            Icon(
+              Icons.arrow_forward,
+              size: 16,
+              color: CustomColor.brownColor,
+            )
           ],
         ),
       ),

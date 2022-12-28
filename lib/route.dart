@@ -43,6 +43,7 @@ import 'package:revver/view/product/product.dart';
 import 'package:revver/view/product/productDetail.dart';
 import 'package:revver/view/report/report.dart';
 import 'package:revver/view/splash.dart';
+import 'package:revver/view/support/support.dart';
 
 final GoRouter router = GoRouter(
   routes: [
@@ -288,6 +289,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/record-progress',
       builder: (context, state) => RecordProgress(),
+    ),
+    GoRoute(
+      path: '/support',
+      builder: (context, state) => Support(),
     ),
   ],
 );
