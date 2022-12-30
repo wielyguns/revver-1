@@ -38,8 +38,9 @@ dependencies:
   flutter_speed_dial: 6.2.0
   expandable: 5.0.1
   flutter_cart: 0.0.7
-  # awesome_notifications: 0.7.2
   midtrans_sdk: 0.3.4
+  firebase_core: 2.4.1
+  firebase_messaging: 14.2.1
 
 dev_dependencies:
   flutter_test:

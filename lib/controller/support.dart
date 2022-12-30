@@ -80,7 +80,6 @@ patchSupportMember(id) async {
   final response = await http.patch(parseUrl, headers: {
     "Authorization": "Bearer $token",
   });
-  print(response.body);
   var res = jsonDecode(response.body);
   return res;
 }

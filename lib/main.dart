@@ -3,7 +3,7 @@ import 'package:revver/globals.dart';
 import 'package:revver/route.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

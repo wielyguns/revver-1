@@ -2,7 +2,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:revver/component/header.dart';
 import 'package:revver/controller/ELearning.dart';
 import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';

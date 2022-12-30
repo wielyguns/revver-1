@@ -1,17 +1,14 @@
-// ignore_for_file: non_constant_identifier_names
-
-import 'dart:convert';
+// ignore_for_file: non_constant_identifier_names, must_be_immutable
 
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:revver/component/header.dart';
+
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/support.dart';
 import 'package:revver/globals.dart';
-import 'package:revver/model/support.dart';
 
 class DownlineDetail extends StatefulWidget {
   DownlineDetail({Key key, this.id}) : super(key: key);
