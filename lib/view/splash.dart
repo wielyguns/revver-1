@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:revver/controller/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
