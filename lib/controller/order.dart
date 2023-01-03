@@ -1,6 +1,11 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
+import 'package:flutter_cart/flutter_cart.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 generateTokenMidtrans(String orderId, double totalPrice) async {
   String serverKey = "SB-Mid-server-5UKRWMkpzEb1Ds9ERKd6uo7Z";
@@ -16,7 +21,7 @@ generateTokenMidtrans(String orderId, double totalPrice) async {
   };
 
   Map body = {
-    "transaction_details": {"order_id": "#$orderId", "gross_amount": totalPrice}
+    "transaction_details": {"order_id": orderId, "gross_amount": totalPrice}
   };
   var response = await http.post(uri, headers: headers, body: jsonEncode(body));
 
@@ -27,4 +32,46 @@ generateTokenMidtrans(String orderId, double totalPrice) async {
   } else {
     return;
   }
+}
+
+postOrderStore(String customer_id, no_receipt) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  Map<String, String> data;
+  var cart = FlutterCart();
+
+  data = {
+    "customer_id": customer_id,
+    "total_price": cart.getTotalAmount().toInt().toString(),
+    "no_receipt": no_receipt,
+  };
+
+  for (int i = 0; i < cart.getCartItemCount(); i++) {
+    data.addAll({"product_id[$i]": cart.cartItem[i].productId.toString()});
+  }
+
+  for (int i = 0; i < cart.getCartItemCount(); i++) {
+    data.addAll(
+        {"total_item[$i]": cart.cartItem[i].subTotal.toInt().toString()});
+  }
+
+  for (int i = 0; i < cart.getCartItemCount(); i++) {
+    data.addAll({"qty[$i]": cart.cartItem[i].quantity.toString()});
+  }
+
+  String url = "https://admin.revveracademy.com/api/v1/order";
+  // String url = "https://webhook.site/4f724449-8502-410f-a1a7-1e3b60cab04b";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.post(
+    parseUrl,
+    headers: {
+      "Authorization": "Bearer $token",
+    },
+    body: data,
+  );
+
+  var res = jsonDecode(response.body);
+
+  return res;
 }

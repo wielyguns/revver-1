@@ -39,7 +39,7 @@ class _InvoiceState extends State<Invoice> {
       for (var data in val['data']['order_dt'] as List) {
         list.add(OrderItemDetail(
           description: data['product']['name'],
-          qty: data['total_item'].toString(),
+          qty: data['qty'].toString(),
           amount: data['total_item'].toString(),
         ));
       }
@@ -71,9 +71,11 @@ class _InvoiceState extends State<Invoice> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: CupertinoNavigationBarBackButton(
-            color: CustomColor.whiteColor,
-            onPressed: () => GoRouter.of(context).pop()),
+        leading: (widget.isHistory)
+            ? CupertinoNavigationBarBackButton(
+                color: CustomColor.whiteColor,
+                onPressed: () => GoRouter.of(context).pop())
+            : SizedBox(),
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
@@ -90,10 +92,11 @@ class _InvoiceState extends State<Invoice> {
                   ),
                 ),
                 SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      SpacerHeight(h: 60),
+                      SpacerHeight(h: 80),
                       ClipPath(
                         clipper: CustomTicketShape(),
                         child: Container(
@@ -265,28 +268,28 @@ class _InvoiceState extends State<Invoice> {
                                           Text("Total",
                                               style: CustomFont.bold16),
                                           SpacerWidth(w: 20),
-                                          Text(rupiah(999999),
+                                          Text(rupiah(total_price),
                                               style: CustomFont.bold12),
                                         ],
                                       )),
                                 ],
                               ),
-                              SpacerHeight(h: 20),
-                              Text(
-                                "Payment Detail",
-                                style: CustomFont.regular16,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                bank_name.toString(),
-                                style: CustomFont.bold16,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              Text(
-                                bank_number.toString(),
-                                style: CustomFont.bold12,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                              // SpacerHeight(h: 20),
+                              // Text(
+                              //   "Payment Detail",
+                              //   style: CustomFont.regular16,
+                              //   overflow: TextOverflow.ellipsis,
+                              // ),
+                              // Text(
+                              //   bank_name.toString(),
+                              //   style: CustomFont.bold16,
+                              //   overflow: TextOverflow.ellipsis,
+                              // ),
+                              // Text(
+                              //   bank_number.toString(),
+                              //   style: CustomFont.bold12,
+                              //   overflow: TextOverflow.ellipsis,
+                              // ),
                             ],
                           ),
                         ),
@@ -303,7 +306,9 @@ class _InvoiceState extends State<Invoice> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: CustomButton(
                 title: "Back to Home",
-                func: () async {},
+                func: () async {
+                  GoRouter.of(context).go('/homepage/0');
+                },
               ),
             ),
     );

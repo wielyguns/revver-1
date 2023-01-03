@@ -646,6 +646,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(

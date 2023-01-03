@@ -1,4 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:math' as math;
+import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +15,7 @@ import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/account.dart';
 import 'package:revver/controller/etc.dart';
 import 'package:revver/controller/order.dart';
 import 'package:revver/globals.dart';
@@ -47,11 +51,19 @@ class _CheckoutState extends State<Checkout> {
   City selectedCity;
   Province selectedProvince;
 
+  String customer_id;
+
   getData() async {
-    await getProvince().then((val) async {
+    if (!mounted) return;
+    await getAccountHeader().then((val) async {
       setState(() {
-        province = val;
-        isLoad = false;
+        customer_id = val['data']['id'].toString();
+      });
+      await getProvince().then((val) async {
+        setState(() {
+          province = val;
+          isLoad = false;
+        });
       });
     });
   }
@@ -87,7 +99,19 @@ class _CheckoutState extends State<Checkout> {
     _midtrans?.setUIKitCustomSetting(
         skipCustomerDetailsPages: true, showPaymentStatus: true);
     _midtrans.setTransactionFinishedCallback((result) async {
-      customSnackBar(context, false, result.orderId);
+      if (result.isTransactionCanceled) {
+        customSnackBar(context, true, "Transaction Canceled");
+      } else {
+        await postOrderStore(customer_id, result.orderId).then((val) {
+          if (val['status'] == 200) {
+            cart.deleteAllCart();
+            String id = val['data']['orders_dt'][0]['order_id'].toString();
+            GoRouter.of(context).push('/invoice/$id/false');
+          } else {
+            customSnackBar(context, true, val['status'].toString());
+          }
+        });
+      }
     });
   }
 
@@ -212,38 +236,45 @@ class _CheckoutState extends State<Checkout> {
                               shrinkWrap: true,
                               itemCount: cart.getCartItemCount(),
                               itemBuilder: (context, index) {
-                                return Row(
+                                return Column(
                                   children: [
-                                    Text(
-                                      "x" +
-                                          cart.cartItem[index].quantity
-                                              .toString(),
-                                      style: CustomFont(
-                                              CustomColor.oldGreyColor,
-                                              16,
-                                              FontWeight.w400)
-                                          .font,
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "x" +
+                                              cart.cartItem[index].quantity
+                                                  .toString(),
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  16,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        SpacerWidth(w: 5),
+                                        Expanded(
+                                          child: Text(
+                                            cart.cartItem[index].productName
+                                                .toString(),
+                                            style: CustomFont(
+                                                    CustomColor.blackColor,
+                                                    16,
+                                                    FontWeight.w400)
+                                                .font,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SpacerWidth(w: 5),
+                                        Text(
+                                          rupiah(cart.cartItem[index].subTotal),
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  16,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
                                     ),
-                                    SpacerWidth(w: 5),
-                                    Expanded(
-                                      child: Text(
-                                        cart.cartItem[index].productName
-                                            .toString(),
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                16,
-                                                FontWeight.w400)
-                                            .font,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    SpacerWidth(w: 5),
-                                    Text(
-                                      rupiah(cart.cartItem[index].subTotal),
-                                      style: CustomFont(CustomColor.blackColor,
-                                              16, FontWeight.w600)
-                                          .font,
-                                    ),
+                                    SpacerHeight(h: 10),
                                   ],
                                 );
                               },
@@ -277,11 +308,10 @@ class _CheckoutState extends State<Checkout> {
                                       customSnackBar(context, true,
                                           "Complete the form first!");
                                     } else {
-                                      math.Random random = math.Random();
-                                      int randomNumber = random.nextInt(999999);
+                                      String nw = DateFormat("yyyyMMddhhmmss")
+                                          .format(DateTime.now());
                                       await generateTokenMidtrans(
-                                              randomNumber.toString(),
-                                              cart.getTotalAmount())
+                                              nw, cart.getTotalAmount())
                                           .then((val) {
                                         if (val != null) {
                                           _midtrans.startPaymentUiFlow(
@@ -440,6 +470,7 @@ class _CheckoutState extends State<Checkout> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(

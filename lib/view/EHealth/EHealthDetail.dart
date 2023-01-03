@@ -89,14 +89,16 @@ class _EHealthDetailState extends State<EHealthDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: StandartHeader(
-        title: name ??= "",
+        title: "",
         isPop: true,
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
+                  SpacerHeight(h: 20),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: header(),
@@ -106,6 +108,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: body(),
                   ),
+                  SpacerHeight(h: 20),
                   productRecommendation(),
                   SpacerHeight(h: 20),
                 ],
@@ -118,89 +121,219 @@ class _EHealthDetailState extends State<EHealthDetail> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        Stack(
           children: [
-            SizedBox(
-              height: 80,
-              width: 80,
-              child: Stack(
-                clipBehavior: Clip.none,
-                fit: StackFit.expand,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        "https://wallpaperaccess.com/full/733834.png"),
-                  ),
-                ],
+            Container(
+              height: 140,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/img/background-resize.png'),
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  name,
+                  style: CustomFont(CustomColor.whiteColor, 32, FontWeight.w600)
+                      .font,
+                ),
               ),
             ),
-            SpacerWidth(w: 20),
+            Column(
+              children: [
+                SpacerHeight(h: 120),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SpacerWidth(w: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: CustomColor.whiteColor,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      padding: EdgeInsets.all(5),
+                      height: 80,
+                      width: 80,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        fit: StackFit.expand,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                "https://wallpaperaccess.com/full/733834.png"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SpacerWidth(w: 5),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          uname,
+                          style: CustomFont(
+                                  CustomColor.blackColor, 14, FontWeight.bold)
+                              .font,
+                        ),
+                        Text(
+                          "$age years old",
+                          style:
+                              CustomFont(CustomColor.blackColor, 12, null).font,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
+        SpacerHeight(h: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Height",
-                        style: CustomFont(
-                                CustomColor.blackColor, 14, FontWeight.bold)
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: CustomColor.greyColor,
+                ),
+                child: Center(
+                  child: Text(
+                    "Height: $height cm",
+                    style:
+                        CustomFont(CustomColor.blackColor, 10, FontWeight.w600)
                             .font,
-                      ),
-                      Text(
-                        "$height cm",
-                        style:
-                            CustomFont(CustomColor.blackColor, 12, null).font,
-                      ),
-                    ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Weight",
-                        style: CustomFont(
-                                CustomColor.blackColor, 14, FontWeight.bold)
+                ),
+              ),
+            ),
+            SpacerWidth(w: 5),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: CustomColor.greyColor,
+                ),
+                child: Center(
+                  child: Text(
+                    "Weight: $weight kg",
+                    style:
+                        CustomFont(CustomColor.blackColor, 10, FontWeight.w600)
                             .font,
-                      ),
-                      Text(
-                        "$weight kg",
-                        style:
-                            CustomFont(CustomColor.blackColor, 12, null).font,
-                      ),
-                    ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Gender",
-                        style: CustomFont(
-                                CustomColor.blackColor, 14, FontWeight.bold)
+                ),
+              ),
+            ),
+            SpacerWidth(w: 5),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: CustomColor.greyColor,
+                ),
+                child: Center(
+                  child: Text(
+                    "Gender: $gender",
+                    style:
+                        CustomFont(CustomColor.blackColor, 10, FontWeight.w600)
                             .font,
-                      ),
-                      Text(
-                        gender,
-                        style:
-                            CustomFont(CustomColor.blackColor, 12, null).font,
-                      ),
-                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ],
         ),
         SpacerHeight(h: 10),
-        Text(
-          uname,
-          style: CustomFont(CustomColor.blackColor, 14, FontWeight.bold).font,
-        ),
-        Text(
-          "$age years old",
-          style: CustomFont(CustomColor.blackColor, 12, null).font,
-        ),
+
+        // Row(
+        //   children: [
+        //     SizedBox(
+        //       height: 80,
+        //       width: 80,
+        //       child: Stack(
+        //         clipBehavior: Clip.none,
+        //         fit: StackFit.expand,
+        //         children: [
+        //           CircleAvatar(
+        //             backgroundImage: NetworkImage(
+        //                 "https://wallpaperaccess.com/full/733834.png"),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     SpacerWidth(w: 20),
+        //     Expanded(
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //         children: [
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text(
+        //                 "Height",
+        //                 style: CustomFont(
+        //                         CustomColor.blackColor, 14, FontWeight.bold)
+        //                     .font,
+        //               ),
+        //               Text(
+        //                 "$height cm",
+        //                 style:
+        //                     CustomFont(CustomColor.blackColor, 12, null).font,
+        //               ),
+        //             ],
+        //           ),
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text(
+        //                 "Weight",
+        //                 style: CustomFont(
+        //                         CustomColor.blackColor, 14, FontWeight.bold)
+        //                     .font,
+        //               ),
+        //               Text(
+        //                 "$weight kg",
+        //                 style:
+        //                     CustomFont(CustomColor.blackColor, 12, null).font,
+        //               ),
+        //             ],
+        //           ),
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text(
+        //                 "Gender",
+        //                 style: CustomFont(
+        //                         CustomColor.blackColor, 14, FontWeight.bold)
+        //                     .font,
+        //               ),
+        //               Text(
+        //                 gender,
+        //                 style:
+        //                     CustomFont(CustomColor.blackColor, 12, null).font,
+        //               ),
+        //             ],
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SpacerHeight(h: 10),
+        // Text(
+        //   uname,
+        //   style: CustomFont(CustomColor.blackColor, 14, FontWeight.bold).font,
+        // ),
+        // Text(
+        //   "$age years old",
+        //   style: CustomFont(CustomColor.blackColor, 12, null).font,
+        // ),
         SpacerHeight(h: 10),
         SizedBox(
           height: 50,
