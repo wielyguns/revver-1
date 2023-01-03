@@ -26,6 +26,7 @@ class _DownlineDetailState extends State<DownlineDetail> {
   String stageName;
 
   //Current Task
+  bool current_task = false;
   int current_task_id;
   String current_task_title;
   String current_task_content;
@@ -39,28 +40,41 @@ class _DownlineDetailState extends State<DownlineDetail> {
       isLoad = true;
     });
     await getSupportMemberDetail(wid).then((val) {
-      setState(() {
-        id = val['data']['id'];
-        name = val['data']['name'];
-        photo = val['data']['photo'];
-        stageName = val['data']['stage']['name'];
-        current_task_id = val['data']['current_task']['id'];
-        current_task_title = val['data']['current_task']['indicator']['title'];
-        current_task_content =
-            val['data']['current_task']['indicator']['content'];
-        current_task_status =
-            val['data']['current_task']['indicator']['status'];
-        if (current_task_status == 0) {
-          sStatus = "Unfinish";
-        }
-        if (current_task_status == 1) {
-          sStatus = "Pending";
-        }
-        if (current_task_status == 2) {
-          sStatus = "Finish";
-        }
-        isLoad = false;
-      });
+      if (val['data']['current_task'] == null) {
+        setState(() {
+          current_task = false;
+          id = val['data']['id'];
+          name = val['data']['name'];
+          photo = val['data']['photo'];
+          stageName = val['data']['stage']['name'];
+          isLoad = false;
+        });
+      } else {
+        setState(() {
+          current_task = true;
+          id = val['data']['id'];
+          name = val['data']['name'];
+          photo = val['data']['photo'];
+          stageName = val['data']['stage']['name'];
+          current_task_id = val['data']['current_task']['id'];
+          current_task_title =
+              val['data']['current_task']['indicator']['title'];
+          current_task_content =
+              val['data']['current_task']['indicator']['content'];
+          current_task_status =
+              val['data']['current_task']['indicator']['status'];
+          if (current_task_status == 0) {
+            sStatus = "Unfinish";
+          }
+          if (current_task_status == 1) {
+            sStatus = "Pending";
+          }
+          if (current_task_status == 2) {
+            sStatus = "Finish";
+          }
+          isLoad = false;
+        });
+      }
     });
   }
 
@@ -160,130 +174,139 @@ class _DownlineDetailState extends State<DownlineDetail> {
                         .font,
                   ),
                   SpacerHeight(h: 20),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: ExpandableNotifier(
-                      initialExpanded: true,
-                      child: Column(
-                        children: [
-                          Expandable(
-                            collapsed: Column(
+                  (current_task)
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          child: ExpandableNotifier(
+                            initialExpanded: true,
+                            child: Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(current_task_title,
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                16,
-                                                FontWeight.w600)
-                                            .font),
-                                    ExpandableButton(
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 2,
-                                  color:
-                                      CustomColor.brownColor.withOpacity(0.5),
-                                )
-                              ],
-                            ),
-                            expanded: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(current_task_title,
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                16,
-                                                FontWeight.w600)
-                                            .font),
-                                    ExpandableButton(
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 2,
-                                  color:
-                                      CustomColor.brownColor.withOpacity(0.5),
-                                ),
-                                Html(data: current_task_content),
-                                SpacerHeight(h: 5),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Status: $sStatus",
-                                      style: CustomFont(CustomColor.blackColor,
-                                              12, FontWeight.w600)
-                                          .font,
-                                    ),
-                                    Container(
-                                      height: 30,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: CupertinoButton(
-                                        padding: EdgeInsets.all(1),
-                                        onPressed: (current_task_status == 1)
-                                            ? () async {
-                                                await patchSupportMember(
-                                                        current_task_id)
-                                                    .then((val) {
-                                                  if (val['status'] == 200) {
-                                                    getData(widget.id);
-                                                  } else {
-                                                    customSnackBar(
-                                                        context,
-                                                        true,
-                                                        val['status']
-                                                            .toString());
-                                                  }
-                                                });
-                                              }
-                                            : null,
-                                        color: CustomColor.brownColor,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Review Task",
+                                Expandable(
+                                  collapsed: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(current_task_title,
                                               style: CustomFont(
-                                                      CustomColor.whiteColor,
-                                                      9,
+                                                      CustomColor.blackColor,
+                                                      16,
                                                       FontWeight.w600)
-                                                  .font,
+                                                  .font),
+                                          ExpandableButton(
+                                            child: Icon(
+                                              Icons.add,
+                                              size: 20,
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
+                                      Divider(
+                                        thickness: 2,
+                                        color: CustomColor.brownColor
+                                            .withOpacity(0.5),
+                                      )
+                                    ],
+                                  ),
+                                  expanded: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(current_task_title,
+                                              style: CustomFont(
+                                                      CustomColor.blackColor,
+                                                      16,
+                                                      FontWeight.w600)
+                                                  .font),
+                                          ExpandableButton(
+                                            child: Icon(
+                                              Icons.remove,
+                                              size: 20,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        thickness: 2,
+                                        color: CustomColor.brownColor
+                                            .withOpacity(0.5),
+                                      ),
+                                      Html(data: current_task_content),
+                                      SpacerHeight(h: 5),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Status: $sStatus",
+                                            style: CustomFont(
+                                                    CustomColor.blackColor,
+                                                    12,
+                                                    FontWeight.w600)
+                                                .font,
+                                          ),
+                                          Container(
+                                            height: 30,
+                                            width: 120,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: CupertinoButton(
+                                              padding: EdgeInsets.all(1),
+                                              onPressed: (current_task_status ==
+                                                      1)
+                                                  ? () async {
+                                                      await patchSupportMember(
+                                                              current_task_id)
+                                                          .then((val) {
+                                                        if (val['status'] ==
+                                                            200) {
+                                                          getData(widget.id);
+                                                        } else {
+                                                          customSnackBar(
+                                                              context,
+                                                              true,
+                                                              val['status']
+                                                                  .toString());
+                                                        }
+                                                      });
+                                                    }
+                                                  : null,
+                                              color: CustomColor.brownColor,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Review Task",
+                                                    style: CustomFont(
+                                                            CustomColor
+                                                                .whiteColor,
+                                                            9,
+                                                            FontWeight.w600)
+                                                        .font,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SpacerHeight(h: 20),
+                                    ],
+                                  ),
                                 ),
-                                SpacerHeight(h: 20),
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),
