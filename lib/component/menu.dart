@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/test.dart';
 import 'package:revver/globals.dart';
 
 class HomeMenu extends StatelessWidget {
@@ -16,28 +16,25 @@ class HomeMenu extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              detailMenu(context, "assets/svg/clipboard-solid 1.svg", "Note",
-                  "/homepage"),
-              detailMenu(context, "assets/svg/book-solid.svg", "E-Learning",
-                  "/homepage"),
-              detailMenu(context, "assets/svg/paper-plane-solid.svg", "Plan",
-                  "/homepage"),
-              detailMenu(context, "assets/svg/stethoscope-solid.svg",
-                  "E-Health", "/homepage"),
+              detailMenu(context, "assets/svg/note-new.svg", "Note", "/note"),
+              detailMenu(context, "assets/svg/e-learning-new.svg", "E-Learning",
+                  "/e-learning"),
+              detailMenu(context, "assets/svg/plan-new.svg", "Plan", "/plan"),
+              detailMenu(context, "assets/svg/e-health-new.svg", "E-Health",
+                  "/e-health-form"),
             ],
           ),
           SpacerHeight(h: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              detailMenu(context, "assets/svg/goals-new.svg", "Goals", "/goal"),
               detailMenu(
-                  context, "assets/svg/trophy-solid.svg", "Goals", "/homepage"),
-              detailMenu(context, "assets/svg/people-group-solid.svg",
-                  "Support", "/homepage"),
-              detailMenu(context, "assets/svg/chart-pie-solid.svg", "Report",
-                  "/homepage"),
-              detailMenu(context, "assets/svg/chart-pie-solid.svg", "Revver",
-                  "/homepage"),
+                  context, "assets/svg/support-new.svg", "Support", "/support"),
+              detailMenu(
+                  context, "assets/svg/report-new.svg", "Report", "/report"),
+              detailMenu(context, "assets/svg/report-new.svg", "Revver",
+                  "/company-profile"),
             ],
           ),
         ],
@@ -46,10 +43,9 @@ class HomeMenu extends StatelessWidget {
   }
 
   detailMenu(BuildContext context, String image, String title, String goTo) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
-        // GoRouter.of(context).go(goTo);
-        test(context);
+        GoRouter.of(context).push(goTo);
       },
       child: Column(
         children: [

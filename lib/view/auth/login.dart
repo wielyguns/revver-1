@@ -27,122 +27,232 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Form(
-              key: formKey,
+        body: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 20),
+              height: CustomScreen(context).height,
+              width: CustomScreen(context).width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/img/background.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SpacerHeight(h: 100),
+                  Image.asset(
+                    "assets/img/revver-white.png",
+                    width: CustomScreen(context).width / 2,
+                  ),
                   SpacerHeight(h: 20),
                   Text(
-                    "Login",
-                    style: CustomFont.heading36,
+                    "Hello!",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w600,
+                        color: CustomColor.whiteColor),
                   ),
-                  SpacerHeight(h: 10),
-                  Text(
-                    "Already have an account? Please, login!",
-                    style: CustomFont.subheading,
-                  ),
-                  SpacerHeight(h: 20),
-                  RegularForm(
-                    title: "Email",
-                    hint: "Your Email",
-                    isValidator: true,
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                  ),
-                  SpacerHeight(h: 20),
-                  PasswordForm(
-                    title: "Password",
-                    hint: "Your Password",
-                    visible: password,
-                    isValidator: true,
-                    controller: passwordController,
-                  ),
-                  SpacerHeight(h: 20),
-                  Row(
-                    children: [
-                      SizedBox(
-                        height: 24.0,
-                        width: 24.0,
-                        child: Checkbox(
-                          value: rememberMe,
-                          activeColor: CustomColor.goldColor,
-                          onChanged: (value) {
-                            setState(() {
-                              rememberMe = !rememberMe;
-                            });
-                          },
-                        ),
-                      ),
-                      SpacerWidth(w: 5),
-                      Text(
-                        "Remember Me?",
-                        style: CustomFont.regular12,
-                      ),
-                    ],
-                  ),
-                  SpacerHeight(h: 20),
-                  Row(
-                    children: [
-                      Text(
-                        "Don't have an account yet? ",
-                        style: CustomFont.regular12,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "Register here!",
-                          style: CustomFont.link,
-                        ),
-                        onTap: () {
-                          GoRouter.of(context).go('/registration');
-                        },
-                      ),
-                    ],
-                  ),
-                  SpacerHeight(h: 20),
                 ],
               ),
             ),
-          ),
+            SingleChildScrollView(
+              child: SizedBox(
+                height: CustomScreen(context).height,
+                width: CustomScreen(context).width,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                    )),
+                    Container(
+                      width: CustomScreen(context).width,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: CustomColor.whiteColor,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30)),
+                      ),
+                      child: Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SpacerHeight(h: 20),
+                            Text(
+                              "Login",
+                              style: CustomFont(CustomColor.brownColor, 36,
+                                      FontWeight.w700)
+                                  .font,
+                            ),
+                            SpacerHeight(h: 10),
+                            Text(
+                              "Already have an account? Please, login!",
+                              style: CustomFont(CustomColor.oldGreyColor, 12,
+                                      FontWeight.w400)
+                                  .font,
+                            ),
+                            SpacerHeight(h: 20),
+                            RegularForm(
+                              icon: Icons.mail,
+                              title: "Email",
+                              hint: "Your Email",
+                              isValidator: true,
+                              keyboardType: TextInputType.emailAddress,
+                              controller: emailController,
+                            ),
+                            SpacerHeight(h: 20),
+                            PasswordForm(
+                              icon: Icons.key,
+                              title: "Password",
+                              hint: "Your Password",
+                              visible: password,
+                              isValidator: true,
+                              controller: passwordController,
+                            ),
+                            SpacerHeight(h: 20),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  height: 24.0,
+                                  width: 24.0,
+                                  child: Checkbox(
+                                    value: rememberMe,
+                                    activeColor: CustomColor.brownColor,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        rememberMe = !rememberMe;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SpacerWidth(w: 5),
+                                Text(
+                                  "Remember Me?",
+                                  style: CustomFont(CustomColor.blackColor, 12,
+                                          FontWeight.w400)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            SpacerHeight(h: 20),
+                            Row(
+                              children: [
+                                Text(
+                                  "Don't have an account yet? ",
+                                  style: CustomFont(CustomColor.blackColor, 12,
+                                          FontWeight.w400)
+                                      .font,
+                                ),
+                                GestureDetector(
+                                  child: Text(
+                                    "Register here!",
+                                    style: CustomFont(CustomColor.brownColor,
+                                            12, FontWeight.w400)
+                                        .font,
+                                  ),
+                                  onTap: () {
+                                    GoRouter.of(context).go('/registration');
+                                  },
+                                ),
+                              ],
+                            ),
+                            SpacerHeight(h: 20),
+                            SizedBox(
+                              width: CustomScreen(context).width - 40,
+                              child: CustomButton(
+                                title: "Login",
+                                func: () async {
+                                  if (!formKey.currentState.validate()) {
+                                    customSnackBar(context, true,
+                                        "Complete the form first!");
+                                  } else {
+                                    String email = emailController.text;
+                                    String password = passwordController.text;
+                                    await loginLoad(email, password).then(
+                                      (val) async {
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        String token = val['api_key'];
+                                        if (val['status'] == 200) {
+                                          if (rememberMe) {
+                                            await prefs.setString(
+                                                'password', password);
+                                            await prefs.setString(
+                                                'email', email);
+                                            await prefs.setString(
+                                                'token', token);
+                                          } else {
+                                            await prefs.remove("password");
+                                            await prefs.remove('email');
+                                            await prefs.setString(
+                                                'token', token);
+                                          }
+                                          GoRouter.of(context)
+                                              .go("/homepage/0");
+                                        } else {
+                                          customSnackBar(
+                                              context, true, val['message']);
+                                        }
+                                      },
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                            SpacerHeight(h: 20),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-        bottomNavigationBar: Container(
-          color: CustomColor.whiteColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: CustomButton(
-            title: "Login",
-            func: () async {
-              if (!formKey.currentState.validate()) {
-                customSnackBar(context, true, "Complete the form first!");
-              } else {
-                String email = emailController.text;
-                String password = passwordController.text;
-                await loginLoad(email, password).then(
-                  (val) async {
-                    final prefs = await SharedPreferences.getInstance();
-                    String token = val['api_key'];
-                    if (val['status'] == 200) {
-                      if (rememberMe) {
-                        await prefs.setString('password', password);
-                        await prefs.setString('email', email);
-                        await prefs.setString('token', token);
-                      } else {
-                        await prefs.remove("password");
-                        await prefs.remove('email');
-                        await prefs.setString('token', token);
-                      }
-                      GoRouter.of(context).go("/homepage/0");
-                    } else {
-                      customSnackBar(context, true, val['message']);
-                    }
-                  },
-                );
-              }
-            },
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   color: CustomColor.whiteColor,
+        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //   child: CustomButton(
+        //     title: "Login",
+        //     func: () async {
+        //       if (!formKey.currentState.validate()) {
+        //         customSnackBar(context, true, "Complete the form first!");
+        //       } else {
+        //         String email = emailController.text;
+        //         String password = passwordController.text;
+        //         await loginLoad(email, password).then(
+        //           (val) async {
+        //             final prefs = await SharedPreferences.getInstance();
+        //             String token = val['api_key'];
+        //             if (val['status'] == 200) {
+        //               if (rememberMe) {
+        //                 await prefs.setString('password', password);
+        //                 await prefs.setString('email', email);
+        //                 await prefs.setString('token', token);
+        //               } else {
+        //                 await prefs.remove("password");
+        //                 await prefs.remove('email');
+        //                 await prefs.setString('token', token);
+        //               }
+        //               GoRouter.of(context).go("/homepage/0");
+        //             } else {
+        //               customSnackBar(context, true, val['message']);
+        //             }
+        //           },
+        //         );
+        //       }
+        //     },
+        //   ),
+        // ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
@@ -15,36 +16,64 @@ class HomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (list != null) {
-      i = list.length;
+      if (list.length >= 5) {
+        i = 5;
+      } else {
+        i = list.length;
+      }
     }
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child: SizedBox(
-            width: CustomScreen(context).width,
-            height: CustomScreen(context).width / 2.5,
-            child: (list == null)
-                ? Center(child: CircularProgressIndicator())
-                : PageView.builder(
-                    controller: controller,
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: i,
-                    itemBuilder: (BuildContext context, int index) {
-                      BannerModel banner = list[index];
-                      return Row(
-                        children: [
-                          _sliderWidget(
-                              context,
-                              banner.image ??=
-                                  "https://wallpaperaccess.com/full/733834.png")
-                        ],
-                      );
-                    },
+        (list == null)
+            ? Container(
+                width: CustomScreen(context).width,
+                height: CustomScreen(context).width / 1.5,
+                decoration: BoxDecoration(
+                  color: CustomColor.backgroundColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 0,
+                      blurRadius: 13,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: CupertinoActivityIndicator(),
+              )
+            : Container(
+                decoration: BoxDecoration(
+                  color: CustomColor.backgroundColor,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      spreadRadius: 0,
+                      blurRadius: 13,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15.0),
+                  child: SizedBox(
+                    width: CustomScreen(context).width,
+                    height: CustomScreen(context).width / 1.5,
+                    child: PageView.builder(
+                      controller: controller,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: i,
+                      itemBuilder: (BuildContext context, int index) {
+                        BannerModel banner = list[index];
+                        return Row(
+                          children: [_sliderWidget(context, banner.image)],
+                        );
+                      },
+                    ),
                   ),
-          ),
-        ),
+                ),
+              ),
         SpacerHeight(h: 20),
         Positioned.fill(
           child: Align(
@@ -58,7 +87,7 @@ class HomeBanner extends StatelessWidget {
                       dotHeight: 8,
                       dotWidth: 8,
                       dotColor: CustomColor.greyColor,
-                      activeDotColor: CustomColor.goldColor),
+                      activeDotColor: CustomColor.brownColor),
                   onDotClicked: (index) {}),
             ),
           ),
@@ -70,7 +99,7 @@ class HomeBanner extends StatelessWidget {
   _sliderWidget(BuildContext context, String gambar) {
     return Container(
         width: CustomScreen(context).width - 40,
-        height: CustomScreen(context).width / 2.5,
+        height: CustomScreen(context).width / 1.5,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
@@ -78,7 +107,7 @@ class HomeBanner extends StatelessWidget {
           children: [
             SizedBox(
               width: CustomScreen(context).width - 40,
-              height: CustomScreen(context).width / 2.5,
+              height: CustomScreen(context).width / 1.5,
               child: ClipRRect(
                 child: CachedNetworkImage(
                   imageUrl: gambar,

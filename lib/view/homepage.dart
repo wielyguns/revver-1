@@ -43,19 +43,18 @@ class _HomepageState extends State<Homepage> {
       body: _children[_currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-          color: CustomColor.goldColor,
+          color: CustomColor.whiteColor,
           boxShadow: [
             BoxShadow(
-              color: CustomColor.blackColor,
-              spreadRadius: 20,
-              blurRadius: 50,
-              offset: Offset(0, 50),
+              color: CustomColor.whiteColor.withOpacity(0.1),
+              spreadRadius: 0,
+              blurRadius: 13,
+              offset: Offset(0, 3),
             ),
           ],
         ),
         child: SalomonBottomBar(
+          selectedColorOpacity: 1,
           margin: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
@@ -63,53 +62,77 @@ class _HomepageState extends State<Homepage> {
             /// Home
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/house-solid.svg",
+                "assets/svg/home.svg",
                 height: 24,
+              ),
+              activeIcon: SvgPicture.asset(
+                "assets/svg/home.svg",
+                height: 24,
+                color: CustomColor.whiteColor,
               ),
               title: Text(
                 "Home",
-                style: CustomFont.bold12,
+                style: CustomFont(CustomColor.whiteColor, 12, FontWeight.bold)
+                    .font,
               ),
-              selectedColor: Colors.black,
+              selectedColor: CustomColor.brownColor,
             ),
 
-            /// Likes
+            /// Event
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/calendar-days-solid.svg",
+                "assets/svg/event.svg",
                 height: 24,
+              ),
+              activeIcon: SvgPicture.asset(
+                "assets/svg/event.svg",
+                height: 24,
+                color: CustomColor.whiteColor,
               ),
               title: Text(
                 "Event",
-                style: CustomFont.bold12,
+                style: CustomFont(CustomColor.whiteColor, 12, FontWeight.bold)
+                    .font,
               ),
-              selectedColor: Colors.black,
+              selectedColor: CustomColor.brownColor,
             ),
 
-            /// Search
+            /// Leads
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/clipboard-solid.svg",
+                "assets/svg/leads.svg",
                 height: 24,
+              ),
+              activeIcon: SvgPicture.asset(
+                "assets/svg/leads.svg",
+                height: 24,
+                color: CustomColor.whiteColor,
               ),
               title: Text(
                 "Leads",
-                style: CustomFont.bold12,
+                style: CustomFont(CustomColor.whiteColor, 12, FontWeight.bold)
+                    .font,
               ),
-              selectedColor: Colors.black,
+              selectedColor: CustomColor.brownColor,
             ),
 
-            /// Profile
+            /// Account
             SalomonBottomBarItem(
               icon: SvgPicture.asset(
-                "assets/svg/user-solid.svg",
+                "assets/svg/account.svg",
                 height: 24,
+              ),
+              activeIcon: SvgPicture.asset(
+                "assets/svg/account.svg",
+                height: 24,
+                color: CustomColor.whiteColor,
               ),
               title: Text(
                 "Account",
-                style: CustomFont.bold12,
+                style: CustomFont(CustomColor.whiteColor, 12, FontWeight.bold)
+                    .font,
               ),
-              selectedColor: Colors.black,
+              selectedColor: CustomColor.brownColor,
             ),
           ],
         ),

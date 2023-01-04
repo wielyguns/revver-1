@@ -1,7 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// ignore_for_file: non_constant_identifier_names
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:indonesia/indonesia.dart';
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/event.dart';
+import 'package:revver/globals.dart';
 
 // ignore: must_be_immutable
 class GlobalEvent extends StatefulWidget {
@@ -13,31 +21,117 @@ class GlobalEvent extends StatefulWidget {
 }
 
 class _GlobalEventState extends State<GlobalEvent> {
+  bool isLoad = true;
+  String name;
+  DateTime date;
+  String time;
+  String description;
+  String long_description;
+  String slug;
+  String address;
+  String image;
+
+  getData(wid) async {
+    await getEventDetail(wid).then((val) {
+      setState(() {
+        name = val['data']['name'];
+        date = DateFormat("yyyy-MM-dd hh:mm:ss").parse(val['data']['date']);
+        description = val['data']['description'];
+        long_description = val['data']['long_description'];
+        slug = val['data']['slug'];
+        address = val['data']['address'];
+        image = val['data']['image'];
+        time = DateFormat.jm().format(date);
+        isLoad = false;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getData(widget.id);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomHeader(
+        title: "",
         isPop: true,
-        title: "Global Event",
+        offMiddleLogo: true,
+        image: image ??= "https://wallpaperaccess.com/full/733834.png",
+        height: 300,
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            child: ClipRRect(
-              child: CachedNetworkImage(
-                imageUrl: "https://wallpaperaccess.com/full/733834.png",
-                fit: BoxFit.cover,
+      body: (isLoad)
+          ? Center(child: CupertinoActivityIndicator())
+          : SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SpacerHeight(h: 20),
+                  Text(
+                    name,
+                    style:
+                        CustomFont(CustomColor.brownColor, 20, FontWeight.w700)
+                            .font,
+                  ),
+                  SpacerHeight(h: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
+                        size: 24,
+                        color: CustomColor.brownColor,
+                      ),
+                      SpacerWidth(w: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tanggal(date),
+                            style: CustomFont(
+                                    CustomColor.blackColor, 14, FontWeight.w600)
+                                .font,
+                          ),
+                          Text(
+                            time,
+                            style: CustomFont(CustomColor.oldGreyColor, 11,
+                                    FontWeight.w400)
+                                .font,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SpacerHeight(h: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_month,
+                        size: 24,
+                        color: CustomColor.brownColor,
+                      ),
+                      SpacerWidth(w: 10),
+                      Text(
+                        address,
+                        style: CustomFont(
+                                CustomColor.blackColor, 14, FontWeight.w600)
+                            .font,
+                      ),
+                    ],
+                  ),
+                  SpacerHeight(h: 20),
+                  (description != null)
+                      ? Html(data: description ??= "")
+                      : SizedBox(),
+                  (description != null) ? SpacerHeight(h: 20) : SizedBox(),
+                  Html(data: long_description ??= "")
+                ],
               ),
             ),
-          ),
-          SpacerHeight(h: 20),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
-          )
-        ],
-      ),
     );
   }
 }

@@ -1,9 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:io' as io;
-
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
+import 'package:revver/model/order.dart';
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,8 +60,13 @@ getAccountOrder() async {
     "Authorization": "Bearer $token",
   });
   var res = jsonDecode(response.body);
+  List<Order> list = [];
 
-  return res;
+  for (var data in res['data'] as List) {
+    list.add(Order.fromJson(jsonEncode(data)));
+  }
+
+  return list;
 }
 
 getAccountOrderDetail(String orderId) async {
@@ -80,18 +83,16 @@ getAccountOrderDetail(String orderId) async {
   return res;
 }
 
-Future<int> postChangeAvatar(String image, String name) async {
+postChangeAvatar(String image, String name) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   int res;
 
-  // String url = "https://admin.revveracademy.com/api/v1/account/";
-  String url = "https://webhook.site/a80fd997-9a6b-4d57-9db2-958f90bb1b09";
+  String url = "https://admin.revveracademy.com/api/v1/account";
   Uri parseUrl = Uri.parse(url);
 
   var request = http.MultipartRequest('POST', parseUrl);
   request.headers['Authorization'] = "Bearer $token";
-  // request.headers['Content-Type'] = "multipart/form-data";
   var file = await http.MultipartFile.fromPath("avatar", image, filename: name);
   request.files.add(file);
 
@@ -100,29 +101,6 @@ Future<int> postChangeAvatar(String image, String name) async {
   });
   return res;
 }
-
-// postChangeAvatar(io.File image, String name) async {
-//   final prefs = await SharedPreferences.getInstance();
-//   String token = prefs.getString('token');
-//   String url = "https://admin.revveracademy.com/api/v1/account/";
-//   // String url = "https://webhook.site/a80fd997-9a6b-4d57-9db2-958f90bb1b09";
-//   final dio = Dio();
-
-//   var formData = FormData.fromMap(
-//       {'avatar': await MultipartFile.fromFile(image.path, filename: name)});
-
-//   Response response = await dio.post(
-//     url,
-//     data: formData,
-//     options: Options(
-//       headers: {
-//         'Content-Type': 'multipart/form-data',
-//         'Authorization': 'Bearer $token',
-//       },
-//     ),
-//   );
-//   print(response);
-// }
 
 patchAccountProfile(name, username, phone, secondary_email) async {
   final prefs = await SharedPreferences.getInstance();
@@ -138,6 +116,19 @@ patchAccountProfile(name, username, phone, secondary_email) async {
     'phone': phone,
     'secondary_email': secondary_email,
   });
+  var res = jsonDecode(response.body);
+
+  return res;
+}
+
+deleteAccount(id) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/account/$id";
+
+  Uri parseUrl = Uri.parse(url);
+  final response =
+      await http.delete(parseUrl, headers: {"Authorization": "Bearer $token"});
   var res = jsonDecode(response.body);
 
   return res;

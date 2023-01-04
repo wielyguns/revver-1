@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -6,17 +8,25 @@ import 'package:revver/view/leads/leadsDetailForm.dart';
 import 'package:revver/view/leads/leadsDetailMeeting.dart';
 
 class LeadsDetail extends StatefulWidget {
-  const LeadsDetail({Key key}) : super(key: key);
+  LeadsDetail({Key key, this.id}) : super(key: key);
+  int id;
 
   @override
   State<LeadsDetail> createState() => _LeadsDetailState();
 }
 
 class _LeadsDetailState extends State<LeadsDetail> {
-  final List<Widget> _children = [
-    LeadsDetailForm(x: "x"),
-    LeadsDetailMeeting(),
-  ];
+  List<Widget> _children = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _children = [
+      LeadsDetailForm(x: "x", id: widget.id),
+      LeadsDetailMeeting(id: widget.id),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -33,7 +43,7 @@ class _LeadsDetailState extends State<LeadsDetail> {
           bottom: PreferredSize(
             preferredSize: Size(0, 50),
             child: Container(
-              color: CustomColor.goldColor,
+              color: CustomColor.brownColor,
               child: TabBar(
                 indicatorColor: CustomColor.blackColor,
                 indicatorWeight: 3,

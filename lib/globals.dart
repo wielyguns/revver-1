@@ -8,9 +8,10 @@ class CustomScreen {
 }
 
 class CustomColor {
+  static Color backgroundColor = Color(0xffF2F2F2);
   static Color blackColor = Color(0xff000000);
   static Color goldColor = Color(0xffF0A500);
-  static Color brownColor = Color(0xffCF7500);
+  static Color brownColor = Color(0xffD5A068);
   static Color oldGreyColor = Color(0xffA7A7A7);
   static Color greyColor = Color(0xffDBDBDB);
   static Color whiteColor = Color(0xffFAFAFA);
@@ -21,6 +22,17 @@ class CustomColor {
 }
 
 class CustomFont {
+  Color color;
+  double size;
+  FontWeight weight;
+  CustomFont(this.color, this.size, this.weight);
+  TextStyle get font => TextStyle(
+        fontSize: size ??= 16,
+        fontFamily: "Montserrat",
+        fontWeight: weight,
+        color: color ??= Colors.black,
+      );
+
   //Heading
   static TextStyle heading48 = TextStyle(
       fontSize: 48, fontFamily: "Montserrat", fontWeight: FontWeight.w700);

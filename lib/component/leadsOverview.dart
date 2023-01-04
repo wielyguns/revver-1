@@ -44,8 +44,8 @@ class _LeadsOverviewState extends State<LeadsOverview> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Leads Overview", style: CustomFont.bold16),
-        SpacerHeight(h: 20),
+        // Text("Leads Overview", style: CustomFont.bold16),
+        // SpacerHeight(h: 20),
         ClipRRect(
           borderRadius: BorderRadius.circular(50.0),
           child: Row(
@@ -60,14 +60,14 @@ class _LeadsOverviewState extends State<LeadsOverview> {
               SizedBox(
                 width: (d / allStats) * widget.warm,
                 child: Divider(
-                  color: CustomColor.goldColor,
+                  color: CustomColor.brownColor,
                   thickness: 10,
                 ),
               ),
               SizedBox(
                 width: (d / allStats) * widget.hot,
                 child: Divider(
-                  color: CustomColor.brownColor,
+                  color: CustomColor.redColor,
                   thickness: 10,
                 ),
               ),
@@ -101,7 +101,7 @@ class _LeadsOverviewState extends State<LeadsOverview> {
               children: [
                 Icon(
                   Icons.circle,
-                  color: CustomColor.goldColor,
+                  color: CustomColor.brownColor,
                   size: 15,
                 ),
                 Text(
@@ -114,7 +114,7 @@ class _LeadsOverviewState extends State<LeadsOverview> {
               children: [
                 Icon(
                   Icons.circle,
-                  color: CustomColor.brownColor,
+                  color: CustomColor.redColor,
                   size: 15,
                 ),
                 Text(

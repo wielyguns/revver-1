@@ -1,11 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/globals.dart';
 
-// ignore: must_be_immutable
 class RegularForm extends StatelessWidget {
   RegularForm(
       {Key key,
+      this.icon,
       this.title,
       this.hint,
       this.controller,
@@ -13,6 +15,7 @@ class RegularForm extends StatelessWidget {
       this.keyboardType,
       this.readOnly})
       : super(key: key);
+  IconData icon;
   final String title;
   final String hint;
   final TextEditingController controller;
@@ -31,39 +34,54 @@ class RegularForm extends StatelessWidget {
         TextFormField(
           readOnly: readOnly,
           keyboardType: keyboardType,
-          style: CustomFont.regular12,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           controller: controller,
           decoration: InputDecoration(
+            prefixIcon: (icon == null)
+                ? null
+                : Icon(
+                    icon,
+                    color: CustomColor.brownColor,
+                  ),
             hintText: hint,
-            hintStyle: CustomFont.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 1,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.oldGreyColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
             ),
           ),
           validator: (value) {
@@ -106,40 +124,49 @@ class MultiLineForm extends StatelessWidget {
         SizedBox(height: 10),
         TextFormField(
           keyboardType: keyboardType,
-          style: CustomFont.regular12,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           maxLines: 5,
           controller: controller,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: CustomFont.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 1,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.oldGreyColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
             ),
           ),
           validator: (value) {
@@ -158,16 +185,17 @@ class MultiLineForm extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class PasswordForm extends StatefulWidget {
   PasswordForm(
       {Key key,
+      this.icon,
       this.title,
       this.hint,
       this.visible,
       this.controller,
       this.isValidator})
       : super(key: key);
+  IconData icon;
   final String title;
   final String hint;
   bool visible;
@@ -188,45 +216,60 @@ class _PasswordFormState extends State<PasswordForm> {
         Text(widget.title, style: CustomFont.regular12),
         SizedBox(height: 10),
         TextFormField(
-          style: CustomFont.regular12,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           controller: widget.controller,
           obscureText: !widget.visible,
           decoration: InputDecoration(
+            prefixIcon: (widget.icon == null)
+                ? null
+                : Icon(
+                    widget.icon,
+                    color: CustomColor.brownColor,
+                  ),
             hintText: widget.hint,
-            hintStyle: CustomFont.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 1,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.oldGreyColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
             ),
             suffixIcon: IconButton(
               icon: Icon(
                 widget.visible ? Icons.visibility : Icons.visibility_off,
-                color: CustomColor.goldColor,
+                color: CustomColor.brownColor,
               ),
               onPressed: () {
                 setState(() {
@@ -252,8 +295,14 @@ class _PasswordFormState extends State<PasswordForm> {
 }
 
 class StringDropdown extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  StringDropdown({Key key}) : super(key: key);
+  StringDropdown(
+      {Key key, this.list, this.title, this.hint, this.value, this.callback})
+      : super(key: key);
+  List<String> list;
+  String title;
+  String hint;
+  String value;
+  Function(String val) callback;
 
   @override
   State<StringDropdown> createState() => _StringDropdownState();
@@ -262,93 +311,259 @@ class StringDropdown extends StatefulWidget {
 class _StringDropdownState extends State<StringDropdown> {
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField(
-      items:
-          ['Dog', 'Cat', 'Tiger', 'Lion'].map<DropdownMenuItem>((String value) {
-        return DropdownMenuItem(
-          value: value,
-          child: Text(
-            value,
-            style: CustomFont.filled,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        DropdownButtonFormField(
+          value: widget.value,
+          items: widget.list.map<DropdownMenuItem>((String value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(
+                value,
+                style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400)
+                    .font,
+              ),
+            );
+          }).toList(),
+          onChanged: (value) {
+            // print(value);
+            widget.callback(value);
+          },
+          dropdownColor: CustomColor.whiteColor,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
+          decoration: InputDecoration(
+            hintText: widget.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
+            contentPadding: EdgeInsets.all(10),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
           ),
-        );
-      }).toList(),
-      onChanged: (value) {},
-      dropdownColor: CustomColor.whiteColor,
-      style: CustomFont.filled,
-      decoration: InputDecoration(
-        hintText: "Name",
-        hintStyle: CustomFont.hint,
-        contentPadding: EdgeInsets.all(10),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 1,
-              style: BorderStyle.solid,
-              color: CustomColor.oldGreyColor),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.goldColor),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
-        ),
-      ),
+      ],
     );
   }
 }
 
-// ignore: must_be_immutable
-class SearchForm extends StatelessWidget {
-  SearchForm({Key key}) : super(key: key);
-  TextEditingController controller;
+class DynamicDropdown extends StatelessWidget {
+  DynamicDropdown({Key key, this.hint, this.list, this.title, this.callback})
+      : super(key: key);
+  String title;
+  String hint;
+  List list;
+  Function(String val) callback;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      style: CustomFont.regular12,
-      controller: controller,
-      decoration: InputDecoration(
-        hintText: "Search",
-        hintStyle: CustomFont.hint,
-        contentPadding: EdgeInsets.all(10),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 1,
-              style: BorderStyle.solid,
-              color: CustomColor.oldGreyColor),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        DropdownButtonFormField(
+          items: list.map((val) {
+            return DropdownMenuItem(
+              value: val,
+              child: Text(
+                val.name,
+                style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400)
+                    .font,
+              ),
+            );
+          }).toList(),
+          onChanged: (val) {
+            callback(val.id);
+          },
+          dropdownColor: CustomColor.whiteColor,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
+            contentPadding: EdgeInsets.all(10),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.goldColor),
+      ],
+    );
+  }
+}
+
+class SearchForm extends StatelessWidget {
+  SearchForm({Key key, this.controller, this.callback}) : super(key: key);
+  TextEditingController controller;
+  VoidCallback callback;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: CustomColor.whiteColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 0,
+            blurRadius: 13,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: TextFormField(
+        style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
+        controller: controller,
+        decoration: InputDecoration(
+          fillColor: CustomColor.whiteColor,
+          suffixIcon: (controller.text != "")
+              ? IconButton(
+                  onPressed: (() {
+                    controller.clear();
+                    callback();
+                    FocusScope.of(context).unfocus();
+                  }),
+                  icon: Icon(
+                    Icons.clear,
+                    color: CustomColor.brownColor,
+                  ),
+                )
+              : IconButton(
+                  onPressed: (() {
+                    callback();
+                    FocusScope.of(context).unfocus();
+                  }),
+                  icon: Icon(
+                    Icons.search,
+                    color: CustomColor.brownColor,
+                  ),
+                ),
+          hintText: "Search",
+          hintStyle:
+              CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
+          contentPadding: EdgeInsets.all(10),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+                width: 2,
+                style: BorderStyle.solid,
+                color: CustomColor.whiteColor),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+                width: 2,
+                style: BorderStyle.solid,
+                color: CustomColor.whiteColor),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+                width: 2,
+                style: BorderStyle.solid,
+                color: CustomColor.whiteColor),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+                width: 2,
+                style: BorderStyle.solid,
+                color: CustomColor.whiteColor),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+                width: 2,
+                style: BorderStyle.solid,
+                color: CustomColor.whiteColor),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(
+                width: 2,
+                style: BorderStyle.solid,
+                color: CustomColor.whiteColor),
+          ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(
-              width: 2, style: BorderStyle.solid, color: CustomColor.redColor),
-        ),
+        onEditingComplete: () {
+          callback();
+          FocusScope.of(context).unfocus();
+        },
       ),
     );
   }
 }
 
-// ignore: must_be_immutable
 class DateTimePickerForm extends StatefulWidget {
   DateTimePickerForm({Key key, this.title, this.hint, this.date, this.callback})
       : super(key: key);
@@ -372,38 +587,47 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
         TextFormField(
           readOnly: true,
           onTap: () => _showDialog(),
-          style: CustomFont.regular12,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: widget.date.toString(),
-            hintStyle: CustomFont.hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+            border: UnderlineInputBorder(
               borderSide: BorderSide(
-                  width: 1,
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.oldGreyColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.goldColor),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                  width: 2,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
             ),
           ),
         ),

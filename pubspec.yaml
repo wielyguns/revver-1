@@ -31,6 +31,17 @@ dependencies:
   advance_pdf_viewer: 2.0.1
   smooth_page_indicator: 1.0.0
   image_picker: 0.8.4
+  url_launcher: 6.0.10
+  chewie: 1.0.0
+  video_player: 2.2.3
+  webview_flutter: 2.0.13
+  flutter_speed_dial: 6.2.0
+  expandable: 5.0.1
+  flutter_cart: 0.0.7
+  midtrans_sdk: 0.3.4
+  firebase_core: 2.4.1
+  firebase_messaging: 14.2.1
+  overlay_support: 1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -45,12 +56,14 @@ flutter:
   assets:
     - assets/svg/
     - assets/img/
+    - assets/pdf/
 
   fonts:
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Bold.ttf
           weight: 700
+        - asset: assets/fonts/Montserrat-Regular.ttf
     
     - family: Poppins
       fonts:

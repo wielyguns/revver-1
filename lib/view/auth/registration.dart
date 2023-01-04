@@ -31,135 +31,244 @@ class _RegistrationState extends State<Registration> {
   Widget build(BuildContext context) {
     return KeyboardDismisser(
       child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Form(
-              key: formKey,
+        body: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 20),
+              height: CustomScreen(context).height,
+              width: CustomScreen(context).width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/img/background.jpeg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SpacerHeight(h: 100),
+                  Image.asset(
+                    "assets/img/revver-white.png",
+                    width: CustomScreen(context).width / 2,
+                  ),
                   SpacerHeight(h: 20),
                   Text(
-                    "Registration",
-                    style: CustomFont.heading36,
+                    "Hello!",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w600,
+                        color: CustomColor.whiteColor),
                   ),
-                  SpacerHeight(h: 10),
-                  Text(
-                    "Don't have an account yet? Register here!",
-                    style: CustomFont.subheading,
-                  ),
-                  SpacerHeight(h: 20),
-                  RegularForm(
-                    title: "Full Name",
-                    hint: "Your Full Name",
-                    isValidator: true,
-                    controller: nameController,
-                  ),
-                  SpacerHeight(h: 20),
-                  RegularForm(
-                    title: "Username",
-                    hint: "Your Username",
-                    isValidator: true,
-                    controller: usernameController,
-                  ),
-                  SpacerHeight(h: 20),
-                  RegularForm(
-                    title: "Email",
-                    hint: "Your Email",
-                    isValidator: true,
-                    controller: emailController,
-                  ),
-                  SpacerHeight(h: 20),
-                  RegularForm(
-                    title: "Phone",
-                    hint: "Your Phone",
-                    isValidator: true,
-                    controller: phoneController,
-                  ),
-                  SpacerHeight(h: 20),
-                  RegularForm(
-                    title: "Sponsor ID",
-                    hint: "Your Sponsor ID",
-                    isValidator: false,
-                    controller: sponsorIdController,
-                  ),
-                  SpacerHeight(h: 20),
-                  PasswordForm(
-                    title: "Password",
-                    hint: "Your Password",
-                    visible: password,
-                    isValidator: true,
-                    controller: passwordController,
-                  ),
-                  SpacerHeight(h: 20),
-                  PasswordForm(
-                    title: "Confirm Password",
-                    hint: "Your Confirm Password",
-                    visible: password,
-                    isValidator: true,
-                    controller: confirmPasswordController,
-                  ),
-                  SpacerHeight(h: 20),
-                  Row(
-                    children: [
-                      Text(
-                        "Don't have an account yet? ",
-                        style: CustomFont.regular12,
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          "Login here!",
-                          style: CustomFont.link,
-                        ),
-                        onTap: () {
-                          GoRouter.of(context).go('/login');
-                        },
-                      ),
-                    ],
-                  ),
-                  SpacerHeight(h: 20),
                 ],
               ),
             ),
-          ),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  SpacerHeight(h: 250),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: CustomColor.whiteColor,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                    ),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SpacerHeight(h: 20),
+                          Text(
+                            "Registration",
+                            style: CustomFont(
+                                    CustomColor.brownColor, 36, FontWeight.w700)
+                                .font,
+                          ),
+                          SpacerHeight(h: 10),
+                          Text(
+                            "Don't have an account yet? Register here!",
+                            style: CustomFont(CustomColor.oldGreyColor, 12,
+                                    FontWeight.w400)
+                                .font,
+                          ),
+                          SpacerHeight(h: 20),
+                          RegularForm(
+                            icon: Icons.person,
+                            title: "Full Name",
+                            hint: "Your Full Name",
+                            isValidator: true,
+                            controller: nameController,
+                          ),
+                          SpacerHeight(h: 20),
+                          RegularForm(
+                            icon: Icons.person,
+                            title: "Username",
+                            hint: "Your Username",
+                            isValidator: true,
+                            controller: usernameController,
+                          ),
+                          SpacerHeight(h: 20),
+                          RegularForm(
+                            icon: Icons.email,
+                            title: "Email",
+                            hint: "Your Email",
+                            isValidator: true,
+                            controller: emailController,
+                          ),
+                          SpacerHeight(h: 20),
+                          RegularForm(
+                            icon: Icons.phone,
+                            title: "Phone",
+                            hint: "Your Phone",
+                            isValidator: true,
+                            controller: phoneController,
+                          ),
+                          SpacerHeight(h: 20),
+                          RegularForm(
+                            icon: Icons.card_travel,
+                            title: "Sponsor ID",
+                            hint: "Your Sponsor ID",
+                            isValidator: false,
+                            controller: sponsorIdController,
+                          ),
+                          SpacerHeight(h: 20),
+                          PasswordForm(
+                            icon: Icons.key,
+                            title: "Password",
+                            hint: "Your Password",
+                            visible: password,
+                            isValidator: true,
+                            controller: passwordController,
+                          ),
+                          SpacerHeight(h: 20),
+                          PasswordForm(
+                            icon: Icons.key,
+                            title: "Confirm Password",
+                            hint: "Your Confirm Password",
+                            visible: password,
+                            isValidator: true,
+                            controller: confirmPasswordController,
+                          ),
+                          SpacerHeight(h: 20),
+                          Row(
+                            children: [
+                              Text(
+                                "Don't have an account yet? ",
+                                style: CustomFont(CustomColor.blackColor, 12,
+                                        FontWeight.w400)
+                                    .font,
+                              ),
+                              GestureDetector(
+                                child: Text(
+                                  "Login here!",
+                                  style: CustomFont(CustomColor.brownColor, 12,
+                                          FontWeight.w400)
+                                      .font,
+                                ),
+                                onTap: () {
+                                  GoRouter.of(context).go('/login');
+                                },
+                              ),
+                            ],
+                          ),
+                          SpacerHeight(h: 20),
+                          SizedBox(
+                            width: CustomScreen(context).width - 40,
+                            child: CustomButton(
+                              title: "Registration",
+                              func: () async {
+                                if (!formKey.currentState.validate()) {
+                                  customSnackBar(context, true,
+                                      "Complete the form first!");
+                                } else {
+                                  String name = nameController.text;
+                                  String username = usernameController.text;
+                                  String email = emailController.text;
+                                  String phone = phoneController.text;
+                                  String sponsorId = sponsorIdController.text;
+                                  String password = passwordController.text;
+                                  String confirmPassword =
+                                      confirmPasswordController.text;
+                                  if (password == confirmPassword) {
+                                    await registrationPost(
+                                            name,
+                                            username,
+                                            email,
+                                            phone,
+                                            sponsorId,
+                                            password,
+                                            confirmPassword)
+                                        .then(
+                                      (val) async {
+                                        if (val['status'] == 200) {
+                                          customSnackBar(context, false,
+                                              val['message'].toString());
+                                          GoRouter.of(context).go("/login");
+                                        } else {
+                                          customSnackBar(context, true,
+                                              val['message'].toString());
+                                        }
+                                      },
+                                    );
+                                  } else {
+                                    customSnackBar(
+                                        context, true, 'Password not match!');
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                          SpacerHeight(h: 20),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-        bottomNavigationBar: Container(
-            color: CustomColor.whiteColor,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: CustomButton(
-              title: "Registration",
-              func: () async {
-                if (!formKey.currentState.validate()) {
-                  customSnackBar(context, true, "Complete the form first!");
-                } else {
-                  String name = nameController.text;
-                  String username = usernameController.text;
-                  String email = emailController.text;
-                  String phone = phoneController.text;
-                  String sponsorId = sponsorIdController.text;
-                  String password = passwordController.text;
-                  String confirmPassword = confirmPasswordController.text;
-                  if (password == confirmPassword) {
-                    await registrationPost(name, username, email, phone,
-                            sponsorId, password, confirmPassword)
-                        .then(
-                      (val) async {
-                        if (val['status'] == 200) {
-                          customSnackBar(
-                              context, false, val['message'].toString());
-                          GoRouter.of(context).go("/login");
-                        } else {
-                          customSnackBar(context, true, val['data'].toString());
-                        }
-                      },
-                    );
-                  } else {
-                    customSnackBar(context, true, 'Password not match!');
-                  }
-                }
-              },
-            )),
+        // bottomNavigationBar: Container(
+        //   color: CustomColor.whiteColor,
+        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //   child: CustomButton(
+        //     title: "Registration",
+        //     func: () async {
+        //       if (!formKey.currentState.validate()) {
+        //         customSnackBar(context, true, "Complete the form first!");
+        //       } else {
+        //         String name = nameController.text;
+        //         String username = usernameController.text;
+        //         String email = emailController.text;
+        //         String phone = phoneController.text;
+        //         String sponsorId = sponsorIdController.text;
+        //         String password = passwordController.text;
+        //         String confirmPassword = confirmPasswordController.text;
+        //         if (password == confirmPassword) {
+        //           await registrationPost(name, username, email, phone,
+        //                   sponsorId, password, confirmPassword)
+        //               .then(
+        //             (val) async {
+        //               if (val['status'] == 200) {
+        //                 customSnackBar(
+        //                     context, false, val['message'].toString());
+        //                 GoRouter.of(context).go("/login");
+        //               } else {
+        //                 customSnackBar(context, true, val['data'].toString());
+        //               }
+        //             },
+        //           );
+        //         } else {
+        //           customSnackBar(context, true, 'Password not match!');
+        //         }
+        //       }
+        //     },
+        //   ),
+        // ),
       ),
     );
   }

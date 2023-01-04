@@ -1,12 +1,13 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:revver/controller/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
-  const Splash({Key key}) : super(key: key);
+  Splash({Key key}) : super(key: key);
 
   @override
   State<Splash> createState() => _SplashState();
@@ -39,8 +40,15 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: CircularProgressIndicator(),
-    ));
+      body: Center(
+        child: CupertinoActivityIndicator(),
+        // child: Column(
+        //   children: [
+        //     Text("Message: $mess" ?? "Message: null"),
+        //     Text("Token: $token" ?? "Token: null"),
+        //   ],
+        // ),
+      ),
+    );
   }
 }

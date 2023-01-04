@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "731204775954",
+    "project_id": "revver-fcm",
+    "storage_bucket": "revver-fcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731204775954:android:5e3eadd22746415fa3e8cb",
+        "android_client_info": {
+          "package_name": "com.revver.revver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "731204775954-03nkqpfoaccabenf7m4cg7mi1lrspenq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsh92Uw4G-QdlbZw4i6ZoEA6DbR_iRVVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "731204775954-03nkqpfoaccabenf7m4cg7mi1lrspenq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

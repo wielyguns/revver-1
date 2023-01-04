@@ -13,13 +13,13 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    color ??= CustomColor.goldColor;
+    color ??= CustomColor.brownColor;
     return CupertinoButton(
       onPressed: func,
       color: color,
       child: Text(
         title,
-        style: CustomFont.regular12,
+        style: CustomFont(CustomColor.whiteColor, 16, FontWeight.w600).font,
       ),
     );
   }
@@ -28,29 +28,51 @@ class CustomButton extends StatelessWidget {
 // ignore: must_be_immutable
 class IconTextButton extends StatelessWidget {
   IconTextButton(
-      {Key key, this.title, this.iconTitle, this.func, this.buttonColor})
+      {Key key,
+      this.title,
+      this.iconTitle,
+      this.func,
+      this.buttonColor,
+      this.borderColor,
+      this.textColor})
       : super(key: key);
   final String title;
   final String iconTitle;
   final Function func;
   Color buttonColor;
+  Color borderColor;
+  Color textColor;
 
   @override
   Widget build(BuildContext context) {
-    buttonColor ??= CustomColor.goldColor;
-    return CupertinoButton(
-      onPressed: func,
-      color: buttonColor,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset("assets/svg/$iconTitle"),
-          SpacerWidth(w: 10),
-          Text(
-            title,
-            style: CustomFont.medium16,
-          ),
-        ],
+    buttonColor ??= CustomColor.brownColor;
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: (borderColor != null)
+              ? Border.all(color: borderColor)
+              : Border.all(width: 0, color: buttonColor)),
+      child: CupertinoButton(
+        onPressed: func,
+        color: buttonColor,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            (iconTitle != null)
+                ? SvgPicture.asset("assets/svg/$iconTitle",
+                    color: CustomColor.whiteColor)
+                : SizedBox(),
+            (iconTitle != null) ? SpacerWidth(w: 10) : SizedBox(),
+            Text(
+              title,
+              style: CustomFont(
+                      (textColor != null) ? textColor : CustomColor.whiteColor,
+                      16,
+                      FontWeight.w600)
+                  .font,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -67,11 +89,11 @@ class AddToCartButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
-            color: CustomColor.goldColor),
+            color: CustomColor.brownColor),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: Text(
           "Add To Cart",
-          style: CustomFont.addToCart,
+          style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w600).font,
         ),
       ),
       onTap: func,
@@ -90,12 +112,14 @@ class ChangePasswordButton extends StatelessWidget {
     return GestureDetector(
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-            color: CustomColor.goldColor),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            color: CustomColor.oldGreyColor),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-        child: Text(
-          title,
-          style: CustomFont.changePassword,
+        child: Center(
+          child: Text(
+            title,
+            style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w400).font,
+          ),
         ),
       ),
       onTap: func,
@@ -115,18 +139,18 @@ class AccountMenu extends StatelessWidget {
     return InkWell(
       onTap: func,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Container(
-                  height: 40,
-                  width: 40,
+                  height: 35,
+                  width: 35,
                   decoration: BoxDecoration(
-                    color: CustomColor.goldColor,
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    color: CustomColor.brownColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(10),
@@ -139,11 +163,16 @@ class AccountMenu extends StatelessWidget {
                 SpacerWidth(w: 20),
                 Text(
                   title,
-                  style: CustomFont.regular16,
+                  style: CustomFont(CustomColor.blackColor, 14, FontWeight.w600)
+                      .font,
                 )
               ],
             ),
-            Icon(Icons.arrow_forward_ios)
+            Icon(
+              Icons.arrow_forward,
+              size: 16,
+              color: CustomColor.brownColor,
+            )
           ],
         ),
       ),
