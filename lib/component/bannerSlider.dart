@@ -98,7 +98,7 @@ class HomeBanner extends StatelessWidget {
 
   _sliderWidget(BuildContext context, String gambar) {
     return Container(
-        width: CustomScreen(context).width - 40,
+        width: CustomScreen(context).width - 70,
         height: CustomScreen(context).width / 1.5,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -106,7 +106,7 @@ class HomeBanner extends StatelessWidget {
         child: Stack(
           children: [
             SizedBox(
-              width: CustomScreen(context).width - 40,
+              width: CustomScreen(context).width - 70,
               height: CustomScreen(context).width / 1.5,
               child: ClipRRect(
                 child: CachedNetworkImage(

@@ -148,7 +148,7 @@ class _NoteDetailState extends State<NoteDetail> {
                       SpacerHeight(h: 40),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          margin: EdgeInsets.symmetric(horizontal: 35),
                           decoration: BoxDecoration(
                             color: CustomColor.backgroundColor,
                             borderRadius: BorderRadius.circular(10),
@@ -159,7 +159,7 @@ class _NoteDetailState extends State<NoteDetail> {
                       SpacerHeight(h: 20),
                       Container(
                         width: CustomScreen(context).width,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 35),
                         child: CustomButton(
                           title: "Save",
                           func: () async {
@@ -212,7 +212,7 @@ class _NoteDetailState extends State<NoteDetail> {
               ),
         // bottomNavigationBar: Container(
         //   color: Colors.transparent,
-        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //   padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
         //   child: CustomButton(
         //     title: "Save",
         //     func: () async {
@@ -262,7 +262,7 @@ class _NoteDetailState extends State<NoteDetail> {
 
   contentWidget() {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 35),
       physics: BouncingScrollPhysics(),
       child: Column(
         children: [

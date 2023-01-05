@@ -65,11 +65,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                   children: [
                     Expanded(
                         child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 35),
                     )),
                     Container(
                       width: CustomScreen(context).width,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 35),
                       decoration: BoxDecoration(
                         color: CustomColor.whiteColor,
                         borderRadius: BorderRadius.only(
@@ -147,7 +147,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
         // bottomNavigationBar: Container(
         //   color: CustomColor.whiteColor,
-        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //   padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
         //   child: CustomButton(
         //     title: "Save",
         //     func: () async {
@@ -176,7 +176,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 }
 
         // body: SingleChildScrollView(
-        //   padding: EdgeInsets.symmetric(horizontal: 20),
+        //   padding: EdgeInsets.symmetric(horizontal: 35),
         //   child: Form(
         //     key: formKey,
         //     child: Column(

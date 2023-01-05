@@ -21,8 +21,8 @@ class _AccountState extends State<Account> {
   String stage;
 
   getHeader() async {
-    if (!mounted) return;
     await getAccountHeader().then((val) {
+      if (!mounted) return;
       setState(() {
         name = val['data']['name'];
         image = val['data']['avatar'];
@@ -58,7 +58,7 @@ class _AccountState extends State<Account> {
                 children: [
                   SpacerHeight(h: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: Stack(
                       children: [
                         Container(
@@ -151,7 +151,7 @@ class _AccountState extends State<Account> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

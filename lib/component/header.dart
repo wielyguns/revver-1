@@ -68,7 +68,7 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
             children: [
               SizedBox(height: kToolbarHeight),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Text(
                   title ??= "",
                   style: CustomFont(CustomColor.whiteColor, 32, FontWeight.bold)

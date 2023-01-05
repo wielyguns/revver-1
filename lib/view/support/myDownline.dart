@@ -44,7 +44,7 @@ class _MyDownlineState extends State<MyDownline> {
               children: [
                 SpacerHeight(h: 10),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 35),
                   child: (member.isEmpty)
                       ? Padding(
                           padding: EdgeInsets.only(top: 20),

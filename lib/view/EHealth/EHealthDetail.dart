@@ -100,12 +100,12 @@ class _EHealthDetailState extends State<EHealthDetail> {
                 children: [
                   SpacerHeight(h: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: header(),
                   ),
                   SpacerHeight(h: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: body(),
                   ),
                   SpacerHeight(h: 20),
@@ -364,7 +364,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 35),
           child: Text(
             "Product Recommendations",
             style: CustomFont(CustomColor.brownColor, 16, FontWeight.bold).font,

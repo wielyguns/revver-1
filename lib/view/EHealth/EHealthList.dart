@@ -92,7 +92,7 @@ class _EHealthListState extends State<EHealthList> {
                   : listCategory(),
               SpacerHeight(h: 20),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: SearchForm(
                   controller: searchController,
                   callback: () {
@@ -104,7 +104,7 @@ class _EHealthListState extends State<EHealthList> {
               (isLoad)
                   ? Center(child: LinearProgressIndicator())
                   : Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 35),
                       child: listDisease(),
                     ),
             ],

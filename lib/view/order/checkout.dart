@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:math' as math;
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -32,7 +31,6 @@ class _CheckoutState extends State<Checkout> {
   bool isLoad = true;
   var cart = FlutterCart();
   final formKey = GlobalKey<FormState>();
-  math.Random random = math.Random();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -98,21 +96,31 @@ class _CheckoutState extends State<Checkout> {
     );
     _midtrans?.setUIKitCustomSetting(
         skipCustomerDetailsPages: true, showPaymentStatus: true);
-    _midtrans.setTransactionFinishedCallback((result) async {
-      if (result.isTransactionCanceled) {
-        customSnackBar(context, true, "Transaction Canceled");
-      } else {
-        await postOrderStore(customer_id, result.orderId).then((val) {
-          if (val['status'] == 200) {
-            cart.deleteAllCart();
-            String id = val['data']['orders_dt'][0]['order_id'].toString();
-            GoRouter.of(context).push('/invoice/$id/false');
-          } else {
-            customSnackBar(context, true, val['status'].toString());
-          }
-        });
-      }
-    });
+    // _midtrans.setTransactionFinishedCallback((result) async {
+    //   if (result.isTransactionCanceled) {
+    //     customSnackBar(context, true, "Transaction Canceled");
+    //   } else {
+    //     await postOrderStore(
+    //             customer_id,
+    //             result.orderId,
+    //             firstNameController.text,
+    //             lastNameController.text,
+    //             addressController.text,
+    //             contactController.text,
+    //             selectedProvince.id.toString(),
+    //             selectedCity.id.toString(),
+    //             zipCodeController.text)
+    //         .then((val) {
+    //       if (val['status'] == 200) {
+    //         cart.deleteAllCart();
+    //         String id = val['data']['orders_dt'][0]['order_id'].toString();
+    //         GoRouter.of(context).push('/invoice/$id/false');
+    //       } else {
+    //         customSnackBar(context, true, val['status'].toString());
+    //       }
+    //     });
+    //   }
+    // });
   }
 
   @override
@@ -152,7 +160,7 @@ class _CheckoutState extends State<Checkout> {
                     Form(
                       key: formKey,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 35),
                         child: Column(
                           children: [
                             RegularForm(
@@ -219,11 +227,11 @@ class _CheckoutState extends State<Checkout> {
                         ],
                       ),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 35),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SpacerHeight(h: 20),
+                            SpacerHeight(h: 35),
                             Text(
                               "Your Order Summary",
                               style: CustomFont(CustomColor.blackColor, 20,
@@ -314,8 +322,50 @@ class _CheckoutState extends State<Checkout> {
                                               nw, cart.getTotalAmount())
                                           .then((val) {
                                         if (val != null) {
-                                          _midtrans.startPaymentUiFlow(
-                                              token: val);
+                                          _midtrans
+                                              .startPaymentUiFlow(token: val)
+                                              .whenComplete(() {
+                                            _midtrans
+                                                .setTransactionFinishedCallback(
+                                                    (result) async {
+                                              if (result
+                                                  .isTransactionCanceled) {
+                                                customSnackBar(context, true,
+                                                    "Transaction Canceled");
+                                              } else {
+                                                await postOrderStore(
+                                                        customer_id,
+                                                        result.orderId,
+                                                        firstNameController
+                                                            .text,
+                                                        lastNameController.text,
+                                                        addressController.text,
+                                                        contactController.text,
+                                                        selectedProvince.id
+                                                            .toString(),
+                                                        selectedCity.id
+                                                            .toString(),
+                                                        zipCodeController.text)
+                                                    .then((val) {
+                                                  if (val['status'] == 200) {
+                                                    cart.deleteAllCart();
+                                                    String id = val['data']
+                                                                ['orders_dt'][0]
+                                                            ['order_id']
+                                                        .toString();
+                                                    GoRouter.of(context).push(
+                                                        '/invoice/$id/false');
+                                                  } else {
+                                                    customSnackBar(
+                                                        context,
+                                                        true,
+                                                        val['status']
+                                                            .toString());
+                                                  }
+                                                });
+                                              }
+                                            });
+                                          });
                                         } else {
                                           customSnackBar(
                                               context, true, "Gagal");

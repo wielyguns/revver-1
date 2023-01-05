@@ -65,7 +65,7 @@ class _NewsState extends State<News> {
               },
               separatorBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
                   child: Divider(
                     thickness: 2,
                     color: CustomColor.brownColor.withOpacity(0.5),
@@ -82,7 +82,7 @@ class _NewsState extends State<News> {
         onTap: (() => GoRouter.of(context).push("/news-detail/$id")),
         child: Container(
           width: CustomScreen(context).width,
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 35),
           child: Row(
             children: [
               ClipRRect(

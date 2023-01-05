@@ -34,7 +34,7 @@ class _EHealthFormState extends State<EHealthForm> {
           isPop: true,
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 35),
           child: Form(
             key: formKey,
             child: Column(
@@ -83,7 +83,7 @@ class _EHealthFormState extends State<EHealthForm> {
         ),
         bottomNavigationBar: Container(
           color: CustomColor.whiteColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: CustomButton(
             title: "Save",
             func: () async {

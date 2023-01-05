@@ -51,7 +51,7 @@ class _NoteState extends State<Note> {
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: [
                   SpacerHeight(h: 20),

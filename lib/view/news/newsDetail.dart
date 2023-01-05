@@ -59,7 +59,7 @@ class _NewsDetailState extends State<NewsDetail> {
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

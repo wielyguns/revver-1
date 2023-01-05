@@ -71,7 +71,7 @@ class _MyProgressState extends State<MyProgress> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.all(20),
+                  margin: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
                   decoration: BoxDecoration(
                     color: CustomColor.blackColor,
                     borderRadius: BorderRadius.circular(20),
@@ -97,7 +97,7 @@ class _MyProgressState extends State<MyProgress> {
                 ),
                 SpacerHeight(h: 20),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 35),
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     physics: NeverScrollableScrollPhysics(),

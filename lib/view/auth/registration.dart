@@ -69,7 +69,7 @@ class _RegistrationState extends State<Registration> {
                 children: [
                   SpacerHeight(h: 250),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     decoration: BoxDecoration(
                       color: CustomColor.whiteColor,
                       borderRadius: BorderRadius.only(
@@ -81,7 +81,7 @@ class _RegistrationState extends State<Registration> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SpacerHeight(h: 20),
+                          SpacerHeight(h: 35),
                           Text(
                             "Registration",
                             style: CustomFont(
@@ -234,7 +234,7 @@ class _RegistrationState extends State<Registration> {
         ),
         // bottomNavigationBar: Container(
         //   color: CustomColor.whiteColor,
-        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //   padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
         //   child: CustomButton(
         //     title: "Registration",
         //     func: () async {

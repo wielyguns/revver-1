@@ -84,9 +84,12 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          "assets/img/revver-horizontal.png",
-          width: CustomScreen(context).width / 2.5,
+        title: Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: Image.asset(
+            "assets/img/revver-horizontal.png",
+            width: CustomScreen(context).width / 2.5,
+          ),
         ),
         actions: [
           Row(
@@ -180,7 +183,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              SpacerWidth(w: 20),
+              SpacerWidth(w: 35),
             ],
           ),
         ],
@@ -195,17 +198,17 @@ class _HomeState extends State<Home> {
             children: [
               SpacerHeight(h: 20),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: WelcomeHeader(name: name ??= "..."),
               ),
               SpacerHeight(h: 20),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: HomeBanner(list: banner),
               ),
               SpacerHeight(h: 40),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: HomeMenu(),
               ),
               SpacerHeight(h: 40),

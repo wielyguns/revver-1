@@ -42,6 +42,7 @@ class _ProfileState extends State<Profile> {
 
   getData() async {
     await getAccountProfile().then((val) {
+      if (!mounted) return;
       setState(() {
         id = val['data']['id'];
         nameController.text = val['data']['name'];
@@ -79,7 +80,7 @@ class _ProfileState extends State<Profile> {
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 35),
           child: Form(
             key: formKey,
             child: Column(
@@ -288,7 +289,7 @@ class _ProfileState extends State<Profile> {
         ),
         bottomNavigationBar: Container(
           color: CustomColor.backgroundColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: IconTextButton(
             buttonColor: CustomColor.brownColor,
             title: "Save",

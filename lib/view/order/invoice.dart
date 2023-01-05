@@ -43,7 +43,7 @@ class _InvoiceState extends State<Invoice> {
         list.add(OrderItemDetail(
           description: data['product']['name'],
           qty: data['qty'].toString(),
-          amount: data['total_item'].toString(),
+          amount: data['sub_total'].toString(),
         ));
       }
       setState(() {
@@ -117,7 +117,7 @@ class _InvoiceState extends State<Invoice> {
                 ),
                 SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(35),
                   child: Column(
                     children: [
                       SpacerHeight(h: 80),
@@ -481,7 +481,7 @@ class _InvoiceState extends State<Invoice> {
           ? SizedBox()
           : Container(
               color: CustomColor.whiteColor,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
               child: CustomButton(
                 title: "Back to Home",
                 func: () async {

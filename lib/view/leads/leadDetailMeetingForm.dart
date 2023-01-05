@@ -87,7 +87,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
         body: (isLoad)
             ? Center(child: CupertinoActivityIndicator())
             : SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Form(
                   key: formKey,
                   child: Column(
@@ -142,7 +142,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
               ),
         bottomNavigationBar: Container(
           color: CustomColor.backgroundColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: CustomButton(
             title: "Save",
             func: () async {
