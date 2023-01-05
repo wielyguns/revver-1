@@ -174,13 +174,13 @@ class _EHealthDetailState extends State<EHealthDetail> {
                         Text(
                           uname,
                           style: CustomFont(
-                                  CustomColor.blackColor, 14, FontWeight.bold)
+                                  CustomColor.brownColor, 14, FontWeight.bold)
                               .font,
                         ),
                         Text(
                           "$age years old",
-                          style:
-                              CustomFont(CustomColor.blackColor, 12, null).font,
+                          style: CustomFont(CustomColor.oldGreyColor, 12, null)
+                              .font,
                         ),
                       ],
                     )

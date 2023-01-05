@@ -66,7 +66,9 @@ class _ProfileState extends State<Profile> {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: AppBar(
-          leading: CupertinoNavigationBarBackButton(),
+          leading: CupertinoNavigationBarBackButton(
+            onPressed: (() => GoRouter.of(context).pop()),
+          ),
           centerTitle: true,
           title: Image.asset(
             "assets/img/revver-horizontal.png",

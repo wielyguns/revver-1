@@ -145,9 +145,12 @@ class _NoteState extends State<Note> {
 
   getFAB() {
     return SpeedDial(
+      shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      buttonSize: Size(50, 50),
+      childrenButtonSize: Size(50, 50),
       overlayColor: Colors.grey[900],
       animatedIcon: AnimatedIcons.menu_arrow,
-      animatedIconTheme: IconThemeData(size: 22),
+      animatedIconTheme: IconThemeData(size: 16),
       backgroundColor: CustomColor.brownColor,
       foregroundColor: CustomColor.whiteColor,
       visible: true,
@@ -157,6 +160,7 @@ class _NoteState extends State<Note> {
             child: Icon(
               Icons.note,
               color: CustomColor.whiteColor,
+              size: 16,
             ),
             backgroundColor: CustomColor.brownColor,
             onTap: () async {
@@ -171,6 +175,7 @@ class _NoteState extends State<Note> {
             child: Icon(
               Icons.check_box,
               color: CustomColor.whiteColor,
+              size: 16,
             ),
             backgroundColor: CustomColor.brownColor,
             onTap: () async {

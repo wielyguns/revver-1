@@ -26,7 +26,7 @@ class _AccountState extends State<Account> {
       setState(() {
         name = val['data']['name'];
         image = val['data']['avatar'];
-        stage = val['data']['stage_id'].toString();
+        stage = val['data']['stage']['name'].toString();
         isLoad = false;
       });
     });

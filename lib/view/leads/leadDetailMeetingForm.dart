@@ -81,7 +81,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: StandartHeader(
-          title: eventNameController.text ??= "",
+          title: (widget.id != 000) ? "Edit Meeting" : "Create Meeting",
           isPop: true,
         ),
         body: (isLoad)

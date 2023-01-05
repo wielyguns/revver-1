@@ -2,16 +2,17 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/form.dart';
+import 'package:revver/component/header.dart';
 import 'package:revver/component/leadsOverview.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/leads.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/leads.dart' as l;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Leads extends StatefulWidget {
   Leads({Key key}) : super(key: key);
@@ -70,7 +71,7 @@ class _LeadsState extends State<Leads> {
   }
 
   callback() {
-    if (!GoRouter.of(context).location.contains("/leads-detail")) {
+    if (!GoRouter.of(context).location.contains("leads-detail")) {
       getData();
       GoRouter.of(context).removeListener(callback);
     }
@@ -87,6 +88,10 @@ class _LeadsState extends State<Leads> {
     return KeyboardDismisser(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: CustomHeader(
+          title: "Leads",
+          isPop: false,
+        ),
         body: SafeArea(
           child: (isLoad)
               ? Center(child: CupertinoActivityIndicator())
@@ -99,16 +104,29 @@ class _LeadsState extends State<Leads> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SpacerHeight(h: 20),
-                          Text("Leads", style: CustomFont.heading24),
-                          SpacerHeight(h: 20),
-                          LeadsOverview(
-                            cold: cold.length.toDouble(),
-                            avarage: avarage,
-                            converted: converted.length.toDouble(),
-                            hot: hot.length.toDouble(),
-                            potential: potential,
-                            underAvarage: underAvarage,
-                            warm: warm.length.toDouble(),
+                          Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: CustomColor.whiteColor,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              children: [
+                                Text("Leads Overview",
+                                    style: CustomFont(CustomColor.brownColor,
+                                            20, FontWeight.w700)
+                                        .font),
+                                SpacerHeight(h: 20),
+                                LeadsOverview(
+                                  cold: cold.length.toDouble(),
+                                  avarage: avarage,
+                                  converted: converted.length.toDouble(),
+                                  hot: hot.length.toDouble(),
+                                  potential: potential,
+                                  underAvarage: underAvarage,
+                                  warm: warm.length.toDouble(),
+                                ),
+                              ],
+                            ),
                           ),
                           SpacerHeight(h: 20),
                           SearchForm(
@@ -119,18 +137,27 @@ class _LeadsState extends State<Leads> {
                           ),
                           SpacerHeight(h: 20),
                           leadsList(),
-                          SpacerHeight(h: 80),
+                          SpacerHeight(h: 60),
                         ],
                       ),
                     ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            GoRouter.of(context).push("/leads-detail-form");
-            GoRouter.of(context).addListener(callback);
-          },
-          backgroundColor: CustomColor.brownColor,
-          child: Icon(Icons.add),
+        floatingActionButton: SizedBox(
+          height: 40,
+          width: 40,
+          child: FloatingActionButton(
+            onPressed: () {
+              GoRouter.of(context).push("/leads-detail-form");
+              GoRouter.of(context).addListener(callback);
+            },
+            backgroundColor: CustomColor.brownColor,
+            child: Icon(
+              Icons.add,
+              size: 30,
+            ),
+            shape:
+                BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          ),
         ),
       ),
     );
@@ -184,126 +211,256 @@ class _LeadsState extends State<Leads> {
     if (x > 8) {
       statusX = "Potential";
     }
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: (() {
-            GoRouter.of(context).push("/leads-detail/$id");
-            GoRouter.of(context).addListener(callback);
-          }),
-          child: SizedBox(
-            height: 55,
-            width: 55,
-            child: Stack(
-              clipBehavior: Clip.none,
-              fit: StackFit.expand,
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      image ??= "https://wallpaperaccess.com/full/733834.png"),
-                ),
-              ],
-            ),
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: ScrollMotion(),
+        children: [
+          SpacerWidth(w: 10),
+          SlidableAction(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15), bottomLeft: Radius.circular(15)),
+            onPressed: (val) async {
+              await launch(smsUri.toString());
+            },
+            backgroundColor: CustomColor.brownColor,
+            foregroundColor: Colors.white,
+            icon: Icons.message,
           ),
+          SlidableAction(
+            onPressed: (val) async {
+              await launch(telUri.toString());
+            },
+            backgroundColor: CustomColor.brownColor,
+            foregroundColor: Colors.white,
+            icon: Icons.phone,
+          ),
+          SlidableAction(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(15),
+                bottomRight: Radius.circular(15)),
+            onPressed: (val) async {
+              await launch(waUri.toString());
+            },
+            backgroundColor: CustomColor.brownColor,
+            foregroundColor: Colors.white,
+            icon: Icons.whatsapp,
+          ),
+        ],
+      ),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: CustomColor.whiteColor,
+          borderRadius: BorderRadius.circular(15),
         ),
-        SpacerWidth(w: 10),
-        Expanded(
-          child: InkWell(
-            onTap: (() {
-              GoRouter.of(context).push("/leads-detail/$id");
-              GoRouter.of(context).addListener(callback);
-            }),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name ??= "",
-                    overflow: TextOverflow.ellipsis, style: CustomFont.bold12),
-                Text(city_id.toString(), style: CustomFont.regular12),
-                Row(
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: (() {
+                GoRouter.of(context).push("/leads-detail/$id");
+                GoRouter.of(context).addListener(callback);
+              }),
+              child: Container(
+                height: 55,
+                width: 55,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      image ??= "https://wallpaperaccess.com/full/733834.png",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SpacerWidth(w: 20),
+            Expanded(
+              child: InkWell(
+                onTap: (() {
+                  GoRouter.of(context).push("/leads-detail/$id");
+                  GoRouter.of(context).addListener(callback);
+                }),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(name ??= "",
+                        overflow: TextOverflow.ellipsis,
+                        style: CustomFont(
+                                CustomColor.blackColor, 14, FontWeight.w600)
+                            .font),
+                    SpacerHeight(h: 10),
                     Row(
                       children: [
-                        Icon(
-                          Icons.circle,
-                          color: CustomColor.blueColor,
-                          size: 15,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              color: CustomColor.blueColor,
+                              size: 15,
+                            ),
+                            SpacerWidth(w: 5),
+                            Text(
+                              status ??= "Cold",
+                              style: CustomFont(CustomColor.oldGreyColor, 10,
+                                      FontWeight.w400)
+                                  .font,
+                            ),
+                          ],
                         ),
-                        SpacerWidth(w: 2),
-                        Text(
-                          status ??= "Cold",
-                          style: CustomFont.regular10,
+                        SpacerWidth(w: 10),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              color: CustomColor.brownColor,
+                              size: 15,
+                            ),
+                            SpacerWidth(w: 5),
+                            Text(
+                              statusX,
+                              style: CustomFont(CustomColor.oldGreyColor, 10,
+                                      FontWeight.w400)
+                                  .font,
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                    SpacerWidth(w: 10),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.circle,
-                          color: CustomColor.brownColor,
-                          size: 15,
-                        ),
-                        SpacerWidth(w: 2),
-                        Text(
-                          statusX,
-                          style: CustomFont.regular10,
-                        ),
-                      ],
-                    ),
+                    )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
-          ),
+            // SpacerWidth(w: 10),
+            // Text(city_id.toString(),
+            //     style: CustomFont(CustomColor.oldGreyColor, 13, FontWeight.w400)
+            //         .font),
+          ],
         ),
-        SpacerWidth(w: 10),
-        SizedBox(
-          // width: CustomScreen(context).width / 3.3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  await launch(telUri.toString());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                    "assets/svg/phone-solid.svg",
-                    height: 20,
-                  ),
-                ),
-              ),
-              SpacerWidth(w: 5),
-              GestureDetector(
-                onTap: () async {
-                  await launch(smsUri.toString());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                    "assets/svg/envelope-solid.svg",
-                    height: 20,
-                  ),
-                ),
-              ),
-              SpacerWidth(w: 5),
-              GestureDetector(
-                onTap: () async {
-                  await launch(waUri.toString());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                    "assets/svg/whatsapp.svg",
-                    height: 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
+
+
+// return Row(
+//   children: [
+//     GestureDetector(
+//       onTap: (() {
+//         GoRouter.of(context).push("/leads-detail/$id");
+//         GoRouter.of(context).addListener(callback);
+//       }),
+//       child: SizedBox(
+//         height: 55,
+//         width: 55,
+//         child: Stack(
+//           clipBehavior: Clip.none,
+//           fit: StackFit.expand,
+//           children: [
+//             CircleAvatar(
+//               backgroundImage: NetworkImage(
+//                   image ??= "https://wallpaperaccess.com/full/733834.png"),
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//     SpacerWidth(w: 10),
+//     Expanded(
+//       child: InkWell(
+//         onTap: (() {
+//           GoRouter.of(context).push("/leads-detail/$id");
+//           GoRouter.of(context).addListener(callback);
+//         }),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Text(name ??= "",
+//                 overflow: TextOverflow.ellipsis, style: CustomFont.bold12),
+//             Text(city_id.toString(), style: CustomFont.regular12),
+//             Row(
+//               children: [
+//                 Row(
+//                   children: [
+//                     Icon(
+//                       Icons.circle,
+//                       color: CustomColor.blueColor,
+//                       size: 15,
+//                     ),
+//                     SpacerWidth(w: 2),
+//                     Text(
+//                       status ??= "Cold",
+//                       style: CustomFont.regular10,
+//                     ),
+//                   ],
+//                 ),
+//                 SpacerWidth(w: 10),
+//                 Row(
+//                   children: [
+//                     Icon(
+//                       Icons.circle,
+//                       color: CustomColor.brownColor,
+//                       size: 15,
+//                     ),
+//                     SpacerWidth(w: 2),
+//                     Text(
+//                       statusX,
+//                       style: CustomFont.regular10,
+//                     ),
+//                   ],
+//                 ),
+//               ],
+//             )
+//           ],
+//         ),
+//       ),
+//     ),
+//     SpacerWidth(w: 10),
+//     SizedBox(
+//       // width: CustomScreen(context).width / 3.3,
+//       child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           GestureDetector(
+//             onTap: () async {
+//               await launch(telUri.toString());
+//             },
+//             child: Padding(
+//               padding: const EdgeInsets.all(5),
+//               child: SvgPicture.asset(
+//                 "assets/svg/phone-solid.svg",
+//                 height: 20,
+//               ),
+//             ),
+//           ),
+//           SpacerWidth(w: 5),
+//           GestureDetector(
+//             onTap: () async {
+//               await launch(smsUri.toString());
+//             },
+//             child: Padding(
+//               padding: const EdgeInsets.all(5),
+//               child: SvgPicture.asset(
+//                 "assets/svg/envelope-solid.svg",
+//                 height: 20,
+//               ),
+//             ),
+//           ),
+//           SpacerWidth(w: 5),
+//           GestureDetector(
+//             onTap: () async {
+//               await launch(waUri.toString());
+//             },
+//             child: Padding(
+//               padding: const EdgeInsets.all(5),
+//               child: SvgPicture.asset(
+//                 "assets/svg/whatsapp.svg",
+//                 height: 20,
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     ),
+//   ],
+// );

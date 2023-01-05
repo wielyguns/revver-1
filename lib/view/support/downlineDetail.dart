@@ -120,7 +120,7 @@ class _DownlineDetailState extends State<DownlineDetail> {
                           ),
                           child: Center(
                             child: Text(
-                              "My Downline",
+                              "Support",
                               style: CustomFont(CustomColor.whiteColor, 32,
                                       FontWeight.w600)
                                   .font,
@@ -129,10 +129,12 @@ class _DownlineDetailState extends State<DownlineDetail> {
                         ),
                         Column(
                           children: [
-                            SpacerHeight(h: 100),
+                            SpacerHeight(h: 120),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                SpacerWidth(w: 20),
                                 Container(
                                   decoration: BoxDecoration(
                                     color: CustomColor.whiteColor,
@@ -152,6 +154,26 @@ class _DownlineDetailState extends State<DownlineDetail> {
                                     ],
                                   ),
                                 ),
+                                SpacerWidth(w: 5),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      name,
+                                      style: CustomFont(CustomColor.brownColor,
+                                              14, FontWeight.bold)
+                                          .font,
+                                    ),
+                                    Text(
+                                      stageName,
+                                      style: CustomFont(
+                                              CustomColor.oldGreyColor,
+                                              12,
+                                              null)
+                                          .font,
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ],
@@ -159,20 +181,20 @@ class _DownlineDetailState extends State<DownlineDetail> {
                       ],
                     ),
                   ),
-                  SpacerHeight(h: 10),
-                  Text(
-                    name,
-                    style:
-                        CustomFont(CustomColor.brownColor, 20, FontWeight.w600)
-                            .font,
-                  ),
-                  SpacerHeight(h: 5),
-                  Text(
-                    stageName,
-                    style: CustomFont(
-                            CustomColor.oldGreyColor, 13, FontWeight.w400)
-                        .font,
-                  ),
+                  // SpacerHeight(h: 10),
+                  // Text(
+                  //   name,
+                  //   style:
+                  //       CustomFont(CustomColor.brownColor, 20, FontWeight.w600)
+                  //           .font,
+                  // ),
+                  // SpacerHeight(h: 5),
+                  // Text(
+                  //   stageName,
+                  //   style: CustomFont(
+                  //           CustomColor.oldGreyColor, 13, FontWeight.w400)
+                  //       .font,
+                  // ),
                   SpacerHeight(h: 20),
                   (current_task)
                       ? Padding(
@@ -313,3 +335,56 @@ class _DownlineDetailState extends State<DownlineDetail> {
     );
   }
 }
+
+// Stack(
+//   children: [
+//     Container(
+//       height: 140,
+//       decoration: BoxDecoration(
+//         image: DecorationImage(
+//           image: AssetImage(
+//               'assets/img/background-resize.png'),
+//           fit: BoxFit.cover,
+//         ),
+//         borderRadius: BorderRadius.circular(20),
+//       ),
+//       child: Center(
+//         child: Text(
+//           "My Downline",
+//           style: CustomFont(CustomColor.whiteColor, 32,
+//                   FontWeight.w600)
+//               .font,
+//         ),
+//       ),
+//     ),
+//     Column(
+//       children: [
+//         SpacerHeight(h: 100),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Container(
+//               decoration: BoxDecoration(
+//                 color: CustomColor.whiteColor,
+//                 borderRadius: BorderRadius.circular(100),
+//               ),
+//               padding: EdgeInsets.all(5),
+//               height: 80,
+//               width: 80,
+//               child: Stack(
+//                 clipBehavior: Clip.none,
+//                 fit: StackFit.expand,
+//                 children: [
+//                   CircleAvatar(
+//                     backgroundImage: NetworkImage(photo ??=
+//                         "https://wallpaperaccess.com/full/733834.png"),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ],
+//     )
+//   ],
+// ),

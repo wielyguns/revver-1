@@ -132,37 +132,43 @@ class MultiLineForm extends StatelessWidget {
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
-            border: UnderlineInputBorder(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            errorBorder: UnderlineInputBorder(
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
             ),
-            focusedErrorBorder: UnderlineInputBorder(
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
             ),
-            disabledBorder: UnderlineInputBorder(
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,

@@ -1,13 +1,13 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/button.dart';
-import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/goal.dart';
 import 'package:revver/globals.dart';
@@ -39,9 +39,9 @@ class _GoalState extends State<Goal> {
   getData() async {
     if (!mounted) return;
     setState(() {
-      goal.clear();
       isDream = false;
       isLoad = true;
+      goal.clear();
     });
     await getReferralRate().then((val) async {
       setState(() {
@@ -82,10 +82,17 @@ class _GoalState extends State<Goal> {
     });
   }
 
-  callback() {
-    if (!GoRouter.of(context).location.contains("xxx")) {
+  callbackSD() {
+    if (!GoRouter.of(context).location.contains("set-dream")) {
       getData();
-      GoRouter.of(context).removeListener(callback);
+      GoRouter.of(context).removeListener(callbackSD);
+    }
+  }
+
+  callbackRP() {
+    if (!GoRouter.of(context).location.contains("record-progress")) {
+      getData();
+      GoRouter.of(context).removeListener(callbackRP);
     }
   }
 
@@ -98,12 +105,29 @@ class _GoalState extends State<Goal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomHeader(
-        title: "Goals",
-        isPop: true,
-        svgName: "pen-to-square-solid.svg",
-        route: '/set-dream',
-        callback: () => callback(),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: CupertinoNavigationBarBackButton(
+          onPressed: () => GoRouter.of(context).pop(),
+        ),
+        actions: [
+          InkWell(
+            onTap: () {
+              GoRouter.of(context).push('/set-dream');
+              GoRouter.of(context).addListener(callbackSD);
+            },
+            child: Container(
+              padding: EdgeInsets.only(right: 20),
+              child: SvgPicture.asset(
+                'assets/svg/pen-to-square-solid.svg',
+                height: 20,
+                color: CustomColor.brownColor,
+              ),
+            ),
+          )
+        ],
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
@@ -112,68 +136,53 @@ class _GoalState extends State<Goal> {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  SfRadialGauge(
-                    axes: <RadialAxis>[
-                      RadialAxis(
-                        showLabels: false,
-                        showTicks: false,
-                        startAngle: 270,
-                        endAngle: 270,
-                        radiusFactor: 0.7,
-                        axisLineStyle: AxisLineStyle(
-                            thicknessUnit: GaugeSizeUnit.factor,
-                            thickness: 0.15),
-                        annotations: <GaugeAnnotation>[
-                          GaugeAnnotation(
-                            positionFactor: 0.1,
-                            widget: Text(
-                              percentage.toString() + "%",
-                              style: CustomFont(CustomColor.oldGreyColor, 20,
-                                      FontWeight.w700)
-                                  .font,
-                            ),
-                          ),
-                        ],
-                        pointers: <GaugePointer>[
-                          RangePointer(
-                              value: percentage.toDouble(),
-                              cornerStyle: CornerStyle.bothCurve,
-                              enableAnimation: true,
-                              animationDuration: 3000,
-                              sizeUnit: GaugeSizeUnit.factor,
-                              color: CustomColor.brownColor,
-                              width: 0.15),
-                        ],
-                      ),
-                    ],
-                  ),
+                  SpacerHeight(h: 80),
                   Text(
-                    target_title ??= "Your Dream",
+                    "Goals",
                     style:
-                        CustomFont(CustomColor.blackColor, 20, FontWeight.w700)
+                        CustomFont(CustomColor.brownColor, 20, FontWeight.w600)
                             .font,
                   ),
-                  Text(
-                    "Deadline in $tdate Days",
-                    style:
-                        CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
-                            .font,
+                  SpacerHeight(h: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: CustomColor.brownColor,
+                    ),
+                    child: Column(
+                      children: [
+                        radialGauge(),
+                        Text(
+                          target_title ??= "Your Dream",
+                          style: CustomFont(
+                                  CustomColor.whiteColor, 16, FontWeight.w700)
+                              .font,
+                        ),
+                        Text(
+                          "Deadline in $tdate Days",
+                          style: CustomFont(
+                                  CustomColor.blackColor, 14, FontWeight.w400)
+                              .font,
+                        ),
+                        SpacerHeight(h: 20),
+                      ],
+                    ),
                   ),
-                  Divider(
-                    thickness: 2,
-                    color: CustomColor.brownColor,
-                    height: 40,
-                  ),
+
+                  // Divider(
+                  //   thickness: 2,
+                  //   color: CustomColor.brownColor,
+                  //   height: 40,
+                  // ),
                   // Text(
                   //   "Target jaringan: 2800 kanan | 2800 kiri",
                   //   style:
                   //       CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
                   //           .font,
                   // ),
-                  // SpacerHeight(h: 10),
+                  SpacerHeight(h: 20),
                   Text(
                     "Perhitungan dibawah hanya diambil dari bonus referral (Sponsor):",
-                    textAlign: TextAlign.center,
                     style:
                         CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
                             .font,
@@ -182,6 +191,7 @@ class _GoalState extends State<Goal> {
                   (!isDream)
                       ? SizedBox()
                       : ListView.builder(
+                          padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: rrate.length,
@@ -211,20 +221,20 @@ class _GoalState extends State<Goal> {
                               children: [
                                 Divider(
                                   endIndent: 5,
-                                  thickness: 10,
+                                  thickness: 5,
                                   color: cl[index],
                                 ),
                                 Container(
-                                  height: 35,
-                                  width: 35,
+                                  height: 25,
+                                  width: 25,
                                   decoration: BoxDecoration(
                                       color: cl[index],
-                                      borderRadius: BorderRadius.circular(50)),
+                                      borderRadius: BorderRadius.circular(5)),
                                   child: Center(
                                     child: Text(
                                       "or",
                                       style: CustomFont(CustomColor.whiteColor,
-                                              12, FontWeight.w700)
+                                              12, FontWeight.w500)
                                           .font,
                                     ),
                                   ),
@@ -232,24 +242,30 @@ class _GoalState extends State<Goal> {
                                 Column(
                                   children: [
                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           "$u $nameRate",
                                           // "",
                                           style: CustomFont(
                                                   CustomColor.blackColor,
-                                                  18,
-                                                  FontWeight.w700)
+                                                  14,
+                                                  FontWeight.w600)
                                               .font,
                                         ),
-                                        SpacerWidth(w: 10),
-                                        Text(
-                                          "per Days",
-                                          style: CustomFont(
-                                                  CustomColor.blackColor,
-                                                  16,
-                                                  FontWeight.w300)
-                                              .font,
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "per days",
+                                              style: CustomFont(
+                                                      CustomColor.oldGreyColor,
+                                                      14,
+                                                      FontWeight.w400)
+                                                  .font,
+                                            ),
+                                            SpacerWidth(w: 30),
+                                          ],
                                         )
                                       ],
                                     ),
@@ -286,13 +302,14 @@ class _GoalState extends State<Goal> {
                       //     )),
                     ],
                   ),
-                  SpacerHeight(h: 10),
+                  SpacerHeight(h: 20),
                   (goal.isEmpty)
                       ? Padding(
-                          padding: EdgeInsets.only(bottom: 20),
+                          padding: EdgeInsets.only(bottom: 20, top: 20),
                           child: Text("No Record Progress!"),
                         )
                       : ListView.builder(
+                          padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: goal.length,
@@ -314,29 +331,47 @@ class _GoalState extends State<Goal> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.circle),
+                                        Icon(
+                                          Icons.circle,
+                                          color: CustomColor.brownColor,
+                                          size: 16,
+                                        ),
                                         SpacerWidth(w: 10),
                                         Text(
                                           gl.qty.toString() + " $rateName",
                                           style: CustomFont(
                                                   CustomColor.blackColor,
                                                   14,
-                                                  FontWeight.w700)
+                                                  FontWeight.w600)
                                               .font,
                                         ),
                                       ],
                                     ),
-                                    Text(
-                                      gl.updated_at,
-                                      style: CustomFont(
-                                              CustomColor.oldGreyColor,
-                                              9,
-                                              FontWeight.w300)
-                                          .font,
-                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.calendar_month,
+                                          color: CustomColor.oldGreyColor,
+                                          size: 12,
+                                        ),
+                                        SpacerWidth(w: 5),
+                                        Text(
+                                          gl.updated_at,
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  9,
+                                                  FontWeight.w300)
+                                              .font,
+                                        ),
+                                      ],
+                                    )
                                   ],
                                 ),
-                                SpacerHeight(h: 5),
+                                Divider(
+                                  height: 30,
+                                  thickness: 1,
+                                  color: CustomColor.oldGreyColor,
+                                ),
                               ],
                             );
                           }),
@@ -353,10 +388,46 @@ class _GoalState extends State<Goal> {
                 title: "Record Progress",
                 func: () async {
                   GoRouter.of(context).push("/record-progress");
-                  GoRouter.of(context).addListener(callback);
+                  GoRouter.of(context).addListener(callbackRP);
                 },
               ),
             ),
+    );
+  }
+
+  radialGauge() {
+    return SfRadialGauge(
+      axes: <RadialAxis>[
+        RadialAxis(
+          showLabels: false,
+          showTicks: false,
+          startAngle: 270,
+          endAngle: 270,
+          radiusFactor: 0.7,
+          axisLineStyle: AxisLineStyle(
+              thicknessUnit: GaugeSizeUnit.factor, thickness: 0.15),
+          annotations: <GaugeAnnotation>[
+            GaugeAnnotation(
+              positionFactor: 0.1,
+              widget: Text(
+                percentage.toString() + "%",
+                style: CustomFont(CustomColor.whiteColor, 32, FontWeight.w600)
+                    .font,
+              ),
+            ),
+          ],
+          pointers: <GaugePointer>[
+            RangePointer(
+                value: percentage.toDouble(),
+                cornerStyle: CornerStyle.bothCurve,
+                enableAnimation: true,
+                animationDuration: 3000,
+                sizeUnit: GaugeSizeUnit.factor,
+                color: CustomColor.whiteColor,
+                width: 0.15),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -1,12 +1,14 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
-
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/button.dart';
+import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/account.dart';
+import 'package:revver/controller/order.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/order.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -31,10 +33,11 @@ class _InvoiceState extends State<Invoice> {
   int payment_status;
   String bank_name;
   String bank_number;
+  String payment_type;
   String created_at;
 
   getData() async {
-    await getAccountOrderDetail(widget.id.toString()).then((val) {
+    await getAccountOrderDetail(widget.id.toString()).then((val) async {
       List<OrderItemDetail> list = [];
       for (var data in val['data']['order_dt'] as List) {
         list.add(OrderItemDetail(
@@ -48,12 +51,25 @@ class _InvoiceState extends State<Invoice> {
         customer_id = val['data']['customer_id'];
         total_price = val['data']['total_price'];
         payment_status = val['data']['payment_status'];
-        bank_name = val['data']['bank_name'];
-        bank_number = val['data']['bank_number'];
+
         created_at = val['data']['created_at'];
         item = list;
         dataSource = OrderItem(item: item);
-        isLoad = false;
+      });
+      await getPaymentMethodMidtrans(no_receipt).then((val) {
+        if (val['payment_type'] == "bank_transfer") {
+          setState(() {
+            payment_type = val['payment_type'].toString().toUpperCase();
+            bank_name = val['va_numbers'][0]['bank'].toString().toUpperCase();
+            bank_number = val['va_numbers'][0]['va_number'].toString();
+            isLoad = false;
+          });
+        } else {
+          setState(() {
+            payment_type = val['payment_type'].toString().toUpperCase();
+            isLoad = false;
+          });
+        }
       });
     });
   }
@@ -274,22 +290,77 @@ class _InvoiceState extends State<Invoice> {
                                       )),
                                 ],
                               ),
-                              // SpacerHeight(h: 20),
-                              // Text(
-                              //   "Payment Detail",
-                              //   style: CustomFont.regular16,
-                              //   overflow: TextOverflow.ellipsis,
-                              // ),
-                              // Text(
-                              //   bank_name.toString(),
-                              //   style: CustomFont.bold16,
-                              //   overflow: TextOverflow.ellipsis,
-                              // ),
-                              // Text(
-                              //   bank_number.toString(),
-                              //   style: CustomFont.bold12,
-                              //   overflow: TextOverflow.ellipsis,
-                              // ),
+                              SpacerHeight(h: 20),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Payment Detail",
+                                        style: CustomFont.regular16,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        payment_type ??= "",
+                                        style: CustomFont(
+                                                CustomColor.oldGreyColor,
+                                                11,
+                                                FontWeight.w400)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        bank_name ??= "",
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                20,
+                                                FontWeight.w600)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    bank_number ??= "",
+                                    style: CustomFont(CustomColor.brownColor,
+                                            20, FontWeight.w600)
+                                        .font,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  (bank_number.isEmpty)
+                                      ? SizedBox()
+                                      : InkWell(
+                                          child: Icon(
+                                            Icons.copy,
+                                            color: CustomColor.oldGreyColor,
+                                          ),
+                                          onTap: () async {
+                                            await Clipboard.setData(
+                                                    ClipboardData(
+                                                        text: bank_number))
+                                                .then((_) {
+                                              customSnackBar(context, false,
+                                                  "Bank Number Copied to Clipboard");
+                                            });
+                                          },
+                                        ),
+                                ],
+                              )
                             ],
                           ),
                         ),

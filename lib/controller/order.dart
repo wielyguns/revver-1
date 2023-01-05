@@ -75,3 +75,22 @@ postOrderStore(String customer_id, no_receipt) async {
 
   return res;
 }
+
+getPaymentMethodMidtrans(id) async {
+  String username = 'SB-Mid-server-5UKRWMkpzEb1Ds9ERKd6uo7Z';
+  String password = '';
+  String basicAuth =
+      'Basic ' + base64.encode(utf8.encode('$username:$password'));
+
+  String url = "https://api.sandbox.midtrans.com/v2/$id/status";
+  // String url = "https://webhook.site/4f724449-8502-410f-a1a7-1e3b60cab04b";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.get(parseUrl, headers: {
+    "Authorization": basicAuth,
+  });
+
+  var res = jsonDecode(response.body);
+
+  return res;
+}

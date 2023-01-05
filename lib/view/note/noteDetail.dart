@@ -93,21 +93,25 @@ class _NoteDetailState extends State<NoteDetail> {
         //   },
         // ),
         appBar: AppBar(
-          leading: CupertinoNavigationBarBackButton(),
+          leading: CupertinoNavigationBarBackButton(onPressed: () {
+            GoRouter.of(context).pop();
+          }),
           actions: [
-            GestureDetector(
-              onTap: () async {
-                await deleteNote(id).then((val) {
-                  if (val['status'] == 200) {
-                    GoRouter.of(context).pop();
-                  } else {
-                    customSnackBar(context, true, val['status']);
-                  }
-                });
-              },
-              child: SvgPicture.asset('assets/svg/trash-can-solid.svg',
-                  height: 20, color: CustomColor.whiteColor),
-            ),
+            (isNumeric(widget.id))
+                ? GestureDetector(
+                    onTap: () async {
+                      await deleteNote(id).then((val) {
+                        if (val['status'] == 200) {
+                          GoRouter.of(context).pop();
+                        } else {
+                          customSnackBar(context, true, val['status']);
+                        }
+                      });
+                    },
+                    child: SvgPicture.asset('assets/svg/trash-can-solid.svg',
+                        height: 20, color: CustomColor.whiteColor),
+                  )
+                : SizedBox(),
             SpacerWidth(w: 20),
           ],
           backgroundColor: Colors.transparent,
@@ -262,6 +266,7 @@ class _NoteDetailState extends State<NoteDetail> {
       physics: BouncingScrollPhysics(),
       child: Column(
         children: [
+          SpacerHeight(h: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -283,17 +288,20 @@ class _NoteDetailState extends State<NoteDetail> {
             style: CustomFont(CustomColor.blackColor, 18, FontWeight.bold).font,
           ),
           (type.toLowerCase() == "text")
-              ? Expanded(
-                  child: TextField(
-                    controller: descriptionController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'eg: Catatan Hari Ini',
-                      hintStyle:
-                          CustomFont(CustomColor.oldGreyColor, 14, null).font,
-                    ),
-                    style: CustomFont(CustomColor.blackColor, 14, null).font,
-                  ),
+              ? Column(
+                  children: [
+                    TextField(
+                      maxLines: 999,
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'eg: Catatan Hari Ini',
+                        hintStyle:
+                            CustomFont(CustomColor.oldGreyColor, 14, null).font,
+                      ),
+                      style: CustomFont(CustomColor.blackColor, 14, null).font,
+                    )
+                  ],
                 )
               : (note_list.isNotEmpty)
                   ? Column(
