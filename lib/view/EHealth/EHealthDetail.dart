@@ -127,7 +127,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
               height: 140,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/img/background-resize.png'),
+                  image: AssetImage('assets/img/revver-bg.jpg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(20),

@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
               width: CustomScreen(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/img/background.jpeg'),
+                  image: AssetImage('assets/img/revver-bg.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),

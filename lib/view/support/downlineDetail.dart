@@ -112,8 +112,7 @@ class _DownlineDetailState extends State<DownlineDetail> {
                           height: 140,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/img/background-resize.png'),
+                              image: AssetImage('assets/img/revver-bg.jpg'),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(20),
@@ -343,7 +342,7 @@ class _DownlineDetailState extends State<DownlineDetail> {
 //       decoration: BoxDecoration(
 //         image: DecorationImage(
 //           image: AssetImage(
-//               'assets/img/background-resize.png'),
+//               'assets/img/revver-bg.jpg'),
 //           fit: BoxFit.cover,
 //         ),
 //         borderRadius: BorderRadius.circular(20),

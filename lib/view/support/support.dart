@@ -46,7 +46,7 @@ class _SupportState extends State<Support> {
               width: CustomScreen(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/img/background-resize.png'),
+                  image: AssetImage('assets/img/revver-bg.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),

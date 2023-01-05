@@ -199,8 +199,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                             height: 140,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(
-                                    'assets/img/background-resize.png'),
+                                image: AssetImage('assets/img/revver-bg.jpg'),
                                 fit: BoxFit.cover,
                               ),
                               borderRadius: BorderRadius.circular(20),

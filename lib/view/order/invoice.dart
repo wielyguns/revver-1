@@ -30,7 +30,7 @@ class _InvoiceState extends State<Invoice> {
   String no_receipt;
   int customer_id;
   int total_price;
-  int payment_status;
+  String payment_status;
   String bank_name;
   String bank_number;
   String payment_type;
@@ -50,7 +50,15 @@ class _InvoiceState extends State<Invoice> {
         no_receipt = val['data']['no_receipt'];
         customer_id = val['data']['customer_id'];
         total_price = val['data']['total_price'];
-        payment_status = val['data']['payment_status'];
+        if (val['data']['payment_status'] == 1) {
+          payment_status = "Released";
+        }
+        if (val['data']['payment_status'] == 2) {
+          payment_status = "Paid";
+        }
+        if (val['data']['payment_status'] == 3) {
+          payment_status = "Cancel";
+        }
 
         created_at = val['data']['created_at'];
         item = list;
@@ -102,7 +110,7 @@ class _InvoiceState extends State<Invoice> {
                   width: CustomScreen(context).width,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/img/background-resize.png'),
+                      image: AssetImage('assets/img/revver-bg.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -134,95 +142,194 @@ class _InvoiceState extends State<Invoice> {
                                 style: CustomFont.bold10,
                               ),
                               SpacerHeight(h: 20),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              Column(
                                 children: [
-                                  SizedBox(
-                                    width: CustomScreen(context).width / 3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Billed to",
-                                          style: CustomFont.regular16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          customer_id.toString(),
-                                          style: CustomFont.bold16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.end,
+                                  //   children: [
+                                  //     Text(
+                                  //       "Billed to: ",
+                                  //       style: CustomFont(
+                                  //               CustomColor.blackColor,
+                                  //               12,
+                                  //               FontWeight.w600)
+                                  //           .font,
+                                  //       overflow: TextOverflow.ellipsis,
+                                  //     ),
+                                  //     Text(
+                                  //       customer_id.toString(),
+                                  //       style: CustomFont(
+                                  //               CustomColor.blackColor,
+                                  //               12,
+                                  //               FontWeight.w400)
+                                  //           .font,
+                                  //       overflow: TextOverflow.ellipsis,
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  // SpacerHeight(h: 2),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Invoice No: ",
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                12,
+                                                FontWeight.w400)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        no_receipt.toString(),
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                12,
+                                                FontWeight.w600)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: CustomScreen(context).width / 3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "Invoice Number",
-                                          style: CustomFont.regular16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          no_receipt.toString(),
-                                          style: CustomFont.bold16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
+                                  SpacerHeight(h: 2),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Invoice Date: ",
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                12,
+                                                FontWeight.w400)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        created_at.toString(),
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                12,
+                                                FontWeight.w600)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                  SpacerHeight(h: 2),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "Status: ",
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                12,
+                                                FontWeight.w400)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        payment_status.toString(),
+                                        style: CustomFont(
+                                                CustomColor.blackColor,
+                                                12,
+                                                FontWeight.w600)
+                                            .font,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                              SpacerHeight(h: 20),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    width: CustomScreen(context).width / 3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Invoice Date",
-                                          style: CustomFont.regular16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          created_at.toString(),
-                                          style: CustomFont.bold16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: CustomScreen(context).width / 3,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "Payment Status",
-                                          style: CustomFont.regular16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          payment_status.toString(),
-                                          style: CustomFont.bold16,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     SizedBox(
+                              //       width: CustomScreen(context).width / 3,
+                              //       child: Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.start,
+                              //         children: [
+                              //           Text(
+                              //             "Billed to",
+                              //             style: CustomFont.regular16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //           Text(
+                              //             customer_id.toString(),
+                              //             style: CustomFont.bold16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       width: CustomScreen(context).width / 3,
+                              //       child: Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.end,
+                              //         children: [
+                              //           Text(
+                              //             "Invoice Number",
+                              //             style: CustomFont.regular16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //           Text(
+                              //             no_receipt.toString(),
+                              //             style: CustomFont.bold16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                              // SpacerHeight(h: 20),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     SizedBox(
+                              //       width: CustomScreen(context).width / 3,
+                              //       child: Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.start,
+                              //         children: [
+                              //           Text(
+                              //             "Invoice Date",
+                              //             style: CustomFont.regular16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //           Text(
+                              //             created_at.toString(),
+                              //             style: CustomFont.bold16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     SizedBox(
+                              //       width: CustomScreen(context).width / 3,
+                              //       child: Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.end,
+                              //         children: [
+                              //           Text(
+                              //             "Payment Status",
+                              //             style: CustomFont.regular16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //           Text(
+                              //             payment_status.toString(),
+                              //             style: CustomFont.bold16,
+                              //             overflow: TextOverflow.ellipsis,
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               SpacerHeight(h: 20),
                               (item == null)
                                   ? Center(child: Text("No Item"))

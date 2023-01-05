@@ -34,6 +34,7 @@ class _EventState extends State<Event> {
       isLoad = true;
     });
     await getEvent().then((val) async {
+      if (!mounted) return;
       setState(() {
         for (var i = 0; i < val.length; i++) {
           appointment.add(
@@ -49,6 +50,7 @@ class _EventState extends State<Event> {
         }
       });
       await getMeeting().then((val) {
+        if (!mounted) return;
         setState(() {
           for (var i = 0; i < val.length; i++) {
             appointment.add(
