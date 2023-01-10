@@ -79,7 +79,7 @@ class _SupportState extends State<Support> {
                       children: [
                         TabBar(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                              horizontal: 35, vertical: 10),
                           indicatorColor: CustomColor.brownColor,
                           labelColor: CustomColor.blackColor,
                           labelStyle: CustomFont(

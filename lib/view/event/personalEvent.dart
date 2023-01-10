@@ -69,7 +69,7 @@ class _PersonalEventState extends State<PersonalEvent> {
         body: (isLoad)
             ? Center(child: CupertinoActivityIndicator())
             : Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -115,7 +115,7 @@ class _PersonalEventState extends State<PersonalEvent> {
               ),
         bottomNavigationBar: Container(
           color: CustomColor.whiteColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: CustomButton(
             title: "Save",
             func: () async {

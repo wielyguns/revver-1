@@ -67,7 +67,7 @@ class _GlobalEventState extends State<GlobalEvent> {
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

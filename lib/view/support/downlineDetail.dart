@@ -105,7 +105,7 @@ class _DownlineDetailState extends State<DownlineDetail> {
                 children: [
                   SpacerHeight(h: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: Stack(
                       children: [
                         Container(
@@ -197,7 +197,7 @@ class _DownlineDetailState extends State<DownlineDetail> {
                   SpacerHeight(h: 20),
                   (current_task)
                       ? Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(horizontal: 35),
                           child: ExpandableNotifier(
                             initialExpanded: true,
                             child: Column(

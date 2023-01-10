@@ -99,7 +99,7 @@ class _LeadsState extends State<Leads> {
                   ? Center(child: Text("Data lead tidak tersedia."))
                   : SingleChildScrollView(
                       physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 35),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

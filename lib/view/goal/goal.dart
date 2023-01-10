@@ -133,7 +133,7 @@ class _GoalState extends State<Goal> {
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: [
                   SpacerHeight(h: 80),
@@ -383,7 +383,7 @@ class _GoalState extends State<Goal> {
           ? SizedBox()
           : Container(
               color: CustomColor.backgroundColor,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
               child: CustomButton(
                 title: "Record Progress",
                 func: () async {

@@ -34,7 +34,8 @@ generateTokenMidtrans(String orderId, double totalPrice) async {
   }
 }
 
-postOrderStore(String customer_id, no_receipt) async {
+postOrderStore(String customer_id, no_receipt, first_name, last_name, address,
+    contact, province_id, city_id, zip_code) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   Map<String, String> data;
@@ -44,6 +45,13 @@ postOrderStore(String customer_id, no_receipt) async {
     "customer_id": customer_id,
     "total_price": cart.getTotalAmount().toInt().toString(),
     "no_receipt": no_receipt,
+    "first_name": first_name,
+    "last_name": last_name,
+    "address": address,
+    "contact": contact,
+    "province_id": province_id,
+    "city_id": city_id,
+    "zip_code": zip_code,
   };
 
   for (int i = 0; i < cart.getCartItemCount(); i++) {
@@ -52,7 +60,11 @@ postOrderStore(String customer_id, no_receipt) async {
 
   for (int i = 0; i < cart.getCartItemCount(); i++) {
     data.addAll(
-        {"total_item[$i]": cart.cartItem[i].subTotal.toInt().toString()});
+        {"sub_total[$i]": cart.cartItem[i].subTotal.toInt().toString()});
+  }
+
+  for (int i = 0; i < cart.getCartItemCount(); i++) {
+    data.addAll({"price[$i]": cart.cartItem[i].unitPrice.toInt().toString()});
   }
 
   for (int i = 0; i < cart.getCartItemCount(); i++) {

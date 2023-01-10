@@ -89,7 +89,7 @@ class _ProductDetailState extends State<ProductDetail> {
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -426,7 +426,7 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
       bottomNavigationBar: Container(
           color: CustomColor.backgroundColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: Row(
             children: [
               InkWell(
