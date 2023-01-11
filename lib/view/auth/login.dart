@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -148,6 +149,8 @@ class _LoginState extends State<Login> {
                                             await prefs.setString(
                                                 'token', token);
                                           }
+                                          await FirebaseMessaging.instance
+                                              .subscribeToTopic("event");
                                           GoRouter.of(context)
                                               .go("/homepage/0");
                                         } else {
