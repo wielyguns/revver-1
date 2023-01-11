@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -256,6 +257,8 @@ class _AccountState extends State<Account> {
                                   await SharedPreferences.getInstance();
                               await prefs.remove("email");
                               await prefs.remove("password");
+                              await FirebaseMessaging.instance
+                                  .unsubscribeFromTopic("event");
                               GoRouter.of(context).go("/login");
                             },
                           ),
