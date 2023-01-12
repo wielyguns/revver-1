@@ -45,7 +45,7 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: (image == null)
-                ? AssetImage('assets/img/background-resize.png')
+                ? AssetImage('assets/img/revver-bg.jpg')
                 : NetworkImage(image),
             fit: BoxFit.cover,
           ),
@@ -68,7 +68,7 @@ class CustomHeader extends StatelessWidget with PreferredSizeWidget {
             children: [
               SizedBox(height: kToolbarHeight),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Text(
                   title ??= "",
                   style: CustomFont(CustomColor.whiteColor, 32, FontWeight.bold)

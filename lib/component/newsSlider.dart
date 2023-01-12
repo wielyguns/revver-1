@@ -24,7 +24,7 @@ class NewsSlider extends StatelessWidget {
 
   _titleWidget(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 35),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -62,7 +62,7 @@ class NewsSlider extends StatelessWidget {
                 News nws = news[index];
                 return Row(
                   children: [
-                    (0 == index) ? SizedBox(width: 20) : SizedBox(width: 0),
+                    (0 == index) ? SizedBox(width: 35) : SizedBox(width: 0),
                     _sliderBox(
                       context,
                       nws.image ??=

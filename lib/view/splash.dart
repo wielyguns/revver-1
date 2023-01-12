@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,8 +20,9 @@ class _SplashState extends State<Splash> {
     final String email = prefs.getString('email');
     final String password = prefs.getString('password');
     if (email != null && password != null) {
-      loginLoad(email, password).then((val) {
+      loginLoad(email, password).then((val) async {
         if (val['status'] == 200) {
+          await FirebaseMessaging.instance.subscribeToTopic("event");
           GoRouter.of(context).go("/homepage/0");
         } else {
           GoRouter.of(context).go("/login");

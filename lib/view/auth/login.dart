@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -35,7 +36,7 @@ class _LoginState extends State<Login> {
               width: CustomScreen(context).width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/img/background.jpeg'),
+                  image: AssetImage('assets/img/revver-bg.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -69,11 +70,11 @@ class _LoginState extends State<Login> {
                   children: [
                     Expanded(
                         child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 35),
                     )),
                     Container(
                       width: CustomScreen(context).width,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 35),
                       decoration: BoxDecoration(
                         color: CustomColor.whiteColor,
                         borderRadius: BorderRadius.only(
@@ -85,7 +86,7 @@ class _LoginState extends State<Login> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SpacerHeight(h: 20),
+                            SpacerHeight(h: 35),
                             Text(
                               "Login",
                               style: CustomFont(CustomColor.brownColor, 36,
@@ -116,6 +117,51 @@ class _LoginState extends State<Login> {
                               visible: password,
                               isValidator: true,
                               controller: passwordController,
+                            ),
+                            SpacerHeight(h: 40),
+                            SizedBox(
+                              width: CustomScreen(context).width - 40,
+                              child: CustomButton(
+                                title: "Login",
+                                func: () async {
+                                  if (!formKey.currentState.validate()) {
+                                    customSnackBar(context, true,
+                                        "Complete the form first!");
+                                  } else {
+                                    String email = emailController.text;
+                                    String password = passwordController.text;
+                                    await loginLoad(email, password).then(
+                                      (val) async {
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        String token = val['api_key'];
+                                        if (val['status'] == 200) {
+                                          if (rememberMe) {
+                                            await prefs.setString(
+                                                'password', password);
+                                            await prefs.setString(
+                                                'email', email);
+                                            await prefs.setString(
+                                                'token', token);
+                                          } else {
+                                            await prefs.remove("password");
+                                            await prefs.remove('email');
+                                            await prefs.setString(
+                                                'token', token);
+                                          }
+                                          await FirebaseMessaging.instance
+                                              .subscribeToTopic("event");
+                                          GoRouter.of(context)
+                                              .go("/homepage/0");
+                                        } else {
+                                          customSnackBar(
+                                              context, true, val['message']);
+                                        }
+                                      },
+                                    );
+                                  }
+                                },
+                              ),
                             ),
                             SpacerHeight(h: 20),
                             Row(
@@ -164,50 +210,7 @@ class _LoginState extends State<Login> {
                                 ),
                               ],
                             ),
-                            SpacerHeight(h: 20),
-                            SizedBox(
-                              width: CustomScreen(context).width - 40,
-                              child: CustomButton(
-                                title: "Login",
-                                func: () async {
-                                  if (!formKey.currentState.validate()) {
-                                    customSnackBar(context, true,
-                                        "Complete the form first!");
-                                  } else {
-                                    String email = emailController.text;
-                                    String password = passwordController.text;
-                                    await loginLoad(email, password).then(
-                                      (val) async {
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        String token = val['api_key'];
-                                        if (val['status'] == 200) {
-                                          if (rememberMe) {
-                                            await prefs.setString(
-                                                'password', password);
-                                            await prefs.setString(
-                                                'email', email);
-                                            await prefs.setString(
-                                                'token', token);
-                                          } else {
-                                            await prefs.remove("password");
-                                            await prefs.remove('email');
-                                            await prefs.setString(
-                                                'token', token);
-                                          }
-                                          GoRouter.of(context)
-                                              .go("/homepage/0");
-                                        } else {
-                                          customSnackBar(
-                                              context, true, val['message']);
-                                        }
-                                      },
-                                    );
-                                  }
-                                },
-                              ),
-                            ),
-                            SpacerHeight(h: 20),
+                            SpacerHeight(h: 40),
                           ],
                         ),
                       ),
@@ -220,7 +223,7 @@ class _LoginState extends State<Login> {
         ),
         // bottomNavigationBar: Container(
         //   color: CustomColor.whiteColor,
-        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //   padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
         //   child: CustomButton(
         //     title: "Login",
         //     func: () async {

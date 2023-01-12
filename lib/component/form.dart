@@ -46,7 +46,7 @@ class RegularForm extends StatelessWidget {
             hintText: hint,
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-            contentPadding: EdgeInsets.all(10),
+            contentPadding: EdgeInsets.all(15),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                   width: 1.5,
@@ -131,38 +131,44 @@ class MultiLineForm extends StatelessWidget {
             hintText: hint,
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-            contentPadding: EdgeInsets.all(10),
-            border: UnderlineInputBorder(
+            contentPadding: EdgeInsets.all(15),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            enabledBorder: UnderlineInputBorder(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            focusedBorder: UnderlineInputBorder(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.brownColor),
             ),
-            errorBorder: UnderlineInputBorder(
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
             ),
-            focusedErrorBorder: UnderlineInputBorder(
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
                   color: CustomColor.redColor),
             ),
-            disabledBorder: UnderlineInputBorder(
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                   width: 1.5,
                   style: BorderStyle.solid,
@@ -229,7 +235,7 @@ class _PasswordFormState extends State<PasswordForm> {
             hintText: widget.hint,
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-            contentPadding: EdgeInsets.all(10),
+            contentPadding: EdgeInsets.all(15),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                   width: 1.5,
@@ -338,7 +344,7 @@ class _StringDropdownState extends State<StringDropdown> {
             hintText: widget.hint,
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-            contentPadding: EdgeInsets.all(10),
+            contentPadding: EdgeInsets.all(15),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                   width: 1.5,
@@ -417,7 +423,7 @@ class DynamicDropdown extends StatelessWidget {
             hintText: hint,
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-            contentPadding: EdgeInsets.all(10),
+            contentPadding: EdgeInsets.all(15),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                   width: 1.5,
@@ -511,7 +517,7 @@ class SearchForm extends StatelessWidget {
           hintText: "Search",
           hintStyle:
               CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-          contentPadding: EdgeInsets.all(10),
+          contentPadding: EdgeInsets.all(15),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(
@@ -592,7 +598,7 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
             hintText: widget.date.toString(),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-            contentPadding: EdgeInsets.all(10),
+            contentPadding: EdgeInsets.all(15),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
                   width: 1.5,

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,12 +22,12 @@ class _AccountState extends State<Account> {
   String stage;
 
   getHeader() async {
-    if (!mounted) return;
     await getAccountHeader().then((val) {
+      if (!mounted) return;
       setState(() {
         name = val['data']['name'];
         image = val['data']['avatar'];
-        stage = val['data']['stage_id'].toString();
+        stage = val['data']['stage']['name'].toString();
         isLoad = false;
       });
     });
@@ -58,15 +59,14 @@ class _AccountState extends State<Account> {
                 children: [
                   SpacerHeight(h: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: Stack(
                       children: [
                         Container(
                           height: 140,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/img/background-resize.png'),
+                              image: AssetImage('assets/img/revver-bg.jpg'),
                               fit: BoxFit.cover,
                             ),
                             borderRadius: BorderRadius.circular(20),
@@ -152,7 +152,7 @@ class _AccountState extends State<Account> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -257,6 +257,8 @@ class _AccountState extends State<Account> {
                                   await SharedPreferences.getInstance();
                               await prefs.remove("email");
                               await prefs.remove("password");
+                              await FirebaseMessaging.instance
+                                  .unsubscribeFromTopic("event");
                               GoRouter.of(context).go("/login");
                             },
                           ),

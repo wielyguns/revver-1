@@ -55,7 +55,7 @@ class _HomepageState extends State<Homepage> {
         ),
         child: SalomonBottomBar(
           selectedColorOpacity: 1,
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+          margin: EdgeInsets.symmetric(horizontal: 35, vertical: 18),
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
           items: [

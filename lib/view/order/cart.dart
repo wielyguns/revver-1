@@ -34,7 +34,7 @@ class _CartState extends State<Cart> {
             )
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

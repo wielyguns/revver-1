@@ -93,21 +93,25 @@ class _NoteDetailState extends State<NoteDetail> {
         //   },
         // ),
         appBar: AppBar(
-          leading: CupertinoNavigationBarBackButton(),
+          leading: CupertinoNavigationBarBackButton(onPressed: () {
+            GoRouter.of(context).pop();
+          }),
           actions: [
-            GestureDetector(
-              onTap: () async {
-                await deleteNote(id).then((val) {
-                  if (val['status'] == 200) {
-                    GoRouter.of(context).pop();
-                  } else {
-                    customSnackBar(context, true, val['status']);
-                  }
-                });
-              },
-              child: SvgPicture.asset('assets/svg/trash-can-solid.svg',
-                  height: 20, color: CustomColor.whiteColor),
-            ),
+            (isNumeric(widget.id))
+                ? GestureDetector(
+                    onTap: () async {
+                      await deleteNote(id).then((val) {
+                        if (val['status'] == 200) {
+                          GoRouter.of(context).pop();
+                        } else {
+                          customSnackBar(context, true, val['status']);
+                        }
+                      });
+                    },
+                    child: SvgPicture.asset('assets/svg/trash-can-solid.svg',
+                        height: 20, color: CustomColor.whiteColor),
+                  )
+                : SizedBox(),
             SpacerWidth(w: 20),
           ],
           backgroundColor: Colors.transparent,
@@ -122,7 +126,7 @@ class _NoteDetailState extends State<NoteDetail> {
                     width: CustomScreen(context).width,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/img/background-resize.png'),
+                        image: AssetImage('assets/img/revver-bg.jpg'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -144,7 +148,7 @@ class _NoteDetailState extends State<NoteDetail> {
                       SpacerHeight(h: 40),
                       Expanded(
                         child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          margin: EdgeInsets.symmetric(horizontal: 35),
                           decoration: BoxDecoration(
                             color: CustomColor.backgroundColor,
                             borderRadius: BorderRadius.circular(10),
@@ -155,7 +159,7 @@ class _NoteDetailState extends State<NoteDetail> {
                       SpacerHeight(h: 20),
                       Container(
                         width: CustomScreen(context).width,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 35),
                         child: CustomButton(
                           title: "Save",
                           func: () async {
@@ -208,7 +212,7 @@ class _NoteDetailState extends State<NoteDetail> {
               ),
         // bottomNavigationBar: Container(
         //   color: Colors.transparent,
-        //   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        //   padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
         //   child: CustomButton(
         //     title: "Save",
         //     func: () async {
@@ -258,10 +262,11 @@ class _NoteDetailState extends State<NoteDetail> {
 
   contentWidget() {
     return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 35),
       physics: BouncingScrollPhysics(),
       child: Column(
         children: [
+          SpacerHeight(h: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -283,17 +288,20 @@ class _NoteDetailState extends State<NoteDetail> {
             style: CustomFont(CustomColor.blackColor, 18, FontWeight.bold).font,
           ),
           (type.toLowerCase() == "text")
-              ? Expanded(
-                  child: TextField(
-                    controller: descriptionController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'eg: Catatan Hari Ini',
-                      hintStyle:
-                          CustomFont(CustomColor.oldGreyColor, 14, null).font,
-                    ),
-                    style: CustomFont(CustomColor.blackColor, 14, null).font,
-                  ),
+              ? Column(
+                  children: [
+                    TextField(
+                      maxLines: 999,
+                      controller: descriptionController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'eg: Catatan Hari Ini',
+                        hintStyle:
+                            CustomFont(CustomColor.oldGreyColor, 14, null).font,
+                      ),
+                      style: CustomFont(CustomColor.blackColor, 14, null).font,
+                    )
+                  ],
                 )
               : (note_list.isNotEmpty)
                   ? Column(

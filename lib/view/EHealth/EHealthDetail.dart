@@ -100,12 +100,12 @@ class _EHealthDetailState extends State<EHealthDetail> {
                 children: [
                   SpacerHeight(h: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: header(),
                   ),
                   SpacerHeight(h: 20),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 35),
                     child: body(),
                   ),
                   SpacerHeight(h: 20),
@@ -127,7 +127,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
               height: 140,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/img/background-resize.png'),
+                  image: AssetImage('assets/img/revver-bg.jpg'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(20),
@@ -174,13 +174,13 @@ class _EHealthDetailState extends State<EHealthDetail> {
                         Text(
                           uname,
                           style: CustomFont(
-                                  CustomColor.blackColor, 14, FontWeight.bold)
+                                  CustomColor.brownColor, 14, FontWeight.bold)
                               .font,
                         ),
                         Text(
                           "$age years old",
-                          style:
-                              CustomFont(CustomColor.blackColor, 12, null).font,
+                          style: CustomFont(CustomColor.oldGreyColor, 12, null)
+                              .font,
                         ),
                       ],
                     )
@@ -364,7 +364,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 35),
           child: Text(
             "Product Recommendations",
             style: CustomFont(CustomColor.brownColor, 16, FontWeight.bold).font,

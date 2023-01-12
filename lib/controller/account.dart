@@ -53,7 +53,7 @@ patchAccountChangePassword(String password) async {
 getAccountOrder() async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/account/order";
+  String url = "https://admin.revveracademy.com/api/v1/order";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.get(parseUrl, headers: {
@@ -72,7 +72,7 @@ getAccountOrder() async {
 getAccountOrderDetail(String orderId) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/account/order/$orderId";
+  String url = "https://admin.revveracademy.com/api/v1/order/$orderId";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.get(parseUrl, headers: {

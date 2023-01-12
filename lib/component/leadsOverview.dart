@@ -40,7 +40,7 @@ class _LeadsOverviewState extends State<LeadsOverview> {
 
   @override
   Widget build(BuildContext context) {
-    double d = MediaQuery.of(context).size.width - 40;
+    double d = MediaQuery.of(context).size.width - 110;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

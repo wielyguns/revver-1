@@ -45,63 +45,66 @@ class _OrderHistoryState extends State<OrderHistory> {
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
-          : SfDataGrid(
-              verticalScrollPhysics: BouncingScrollPhysics(),
-              horizontalScrollPhysics: BouncingScrollPhysics(),
-              onCellTap: ((details) {
-                if (details.rowColumnIndex.rowIndex != 0) {
-                  int selectedRowIndex = details.rowColumnIndex.rowIndex - 1;
-                  var row =
-                      dataSource.effectiveRows.elementAt(selectedRowIndex);
-                  String val = row.getCells()[0].value.toString();
-                  GoRouter.of(context).push('/invoice/$val/true');
-                }
-              }),
-              frozenColumnsCount: 1,
-              source: dataSource,
-              columnWidthMode: ColumnWidthMode.none,
-              columns: <GridColumn>[
-                GridColumn(
-                    columnName: 'orderId',
-                    label: Container(
-                        padding: EdgeInsets.all(8.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          'ID',
-                          style: CustomFont.bold12,
-                          overflow: TextOverflow.ellipsis,
-                        ))),
-                GridColumn(
-                    columnName: 'designation',
-                    label: Container(
-                        padding: EdgeInsets.all(8.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Total Price',
-                          overflow: TextOverflow.ellipsis,
-                          style: CustomFont.bold12,
-                        ))),
-                GridColumn(
-                    columnName: 'date',
-                    label: Container(
-                        padding: EdgeInsets.all(8.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Date',
-                          style: CustomFont.bold12,
-                          overflow: TextOverflow.ellipsis,
-                        ))),
-                GridColumn(
-                    columnName: 'status',
-                    label: Container(
-                        padding: EdgeInsets.all(8.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Status',
-                          style: CustomFont.bold12,
-                          overflow: TextOverflow.ellipsis,
-                        ))),
-              ],
+          : Padding(
+              padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+              child: SfDataGrid(
+                verticalScrollPhysics: BouncingScrollPhysics(),
+                horizontalScrollPhysics: BouncingScrollPhysics(),
+                onCellTap: ((details) {
+                  if (details.rowColumnIndex.rowIndex != 0) {
+                    int selectedRowIndex = details.rowColumnIndex.rowIndex - 1;
+                    var row =
+                        dataSource.effectiveRows.elementAt(selectedRowIndex);
+                    String val = row.getCells()[0].value.toString();
+                    GoRouter.of(context).push('/invoice/$val/true');
+                  }
+                }),
+                // frozenColumnsCount: 1,
+                source: dataSource,
+                columnWidthMode: ColumnWidthMode.fill,
+                columns: <GridColumn>[
+                  GridColumn(
+                      columnName: 'orderId',
+                      label: Container(
+                          padding: EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Order ID',
+                            style: CustomFont.bold12,
+                            overflow: TextOverflow.ellipsis,
+                          ))),
+                  GridColumn(
+                      columnName: 'designation',
+                      label: Container(
+                          padding: EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Amount',
+                            overflow: TextOverflow.ellipsis,
+                            style: CustomFont.bold12,
+                          ))),
+                  GridColumn(
+                      columnName: 'date',
+                      label: Container(
+                          padding: EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Date',
+                            style: CustomFont.bold12,
+                            overflow: TextOverflow.ellipsis,
+                          ))),
+                  // GridColumn(
+                  //     columnName: 'status',
+                  //     label: Container(
+                  //         padding: EdgeInsets.all(8.0),
+                  //         alignment: Alignment.center,
+                  //         child: Text(
+                  //           'Status',
+                  //           style: CustomFont.bold12,
+                  //           overflow: TextOverflow.ellipsis,
+                  //         ))),
+                ],
+              ),
             ),
     );
   }
@@ -114,7 +117,7 @@ class OrderDataSource extends DataGridSource {
               DataGridCell(columnName: 'orderId', value: e.id),
               DataGridCell(columnName: 'tPrice', value: rupiah(e.total_price)),
               DataGridCell(columnName: 'date', value: e.created_at),
-              DataGridCell(columnName: 'status', value: e.payment_status),
+              // DataGridCell(columnName: 'status', value: e.payment_status),
             ]))
         .toList();
   }

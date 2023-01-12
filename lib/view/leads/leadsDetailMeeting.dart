@@ -1,5 +1,5 @@
 // ignore_for_file: must_be_immutable, non_constant_identifier_names
-
+import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,6 +9,7 @@ import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/meeting.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/meeting.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class LeadsDetailMeeting extends StatefulWidget {
   LeadsDetailMeeting({Key key, this.id}) : super(key: key);
@@ -22,21 +23,40 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
   bool isLoad = true;
   List<Meeting> meeting = [];
   String lead_id;
+  _DataSource events;
+  List<Appointment> appointment = [];
 
   getData() async {
+    if (!mounted) return;
+    setState(() {
+      appointment = [];
+      events = _DataSource(appointment);
+      isLoad = true;
+    });
     await getMeeting().then((val) async {
       setState(() {
         List<Meeting> y = val.where((e) => e.is_meeting == 1).toList();
         List<Meeting> x = y.where((e) => e.lead_id == widget.id).toList();
         meeting = x;
-
+        for (var i = 0; i < x.length; i++) {
+          appointment.add(
+            Appointment(
+              id: x[i].id,
+              subject: val[i].name,
+              startTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(x[i].date),
+              endTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(x[i].date),
+              color: CustomColor.brownColor,
+            ),
+          );
+        }
+        events = _DataSource(appointment);
         isLoad = false;
       });
     });
   }
 
   callback() {
-    if (!GoRouter.of(context).location.contains("/leads-detail-meeting-form")) {
+    if (!GoRouter.of(context).location.contains("leads-detail-meeting-form")) {
       getData();
       GoRouter.of(context).removeListener(callback);
     }
@@ -55,22 +75,68 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 0),
         child: (isLoad)
             ? Center(child: CupertinoActivityIndicator())
             : (meeting.isEmpty)
                 ? Center(child: Text("Not Found!"))
-                : listWidget(),
+                : calendarWidget(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          String x = "000";
-          GoRouter.of(context).push("/leads-detail-meeting-form/$x/$lead_id");
-          GoRouter.of(context).addListener(callback);
-        },
-        backgroundColor: CustomColor.brownColor,
-        child: Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        height: 40,
+        width: 40,
+        child: FloatingActionButton(
+          onPressed: () {
+            String x = "000";
+            GoRouter.of(context).push("/leads-detail-meeting-form/$x/$lead_id");
+            GoRouter.of(context).addListener(callback);
+          },
+          backgroundColor: CustomColor.brownColor,
+          child: Icon(
+            Icons.add,
+            size: 30,
+          ),
+          shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        ),
       ),
+
+      // FloatingActionButton(
+      //   onPressed: () {
+      //     String x = "000";
+      //     GoRouter.of(context).push("/leads-detail-meeting-form/$x/$lead_id");
+      //     GoRouter.of(context).addListener(callback);
+      //   },
+      //   backgroundColor: CustomColor.brownColor,
+      //   child: Icon(Icons.add),
+      // ),
+    );
+  }
+
+  calendarWidget() {
+    return SfCalendar(
+      todayHighlightColor: CustomColor.brownColor,
+      todayTextStyle: CustomFont.regular12,
+      headerStyle: CalendarHeaderStyle(
+          backgroundColor: CustomColor.backgroundColor,
+          textStyle: CustomFont.regular12),
+      showDatePickerButton: true,
+      dataSource: events,
+      view: CalendarView.schedule,
+      scheduleViewSettings: ScheduleViewSettings(
+        appointmentTextStyle: CustomFont.regular12,
+        appointmentItemHeight: 60,
+        monthHeaderSettings: MonthHeaderSettings(
+            monthTextStyle: CustomFont.bold24,
+            height: 120,
+            backgroundColor: CustomColor.brownColor),
+      ),
+      onTap: (CalendarTapDetails details) {
+        Appointment appointment = details.appointments[0];
+        int appointmentId = appointment.id;
+        GoRouter.of(context)
+            .push("/leads-detail-meeting-form/$appointmentId/$lead_id");
+        GoRouter.of(context).addListener(callback);
+      },
     );
   }
 
@@ -140,5 +206,11 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
         ],
       ),
     );
+  }
+}
+
+class _DataSource extends CalendarDataSource {
+  _DataSource(List<Appointment> source) {
+    appointments = source;
   }
 }

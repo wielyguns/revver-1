@@ -34,7 +34,8 @@ generateTokenMidtrans(String orderId, double totalPrice) async {
   }
 }
 
-postOrderStore(String customer_id, no_receipt) async {
+postOrderStore(String customer_id, no_receipt, first_name, last_name, address,
+    contact, province_id, city_id, zip_code) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   Map<String, String> data;
@@ -44,6 +45,13 @@ postOrderStore(String customer_id, no_receipt) async {
     "customer_id": customer_id,
     "total_price": cart.getTotalAmount().toInt().toString(),
     "no_receipt": no_receipt,
+    "first_name": first_name,
+    "last_name": last_name,
+    "address": address,
+    "contact": contact,
+    "province_id": province_id,
+    "city_id": city_id,
+    "zip_code": zip_code,
   };
 
   for (int i = 0; i < cart.getCartItemCount(); i++) {
@@ -52,7 +60,11 @@ postOrderStore(String customer_id, no_receipt) async {
 
   for (int i = 0; i < cart.getCartItemCount(); i++) {
     data.addAll(
-        {"total_item[$i]": cart.cartItem[i].subTotal.toInt().toString()});
+        {"sub_total[$i]": cart.cartItem[i].subTotal.toInt().toString()});
+  }
+
+  for (int i = 0; i < cart.getCartItemCount(); i++) {
+    data.addAll({"price[$i]": cart.cartItem[i].unitPrice.toInt().toString()});
   }
 
   for (int i = 0; i < cart.getCartItemCount(); i++) {
@@ -70,6 +82,25 @@ postOrderStore(String customer_id, no_receipt) async {
     },
     body: data,
   );
+
+  var res = jsonDecode(response.body);
+
+  return res;
+}
+
+getPaymentMethodMidtrans(id) async {
+  String username = 'SB-Mid-server-5UKRWMkpzEb1Ds9ERKd6uo7Z';
+  String password = '';
+  String basicAuth =
+      'Basic ' + base64.encode(utf8.encode('$username:$password'));
+
+  String url = "https://api.sandbox.midtrans.com/v2/$id/status";
+  // String url = "https://webhook.site/4f724449-8502-410f-a1a7-1e3b60cab04b";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.get(parseUrl, headers: {
+    "Authorization": basicAuth,
+  });
 
   var res = jsonDecode(response.body);
 

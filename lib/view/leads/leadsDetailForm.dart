@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
-import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/EHealth.dart';
@@ -171,60 +170,124 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: (widget.x == null)
-            ? CustomHeader(
-                title: "Leads",
-                isPop: true,
+            ? AppBar(
+                leading: CupertinoNavigationBarBackButton(
+                  onPressed: (() => GoRouter.of(context).pop()),
+                ),
+                centerTitle: true,
+                title: Image.asset(
+                  "assets/img/revver-horizontal.png",
+                  width: CustomScreen(context).width / 3,
+                ),
+                backgroundColor: CustomColor.backgroundColor,
+                elevation: 0,
               )
             : PreferredSize(child: SizedBox(), preferredSize: Size(0, 0)),
         body: (isLoad)
             ? Center(child: CupertinoActivityIndicator())
             : SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 35),
                 child: Form(
                   key: formKey,
                   child: Column(
                     children: [
                       SpacerHeight(h: 20),
-                      image != null
-                          ? GestureDetector(
-                              onTap: () {
-                                getImage(ImageSource.gallery);
-                              },
-                              child: SizedBox(
-                                height: 80,
-                                width: 80,
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  fit: StackFit.expand,
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundImage:
-                                          FileImage(File(image.path)),
-                                    ),
-                                  ],
-                                ),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 140,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/img/revver-bg.jpg'),
+                                fit: BoxFit.cover,
                               ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                getImage(ImageSource.gallery);
-                              },
-                              child: SizedBox(
-                                height: 80,
-                                width: 80,
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  fit: StackFit.expand,
-                                  children: [
-                                    CircleAvatar(
-                                      backgroundImage: NetworkImage(avatar ??=
-                                          "https://wallpaperaccess.com/full/733834.png"),
-                                    ),
-                                  ],
-                                ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Leads",
+                                style: CustomFont(CustomColor.whiteColor, 32,
+                                        FontWeight.w600)
+                                    .font,
                               ),
                             ),
-                      SpacerHeight(h: 20),
+                          ),
+                          Column(
+                            children: [
+                              SpacerHeight(h: 100),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: CustomColor.whiteColor,
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    padding: EdgeInsets.all(5),
+                                    height: 80,
+                                    width: 80,
+                                    child: Stack(
+                                      clipBehavior: Clip.none,
+                                      fit: StackFit.expand,
+                                      children: [
+                                        image != null
+                                            ? GestureDetector(
+                                                onTap: () {
+                                                  getImage(ImageSource.gallery);
+                                                },
+                                                child: SizedBox(
+                                                  height: 80,
+                                                  width: 80,
+                                                  child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    fit: StackFit.expand,
+                                                    children: [
+                                                      CircleAvatar(
+                                                        backgroundImage:
+                                                            FileImage(File(
+                                                                image.path)),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            : GestureDetector(
+                                                onTap: () {
+                                                  getImage(ImageSource.gallery);
+                                                },
+                                                child: SizedBox(
+                                                  height: 80,
+                                                  width: 80,
+                                                  child: Stack(
+                                                    clipBehavior: Clip.none,
+                                                    fit: StackFit.expand,
+                                                    children: [
+                                                      CircleAvatar(
+                                                        backgroundImage:
+                                                            NetworkImage(avatar ??=
+                                                                "https://wallpaperaccess.com/full/733834.png"),
+                                                      ),
+                                                      Icon(
+                                                        Icons.edit,
+                                                        size: 20,
+                                                        color: CustomColor
+                                                            .whiteColor,
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SpacerHeight(h: 10),
                       RegularForm(
                         title: "Full Name",
                         hint: "Your Full Name",
@@ -371,7 +434,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                         hint: "Your Note",
                         controller: noteController,
                       ),
-                      SpacerHeight(h: 30),
+                      (widget.x == null) ? SizedBox() : SpacerHeight(h: 30),
                       (widget.x == null)
                           ? SizedBox()
                           : Row(
@@ -403,7 +466,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
               ),
         bottomNavigationBar: Container(
           color: CustomColor.backgroundColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: CustomButton(
             title: "Save",
             func: () async {

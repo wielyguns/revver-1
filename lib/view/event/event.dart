@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/event.dart';
 import 'package:revver/controller/meeting.dart';
@@ -33,6 +34,7 @@ class _EventState extends State<Event> {
       isLoad = true;
     });
     await getEvent().then((val) async {
+      if (!mounted) return;
       setState(() {
         for (var i = 0; i < val.length; i++) {
           appointment.add(
@@ -48,6 +50,7 @@ class _EventState extends State<Event> {
         }
       });
       await getMeeting().then((val) {
+        if (!mounted) return;
         setState(() {
           for (var i = 0; i < val.length; i++) {
             appointment.add(
@@ -71,14 +74,14 @@ class _EventState extends State<Event> {
   }
 
   callbackPE() {
-    if (!GoRouter.of(context).location.contains("/personal-event")) {
+    if (!GoRouter.of(context).location.contains("personal-event")) {
       getData();
       GoRouter.of(context).removeListener(callbackPE);
     }
   }
 
   callbackLM() {
-    if (!GoRouter.of(context).location.contains("/lead-meeting")) {
+    if (!GoRouter.of(context).location.contains("lead-meeting")) {
       getData();
       GoRouter.of(context).removeListener(callbackLM);
     }
@@ -93,6 +96,10 @@ class _EventState extends State<Event> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomHeader(
+        isPop: false,
+        title: "Event",
+      ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
           : SafeArea(
@@ -100,11 +107,6 @@ class _EventState extends State<Event> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SpacerHeight(h: 20),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text("Event", style: CustomFont.heading24),
-                  ),
                   SpacerHeight(h: 10),
                   Expanded(
                     child: SfCalendar(
@@ -149,13 +151,21 @@ class _EventState extends State<Event> {
                 ],
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          GoRouter.of(context).push("/personal-event/000");
-          GoRouter.of(context).addListener(callbackPE);
-        },
-        backgroundColor: CustomColor.brownColor,
-        child: Icon(Icons.add),
+      floatingActionButton: SizedBox(
+        height: 40,
+        width: 40,
+        child: FloatingActionButton(
+          onPressed: () {
+            GoRouter.of(context).push("/personal-event/000");
+            GoRouter.of(context).addListener(callbackPE);
+          },
+          backgroundColor: CustomColor.brownColor,
+          child: Icon(
+            Icons.add,
+            size: 30,
+          ),
+          shape: BeveledRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        ),
       ),
     );
   }

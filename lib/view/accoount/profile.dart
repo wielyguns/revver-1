@@ -42,6 +42,7 @@ class _ProfileState extends State<Profile> {
 
   getData() async {
     await getAccountProfile().then((val) {
+      if (!mounted) return;
       setState(() {
         id = val['data']['id'];
         nameController.text = val['data']['name'];
@@ -66,7 +67,9 @@ class _ProfileState extends State<Profile> {
     return KeyboardDismisser(
       child: Scaffold(
         appBar: AppBar(
-          leading: CupertinoNavigationBarBackButton(),
+          leading: CupertinoNavigationBarBackButton(
+            onPressed: (() => GoRouter.of(context).pop()),
+          ),
           centerTitle: true,
           title: Image.asset(
             "assets/img/revver-horizontal.png",
@@ -77,7 +80,7 @@ class _ProfileState extends State<Profile> {
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 35),
           child: Form(
             key: formKey,
             child: Column(
@@ -89,7 +92,7 @@ class _ProfileState extends State<Profile> {
                       height: 140,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('assets/img/background-resize.png'),
+                          image: AssetImage('assets/img/revver-bg.jpg'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(20),
@@ -286,7 +289,7 @@ class _ProfileState extends State<Profile> {
         ),
         bottomNavigationBar: Container(
           color: CustomColor.backgroundColor,
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
           child: IconTextButton(
             buttonColor: CustomColor.brownColor,
             title: "Save",

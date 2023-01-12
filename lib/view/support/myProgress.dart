@@ -70,59 +70,34 @@ class _MyProgressState extends State<MyProgress> {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                SfRadialGauge(
-                  axes: <RadialAxis>[
-                    RadialAxis(
-                      showLabels: false,
-                      showTicks: false,
-                      startAngle: 270,
-                      endAngle: 270,
-                      radiusFactor: 0.8,
-                      axisLineStyle: AxisLineStyle(
-                          thicknessUnit: GaugeSizeUnit.factor, thickness: 0.15),
-                      annotations: <GaugeAnnotation>[
-                        GaugeAnnotation(
-                          positionFactor: 0.1,
-                          widget: Text(
-                            y.toInt().toString() +
-                                "%\n" +
-                                finished.length.toString() +
-                                " / " +
-                                indicator.length.toString(),
-                            style: CustomFont(CustomColor.oldGreyColor, 20,
-                                    FontWeight.w700)
-                                .font,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                      pointers: <GaugePointer>[
-                        RangePointer(
-                            value: y,
-                            cornerStyle: CornerStyle.bothCurve,
-                            enableAnimation: true,
-                            animationDuration: 3000,
-                            sizeUnit: GaugeSizeUnit.factor,
-                            color: CustomColor.brownColor,
-                            width: 0.15),
-                      ],
-                    ),
-                  ],
-                ),
-                Text(
-                  "Journey To Champion",
-                  style: CustomFont(CustomColor.blackColor, 18, FontWeight.w600)
-                      .font,
-                ),
-                Text(
-                  name,
-                  style:
-                      CustomFont(CustomColor.oldGreyColor, 16, FontWeight.w600)
-                          .font,
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: CustomColor.blackColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      radialGauge(),
+                      Text(
+                        "Journey To Champion",
+                        style: CustomFont(
+                                CustomColor.whiteColor, 18, FontWeight.w600)
+                            .font,
+                      ),
+                      Text(
+                        name,
+                        style: CustomFont(
+                                CustomColor.oldGreyColor, 16, FontWeight.w600)
+                            .font,
+                      ),
+                      SpacerHeight(h: 20),
+                    ],
+                  ),
                 ),
                 SpacerHeight(h: 20),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 35),
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     physics: NeverScrollableScrollPhysics(),
@@ -270,5 +245,46 @@ class _MyProgressState extends State<MyProgress> {
               ],
             ),
           );
+  }
+
+  radialGauge() {
+    return SfRadialGauge(
+      axes: <RadialAxis>[
+        RadialAxis(
+          showLabels: false,
+          showTicks: false,
+          startAngle: 270,
+          endAngle: 270,
+          radiusFactor: 0.7,
+          axisLineStyle: AxisLineStyle(
+              thicknessUnit: GaugeSizeUnit.factor, thickness: 0.15),
+          annotations: <GaugeAnnotation>[
+            GaugeAnnotation(
+              positionFactor: 0.1,
+              widget: Text(
+                y.toInt().toString() +
+                    "%\n" +
+                    finished.length.toString() +
+                    " / " +
+                    indicator.length.toString(),
+                style: CustomFont(CustomColor.brownColor, 32, FontWeight.w600)
+                    .font,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+          pointers: <GaugePointer>[
+            RangePointer(
+                value: y,
+                cornerStyle: CornerStyle.bothCurve,
+                enableAnimation: true,
+                animationDuration: 3000,
+                sizeUnit: GaugeSizeUnit.factor,
+                color: CustomColor.whiteColor,
+                width: 0.15),
+          ],
+        ),
+      ],
+    );
   }
 }
