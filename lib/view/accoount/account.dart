@@ -207,7 +207,7 @@ class _AccountState extends State<Account> {
                         SpacerHeight(h: 20),
                         AccountMenu(
                           title: "Order History",
-                          iconTitle: "cart-shopping-solid.svg",
+                          iconTitle: "ICON 0/ICON-37.svg",
                           func: () {
                             GoRouter.of(context).push("/order-history");
                           },

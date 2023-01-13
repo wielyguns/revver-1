@@ -42,14 +42,52 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CupertinoActivityIndicator(),
-        // child: Column(
-        //   children: [
-        //     Text("Message: $mess" ?? "Message: null"),
-        //     Text("Token: $token" ?? "Token: null"),
-        //   ],
-        // ),
+      body: SizedBox(
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                height: 100,
+                width: 100,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 5,
+                      blurRadius: 10,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: Image.asset("assets/img/revver-icon.png"),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 100,
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Color.fromARGB(255, 213, 160, 104),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color.fromARGB(255, 242, 242, 242),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
