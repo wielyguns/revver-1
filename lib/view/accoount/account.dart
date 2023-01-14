@@ -207,7 +207,7 @@ class _AccountState extends State<Account> {
                         SpacerHeight(h: 20),
                         AccountMenu(
                           title: "Order History",
-                          iconTitle: "ICON 0/ICON-37.svg",
+                          iconTitle: "new-cart-plus.svg",
                           func: () {
                             GoRouter.of(context).push("/order-history");
                           },
@@ -218,7 +218,7 @@ class _AccountState extends State<Account> {
                         ),
                         AccountMenu(
                           title: "Privacy Policy",
-                          iconTitle: "lock-solid.svg",
+                          iconTitle: "new-secure.svg",
                           func: () {
                             GoRouter.of(context).push("/privacy-policy");
                           },
@@ -229,7 +229,7 @@ class _AccountState extends State<Account> {
                         ),
                         AccountMenu(
                           title: "Refund Policy",
-                          iconTitle: "dollar-sign-solid.svg",
+                          iconTitle: "new-dollar.svg",
                           func: () {
                             GoRouter.of(context).push("/refund-policy");
                           },
@@ -240,7 +240,7 @@ class _AccountState extends State<Account> {
                         ),
                         AccountMenu(
                           title: "About Apps",
-                          iconTitle: "circle-info-solid.svg",
+                          iconTitle: "new-information.svg",
                           func: () {
                             GoRouter.of(context).push("/about-apps");
                           },

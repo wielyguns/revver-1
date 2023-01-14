@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
 
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
   String name;
+  String avatar;
   List product;
   List banner;
   List news;
@@ -33,6 +34,7 @@ class _HomeState extends State<Home> {
     await getHomeHeader().then((val) {
       setState(() {
         name = val['data']['name'];
+        avatar = val['data']['avatar'];
         // print(val);
       });
     });
@@ -104,31 +106,11 @@ class _HomeState extends State<Home> {
                     Padding(
                       padding: const EdgeInsets.all(5),
                       child: SvgPicture.asset(
-                        "assets/svg/cart-shopping-solid.svg",
+                        "assets/svg/new-cart.svg",
                         height: 20,
+                        color: CustomColor.blackColor,
                       ),
                     ),
-                    // Positioned(
-                    //   right: 0,
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(1),
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.red,
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     constraints: const BoxConstraints(
-                    //       minWidth: 15,
-                    //       minHeight: 15,
-                    //     ),
-                    //     child: Center(
-                    //       child: Text(
-                    //         cart.getCartItemCount().toString(),
-                    //         style: CustomFont.badge,
-                    //         textAlign: TextAlign.center,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
                   ],
                 ),
               ),
@@ -146,27 +128,6 @@ class _HomeState extends State<Home> {
                         height: 20,
                       ),
                     ),
-                    // Positioned(
-                    //   right: 0,
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(1),
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.red,
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     constraints: const BoxConstraints(
-                    //       minWidth: 15,
-                    //       minHeight: 15,
-                    //     ),
-                    //     child: Center(
-                    //       child: Text(
-                    //         '99',
-                    //         style: CustomFont.badge,
-                    //         textAlign: TextAlign.center,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
                   ],
                 ),
               ),
@@ -176,12 +137,18 @@ class _HomeState extends State<Home> {
                   GoRouter.of(context).push("/homepage/3");
                 },
                 child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                    "assets/svg/user-solid.svg",
-                    height: 20,
-                  ),
-                ),
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      height: 22,
+                      width: 22,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        image: DecorationImage(
+                            image: NetworkImage(avatar ??=
+                                "https://wallpaperaccess.com/full/733834.png"),
+                            fit: BoxFit.cover),
+                      ),
+                    )),
               ),
               SpacerWidth(w: 35),
             ],

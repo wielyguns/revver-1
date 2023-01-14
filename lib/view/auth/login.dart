@@ -102,7 +102,7 @@ class _LoginState extends State<Login> {
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
-                              icon: Icons.mail,
+                              icon: 'assets/svg/new-email.svg',
                               title: "Email",
                               hint: "Your Email",
                               isValidator: true,
@@ -111,7 +111,7 @@ class _LoginState extends State<Login> {
                             ),
                             SpacerHeight(h: 20),
                             PasswordForm(
-                              icon: Icons.key,
+                              icon: 'assets/svg/new-password.svg',
                               title: "Password",
                               hint: "Your Password",
                               visible: password,

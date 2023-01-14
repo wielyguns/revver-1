@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:revver/globals.dart';
 
 class RegularForm extends StatelessWidget {
@@ -15,7 +16,7 @@ class RegularForm extends StatelessWidget {
       this.keyboardType,
       this.readOnly})
       : super(key: key);
-  IconData icon;
+  String icon;
   final String title;
   final String hint;
   final TextEditingController controller;
@@ -39,8 +40,11 @@ class RegularForm extends StatelessWidget {
           decoration: InputDecoration(
             prefixIcon: (icon == null)
                 ? null
-                : Icon(
+                : SvgPicture.asset(
                     icon,
+                    width: 28,
+                    height: 28,
+                    fit: BoxFit.scaleDown,
                     color: CustomColor.brownColor,
                   ),
             hintText: hint,
@@ -201,7 +205,7 @@ class PasswordForm extends StatefulWidget {
       this.controller,
       this.isValidator})
       : super(key: key);
-  IconData icon;
+  String icon;
   final String title;
   final String hint;
   bool visible;
@@ -228,8 +232,11 @@ class _PasswordFormState extends State<PasswordForm> {
           decoration: InputDecoration(
             prefixIcon: (widget.icon == null)
                 ? null
-                : Icon(
+                : SvgPicture.asset(
                     widget.icon,
+                    width: 28,
+                    height: 28,
+                    fit: BoxFit.scaleDown,
                     color: CustomColor.brownColor,
                   ),
             hintText: widget.hint,

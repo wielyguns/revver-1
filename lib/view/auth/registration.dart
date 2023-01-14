@@ -97,7 +97,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.person,
+                            icon: 'assets/svg/new-user.svg',
                             title: "Full Name",
                             hint: "Your Full Name",
                             isValidator: true,
@@ -105,7 +105,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.person,
+                            icon: 'assets/svg/new-user.svg',
                             title: "Username",
                             hint: "Your Username",
                             isValidator: true,
@@ -113,7 +113,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.email,
+                            icon: 'assets/svg/new-email.svg',
                             title: "Email",
                             hint: "Your Email",
                             isValidator: true,
@@ -121,7 +121,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.phone,
+                            icon: 'assets/svg/new-phone.svg',
                             title: "Phone",
                             hint: "Your Phone",
                             isValidator: true,
@@ -129,7 +129,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.card_travel,
+                            icon: 'assets/svg/new-id-card.svg',
                             title: "Sponsor ID",
                             hint: "Your Sponsor ID",
                             isValidator: false,
@@ -137,7 +137,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           PasswordForm(
-                            icon: Icons.key,
+                            icon: 'assets/svg/new-password.svg',
                             title: "Password",
                             hint: "Your Password",
                             visible: password,
@@ -146,7 +146,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           PasswordForm(
-                            icon: Icons.key,
+                            icon: 'assets/svg/new-password.svg',
                             title: "Confirm Password",
                             hint: "Your Confirm Password",
                             visible: password,

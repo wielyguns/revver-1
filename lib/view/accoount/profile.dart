@@ -219,6 +219,7 @@ class _ProfileState extends State<Profile> {
                 //       ),
                 SpacerHeight(h: 5),
                 RegularForm(
+                  icon: 'assets/svg/new-user-edit.svg',
                   title: "Full Name",
                   hint: "Your Full Name",
                   isValidator: false,
@@ -226,6 +227,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-user.svg',
                   title: "Username",
                   hint: "Your Username",
                   isValidator: false,
@@ -233,13 +235,16 @@ class _ProfileState extends State<Profile> {
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-id-card.svg',
                   title: "Sponsor ID",
                   hint: "Your Sponsor ID",
                   isValidator: false,
                   controller: sponsorIdController,
+                  readOnly: true,
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-phone.svg',
                   title: "Phone",
                   hint: "Your Phone",
                   isValidator: false,
@@ -247,6 +252,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-email.svg',
                   title: "Email",
                   hint: "Your Email",
                   isValidator: false,
@@ -255,6 +261,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-email.svg',
                   title: "Secondary Email",
                   hint: "Your Secondary Email",
                   isValidator: false,

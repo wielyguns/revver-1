@@ -51,7 +51,7 @@ class _ProductState extends State<Product> {
       child: Scaffold(
         appBar: CustomHeader(
           title: "Product",
-          svgName: "cart-shopping-solid.svg",
+          svgName: "new-cart.svg",
           route: "/cart",
           isPop: true,
         ),

@@ -90,6 +90,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             ),
                             SpacerHeight(h: 40),
                             PasswordForm(
+                              icon: 'assets/svg/new-password.svg',
                               title: "New Password",
                               hint: "Your New Password",
                               visible: false,
@@ -98,6 +99,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             ),
                             SpacerHeight(h: 20),
                             PasswordForm(
+                              icon: 'assets/svg/new-password.svg',
                               title: "Confirm New Password",
                               hint: "Your New Password",
                               visible: false,
