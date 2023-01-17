@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -164,6 +165,7 @@ class _CheckoutState extends State<Checkout> {
                         child: Column(
                           children: [
                             RegularForm(
+                              icon: 'assets/svg/new-user-edit.svg',
                               title: "First Name",
                               hint: "Your First Name",
                               controller: firstNameController,
@@ -171,6 +173,7 @@ class _CheckoutState extends State<Checkout> {
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
+                              icon: 'assets/svg/new-user.svg',
                               title: "Last Name",
                               hint: "Your Last Name",
                               controller: lastNameController,
@@ -178,6 +181,7 @@ class _CheckoutState extends State<Checkout> {
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
+                              icon: 'assets/svg/new-location.svg',
                               title: "Address",
                               hint: "Your Address",
                               controller: addressController,
@@ -185,6 +189,7 @@ class _CheckoutState extends State<Checkout> {
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
+                              icon: 'assets/svg/new-email.svg',
                               title: "Contact",
                               hint: "Your Contact",
                               controller: contactController,
@@ -200,6 +205,7 @@ class _CheckoutState extends State<Checkout> {
                                     selectedCity, true),
                             SpacerHeight(h: 20),
                             RegularForm(
+                              icon: 'assets/svg/new-post-office.svg',
                               title: "Zip Code",
                               hint: "Your Zip Code",
                               controller: zipCodeController,
@@ -428,6 +434,7 @@ class _CheckoutState extends State<Checkout> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(
@@ -462,6 +469,13 @@ class _CheckoutState extends State<Checkout> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
@@ -552,6 +566,13 @@ class _CheckoutState extends State<Checkout> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),

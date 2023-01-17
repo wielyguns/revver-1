@@ -58,6 +58,7 @@ class _RecordProgressState extends State<RecordProgress> {
                     children: [
                       SpacerHeight(h: 20),
                       RegularForm(
+                        icon: 'assets/svg/new-counter.svg',
                         title: "Total Package",
                         hint: "eg: 1",
                         controller: qtyController,

@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -128,10 +129,12 @@ class _LoginState extends State<Login> {
                                     customSnackBar(context, true,
                                         "Complete the form first!");
                                   } else {
+                                    _onLoading();
                                     String email = emailController.text;
                                     String password = passwordController.text;
                                     await loginLoad(email, password).then(
                                       (val) async {
+                                        Navigator.pop(context);
                                         final prefs = await SharedPreferences
                                             .getInstance();
                                         String token = val['api_key'];
@@ -257,6 +260,21 @@ class _LoginState extends State<Login> {
         //   ),
         // ),
       ),
+    );
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Container(
+          height: CustomScreen(context).height,
+          width: CustomScreen(context).width,
+          color: Colors.black.withOpacity(0.1),
+          child: Center(child: CupertinoActivityIndicator()),
+        );
+      },
     );
   }
 }

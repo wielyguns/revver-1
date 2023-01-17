@@ -134,6 +134,7 @@ class _SetDreamState extends State<SetDream> {
                                   ),
                                   SpacerHeight(h: 20),
                                   DateTimePickerForm(
+                                    icon: 'assets/svg/new-calendar-month.svg',
                                     title: "When exactly do you want it?",
                                     hint: "t",
                                     date: dateNow,

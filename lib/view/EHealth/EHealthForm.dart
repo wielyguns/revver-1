@@ -41,6 +41,7 @@ class _EHealthFormState extends State<EHealthForm> {
               children: [
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-user-edit.svg',
                   title: "Name",
                   hint: "Enter your name",
                   controller: nameController,
@@ -58,6 +59,7 @@ class _EHealthFormState extends State<EHealthForm> {
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-height.svg',
                   title: "Height",
                   hint: "eg: 160",
                   isValidator: false,
@@ -65,12 +67,14 @@ class _EHealthFormState extends State<EHealthForm> {
                 ),
                 SpacerHeight(h: 20),
                 RegularForm(
+                    icon: 'assets/svg/new-weight.svg',
                     title: "Weight",
                     hint: "eg: 60",
                     isValidator: false,
                     controller: weightController),
                 SpacerHeight(h: 20),
                 RegularForm(
+                  icon: 'assets/svg/new-age.svg',
                   title: "Age",
                   hint: "eg: 20",
                   isValidator: false,

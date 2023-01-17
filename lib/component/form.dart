@@ -309,13 +309,20 @@ class _PasswordFormState extends State<PasswordForm> {
 
 class StringDropdown extends StatefulWidget {
   StringDropdown(
-      {Key key, this.list, this.title, this.hint, this.value, this.callback})
+      {Key key,
+      this.list,
+      this.title,
+      this.hint,
+      this.value,
+      this.callback,
+      this.icon})
       : super(key: key);
   List<String> list;
   String title;
   String hint;
   String value;
   Function(String val) callback;
+  String icon;
 
   @override
   State<StringDropdown> createState() => _StringDropdownState();
@@ -349,6 +356,15 @@ class _StringDropdownState extends State<StringDropdown> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: widget.hint,
+            prefixIcon: (widget.icon == null)
+                ? null
+                : SvgPicture.asset(
+                    widget.icon,
+                    width: 28,
+                    height: 28,
+                    fit: BoxFit.scaleDown,
+                    color: CustomColor.brownColor,
+                  ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(15),
@@ -578,10 +594,12 @@ class SearchForm extends StatelessWidget {
 }
 
 class DateTimePickerForm extends StatefulWidget {
-  DateTimePickerForm({Key key, this.title, this.hint, this.date, this.callback})
+  DateTimePickerForm(
+      {Key key, this.title, this.hint, this.date, this.callback, this.icon})
       : super(key: key);
   final String title;
   final String hint;
+  String icon;
   DateTime date;
   final Function(DateTime) callback;
 
@@ -603,6 +621,15 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: widget.date.toString(),
+            prefixIcon: (widget.icon == null)
+                ? null
+                : SvgPicture.asset(
+                    widget.icon,
+                    width: 28,
+                    height: 28,
+                    fit: BoxFit.scaleDown,
+                    color: CustomColor.brownColor,
+                  ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(15),

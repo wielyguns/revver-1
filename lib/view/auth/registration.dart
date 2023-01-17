@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -185,6 +186,7 @@ class _RegistrationState extends State<Registration> {
                                   customSnackBar(context, true,
                                       "Complete the form first!");
                                 } else {
+                                  _onLoading();
                                   String name = nameController.text;
                                   String username = usernameController.text;
                                   String email = emailController.text;
@@ -204,6 +206,7 @@ class _RegistrationState extends State<Registration> {
                                             confirmPassword)
                                         .then(
                                       (val) async {
+                                        Navigator.pop(context);
                                         if (val['status'] == 200) {
                                           customSnackBar(context, false,
                                               val['message'].toString());
@@ -270,6 +273,21 @@ class _RegistrationState extends State<Registration> {
         //   ),
         // ),
       ),
+    );
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Container(
+          height: CustomScreen(context).height,
+          width: CustomScreen(context).width,
+          color: Colors.black.withOpacity(0.1),
+          child: Center(child: CupertinoActivityIndicator()),
+        );
+      },
     );
   }
 }

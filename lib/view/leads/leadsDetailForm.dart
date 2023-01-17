@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -289,12 +290,14 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       ),
                       SpacerHeight(h: 10),
                       RegularForm(
+                        icon: 'assets/svg/new-user-edit.svg',
                         title: "Full Name",
                         hint: "Your Full Name",
                         controller: nameController,
                       ),
                       SpacerHeight(h: 20),
                       StringDropdown(
+                        icon: 'assets/svg/new-user.svg',
                         title: "Lead Status",
                         hint: "Lead Status",
                         list: leadStatus,
@@ -406,6 +409,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       ),
                       SpacerHeight(h: 20),
                       RegularForm(
+                        icon: 'assets/svg/new-phone.svg',
                         title: "Phone",
                         hint: "Your Phone",
                         controller: phoneController,
@@ -424,6 +428,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                             ),
                       SpacerHeight(h: 20),
                       RegularForm(
+                        icon: 'assets/svg/new-location.svg',
                         title: "Address",
                         hint: "Your Address",
                         controller: addressController,
@@ -550,6 +555,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(
@@ -574,6 +580,13 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
@@ -631,6 +644,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(
@@ -652,6 +666,13 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
@@ -731,6 +752,13 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-id-card.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),

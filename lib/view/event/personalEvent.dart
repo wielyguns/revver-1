@@ -86,6 +86,7 @@ class _PersonalEventState extends State<PersonalEvent> {
                               ),
                               SpacerHeight(h: 20),
                               DateTimePickerForm(
+                                icon: 'assets/svg/new-calendar-month.svg',
                                 title: "Event Date",
                                 hint: "t",
                                 date: dateNow,
@@ -101,7 +102,8 @@ class _PersonalEventState extends State<PersonalEvent> {
                                 isValidator: false,
                               ),
                               SpacerHeight(h: 20),
-                              MultiLineForm(
+                              RegularForm(
+                                icon: 'assets/svg/new-location.svg',
                                 title: "Event Location",
                                 hint: "eg: Coffee Shop Tunjungan Plaza",
                                 controller: eventLocationController,

@@ -106,6 +106,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                       ),
                       SpacerHeight(h: 20),
                       RegularForm(
+                        icon: 'assets/svg/new-user.svg',
                         title: "Related to Lead",
                         hint: "",
                         controller: leadNameController,
@@ -114,6 +115,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                       ),
                       SpacerHeight(h: 20),
                       DateTimePickerForm(
+                        icon: 'assets/svg/new-calendar-month.svg',
                         title: "Event Date",
                         hint: "t",
                         date: dateNow,
@@ -129,7 +131,8 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                         isValidator: false,
                       ),
                       SpacerHeight(h: 20),
-                      MultiLineForm(
+                      RegularForm(
+                        icon: 'assets/svg/new-location.svg',
                         title: "Event Location",
                         hint: "eg: Coffee Shop Tunjungan Plaza",
                         controller: eventLocationController,
