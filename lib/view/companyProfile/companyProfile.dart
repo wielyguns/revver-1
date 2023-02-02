@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 

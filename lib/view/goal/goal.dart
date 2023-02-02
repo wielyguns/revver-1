@@ -24,6 +24,7 @@ class Goal extends StatefulWidget {
 class _GoalState extends State<Goal> {
   bool isLoad = true;
   bool isDream = false;
+  int id;
   String target_title;
   int target_point;
   DateTime target_date;
@@ -49,36 +50,46 @@ class _GoalState extends State<Goal> {
       });
       await getGoal().then((val) {
         if (val['status'] == 200) {
-          setState(() {
-            target_title = val['data']['target_title'];
-            target_point = val['data']['target_point'];
-            target_date =
-                DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
-            target_description = val['data']['target_description'];
-            percentage = val['data']['percentage'];
-            for (var data in val['data']['goal_history'] as List) {
-              goal.add(g.Goal.fromJson(jsonEncode(data)));
-            }
-            duration = target_date.difference(dnow);
-            tdate = duration.inDays.toString();
-            isDream = true;
-            isLoad = false;
-          });
+          if (val['data'] == null) {
+            nullValue();
+          } else {
+            setState(() {
+              id = val['data']['id'];
+              target_title = val['data']['target_title'];
+              target_point = val['data']['target_point'];
+              target_date =
+                  DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
+              target_description = val['data']['target_description'];
+              percentage = val['data']['percentage'];
+              for (var data in val['data']['goal_history'] as List) {
+                goal.add(g.Goal.fromJson(jsonEncode(data)));
+              }
+              duration = target_date.difference(dnow);
+              tdate = duration.inDays.toString();
+              isDream = true;
+              isLoad = false;
+            });
+          }
         }
         if (val['status'] == 500) {
-          setState(() {
-            target_title = null;
-            target_point = null;
-            target_description = null;
-            target_date = dnow;
-            percentage = 0;
-            goal = [];
-            duration = target_date.difference(dnow);
-            tdate = duration.inDays.toString();
-            isLoad = false;
-          });
+          nullValue();
         }
       });
+    });
+  }
+
+  nullValue() {
+    setState(() {
+      id = null;
+      target_title = null;
+      target_point = null;
+      target_description = null;
+      target_date = dnow;
+      percentage = 0;
+      goal = [];
+      duration = target_date.difference(dnow);
+      tdate = duration.inDays.toString();
+      isLoad = false;
     });
   }
 
@@ -387,7 +398,7 @@ class _GoalState extends State<Goal> {
               child: CustomButton(
                 title: "Record Progress",
                 func: () async {
-                  GoRouter.of(context).push("/record-progress");
+                  GoRouter.of(context).push("/record-progress/$id");
                   GoRouter.of(context).addListener(callbackRP);
                 },
               ),

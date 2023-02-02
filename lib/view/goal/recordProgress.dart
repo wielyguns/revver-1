@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +14,8 @@ import 'package:revver/globals.dart';
 import 'package:revver/model/goal.dart';
 
 class RecordProgress extends StatefulWidget {
-  const RecordProgress({Key key}) : super(key: key);
+  RecordProgress({Key key, this.id}) : super(key: key);
+  int id;
 
   @override
   State<RecordProgress> createState() => _RecordProgressState();
@@ -86,8 +89,8 @@ class _RecordProgressState extends State<RecordProgress> {
               if (!formKey.currentState.validate()) {
                 customSnackBar(context, true, "Complete the form first!");
               } else {
-                await postRecordProgress(
-                        selectedReferral.id.toString(), qtyController.text)
+                await postRecordProgress(selectedReferral.id.toString(),
+                        qtyController.text, widget.id.toString())
                     .then((val) {
                   if (val['status'] == 200) {
                     customSnackBar(context, false, val['status'].toString());

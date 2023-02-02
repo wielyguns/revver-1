@@ -134,7 +134,6 @@ class _LoginState extends State<Login> {
                                     String password = passwordController.text;
                                     await loginLoad(email, password).then(
                                       (val) async {
-                                        Navigator.pop(context);
                                         final prefs = await SharedPreferences
                                             .getInstance();
                                         String token = val['api_key'];
@@ -154,9 +153,11 @@ class _LoginState extends State<Login> {
                                           }
                                           await FirebaseMessaging.instance
                                               .subscribeToTopic("event");
+                                          Navigator.pop(context);
                                           GoRouter.of(context)
                                               .go("/homepage/0");
                                         } else {
+                                          Navigator.pop(context);
                                           customSnackBar(
                                               context, true, val['message']);
                                         }

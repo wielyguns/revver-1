@@ -77,6 +77,7 @@ postLeadDetail(
     'address': address,
     'note': note,
     "disease_id[]": disease,
+    "gender": "Male"
   };
 
   int res;
@@ -137,6 +138,7 @@ patchLeadDetail(
     'address': address,
     'note': note,
     "disease_id[]": disease,
+    "gender": "Male"
   };
 
   int res;

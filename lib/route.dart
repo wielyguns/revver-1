@@ -288,8 +288,11 @@ final GoRouter router = GoRouter(
       builder: (context, state) => SetDream(),
     ),
     GoRoute(
-      path: '/record-progress',
-      builder: (context, state) => RecordProgress(),
+      path: '/record-progress/:id',
+      builder: (context, state) {
+        int id = int.parse(state.params['id']);
+        return RecordProgress(id: id);
+      },
     ),
     GoRoute(
       path: '/support',

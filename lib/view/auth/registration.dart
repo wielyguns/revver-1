@@ -206,12 +206,13 @@ class _RegistrationState extends State<Registration> {
                                             confirmPassword)
                                         .then(
                                       (val) async {
-                                        Navigator.pop(context);
                                         if (val['status'] == 200) {
                                           customSnackBar(context, false,
                                               val['message'].toString());
+                                          Navigator.pop(context);
                                           GoRouter.of(context).go("/login");
                                         } else {
+                                          Navigator.pop(context);
                                           customSnackBar(context, true,
                                               val['message'].toString());
                                         }

@@ -23,6 +23,7 @@ class _SetDreamState extends State<SetDream> {
   bool isContain = true;
   final formKey = GlobalKey<FormState>();
   DateTime dateNow = DateTime.now();
+  int id;
   TextEditingController nameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -30,13 +31,22 @@ class _SetDreamState extends State<SetDream> {
   getData() async {
     await getGoal().then((val) {
       if (val['status'] == 200) {
-        setState(() {
-          nameController.text = val['data']['target_title'];
-          priceController.text = val['data']['target_point'].toString();
-          dateNow = DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
-          descriptionController.text = val['data']['target_description'];
-          isLoad = false;
-        });
+        if (val['data'] == null) {
+          setState(() {
+            isLoad = false;
+            isContain = false;
+          });
+        } else {
+          setState(() {
+            id = val['data']['id'];
+            nameController.text = val['data']['target_title'];
+            priceController.text = val['data']['target_point'].toString();
+            dateNow =
+                DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
+            descriptionController.text = val['data']['target_description'];
+            isLoad = false;
+          });
+        }
       } else {
         setState(() {
           isLoad = false;
@@ -160,7 +170,7 @@ class _SetDreamState extends State<SetDream> {
                                             iconTitle: "trash-can-solid.svg",
                                             buttonColor: CustomColor.redColor,
                                             func: () async {
-                                              await deleteGoal().then((val) {
+                                              await deleteGoal(id).then((val) {
                                                 if (val['status'] == 200) {
                                                   customSnackBar(context, false,
                                                       val['status'].toString());

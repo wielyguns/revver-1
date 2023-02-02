@@ -38,10 +38,10 @@ getReferralRate() async {
   return list;
 }
 
-deleteGoal() async {
+deleteGoal(id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/goal/1";
+  String url = "https://admin.revveracademy.com/api/v1/goal/$id";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.delete(parseUrl, headers: {
@@ -92,10 +92,10 @@ patchGoal(
   return res;
 }
 
-postRecordProgress(String rrate_id, qty) async {
+postRecordProgress(String rrate_id, qty, id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/goal/progress/1";
+  String url = "https://admin.revveracademy.com/api/v1/goal/progress/$id";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.post(parseUrl, headers: {
