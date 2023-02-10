@@ -20,12 +20,13 @@ class _ReportState extends State<Report> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomHeader(
-          title: "Report",
-          isPop: true,
-        ),
-        body: WebView(
-          initialUrl: "https://google.com",
-        ));
+      appBar: CustomHeader(
+        title: "Report",
+        isPop: true,
+      ),
+      body: WebView(
+        initialUrl: "https://google.com",
+      ),
+    );
   }
 }

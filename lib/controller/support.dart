@@ -44,7 +44,6 @@ getSupportMember() async {
 }
 
 patchSupport(id) async {
-  print(id);
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   String url = "https://admin.revveracademy.com/api/v1/vital-sign/$id";
@@ -69,7 +68,6 @@ getSupportMemberDetail(id) async {
 }
 
 patchSupportMember(id) async {
-  print(id);
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   String url = "https://admin.revveracademy.com/api/v1/vital-sign/member/$id";

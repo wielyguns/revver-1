@@ -1,5 +1,8 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/globals.dart';
 
@@ -41,28 +44,35 @@ class _CompanyProfileState extends State<CompanyProfile> {
               children: [
                 SpacerHeight(h: 65),
                 Padding(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.symmetric(horizontal: 60),
                   child: Image.asset('assets/img/revver-white.png'),
                 ),
                 SpacerHeight(h: 20),
-                Text(
-                  'PT. Revival Network Internasional (RNI) adalah Perusahaan Multi Level Marketing yang berdiri di Jakarta Pada tanggal 27 Juni 2022. Perusahaan ini didirikan Oleh Anak anak muda yang memiliki Semangat yang tinggi, Punya Visi besar dan Nasionalisme Untuk Bangsa Dan Negara.',
-                  style: CustomFont(CustomColor.whiteColor, 16, FontWeight.w600)
-                      .font,
+                GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: EdgeInsets.all(20),
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  children: [
+                    listWidget('Vision & Mission', visiMisi(),
+                        "assets/svg/compro-arrow.svg"),
+                    listWidget('Our Contact', visiMisi(),
+                        "assets/svg/compro-call.svg"),
+                    listWidget(
+                        'Legality', visiMisi(), "assets/svg/compro-libra.svg"),
+                    goToProduct('Our Product', "assets/svg/compro-cart.svg"),
+                    listWidget('Ethical Code', visiMisi(),
+                        "assets/svg/compro-clipboard.svg"),
+                    listWidget('Distribution Flow', visiMisi(),
+                        "assets/svg/compro-puzzle.svg"),
+                    listWidget('Syariah Business Strategy', visiMisi(),
+                        "assets/svg/compro-chart.svg"),
+                    listWidget('Profile of Management', visiMisi(),
+                        "assets/svg/compro-tree-man.svg"),
+                  ],
                 ),
-                SpacerHeight(h: 40),
-                listWidget('Vision & Mission', visiMisi()),
-                SpacerHeight(h: 20),
-                listWidget('Vision & Mission', visiMisi()),
-                SpacerHeight(h: 20),
-                listWidget('Vision & Mission', visiMisi()),
-                SpacerHeight(h: 20),
-                listWidget('Vision & Mission', visiMisi()),
-                SpacerHeight(h: 20),
-                listWidget('Vision & Mission', visiMisi()),
-                SpacerHeight(h: 20),
-                listWidget('Vision & Mission', visiMisi()),
-                SpacerHeight(h: 20),
               ],
             ),
           ),
@@ -71,7 +81,47 @@ class _CompanyProfileState extends State<CompanyProfile> {
     );
   }
 
-  listWidget(String name, wd) {
+  goToProduct(String name, svg) {
+    return GestureDetector(
+      onTap: (() {
+        GoRouter.of(context).pop();
+        GoRouter.of(context).push('/product');
+      }),
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: CustomColor.whiteColor,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              spreadRadius: 0,
+              blurRadius: 13,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              svg,
+              width: 40,
+            ),
+            SpacerHeight(h: 20),
+            Text(
+              name,
+              style:
+                  CustomFont(CustomColor.blackColor, 12, FontWeight.w600).font,
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  listWidget(String name, wd, svg) {
     return GestureDetector(
       onTap: (() {
         return showGeneralDialog(
@@ -88,10 +138,9 @@ class _CompanyProfileState extends State<CompanyProfile> {
             });
       }),
       child: Container(
-        height: 70,
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: CustomColor.brownColor,
+          color: CustomColor.whiteColor,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -102,17 +151,19 @@ class _CompanyProfileState extends State<CompanyProfile> {
             ),
           ],
         ),
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.circle,
-              color: CustomColor.whiteColor,
+            SvgPicture.asset(
+              svg,
+              width: 40,
             ),
-            SpacerWidth(w: 10),
+            SpacerHeight(h: 20),
             Text(
               name,
               style:
-                  CustomFont(CustomColor.whiteColor, 18, FontWeight.w600).font,
+                  CustomFont(CustomColor.blackColor, 12, FontWeight.w600).font,
+              textAlign: TextAlign.center,
             )
           ],
         ),
@@ -121,65 +172,197 @@ class _CompanyProfileState extends State<CompanyProfile> {
   }
 
   visiMisi() {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      margin: EdgeInsets.only(top: 70, left: 35, right: 35, bottom: 35),
-      child: Scaffold(
-        backgroundColor: CustomColor.backgroundColor,
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SpacerHeight(h: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.grey[100],
-                      ),
-                      child: Icon(
-                        Icons.clear,
-                        color: Colors.grey,
-                      ),
+    return Scaffold(
+      backgroundColor: CustomColor.backgroundColor,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Container(
+                  height: 220,
+                  width: CustomScreen(context).width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/img/revver-bg.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25),
                     ),
                   ),
-                ],
-              ),
-              SpacerHeight(h: 20),
-              // Text('VISI'),
-              // Text(''),
-              // Text(
-              //     'Menjadikan PT. Revival Network Internasional (RNI) sebagai perusahaan dari Indonesia yang mendunia dalam bidang Multi Level Marketing. Dan menjadikan usaha yang bisa mensejahterakan masyarakat dan solusi dalam penghidupan yang lebih baik'),
-              // Text(''),
-              // Text('MISI'),
-              // Text(''),
-              // Text('1. Membangun Management yang profesional. '),
-              // Text(
-              //     '2. Memberikan Produk produk terbaik yang berkualitas, Unik dan Inovatif.'),
-              // Text(
-              //     '3. Memberikan Penghasilan dan Karier jangka panjang bagi Anggota nya. '),
-              // Text(
-              //     '4. Memberikan pelatihan Pengembangan diri, pelatihan Online dan pelatihan marketing untuk anggota nya.'),
-              // Text(
-              //     '5. Memberikan fasilitas fasilitas pendukung, terutama yang berhubungan dengan dunia digital sehubungan dengan berkembangnya arah era kedepan.'),
-              SizedBox(
-                height: 200,
-                width: 200,
-                child: Center(
-                  child: Text("FOYA-FOYA"),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: kToolbarHeight),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 35),
+                          child: Text(
+                            "Vision & Mission",
+                            style: CustomFont(
+                                    CustomColor.whiteColor, 32, FontWeight.bold)
+                                .font,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              )
-            ],
-          ),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Container(
+                    margin: EdgeInsets.only(top: kToolbarHeight, right: 20),
+                    padding: EdgeInsets.all(10),
+                    child: Icon(
+                      Icons.clear,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SpacerHeight(h: 40),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35),
+              child: ExpandableNotifier(
+                child: Column(
+                  children: [
+                    Expandable(
+                      collapsed: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Vision",
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w400)
+                                      .font),
+                              ExpandableButton(
+                                child: RotatedBox(
+                                  quarterTurns: 2,
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    size: 20,
+                                    color: CustomColor.brownColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            thickness: 2,
+                            color: CustomColor.brownColor.withOpacity(0.5),
+                          )
+                        ],
+                      ),
+                      expanded: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Vision",
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w400)
+                                      .font),
+                              ExpandableButton(
+                                child: RotatedBox(
+                                  quarterTurns: 3,
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    size: 20,
+                                    color: CustomColor.brownColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            thickness: 2,
+                            color: CustomColor.brownColor.withOpacity(0.5),
+                          ),
+                          Text("..."),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SpacerHeight(h: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35),
+              child: ExpandableNotifier(
+                child: Column(
+                  children: [
+                    Expandable(
+                      collapsed: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Mission",
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w400)
+                                      .font),
+                              ExpandableButton(
+                                child: RotatedBox(
+                                  quarterTurns: 2,
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    size: 20,
+                                    color: CustomColor.brownColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            thickness: 2,
+                            color: CustomColor.brownColor.withOpacity(0.5),
+                          )
+                        ],
+                      ),
+                      expanded: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Mission",
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w400)
+                                      .font),
+                              ExpandableButton(
+                                child: RotatedBox(
+                                  quarterTurns: 3,
+                                  child: Icon(
+                                    Icons.arrow_back,
+                                    size: 20,
+                                    color: CustomColor.brownColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            thickness: 2,
+                            color: CustomColor.brownColor.withOpacity(0.5),
+                          ),
+                          Text("..."),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
