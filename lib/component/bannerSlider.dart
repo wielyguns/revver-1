@@ -22,12 +22,17 @@ class HomeBanner extends StatelessWidget {
         i = list.length;
       }
     }
+    double w = CustomScreen(context).width;
+    double x = w - 70;
+    double y = x / 5;
+    double v = y * 5;
+    double z = y * 2;
     return Stack(
       children: [
         (list == null)
             ? Container(
-                width: CustomScreen(context).width,
-                height: CustomScreen(context).width / 1.5,
+                width: v,
+                height: z,
                 decoration: BoxDecoration(
                   color: CustomColor.backgroundColor,
                   borderRadius: BorderRadius.circular(15.0),
@@ -58,8 +63,8 @@ class HomeBanner extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: SizedBox(
-                    width: CustomScreen(context).width,
-                    height: CustomScreen(context).width / 1.5,
+                    width: v,
+                    height: z,
                     child: PageView.builder(
                       controller: controller,
                       scrollDirection: Axis.horizontal,
@@ -97,25 +102,31 @@ class HomeBanner extends StatelessWidget {
   }
 
   _sliderWidget(BuildContext context, String gambar) {
+    double w = CustomScreen(context).width;
+    double x = w - 70;
+    double y = x / 5;
+    double v = y * 5;
+    double z = y * 2;
     return Container(
-        width: CustomScreen(context).width - 70,
-        height: CustomScreen(context).width / 1.5,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        child: Stack(
-          children: [
-            SizedBox(
-              width: CustomScreen(context).width - 70,
-              height: CustomScreen(context).width / 1.5,
-              child: ClipRRect(
-                child: CachedNetworkImage(
-                  imageUrl: gambar,
-                  fit: BoxFit.cover,
-                ),
+      width: v,
+      height: z,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      child: Stack(
+        children: [
+          SizedBox(
+            width: v,
+            height: z,
+            child: ClipRRect(
+              child: CachedNetworkImage(
+                imageUrl: gambar,
+                fit: BoxFit.cover,
               ),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }
