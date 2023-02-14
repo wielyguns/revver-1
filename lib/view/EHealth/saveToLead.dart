@@ -364,7 +364,7 @@ class _SaveToLeadState extends State<SaveToLead> {
               ).then((val) {
                 if (val == 200) {
                   customSnackBar(context, false, val.toString());
-                  GoRouter.of(context).push('/homepage/0');
+                  GoRouter.of(context).go('/homepage/0');
                 } else {
                   customSnackBar(context, true, val.toString());
                 }
