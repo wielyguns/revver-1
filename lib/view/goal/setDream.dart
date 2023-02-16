@@ -204,6 +204,7 @@ class _SetDreamState extends State<SetDream> {
                                               priceController.text,
                                               date,
                                               descriptionController.text,
+                                              id,
                                             ).then((val) {
                                               if (val['status'] == 200) {
                                                 customSnackBar(context, false,
