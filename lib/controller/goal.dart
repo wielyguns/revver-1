@@ -107,3 +107,17 @@ postRecordProgress(String rrate_id, qty, id) async {
 
   return res;
 }
+
+deleteRecordProgress(id) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/goal/history/$id";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.delete(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  });
+  var res = jsonDecode(response.body);
+
+  return res;
+}

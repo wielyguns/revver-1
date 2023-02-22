@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -8,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/button.dart';
+import 'package:revver/component/form.dart';
+import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/goal.dart';
 import 'package:revver/globals.dart';
@@ -32,6 +35,7 @@ class _GoalState extends State<Goal> {
   int percentage = 0;
   List<g.Goal> goal = [];
   List<g.ReferralRate> rrate = [];
+  String defDM = 'Day';
 
   DateTime dnow = DateFormat('yyyy-MM-dd').parse(DateTime.now().toString());
   Duration duration;
@@ -199,6 +203,26 @@ class _GoalState extends State<Goal> {
                             .font,
                   ),
                   SpacerHeight(h: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: CustomScreen(context).width / 3,
+                        child: StringDropdown(
+                          title: '',
+                          list: ['Day', 'Month'],
+                          value: defDM,
+                          callback: (val) {
+                            setState(() {
+                              defDM = val;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  SpacerHeight(h: 20),
+
                   (!isDream)
                       ? SizedBox()
                       : ListView.builder(
@@ -212,7 +236,16 @@ class _GoalState extends State<Goal> {
                             g.ReferralRate rate = rrate[index];
                             double x = rate.price * (rate.rate / 100);
                             double y = b / x;
-                            double z = y / double.parse(tdate);
+                            double z;
+                            if (defDM == 'Month') {
+                              if (double.parse(tdate) < 30) {
+                                z = y / double.parse(tdate);
+                              } else {
+                                z = (y / double.parse(tdate)) * 30;
+                              }
+                            } else {
+                              z = y / double.parse(tdate);
+                            }
                             if (z < 1) {
                               z = 1;
                             }
@@ -220,6 +253,12 @@ class _GoalState extends State<Goal> {
                             String nameRate = rate.name;
 
                             List<Color> cl = [
+                              CustomColor.greyColor,
+                              CustomColor.goldColor,
+                              CustomColor.oldGreyColor,
+                              CustomColor.brownColor,
+                              CustomColor.blueColor,
+                              CustomColor.blackColor,
                               CustomColor.greyColor,
                               CustomColor.goldColor,
                               CustomColor.oldGreyColor,
@@ -268,7 +307,9 @@ class _GoalState extends State<Goal> {
                                         Row(
                                           children: [
                                             Text(
-                                              "per days",
+                                              (defDM == 'Day')
+                                                  ? "per day"
+                                                  : "per month",
                                               style: CustomFont(
                                                       CustomColor.oldGreyColor,
                                                       14,
@@ -333,50 +374,77 @@ class _GoalState extends State<Goal> {
                             String rateName = y[0].name;
                             return Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.circle,
-                                          color: CustomColor.brownColor,
-                                          size: 16,
-                                        ),
-                                        SpacerWidth(w: 10),
-                                        Text(
-                                          gl.qty.toString() + " $rateName",
-                                          style: CustomFont(
-                                                  CustomColor.blackColor,
-                                                  14,
-                                                  FontWeight.w600)
-                                              .font,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.calendar_month,
-                                          color: CustomColor.oldGreyColor,
-                                          size: 12,
-                                        ),
-                                        SpacerWidth(w: 5),
-                                        Text(
-                                          gl.updated_at,
-                                          style: CustomFont(
-                                                  CustomColor.oldGreyColor,
-                                                  9,
-                                                  FontWeight.w300)
-                                              .font,
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                                Slidable(
+                                  endActionPane: ActionPane(
+                                    motion: ScrollMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        onPressed: (val) async {
+                                          await deleteRecordProgress(gl.id)
+                                              .then((val) {
+                                            if (val['status'] == 200) {
+                                              customSnackBar(context, false,
+                                                  val['status'].toString());
+                                              getData();
+                                            } else {
+                                              customSnackBar(context, true,
+                                                  val['status'].toString());
+                                            }
+                                          });
+                                        },
+                                        backgroundColor:
+                                            CustomColor.backgroundColor,
+                                        foregroundColor: CustomColor.brownColor,
+                                        label: "Delete Record",
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.circle,
+                                            color: CustomColor.brownColor,
+                                            size: 16,
+                                          ),
+                                          SpacerWidth(w: 10),
+                                          Text(
+                                            gl.qty.toString() + " $rateName",
+                                            style: CustomFont(
+                                                    CustomColor.blackColor,
+                                                    14,
+                                                    FontWeight.w600)
+                                                .font,
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.calendar_month,
+                                            color: CustomColor.oldGreyColor,
+                                            size: 12,
+                                          ),
+                                          SpacerWidth(w: 5),
+                                          Text(
+                                            gl.updated_at,
+                                            style: CustomFont(
+                                                    CustomColor.oldGreyColor,
+                                                    9,
+                                                    FontWeight.w300)
+                                                .font,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Divider(
                                   height: 30,

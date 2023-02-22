@@ -685,7 +685,7 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
           top: false,
           child: CupertinoDatePicker(
             initialDateTime: widget.date,
-            mode: CupertinoDatePickerMode.dateAndTime,
+            mode: CupertinoDatePickerMode.date,
             use24hFormat: true,
             onDateTimeChanged: (DateTime newDate) {
               setState(() {
