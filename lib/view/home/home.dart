@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -75,11 +77,16 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
     getDataHeader();
     getNewsList();
     getProductList();
     getBanner();
+    super.initState();
+  }
+
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {});
   }
 
   @override
@@ -158,6 +165,8 @@ class _HomeState extends State<Home> {
         elevation: 0,
       ),
       body: SafeArea(
+          child: RefreshIndicator(
+        onRefresh: _pullRefresh,
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
@@ -192,7 +201,43 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-      ),
+      )
+
+          // SingleChildScrollView(
+          //   physics: BouncingScrollPhysics(),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       SpacerHeight(h: 20),
+          //       Padding(
+          //         padding: EdgeInsets.symmetric(horizontal: 35),
+          //         child: WelcomeHeader(name: name ??= "..."),
+          //       ),
+          //       SpacerHeight(h: 20),
+          //       Padding(
+          //         padding: EdgeInsets.symmetric(horizontal: 35),
+          //         child: HomeBanner(list: banner),
+          //       ),
+          //       SpacerHeight(h: 40),
+          //       Padding(
+          //         padding: EdgeInsets.symmetric(horizontal: 35),
+          //         child: HomeMenu(),
+          //       ),
+          //       SpacerHeight(h: 40),
+          //       ProductSlider(
+          //         product: product,
+          //         callback: (x) {
+          //           setState(() {});
+          //         },
+          //         callbackPop: () => callback(),
+          //       ),
+          //       SpacerHeight(h: 40),
+          //       NewsSlider(news: news),
+          //       SpacerHeight(h: 20),
+          //     ],
+          //   ),
+          // ),
+          ),
     );
   }
 }

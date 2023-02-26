@@ -4,10 +4,12 @@ class BannerModel {
   int id;
   String caption;
   String image;
+  int order;
   BannerModel({
     this.id,
     this.caption,
     this.image,
+    this.order,
   });
 
   Map<String, dynamic> toMap() {
@@ -15,6 +17,7 @@ class BannerModel {
       'id': id,
       'caption': caption,
       'image': image,
+      'order': order,
     };
   }
 
@@ -23,6 +26,7 @@ class BannerModel {
       id: map['id'] as int,
       caption: map['caption'] as String,
       image: map['image'] as String,
+      order: map['order'] as int,
     );
   }
 

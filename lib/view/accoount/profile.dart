@@ -99,7 +99,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       child: Center(
                         child: Text(
-                          "Profile",
+                          "Edit Profile",
                           style: CustomFont(
                                   CustomColor.whiteColor, 32, FontWeight.w600)
                               .font,

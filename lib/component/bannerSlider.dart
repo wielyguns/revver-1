@@ -10,7 +10,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class HomeBanner extends StatelessWidget {
   HomeBanner({Key key, this.list}) : super(key: key);
   List list;
-  int i = 3;
+  int i = 1;
   final controller = PageController(viewportFraction: 1, keepPage: true);
 
   @override
@@ -21,6 +21,7 @@ class HomeBanner extends StatelessWidget {
       } else {
         i = list.length;
       }
+      list.sort((min, max) => min.order.compareTo(max.order));
     }
     double w = CustomScreen(context).width;
     double x = w - 70;

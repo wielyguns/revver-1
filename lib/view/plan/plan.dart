@@ -39,7 +39,9 @@ class _PlanState extends State<Plan> {
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
           : SfPdfViewer.asset(
-              "assets/pdf/sample.pdf",
+              "assets/pdf/plan.pdf",
+              scrollDirection: PdfScrollDirection.horizontal,
+              pageLayoutMode: PdfPageLayoutMode.single,
             ),
     );
   }
