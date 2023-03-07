@@ -62,6 +62,9 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
   List<Disease> disease = [];
   Disease selectedDisease;
 
+  List<String> gender = ['Male', 'Female'];
+  String selectedGender;
+
   XFile image;
   final ImagePicker picker = ImagePicker();
   String avatar;
@@ -101,6 +104,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         ambition = val['data']['status_ambition'];
         supel = val['data']['status_supel'];
         teachable = val['data']['status_teachable'];
+        selectedGender = val['data']['gender'];
 
         avatar = val['data']['image'];
       });
@@ -381,26 +385,38 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // SizedBox(
+                          //   width: CustomScreen(context).width / 4,
+                          //   child: RegularForm(
+                          //     title: "Height",
+                          //     hint: "eg: 160",
+                          //     controller: heightController,
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   width: CustomScreen(context).width / 4,
+                          //   child: RegularForm(
+                          //     title: "Weight",
+                          //     hint: "eg: 60",
+                          //     controller: weightController,
+                          //   ),
+                          // ),
                           SizedBox(
-                            width: CustomScreen(context).width / 4,
-                            child: RegularForm(
-                              title: "Height",
-                              hint: "eg: 160",
-                              controller: heightController,
+                            width: CustomScreen(context).width / 2,
+                            child: StringDropdown(
+                              title: "Jenis Kelamin",
+                              hint: "Male / Female",
+                              list: gender,
+                              value: selectedGender,
+                              callback: (val) {
+                                selectedGender = val;
+                              },
                             ),
                           ),
                           SizedBox(
                             width: CustomScreen(context).width / 4,
                             child: RegularForm(
-                              title: "Weight",
-                              hint: "eg: 60",
-                              controller: weightController,
-                            ),
-                          ),
-                          SizedBox(
-                            width: CustomScreen(context).width / 4,
-                            child: RegularForm(
-                              title: "Age",
+                              title: "Umur",
                               hint: "eg: 20",
                               controller: ageController,
                             ),
@@ -410,18 +426,18 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       SpacerHeight(h: 20),
                       RegularForm(
                         icon: 'assets/svg/new-phone.svg',
-                        title: "Phone",
+                        title: "Nomor Telepon",
                         hint: "Your Phone",
                         controller: phoneController,
                       ),
                       SpacerHeight(h: 20),
-                      provinceDropdown("Province", "Your Province", province,
+                      provinceDropdown("Provinsi", "Your Province", province,
                           selectedProvince),
                       (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
                       (city.isEmpty)
                           ? SizedBox()
                           : cityDropdown(
-                              "City",
+                              "Kota",
                               "Your City",
                               city,
                               selectedCity,
@@ -429,7 +445,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       SpacerHeight(h: 20),
                       RegularForm(
                         icon: 'assets/svg/new-location.svg',
-                        title: "Address",
+                        title: "Alamat",
                         hint: "Your Address",
                         controller: addressController,
                       ),
@@ -497,6 +513,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                   selectedDisease.id.toString(),
                   imgpath,
                   imgname,
+                  selectedGender,
                 ).then((val) {
                   if (val == 200) {
                     customSnackBar(context, false, val.toString());
@@ -525,6 +542,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                   selectedDisease.id.toString(),
                   imgpath,
                   imgname,
+                  selectedGender,
                 ).then((val) {
                   if (val == 200) {
                     customSnackBar(context, false, val.toString());

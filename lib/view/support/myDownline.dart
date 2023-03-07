@@ -49,7 +49,7 @@ class _MyDownlineState extends State<MyDownline> {
                       ? Padding(
                           padding: EdgeInsets.only(top: 20),
                           child: Text(
-                            "Empty Member!",
+                            "Member Kosong!",
                             style: CustomFont(
                                     CustomColor.blackColor, 16, FontWeight.w600)
                                 .font,

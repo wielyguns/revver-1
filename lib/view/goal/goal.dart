@@ -27,19 +27,43 @@ class Goal extends StatefulWidget {
 class _GoalState extends State<Goal> {
   bool isLoad = true;
   bool isDream = false;
+
   int id;
+  int user_id;
   String target_title;
   int target_point;
   DateTime target_date;
   String target_description;
-  int percentage = 0;
+  String created_at;
+  String updated_at;
+  DateTime target_date_sponsor;
+  String kanan;
+  String kiri;
+  String sponsor_count;
+  int pair;
+  int price_per_pair;
+  int price_per_sponsor;
+  int sponsor;
+
+  double totalPair;
+
+  double kiriLeft;
+  double kananLeft;
+  double sponsorLeft;
+
+  double kiriPerDay;
+  double kananPerDay;
+  double sponsorPerDay;
+
+  int percentage;
   List<g.Goal> goal = [];
-  List<g.ReferralRate> rrate = [];
   String defDM = 'Day';
 
   DateTime dnow = DateFormat('yyyy-MM-dd').parse(DateTime.now().toString());
   Duration duration;
   String tdate = "0";
+  Duration durationS;
+  String tdateS = "0";
 
   getData() async {
     if (!mounted) return;
@@ -48,37 +72,63 @@ class _GoalState extends State<Goal> {
       isLoad = true;
       goal.clear();
     });
-    await getReferralRate().then((val) async {
-      setState(() {
-        rrate = val;
-      });
-      await getGoal().then((val) {
-        if (val['status'] == 200) {
-          if (val['data'] == null) {
-            nullValue();
-          } else {
-            setState(() {
-              id = val['data']['id'];
-              target_title = val['data']['target_title'];
-              target_point = val['data']['target_point'];
-              target_date =
-                  DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
-              target_description = val['data']['target_description'];
-              percentage = val['data']['percentage'];
-              for (var data in val['data']['goal_history'] as List) {
-                goal.add(g.Goal.fromJson(jsonEncode(data)));
-              }
-              duration = target_date.difference(dnow);
-              tdate = duration.inDays.toString();
-              isDream = true;
-              isLoad = false;
-            });
-          }
-        }
-        if (val['status'] == 500) {
+    await getGoal().then((val) {
+      if (val['status'] == 200) {
+        if (val['data'] == null) {
           nullValue();
+        } else {
+          setState(() {
+            id = val['data']['id'];
+            target_title = val['data']['target_title'];
+            target_point = val['data']['target_point'];
+            target_date =
+                DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
+            target_description = val['data']['target_description'];
+            created_at = val['data']['created_at'];
+            updated_at = val['data']['updated_at'];
+            target_date_sponsor = DateFormat('yyyy-MM-dd')
+                .parse(val['data']['target_date_sponsor']);
+            kanan = val['data']['kanan'];
+            kiri = val['data']['kiri'];
+            sponsor_count = val['data']['sponsor_count'];
+            pair = val['data']['pair'];
+            price_per_pair = val['data']['price_per_pair'];
+            price_per_sponsor = val['data']['price_per_sponsor'];
+            sponsor = val['data']['sponsor'];
+
+            duration = target_date.difference(dnow);
+            tdate = duration.inDays.toString();
+
+            durationS = target_date_sponsor.difference(dnow);
+            tdateS = durationS.inDays.toString();
+
+            for (var data in val['data']['goal_history'] as List) {
+              goal.add(g.Goal.fromJson(jsonEncode(data)));
+            }
+            calculate();
+          });
         }
-      });
+      }
+      if (val['status'] == 500) {
+        nullValue();
+      }
+    });
+  }
+
+  calculate() async {
+    setState(() {
+      totalPair = target_point / price_per_pair;
+      sponsorLeft = (totalPair * 2) * 0.005;
+      kiriLeft = totalPair - int.parse(kiri);
+      kananLeft = totalPair - int.parse(kanan);
+      kiriPerDay = kiriLeft / int.parse(tdate);
+      kananPerDay = kananLeft / int.parse(tdate);
+      sponsorPerDay = sponsorLeft / int.parse(tdateS);
+      kiriPerDay = double.parse(kiriPerDay.toStringAsFixed(0));
+      kananPerDay = double.parse(kananPerDay.toStringAsFixed(0));
+      sponsorPerDay = double.parse(sponsorPerDay.toStringAsFixed(0));
+      isDream = true;
+      isLoad = false;
     });
   }
 
@@ -151,209 +201,134 @@ class _GoalState extends State<Goal> {
               padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: [
-                  SpacerHeight(h: 80),
-                  Text(
-                    "Goals",
-                    style:
-                        CustomFont(CustomColor.brownColor, 20, FontWeight.w600)
-                            .font,
-                  ),
-                  SpacerHeight(h: 20),
+                  // SpacerHeight(h: 80),
+                  // Text(
+                  //   "Goals",
+                  //   style:
+                  //       CustomFont(CustomColor.brownColor, 20, FontWeight.w600)
+                  //           .font,
+                  // ),
+                  SpacerHeight(
+                      h: MediaQuery.of(context).padding.top +
+                          kToolbarHeight +
+                          20),
                   Container(
+                    height: MediaQuery.of(context).size.height -
+                        (MediaQuery.of(context).padding.top + kToolbarHeight) -
+                        kBottomNavigationBarHeight -
+                        90,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: CustomColor.brownColor,
+                      // color: CustomColor.brownColor,
+                      image: DecorationImage(
+                        image: AssetImage("assets/img/revver-bg-1.png"),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Text(
+                          "Goals",
+                          style: CustomFont(
+                                  CustomColor.whiteColor, 26, FontWeight.w600)
+                              .font,
+                        ),
                         radialGauge(),
                         Text(
                           target_title ??= "Your Dream",
                           style: CustomFont(
-                                  CustomColor.whiteColor, 16, FontWeight.w700)
+                                  CustomColor.whiteColor, 22, FontWeight.w700)
                               .font,
                         ),
                         Text(
                           "Deadline in $tdate Days",
                           style: CustomFont(
-                                  CustomColor.blackColor, 14, FontWeight.w400)
+                                  CustomColor.brownColor, 16, FontWeight.w400)
                               .font,
                         ),
-                        SpacerHeight(h: 20),
                       ],
                     ),
                   ),
-
                   // Divider(
                   //   thickness: 2,
                   //   color: CustomColor.brownColor,
                   //   height: 40,
                   // ),
+                  SpacerHeight(h: 55),
                   // Text(
                   //   "Target jaringan: 2800 kanan | 2800 kiri",
                   //   style:
                   //       CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
                   //           .font,
                   // ),
-                  SpacerHeight(h: 20),
-                  Text(
-                    "Perhitungan dibawah hanya diambil dari bonus referral (Sponsor):",
-                    style:
-                        CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
-                            .font,
-                  ),
-                  SpacerHeight(h: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: CustomScreen(context).width / 3,
-                        child: StringDropdown(
-                          title: '',
-                          list: ['Day', 'Month'],
-                          value: defDM,
-                          callback: (val) {
-                            setState(() {
-                              defDM = val;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  SpacerHeight(h: 20),
+                  // SpacerHeight(h: 20),
+                  // Text(
+                  //   "Perhitungan dibawah hanya diambil dari bonus referral (Sponsor):",
+                  //   style:
+                  //       CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
+                  //           .font,
+                  // ),
+                  Text("Current Kiri: $kiri"),
+                  Text("Current Kanan: $kanan"),
+                  Text("Current Sponsor: $sponsor_count"),
+                  Text(""),
+                  Text("Total Pair: $totalPair"),
+                  Text("Sisa Kiri: $kiriLeft"),
+                  Text("Sisa Kanan: $kananLeft"),
+                  Text("Sisa Sponsor: $sponsorLeft"),
+                  Text(""),
+                  Text("Sisa Target Date Sponsor: $tdateS"),
+                  Text(""),
+                  Text("Min Pair per Day (Kiri): $kiriPerDay"),
+                  Text("Min Pair per Day (Kanan): $kananPerDay"),
+                  Text("Min Sponsor per Day : $sponsorPerDay"),
 
-                  (!isDream)
-                      ? SizedBox()
-                      : ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: rrate.length,
-                          itemBuilder: ((context, index) {
-                            double a = target_point * (percentage / 100);
-                            double b = target_point - a;
-                            g.ReferralRate rate = rrate[index];
-                            double x = rate.price * (rate.rate / 100);
-                            double y = b / x;
-                            double z;
-                            if (defDM == 'Month') {
-                              if (double.parse(tdate) < 30) {
-                                z = y / double.parse(tdate);
-                              } else {
-                                z = (y / double.parse(tdate)) * 30;
-                              }
-                            } else {
-                              z = y / double.parse(tdate);
-                            }
-                            if (z < 1) {
-                              z = 1;
-                            }
-                            String u = z.toStringAsFixed(0);
-                            String nameRate = rate.name;
-
-                            List<Color> cl = [
-                              CustomColor.greyColor,
-                              CustomColor.goldColor,
-                              CustomColor.oldGreyColor,
-                              CustomColor.brownColor,
-                              CustomColor.blueColor,
-                              CustomColor.blackColor,
-                              CustomColor.greyColor,
-                              CustomColor.goldColor,
-                              CustomColor.oldGreyColor,
-                              CustomColor.brownColor,
-                              CustomColor.blueColor,
-                              CustomColor.blackColor,
-                            ];
-                            return Stack(
-                              alignment: AlignmentDirectional.centerEnd,
-                              children: [
-                                Divider(
-                                  endIndent: 5,
-                                  thickness: 5,
-                                  color: cl[index],
-                                ),
-                                Container(
-                                  height: 25,
-                                  width: 25,
-                                  decoration: BoxDecoration(
-                                      color: cl[index],
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Center(
-                                    child: Text(
-                                      "or",
-                                      style: CustomFont(CustomColor.whiteColor,
-                                              12, FontWeight.w500)
-                                          .font,
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "$u $nameRate",
-                                          // "",
-                                          style: CustomFont(
-                                                  CustomColor.blackColor,
-                                                  14,
-                                                  FontWeight.w600)
-                                              .font,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              (defDM == 'Day')
-                                                  ? "per day"
-                                                  : "per month",
-                                              style: CustomFont(
-                                                      CustomColor.oldGreyColor,
-                                                      14,
-                                                      FontWeight.w400)
-                                                  .font,
-                                            ),
-                                            SpacerWidth(w: 30),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    SpacerHeight(h: 35),
-                                  ],
-                                ),
-                              ],
-                            );
-                          }),
-                        ),
-                  SpacerHeight(h: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Progress History",
-                        style: CustomFont(
-                                CustomColor.brownColor, 20, FontWeight.w700)
-                            .font,
-                      ),
-                      // TextButton(
-                      //     onPressed: () {},
-                      //     style: TextButton.styleFrom(
-                      //         padding: EdgeInsets.zero,
-                      //         minimumSize: Size(50, 30),
-                      //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      //         alignment: Alignment.centerLeft),
-                      //     child: Text(
-                      //       "Reset Progress",
-                      //       style: CustomFont(
-                      //               CustomColor.brownColor, 12, FontWeight.w400)
-                      //           .font,
-                      //     )),
-                    ],
-                  ),
+                  // SpacerHeight(h: 20),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     SizedBox(
+                  //       width: CustomScreen(context).width / 3,
+                  //       child: StringDropdown(
+                  //         title: '',
+                  //         list: ['Day', 'Month'],
+                  //         value: defDM,
+                  //         callback: (val) {
+                  //           setState(() {
+                  //             defDM = val;
+                  //           });
+                  //         },
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // SpacerHeight(h: 20),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     Text(
+                  //       "Progress History",
+                  //       style: CustomFont(
+                  //               CustomColor.brownColor, 20, FontWeight.w700)
+                  //           .font,
+                  //     ),
+                  //     // TextButton(
+                  //     //     onPressed: () {},
+                  //     //     style: TextButton.styleFrom(
+                  //     //         padding: EdgeInsets.zero,
+                  //     //         minimumSize: Size(50, 30),
+                  //     //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  //     //         alignment: Alignment.centerLeft),
+                  //     //     child: Text(
+                  //     //       "Reset Progress",
+                  //     //       style: CustomFont(
+                  //     //               CustomColor.brownColor, 12, FontWeight.w400)
+                  //     //           .font,
+                  //     //     )),
+                  //   ],
+                  // ),
                   SpacerHeight(h: 20),
                   (goal.isEmpty)
                       ? Padding(
@@ -367,11 +342,9 @@ class _GoalState extends State<Goal> {
                           itemCount: goal.length,
                           itemBuilder: ((context, index) {
                             g.Goal gl = goal[index];
-                            List<g.ReferralRate> x = rrate
-                                .where((e) => e.id == gl.referral_rate_id)
-                                .toList();
-                            List<g.ReferralRate> y = x;
-                            String rateName = y[0].name;
+                            String kiri = gl.kiri.toString();
+                            String kanan = gl.kanan.toString();
+                            String sponsor = gl.sponsor.toString();
                             return Column(
                               children: [
                                 Slidable(
@@ -416,7 +389,7 @@ class _GoalState extends State<Goal> {
                                           ),
                                           SpacerWidth(w: 10),
                                           Text(
-                                            gl.qty.toString() + " $rateName",
+                                            "Ki: $kiri | Ka: $kanan | Sponsor: $sponsor",
                                             style: CustomFont(
                                                     CustomColor.blackColor,
                                                     14,
@@ -434,7 +407,7 @@ class _GoalState extends State<Goal> {
                                           ),
                                           SpacerWidth(w: 5),
                                           Text(
-                                            gl.updated_at,
+                                            gl.converted_date,
                                             style: CustomFont(
                                                     CustomColor.oldGreyColor,
                                                     9,
@@ -484,23 +457,30 @@ class _GoalState extends State<Goal> {
           endAngle: 270,
           radiusFactor: 0.7,
           axisLineStyle: AxisLineStyle(
-              thicknessUnit: GaugeSizeUnit.factor, thickness: 0.15),
+            thicknessUnit: GaugeSizeUnit.factor,
+            thickness: 0.15,
+            color: CustomColor.whiteColor.withOpacity(0.2),
+          ),
           annotations: <GaugeAnnotation>[
             GaugeAnnotation(
-              positionFactor: 0.1,
-              widget: Text(
-                percentage.toString() + "%",
-                style: CustomFont(CustomColor.whiteColor, 32, FontWeight.w600)
-                    .font,
-              ),
-            ),
+                positionFactor: 0.1,
+                widget: CircleAvatar(
+                  radius: MediaQuery.of(context).size.width - 300,
+                  backgroundImage: AssetImage("assets/img/revver-bg.jpg"),
+                  child: Text(
+                    percentage.toString() + "%",
+                    style:
+                        CustomFont(CustomColor.whiteColor, 32, FontWeight.w600)
+                            .font,
+                  ),
+                )),
           ],
           pointers: <GaugePointer>[
             RangePointer(
-                value: percentage.toDouble(),
+                value: 10,
                 cornerStyle: CornerStyle.bothCurve,
                 enableAnimation: true,
-                animationDuration: 3000,
+                animationDuration: 500,
                 sizeUnit: GaugeSizeUnit.factor,
                 color: CustomColor.whiteColor,
                 width: 0.15),

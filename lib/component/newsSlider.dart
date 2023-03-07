@@ -34,7 +34,7 @@ class NewsSlider extends StatelessWidget {
           ),
           GestureDetector(
             child: Text(
-              "View All",
+              "Lihat Semua",
               style: CustomFont(CustomColor.blackColor, 14, null).font,
             ),
             onTap: () {
@@ -162,7 +162,7 @@ class NewsSlider extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "Read More",
+                  "Lihat Lebih",
                   style: CustomFont(CustomColor.whiteColor, 12, FontWeight.w600)
                       .font,
                 ),

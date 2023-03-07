@@ -182,7 +182,7 @@ class _NoteDetailState extends State<NoteDetail> {
                               // add
                               if (type == "checkbox" && note_list.isEmpty) {
                                 customSnackBar(
-                                    context, true, "Add Item First!");
+                                    context, true, "Tambah Item Dahulu!");
                               } else {
                                 int len = note_list.length;
                                 await postNote(
@@ -280,7 +280,7 @@ class _NoteDetailState extends State<NoteDetail> {
             controller: titleController,
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: 'Note Title',
+              hintText: 'Judul',
               hintStyle:
                   CustomFont(CustomColor.oldGreyColor, 18, FontWeight.bold)
                       .font,
@@ -393,7 +393,7 @@ class _NoteDetailState extends State<NoteDetail> {
                               onTap: () {
                                 setState(() {
                                   note_list.add(NoteList(
-                                    text: "New Item",
+                                    text: "Item Baru",
                                     is_check: 0,
                                   ));
                                 });
@@ -402,7 +402,7 @@ class _NoteDetailState extends State<NoteDetail> {
                                 children: [
                                   SpacerWidth(w: 33),
                                   Text(
-                                    "+ Add Item",
+                                    "+ Tambah Item",
                                     style: CustomFont(
                                             CustomColor.oldGreyColor, 14, null)
                                         .font,
@@ -420,7 +420,7 @@ class _NoteDetailState extends State<NoteDetail> {
                           onTap: () {
                             setState(() {
                               note_list.add(NoteList(
-                                text: "New Item",
+                                text: "Item Baru",
                                 is_check: 0,
                               ));
                             });
@@ -429,7 +429,7 @@ class _NoteDetailState extends State<NoteDetail> {
                             children: [
                               SpacerWidth(w: 33),
                               Text(
-                                "+ Add Item",
+                                "+ Tambah Item",
                                 style: CustomFont(
                                         CustomColor.oldGreyColor, 14, null)
                                     .font,

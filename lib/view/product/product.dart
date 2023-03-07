@@ -51,8 +51,8 @@ class _ProductState extends State<Product> {
       child: Scaffold(
         appBar: CustomHeader(
           title: "Product",
-          svgName: "new-cart.svg",
-          route: "/cart",
+          // svgName: "new-cart.svg",
+          // route: "/cart",
           isPop: true,
         ),
         body: SingleChildScrollView(
@@ -75,7 +75,7 @@ class _ProductState extends State<Product> {
                       crossAxisCount: 2,
                       mainAxisSpacing: 20,
                       crossAxisSpacing: 20,
-                      childAspectRatio: (itemWidth / 300),
+                      childAspectRatio: (itemWidth / 250),
                       children: List.generate(product.length, (index) {
                         p.Product prod = product[index];
                         return _sliderBox(
@@ -203,33 +203,33 @@ class _ProductState extends State<Product> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-            child: InkWell(
-              onTap: () {
-                cart.addToCart(
-                    productId: id,
-                    unitPrice: price,
-                    productName: name,
-                    productDetailsObject: image);
-              },
-              child: Container(
-                height: 30,
-                decoration: BoxDecoration(
-                  color: CustomColor.brownColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Center(
-                  child: Text(
-                    "Add to Cart",
-                    style:
-                        CustomFont(CustomColor.whiteColor, 10, FontWeight.w600)
-                            .font,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+          //   child: InkWell(
+          //     onTap: () {
+          //       cart.addToCart(
+          //           productId: id,
+          //           unitPrice: price,
+          //           productName: name,
+          //           productDetailsObject: image);
+          //     },
+          //     child: Container(
+          //       height: 30,
+          //       decoration: BoxDecoration(
+          //         color: CustomColor.brownColor,
+          //         borderRadius: BorderRadius.circular(10),
+          //       ),
+          //       child: Center(
+          //         child: Text(
+          //           "Add to Cart",
+          //           style:
+          //               CustomFont(CustomColor.whiteColor, 10, FontWeight.w600)
+          //                   .font,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

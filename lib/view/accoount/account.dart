@@ -133,7 +133,7 @@ class _AccountState extends State<Account> {
                       children: [
                         Expanded(
                           child: ChangePasswordButton(
-                            title: "Profile",
+                            title: "Profil",
                             func: () {
                               GoRouter.of(context).push("/profile");
                             },
@@ -142,7 +142,7 @@ class _AccountState extends State<Account> {
                         SpacerWidth(w: 5),
                         Expanded(
                           child: ChangePasswordButton(
-                            title: "Change Password",
+                            title: "Ubah Sandi",
                             func: () {
                               GoRouter.of(context).push("/change-password");
                             },
@@ -206,7 +206,7 @@ class _AccountState extends State<Account> {
                         // ),
                         SpacerHeight(h: 20),
                         AccountMenu(
-                          title: "Order History",
+                          title: "Riwayat Pemesanan",
                           iconTitle: "new-cart-plus.svg",
                           func: () {
                             GoRouter.of(context).push("/order-history");
@@ -239,7 +239,7 @@ class _AccountState extends State<Account> {
                           color: CustomColor.oldGreyColor,
                         ),
                         AccountMenu(
-                          title: "About Apps",
+                          title: "Tentang Apps",
                           iconTitle: "new-information.svg",
                           func: () {
                             GoRouter.of(context).push("/about-apps");

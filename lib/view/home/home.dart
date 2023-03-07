@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parallax_image/parallax_image.dart';
 import 'package:revver/component/bannerSlider.dart';
 import 'package:revver/component/menu.dart';
 import 'package:revver/component/newsSlider.dart';
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> {
   String notificationCounter = "99";
   var cart = FlutterCart();
 
-  final controller = PageController(viewportFraction: 0.8, keepPage: true);
+  ScrollController scrollController = ScrollController(initialScrollOffset: 1);
   String name;
   String avatar;
   List product;
@@ -92,95 +93,38 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Image.asset(
-            "assets/img/revver-horizontal.png",
-            width: CustomScreen(context).width / 2.5,
-          ),
-        ),
-        actions: [
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).push("/cart");
-                  GoRouter.of(context).addListener(callback());
-                },
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: SvgPicture.asset(
-                        "assets/svg/new-cart.svg",
-                        height: 20,
-                        color: CustomColor.blackColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SpacerWidth(w: 5),
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).push("/notification");
-                },
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: SvgPicture.asset(
-                        "assets/svg/bell-solid.svg",
-                        height: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SpacerWidth(w: 5),
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).push("/homepage/3");
-                },
-                child: Padding(
-                    padding: EdgeInsets.all(5),
-                    child: Container(
-                      height: 22,
-                      width: 22,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        image: DecorationImage(
-                            image: NetworkImage(avatar ??=
-                                "https://wallpaperaccess.com/full/733834.png"),
-                            fit: BoxFit.cover),
-                      ),
-                    )),
-              ),
-              SpacerWidth(w: 35),
-            ],
-          ),
-        ],
-        backgroundColor: CustomColor.backgroundColor,
-        elevation: 0,
-      ),
-      body: SafeArea(
-          child: RefreshIndicator(
+      body: RefreshIndicator(
         onRefresh: _pullRefresh,
         child: SingleChildScrollView(
+          controller: scrollController,
           physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerHeight(h: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: WelcomeHeader(name: name ??= "..."),
-              ),
-              SpacerHeight(h: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: HomeBanner(list: banner),
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                child: ParallaxImage(
+                  image: AssetImage("assets/img/revver-bg-1.png"),
+                  extent: 0,
+                  child: Padding(
+                    padding: EdgeInsets.all(35),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SpacerHeight(h: 20),
+                        headerWidget(),
+                        SpacerHeight(h: 20),
+                        WelcomeHeader(name: name ??= "..."),
+                        SpacerHeight(h: 20),
+                        HomeBanner(list: banner),
+                      ],
+                    ),
+                  ),
+                  controller: scrollController,
+                ),
               ),
               SpacerHeight(h: 40),
               Padding(
@@ -201,43 +145,78 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
-      )
+      ),
+    );
+  }
 
-          // SingleChildScrollView(
-          //   physics: BouncingScrollPhysics(),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       SpacerHeight(h: 20),
-          //       Padding(
-          //         padding: EdgeInsets.symmetric(horizontal: 35),
-          //         child: WelcomeHeader(name: name ??= "..."),
-          //       ),
-          //       SpacerHeight(h: 20),
-          //       Padding(
-          //         padding: EdgeInsets.symmetric(horizontal: 35),
-          //         child: HomeBanner(list: banner),
-          //       ),
-          //       SpacerHeight(h: 40),
-          //       Padding(
-          //         padding: EdgeInsets.symmetric(horizontal: 35),
-          //         child: HomeMenu(),
-          //       ),
-          //       SpacerHeight(h: 40),
-          //       ProductSlider(
-          //         product: product,
-          //         callback: (x) {
-          //           setState(() {});
-          //         },
-          //         callbackPop: () => callback(),
-          //       ),
-          //       SpacerHeight(h: 40),
-          //       NewsSlider(news: news),
-          //       SpacerHeight(h: 20),
-          //     ],
-          //   ),
-          // ),
-          ),
+  headerWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Image.asset(
+          "assets/img/revver-white.png",
+          width: CustomScreen(context).width / 2.5,
+        ),
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push("/cart");
+                GoRouter.of(context).addListener(callback());
+              },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: SvgPicture.asset(
+                      "assets/svg/new-cart.svg",
+                      height: 20,
+                      color: CustomColor.whiteColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SpacerWidth(w: 5),
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push("/notification");
+              },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: SvgPicture.asset(
+                      "assets/svg/bell-solid.svg",
+                      height: 20,
+                      color: CustomColor.whiteColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SpacerWidth(w: 5),
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push("/homepage/3");
+              },
+              child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    height: 22,
+                    width: 22,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      image: DecorationImage(
+                          image: NetworkImage(avatar ??=
+                              "https://wallpaperaccess.com/full/733834.png"),
+                          fit: BoxFit.cover),
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

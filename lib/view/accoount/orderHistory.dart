@@ -24,6 +24,7 @@ class _OrderHistoryState extends State<OrderHistory> {
     await getAccountOrder().then((val) {
       setState(() {
         order = val;
+        order.sort((a, b) => b.id.compareTo(a.id));
         dataSource = OrderDataSource(order: order);
         isLoad = false;
       });

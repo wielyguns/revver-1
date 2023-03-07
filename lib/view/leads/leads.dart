@@ -111,7 +111,7 @@ class _LeadsState extends State<Leads> {
                                 borderRadius: BorderRadius.circular(20)),
                             child: Column(
                               children: [
-                                Text("Leads Overview",
+                                Text("Ringkasan Leads",
                                     style: CustomFont(CustomColor.brownColor,
                                             20, FontWeight.w700)
                                         .font),

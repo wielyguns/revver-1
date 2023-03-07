@@ -40,7 +40,7 @@ class ProductSlider extends StatelessWidget {
           ),
           GestureDetector(
             child: Text(
-              "View All",
+              "Lihat Semua",
               style: CustomFont(CustomColor.blackColor, 14, null).font,
             ),
             onTap: () {
@@ -154,26 +154,26 @@ class ProductSlider extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SpacerWidth(w: 20),
-                  InkWell(
-                    onTap: () {
-                      cart.addToCart(
-                          productId: id,
-                          unitPrice: price,
-                          productName: name,
-                          productDetailsObject: gambar);
-                      callback("x");
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: CustomColor.brownColor,
-                      ),
-                      child: Icon(Icons.add, color: CustomColor.whiteColor),
-                    ),
-                  ),
+                  // SpacerWidth(w: 20),
+                  // InkWell(
+                  //   onTap: () {
+                  //     cart.addToCart(
+                  //         productId: id,
+                  //         unitPrice: price,
+                  //         productName: name,
+                  //         productDetailsObject: gambar);
+                  //     callback("x");
+                  //   },
+                  //   child: Container(
+                  //     height: 30,
+                  //     width: 30,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.all(Radius.circular(15)),
+                  //       color: CustomColor.brownColor,
+                  //     ),
+                  //     child: Icon(Icons.add, color: CustomColor.whiteColor),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

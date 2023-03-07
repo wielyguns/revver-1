@@ -55,7 +55,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                   SpacerHeight(h: 20),
                   Text(
-                    "Hello!",
+                    "Halo!",
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -91,7 +91,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 10),
                           Text(
-                            "Don't have an account yet? Register here!",
+                            "Tidak punya akun? Daftar sekarang!",
                             style: CustomFont(CustomColor.oldGreyColor, 12,
                                     FontWeight.w400)
                                 .font,
@@ -158,14 +158,14 @@ class _RegistrationState extends State<Registration> {
                           Row(
                             children: [
                               Text(
-                                "Don't have an account yet? ",
+                                "Sudah punya akun? ",
                                 style: CustomFont(CustomColor.blackColor, 12,
                                         FontWeight.w400)
                                     .font,
                               ),
                               GestureDetector(
                                 child: Text(
-                                  "Login here!",
+                                  "Masuk sekarang!",
                                   style: CustomFont(CustomColor.brownColor, 12,
                                           FontWeight.w400)
                                       .font,

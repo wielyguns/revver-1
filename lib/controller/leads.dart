@@ -56,6 +56,7 @@ postLeadDetail(
   disease,
   image,
   image_name,
+  selectedGender,
 ) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
@@ -69,15 +70,15 @@ postLeadDetail(
     'status_ambition': status_ambition,
     'status_supel': status_supel,
     'status_teachable': status_teachable,
-    'height': height,
-    'weight': weight,
+    'height': "0",
+    'weight': "0",
     'age': age,
     'province_id': province_id,
     'city_id': city_id,
     'address': address,
     'note': note,
     "disease_id[]": disease,
-    "gender": "Male"
+    "gender": selectedGender
   };
 
   int res;
@@ -117,6 +118,7 @@ patchLeadDetail(
   disease,
   image,
   image_name,
+  selectedGender,
 ) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
@@ -130,15 +132,15 @@ patchLeadDetail(
     'status_ambition': status_ambition,
     'status_supel': status_supel,
     'status_teachable': status_teachable,
-    'height': height,
-    'weight': weight,
+    'height': "0",
+    'weight': "0",
     'age': age,
     'province_id': province_id,
     'city_id': city_id,
     'address': address,
     'note': note,
     "disease_id[]": disease,
-    "gender": "Male"
+    "gender": selectedGender
   };
 
   int res;

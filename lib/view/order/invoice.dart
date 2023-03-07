@@ -41,7 +41,9 @@ class _InvoiceState extends State<Invoice> {
       List<OrderItemDetail> list = [];
       for (var data in val['data']['order_dt'] as List) {
         list.add(OrderItemDetail(
-          description: data['product']['name'],
+          description: (data['product_id'] != null)
+              ? data['product']['name']
+              : data['e_learning']['name'],
           qty: data['qty'].toString(),
           amount: data['sub_total'].toString(),
         ));

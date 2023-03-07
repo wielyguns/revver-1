@@ -6,24 +6,33 @@ import 'dart:convert';
 class Goal {
   int id;
   int goal_id;
-  int referral_rate_id;
-  int qty;
+  int kanan;
+  int kiri;
+  int sponsor;
+  String created_at;
   String updated_at;
+  String converted_date;
   Goal({
     this.id,
     this.goal_id,
-    this.referral_rate_id,
-    this.qty,
+    this.kanan,
+    this.kiri,
+    this.sponsor,
+    this.created_at,
     this.updated_at,
+    this.converted_date,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'goal_id': goal_id,
-      'referral_rate_id': referral_rate_id,
-      'qty': qty,
+      'kanan': kanan,
+      'kiri': kiri,
+      'sponsor': sponsor,
+      'created_at': created_at,
       'updated_at': updated_at,
+      'converted_date': converted_date,
     };
   }
 
@@ -31,9 +40,12 @@ class Goal {
     return Goal(
       id: map['id'] as int,
       goal_id: map['goal_id'] as int,
-      referral_rate_id: map['referral_rate_id'] as int,
-      qty: map['qty'] as int,
+      kanan: map['kanan'] as int,
+      kiri: map['kiri'] as int,
+      sponsor: map['sponsor'] as int,
+      created_at: map['created_at'] as String,
       updated_at: map['updated_at'] as String,
+      converted_date: map['converted_date'] as String,
     );
   }
 

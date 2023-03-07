@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/EHealth.dart';
@@ -61,7 +60,7 @@ class _EHealthListState extends State<EHealthList> {
       setState(() {
         diseaseCategory = val;
         diseaseCategory
-            .add(DiseaseCategory(id: 0, name: "All Categories", image: ""));
+            .add(DiseaseCategory(id: 0, name: "Semua Kategori", image: ""));
         diseaseCategory.sort((a, b) => a.id.compareTo(b.id));
         isLoadCategory = false;
       });
@@ -87,20 +86,20 @@ class _EHealthListState extends State<EHealthList> {
           child: Column(
             children: [
               SpacerHeight(h: 20),
-              (isLoadCategory)
-                  ? Center(child: LinearProgressIndicator())
-                  : listCategory(),
-              SpacerHeight(h: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: SearchForm(
-                  controller: searchController,
-                  callback: () {
-                    getData();
-                  },
-                ),
-              ),
-              SpacerHeight(h: 20),
+              // (isLoadCategory)
+              //     ? Center(child: LinearProgressIndicator())
+              //     : listCategory(),
+              // SpacerHeight(h: 20),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 35),
+              //   child: SearchForm(
+              //     controller: searchController,
+              //     callback: () {
+              //       getData();
+              //     },
+              //   ),
+              // ),
+              // SpacerHeight(h: 20),
               (isLoad)
                   ? Center(child: LinearProgressIndicator())
                   : Padding(
@@ -171,7 +170,7 @@ class _EHealthListState extends State<EHealthList> {
       itemCount: disease.length,
       itemBuilder: ((context, index) {
         Disease ds = disease[index];
-        return GestureDetector(
+        return InkWell(
           onTap: () {
             String name = widget.name;
             String height = widget.height;

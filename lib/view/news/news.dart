@@ -134,7 +134,7 @@ class _NewsState extends State<News> {
                         children: [
                           Row(
                             children: [
-                              Text("Read More", style: CustomFont.bold10),
+                              Text("Lihat Lebih", style: CustomFont.bold10),
                               Icon(
                                 Icons.arrow_right_alt,
                                 color: CustomColor.oldGreyColor,

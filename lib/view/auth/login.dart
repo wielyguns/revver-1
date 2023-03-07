@@ -52,7 +52,7 @@ class _LoginState extends State<Login> {
                   ),
                   SpacerHeight(h: 20),
                   Text(
-                    "Hello!",
+                    "Halo!",
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -96,7 +96,7 @@ class _LoginState extends State<Login> {
                             ),
                             SpacerHeight(h: 10),
                             Text(
-                              "Already have an account? Please, login!",
+                              "Sudah punya akun? Silahkan masuk!",
                               style: CustomFont(CustomColor.oldGreyColor, 12,
                                       FontWeight.w400)
                                   .font,
@@ -185,7 +185,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 SpacerWidth(w: 5),
                                 Text(
-                                  "Remember Me?",
+                                  "Ingat saya?",
                                   style: CustomFont(CustomColor.blackColor, 12,
                                           FontWeight.w400)
                                       .font,
@@ -196,14 +196,14 @@ class _LoginState extends State<Login> {
                             Row(
                               children: [
                                 Text(
-                                  "Don't have an account yet? ",
+                                  "Belum punya akun? ",
                                   style: CustomFont(CustomColor.blackColor, 12,
                                           FontWeight.w400)
                                       .font,
                                 ),
                                 GestureDetector(
                                   child: Text(
-                                    "Register here!",
+                                    "Daftar sekarang!",
                                     style: CustomFont(CustomColor.brownColor,
                                             12, FontWeight.w400)
                                         .font,

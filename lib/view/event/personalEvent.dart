@@ -64,7 +64,7 @@ class _PersonalEventState extends State<PersonalEvent> {
       child: Scaffold(
         appBar: CustomHeader(
           isPop: true,
-          title: (widget.id == 000) ? "Create Event" : "Edit Event",
+          title: (widget.id == 000) ? "Buat Event" : "Edit Event",
         ),
         body: (isLoad)
             ? Center(child: CupertinoActivityIndicator())
@@ -79,15 +79,15 @@ class _PersonalEventState extends State<PersonalEvent> {
                           child: Column(
                             children: [
                               RegularForm(
-                                title: "Event Name",
-                                hint: "eg: Meeting with new project",
+                                title: "Nama Event",
+                                hint: "eg: Meeting proyek baru",
                                 controller: eventNameController,
                                 isValidator: true,
                               ),
                               SpacerHeight(h: 20),
                               DateTimePickerForm(
                                 icon: 'assets/svg/new-calendar-month.svg',
-                                title: "Event Date",
+                                title: "Tanggal Event",
                                 hint: "t",
                                 date: dateNow,
                                 callback: (x) {
@@ -96,15 +96,15 @@ class _PersonalEventState extends State<PersonalEvent> {
                               ),
                               SpacerHeight(h: 20),
                               MultiLineForm(
-                                title: "Event Description",
-                                hint: "eg: Presentation to the new prospect",
+                                title: "Description Event",
+                                hint: "eg: Persentasi proyek baru",
                                 controller: eventDescriptionController,
                                 isValidator: false,
                               ),
                               SpacerHeight(h: 20),
                               RegularForm(
                                 icon: 'assets/svg/new-location.svg',
-                                title: "Event Location",
+                                title: "Lokasi Event",
                                 hint: "eg: Coffee Shop Tunjungan Plaza",
                                 controller: eventLocationController,
                                 isValidator: false,
