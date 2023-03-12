@@ -22,24 +22,13 @@ class RecordProgress extends StatefulWidget {
 }
 
 class _RecordProgressState extends State<RecordProgress> {
-  bool isLoad = true;
   final formKey = GlobalKey<FormState>();
-  List<ReferralRate> rrate = [];
-  ReferralRate selectedReferral;
-  TextEditingController qtyController = TextEditingController();
-
-  getData() async {
-    await getReferralRate().then((val) async {
-      setState(() {
-        rrate = val;
-        isLoad = false;
-      });
-    });
-  }
+  TextEditingController kananController = TextEditingController();
+  TextEditingController kiriController = TextEditingController();
+  TextEditingController sponsorController = TextEditingController();
 
   @override
   void initState() {
-    getData();
     super.initState();
   }
 
@@ -51,35 +40,43 @@ class _RecordProgressState extends State<RecordProgress> {
           title: "Record Progress",
           isPop: true,
         ),
-        body: (isLoad)
-            ? Center(child: CupertinoActivityIndicator())
-            : SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      SpacerHeight(h: 20),
-                      RegularForm(
-                        icon: 'assets/svg/new-counter.svg',
-                        title: "Total Package",
-                        hint: "eg: 1",
-                        controller: qtyController,
-                        isValidator: true,
-                        keyboardType: TextInputType.number,
-                      ),
-                      SpacerHeight(h: 20),
-                      referralWidget(
-                        "Package",
-                        "Choose Package",
-                        rrate,
-                        selectedReferral,
-                        true,
-                      ),
-                    ],
-                  ),
+        body: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 35),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                SpacerHeight(h: 20),
+                RegularForm(
+                  icon: 'assets/svg/new-counter.svg',
+                  title: "Total Kanan",
+                  hint: "eg: 1",
+                  controller: kananController,
+                  isValidator: false,
+                  keyboardType: TextInputType.number,
                 ),
-              ),
+                SpacerHeight(h: 20),
+                RegularForm(
+                  icon: 'assets/svg/new-counter.svg',
+                  title: "Total Kiri",
+                  hint: "eg: 1",
+                  controller: kiriController,
+                  isValidator: false,
+                  keyboardType: TextInputType.number,
+                ),
+                SpacerHeight(h: 20),
+                RegularForm(
+                  icon: 'assets/svg/new-counter.svg',
+                  title: "Total Sponsor",
+                  hint: "eg: 1",
+                  controller: sponsorController,
+                  isValidator: false,
+                  keyboardType: TextInputType.number,
+                ),
+              ],
+            ),
+          ),
+        ),
         bottomNavigationBar: Container(
           color: CustomColor.backgroundColor,
           padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
@@ -89,8 +86,11 @@ class _RecordProgressState extends State<RecordProgress> {
               if (!formKey.currentState.validate()) {
                 customSnackBar(context, true, "Complete the form first!");
               } else {
-                await postRecordProgress(selectedReferral.id.toString(),
-                        qtyController.text, widget.id.toString())
+                await postRecordProgress(
+                        kananController.text,
+                        kiriController.text,
+                        sponsorController.text,
+                        widget.id.toString())
                     .then((val) {
                   if (val['status'] == 200) {
                     customSnackBar(context, false, val['status'].toString());
@@ -104,94 +104,6 @@ class _RecordProgressState extends State<RecordProgress> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget referralWidget(
-    String title,
-    String hint,
-    List<ReferralRate> list,
-    ReferralRate selectedItem,
-    bool isValidator,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: CustomFont.regular12),
-        SizedBox(height: 10),
-        DropdownButtonFormField(
-          validator: (value) {
-            if (isValidator) {
-              if (value == null) {
-                return 'Please enter your $title';
-              }
-              return null;
-            } else {
-              return null;
-            }
-          },
-          value: selectedItem,
-          items: list.map((v) {
-            return DropdownMenuItem(
-              value: v,
-              child: Text(
-                v.name,
-                style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400)
-                    .font,
-              ),
-            );
-          }).toList(),
-          onChanged: (val) {
-            setState(() {
-              selectedReferral = val;
-            });
-          },
-          dropdownColor: CustomColor.whiteColor,
-          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle:
-                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
-            contentPadding: EdgeInsets.all(10),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: 1.5,
-                  style: BorderStyle.solid,
-                  color: CustomColor.brownColor),
-            ),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: 1.5,
-                  style: BorderStyle.solid,
-                  color: CustomColor.brownColor),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: 1.5,
-                  style: BorderStyle.solid,
-                  color: CustomColor.brownColor),
-            ),
-            errorBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: 1.5,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
-            ),
-            focusedErrorBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: 1.5,
-                  style: BorderStyle.solid,
-                  color: CustomColor.redColor),
-            ),
-            disabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  width: 1.5,
-                  style: BorderStyle.solid,
-                  color: CustomColor.oldGreyColor),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

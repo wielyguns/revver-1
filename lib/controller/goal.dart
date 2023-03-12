@@ -91,17 +91,19 @@ patchGoal(String target_title, target_point, target_date, target_description,
   return res;
 }
 
-postRecordProgress(String rrate_id, qty, id) async {
+postRecordProgress(String kanan, kiri, sponsor, id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   String url = "https://admin.revveracademy.com/api/v1/goal/progress/$id";
+  // String url = "https://webhook.site/9bffa78b-30ad-4a52-9564-00106f2ce9ee";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.post(parseUrl, headers: {
     "Authorization": "Bearer $token",
   }, body: {
-    "referral_rate_id[0]": rrate_id,
-    "qty[0]": qty,
+    "kanan": kanan.isNotEmpty ? kanan : "0",
+    "kiri": kiri.isNotEmpty ? kiri : "0",
+    "sponsor": sponsor.isNotEmpty ? sponsor : "0",
   });
   var res = jsonDecode(response.body);
 

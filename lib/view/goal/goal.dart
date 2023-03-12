@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/button.dart';
 import 'package:revver/component/form.dart';
+import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/goal.dart';
@@ -55,7 +57,7 @@ class _GoalState extends State<Goal> {
   double kananPerDay;
   double sponsorPerDay;
 
-  int percentage;
+  double percentage;
   List<g.Goal> goal = [];
   String defDM = 'Day';
 
@@ -127,6 +129,8 @@ class _GoalState extends State<Goal> {
       kiriPerDay = double.parse(kiriPerDay.toStringAsFixed(0));
       kananPerDay = double.parse(kananPerDay.toStringAsFixed(0));
       sponsorPerDay = double.parse(sponsorPerDay.toStringAsFixed(0));
+      double xPercentage = ((pair + sponsor) / target_point) * 100;
+      percentage = double.parse(xPercentage.toStringAsFixed(0));
       isDream = true;
       isLoad = false;
     });
@@ -163,6 +167,10 @@ class _GoalState extends State<Goal> {
 
   @override
   void initState() {
+    Timer.run(() {
+      introduction();
+    });
+
     getData();
     super.initState();
   }
@@ -170,30 +178,37 @@ class _GoalState extends State<Goal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: CupertinoNavigationBarBackButton(
-          onPressed: () => GoRouter.of(context).pop(),
-        ),
-        actions: [
-          InkWell(
-            onTap: () {
-              GoRouter.of(context).push('/set-dream');
-              GoRouter.of(context).addListener(callbackSD);
-            },
-            child: Container(
-              padding: EdgeInsets.only(right: 20),
-              child: SvgPicture.asset(
-                'assets/svg/pen-to-square-solid.svg',
-                height: 20,
-                color: CustomColor.brownColor,
-              ),
-            ),
-          )
-        ],
+      // extendBodyBehindAppBar: true,
+      appBar: CustomHeader(
+        title: "Goals",
+        svgName: "pen-to-square-solid.svg",
+        route: "/set-dream",
+        callback: callbackSD,
+        isPop: true,
       ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   leading: CupertinoNavigationBarBackButton(
+      //     onPressed: () => GoRouter.of(context).pop(),
+      //   ),
+      //   actions: [
+      //     InkWell(
+      //       onTap: () {
+      //         GoRouter.of(context).push('/set-dream');
+      //         GoRouter.of(context).addListener(callbackSD);
+      //       },
+      //       child: Container(
+      //         padding: EdgeInsets.only(right: 20),
+      //         child: SvgPicture.asset(
+      //           'assets/svg/pen-to-square-solid.svg',
+      //           height: 20,
+      //           color: CustomColor.brownColor,
+      //         ),
+      //       ),
+      //     )
+      //   ],
+      // ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
           : SingleChildScrollView(
@@ -201,39 +216,41 @@ class _GoalState extends State<Goal> {
               padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: [
-                  // SpacerHeight(h: 80),
+                  SpacerHeight(h: 20),
                   // Text(
                   //   "Goals",
                   //   style:
                   //       CustomFont(CustomColor.brownColor, 20, FontWeight.w600)
                   //           .font,
                   // ),
-                  SpacerHeight(
-                      h: MediaQuery.of(context).padding.top +
-                          kToolbarHeight +
-                          20),
+                  // SpacerHeight(
+                  //     h: MediaQuery.of(context).padding.top +
+                  //         kToolbarHeight +
+                  //         20),
                   Container(
                     height: MediaQuery.of(context).size.height -
                         (MediaQuery.of(context).padding.top + kToolbarHeight) -
                         kBottomNavigationBarHeight -
-                        90,
+                        150,
                     decoration: BoxDecoration(
+                      color: Color(0xFF3A515F),
                       borderRadius: BorderRadius.circular(20),
                       // color: CustomColor.brownColor,
                       image: DecorationImage(
-                        image: AssetImage("assets/img/revver-bg-1.png"),
+                        image: AssetImage("assets/img/revver-bg.jpg"),
+                        opacity: 0.1,
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Goals",
-                          style: CustomFont(
-                                  CustomColor.whiteColor, 26, FontWeight.w600)
-                              .font,
-                        ),
+                        // Text(
+                        //   "Goals",
+                        //   style: CustomFont(
+                        //           CustomColor.whiteColor, 26, FontWeight.w600)
+                        //       .font,
+                        // ),
                         radialGauge(),
                         Text(
                           target_title ??= "Your Dream",
@@ -247,43 +264,313 @@ class _GoalState extends State<Goal> {
                                   CustomColor.brownColor, 16, FontWeight.w400)
                               .font,
                         ),
+                        SizedBox(height: 5),
+                        InkWell(
+                          onTap: (() {
+                            introduction();
+                          }),
+                          child: Icon(
+                            Icons.info,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  // Divider(
-                  //   thickness: 2,
-                  //   color: CustomColor.brownColor,
-                  //   height: 40,
-                  // ),
-                  SpacerHeight(h: 55),
-                  // Text(
-                  //   "Target jaringan: 2800 kanan | 2800 kiri",
-                  //   style:
-                  //       CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
-                  //           .font,
-                  // ),
-                  // SpacerHeight(h: 20),
-                  // Text(
-                  //   "Perhitungan dibawah hanya diambil dari bonus referral (Sponsor):",
-                  //   style:
-                  //       CustomFont(CustomColor.blackColor, 12, FontWeight.w300)
-                  //           .font,
-                  // ),
-                  Text("Current Kiri: $kiri"),
-                  Text("Current Kanan: $kanan"),
-                  Text("Current Sponsor: $sponsor_count"),
-                  Text(""),
-                  Text("Total Pair: $totalPair"),
-                  Text("Sisa Kiri: $kiriLeft"),
-                  Text("Sisa Kanan: $kananLeft"),
-                  Text("Sisa Sponsor: $sponsorLeft"),
-                  Text(""),
-                  Text("Sisa Target Date Sponsor: $tdateS"),
-                  Text(""),
-                  Text("Min Pair per Day (Kiri): $kiriPerDay"),
-                  Text("Min Pair per Day (Kanan): $kananPerDay"),
-                  Text("Min Sponsor per Day : $sponsorPerDay"),
-
+                  SpacerHeight(h: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: CustomColor.backgroundColor,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 13,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 15),
+                        Text(
+                          "Current",
+                          style: CustomFont(
+                                  CustomColor.brownColor, 16, FontWeight.w700)
+                              .font,
+                        ),
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "Kanan",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  kanan,
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Kiri",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  kiri,
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Sponsor",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  sponsor_count,
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
+                  SpacerHeight(h: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: CustomColor.backgroundColor,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 13,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Total Pair ",
+                              style: CustomFont(CustomColor.brownColor, 16,
+                                      FontWeight.w700)
+                                  .font,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              totalPair.toString(),
+                              style: CustomFont(CustomColor.blackColor, 16,
+                                      FontWeight.w700)
+                                  .font,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "Kanan",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  kananLeft.toString(),
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Kiri",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  kiriLeft.toString(),
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Sponsor",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  sponsorLeft.toString(),
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
+                  SpacerHeight(h: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: CustomColor.backgroundColor,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 13,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 15),
+                        Text(
+                          "Sisa Target Date Sponsor",
+                          style: CustomFont(
+                                  CustomColor.brownColor, 16, FontWeight.w700)
+                              .font,
+                        ),
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              tdateS,
+                              style: CustomFont(CustomColor.blackColor, 16,
+                                      FontWeight.w700)
+                                  .font,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
+                  SpacerHeight(h: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: CustomColor.backgroundColor,
+                      borderRadius: BorderRadius.circular(15.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 0,
+                          blurRadius: 13,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 15),
+                        Text(
+                          "Min Pair per Day",
+                          style: CustomFont(
+                                  CustomColor.brownColor, 16, FontWeight.w700)
+                              .font,
+                        ),
+                        SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "Kanan",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  kananPerDay.toString(),
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Kiri",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  kiriPerDay.toString(),
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Sponsor",
+                                  style: CustomFont(CustomColor.oldGreyColor,
+                                          12, FontWeight.w400)
+                                      .font,
+                                ),
+                                Text(
+                                  sponsorPerDay.toString(),
+                                  style: CustomFont(CustomColor.blackColor, 14,
+                                          FontWeight.w600)
+                                      .font,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                      ],
+                    ),
+                  ),
                   // SpacerHeight(h: 20),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.start,
@@ -329,6 +616,18 @@ class _GoalState extends State<Goal> {
                   //     //     )),
                   //   ],
                   // ),
+                  SpacerHeight(h: 40),
+
+                  Row(
+                    children: [
+                      Text(
+                        "Progress History",
+                        style: CustomFont(
+                                CustomColor.brownColor, 16, FontWeight.w700)
+                            .font,
+                      ),
+                    ],
+                  ),
                   SpacerHeight(h: 20),
                   (goal.isEmpty)
                       ? Padding(
@@ -352,18 +651,8 @@ class _GoalState extends State<Goal> {
                                     motion: ScrollMotion(),
                                     children: [
                                       SlidableAction(
-                                        onPressed: (val) async {
-                                          await deleteRecordProgress(gl.id)
-                                              .then((val) {
-                                            if (val['status'] == 200) {
-                                              customSnackBar(context, false,
-                                                  val['status'].toString());
-                                              getData();
-                                            } else {
-                                              customSnackBar(context, true,
-                                                  val['status'].toString());
-                                            }
-                                          });
+                                        onPressed: (val) {
+                                          deleteConfirmation(gl.id);
                                         },
                                         backgroundColor:
                                             CustomColor.backgroundColor,
@@ -382,20 +671,32 @@ class _GoalState extends State<Goal> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Icon(
-                                            Icons.circle,
-                                            color: CustomColor.brownColor,
-                                            size: 16,
-                                          ),
+                                          SvgPicture.asset(
+                                              "assets/svg/new-gold.svg"),
                                           SpacerWidth(w: 10),
-                                          Text(
-                                            "Ki: $kiri | Ka: $kanan | Sponsor: $sponsor",
-                                            style: CustomFont(
-                                                    CustomColor.blackColor,
-                                                    14,
-                                                    FontWeight.w600)
-                                                .font,
-                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "My Progress",
+                                                style: CustomFont(
+                                                        CustomColor.blackColor,
+                                                        14,
+                                                        FontWeight.w600)
+                                                    .font,
+                                              ),
+                                              Text(
+                                                "Ki: $kiri | Ka: $kanan | Sponsor: $sponsor",
+                                                style: CustomFont(
+                                                        CustomColor
+                                                            .oldGreyColor,
+                                                        9,
+                                                        FontWeight.w500)
+                                                    .font,
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       ),
                                       Row(
@@ -455,26 +756,23 @@ class _GoalState extends State<Goal> {
           showTicks: false,
           startAngle: 270,
           endAngle: 270,
-          radiusFactor: 0.7,
+          radiusFactor: 0.6,
+          annotations: <GaugeAnnotation>[
+            GaugeAnnotation(
+              angle: 270,
+              positionFactor: 0.1,
+              widget: Text(
+                percentage.toString() + "%",
+                style: CustomFont(CustomColor.whiteColor, 32, FontWeight.w600)
+                    .font,
+              ),
+            ),
+          ],
           axisLineStyle: AxisLineStyle(
             thicknessUnit: GaugeSizeUnit.factor,
             thickness: 0.15,
-            color: CustomColor.whiteColor.withOpacity(0.2),
+            color: CustomColor.oldGreyColor,
           ),
-          annotations: <GaugeAnnotation>[
-            GaugeAnnotation(
-                positionFactor: 0.1,
-                widget: CircleAvatar(
-                  radius: MediaQuery.of(context).size.width - 300,
-                  backgroundImage: AssetImage("assets/img/revver-bg.jpg"),
-                  child: Text(
-                    percentage.toString() + "%",
-                    style:
-                        CustomFont(CustomColor.whiteColor, 32, FontWeight.w600)
-                            .font,
-                  ),
-                )),
-          ],
           pointers: <GaugePointer>[
             RangePointer(
                 value: 10,
@@ -487,6 +785,79 @@ class _GoalState extends State<Goal> {
           ],
         ),
       ],
+    );
+  }
+
+  deleteConfirmation(glid) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Peringatan'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Apakah anda yakin ingin menghapus Progress ini?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Tidak',
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Ya'),
+              onPressed: () async {
+                await deleteRecordProgress(glid).then((val) {
+                  if (val['status'] == 200) {
+                    customSnackBar(context, false, val['status'].toString());
+                    Navigator.of(context).pop();
+                    getData();
+                  } else {
+                    customSnackBar(context, true, val['status'].toString());
+                  }
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  introduction() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Introduction'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Tata Cara ...'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Tutup',
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
