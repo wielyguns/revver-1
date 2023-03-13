@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -11,7 +10,6 @@ import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/goal.dart';
 import 'package:revver/globals.dart';
-import 'package:revver/model/goal.dart';
 
 class RecordProgress extends StatefulWidget {
   RecordProgress({Key key, this.id}) : super(key: key);

@@ -27,7 +27,7 @@ class _CartState extends State<Cart> {
       body: (cart.getCartItemCount() == 0)
           ? Center(
               child: Text(
-                "Empty Cart!",
+                "Keranjang Kosong!",
                 style: CustomFont(CustomColor.oldGreyColor, 14, FontWeight.w500)
                     .font,
               ),
@@ -58,7 +58,7 @@ class _CartState extends State<Cart> {
                     color: CustomColor.brownColor,
                   ),
                   Text(
-                    "Payment Summary",
+                    "Ringkasan Pembayaran",
                     style:
                         CustomFont(CustomColor.blackColor, 20, FontWeight.w600)
                             .font,
@@ -96,7 +96,7 @@ class _CartState extends State<Cart> {
                   SizedBox(
                     width: double.infinity,
                     child: IconTextButton(
-                      title: "Continue Shopping",
+                      title: "Lanjutkan Belanja",
                       buttonColor: CustomColor.backgroundColor,
                       borderColor: CustomColor.brownColor,
                       textColor: CustomColor.brownColor,

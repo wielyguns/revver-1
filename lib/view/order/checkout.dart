@@ -166,48 +166,48 @@ class _CheckoutState extends State<Checkout> {
                           children: [
                             RegularForm(
                               icon: 'assets/svg/new-user-edit.svg',
-                              title: "First Name",
-                              hint: "Your First Name",
+                              title: "Nama Depan",
+                              hint: "Nama Depan Anda",
                               controller: firstNameController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
                               icon: 'assets/svg/new-user.svg',
-                              title: "Last Name",
-                              hint: "Your Last Name",
+                              title: "Nama Belakang",
+                              hint: "Nama Belakang Anda",
                               controller: lastNameController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
                               icon: 'assets/svg/new-location.svg',
-                              title: "Address",
-                              hint: "Your Address",
+                              title: "Alamat",
+                              hint: "Alamat Anda",
                               controller: addressController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
                               icon: 'assets/svg/new-email.svg',
-                              title: "Contact",
-                              hint: "Your Contact",
+                              title: "Kontak",
+                              hint: "Kontak Anda",
                               controller: contactController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
-                            provinceDropdown("Province", "Your Province",
+                            provinceDropdown("Provinsi", "Provinsi Anda",
                                 province, selectedProvince, true),
                             (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
                             (city.isEmpty)
                                 ? SizedBox()
-                                : cityDropdown("City", "Your City", city,
+                                : cityDropdown("Kota", "Kota Anda", city,
                                     selectedCity, true),
                             SpacerHeight(h: 20),
                             RegularForm(
                               icon: 'assets/svg/new-post-office.svg',
-                              title: "Zip Code",
-                              hint: "Your Zip Code",
+                              title: "Kode Pos",
+                              hint: "Kode Pos Anda",
                               controller: zipCodeController,
                               isValidator: true,
                             ),
@@ -239,7 +239,7 @@ class _CheckoutState extends State<Checkout> {
                           children: [
                             SpacerHeight(h: 35),
                             Text(
-                              "Your Order Summary",
+                              "Ringkasan Pesanan Anda",
                               style: CustomFont(CustomColor.blackColor, 20,
                                       FontWeight.w600)
                                   .font,
@@ -384,7 +384,7 @@ class _CheckoutState extends State<Checkout> {
                             SizedBox(
                               width: double.infinity,
                               child: IconTextButton(
-                                title: "Back To Cart",
+                                title: "Kembali ke Keranjang",
                                 buttonColor: CustomColor.whiteColor,
                                 borderColor: CustomColor.brownColor,
                                 textColor: CustomColor.brownColor,

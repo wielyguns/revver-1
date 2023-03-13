@@ -21,8 +21,8 @@ class _EHealthFormState extends State<EHealthForm> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController nameController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
+  TextEditingController heightController = TextEditingController(text: "0");
+  TextEditingController weightController = TextEditingController(text: "0");
   TextEditingController ageController = TextEditingController();
   String selectedGender;
   @override
@@ -43,7 +43,7 @@ class _EHealthFormState extends State<EHealthForm> {
                 RegularForm(
                   icon: 'assets/svg/new-user-edit.svg',
                   title: "Nama",
-                  hint: "Enter your nama",
+                  hint: "Masukkan nama anda",
                   controller: nameController,
                   isValidator: true,
                 ),
@@ -58,21 +58,21 @@ class _EHealthFormState extends State<EHealthForm> {
                   },
                 ),
                 SpacerHeight(h: 20),
-                RegularForm(
-                  icon: 'assets/svg/new-height.svg',
-                  title: "Tinggi",
-                  hint: "eg: 160",
-                  isValidator: false,
-                  controller: heightController,
-                ),
-                SpacerHeight(h: 20),
-                RegularForm(
-                    icon: 'assets/svg/new-weight.svg',
-                    title: "Berat",
-                    hint: "eg: 60",
-                    isValidator: false,
-                    controller: weightController),
-                SpacerHeight(h: 20),
+                // RegularForm(
+                //   icon: 'assets/svg/new-height.svg',
+                //   title: "Tinggi",
+                //   hint: "eg: 160",
+                //   isValidator: false,
+                //   controller: heightController,
+                // ),
+                // SpacerHeight(h: 20),
+                // RegularForm(
+                //     icon: 'assets/svg/new-weight.svg',
+                //     title: "Berat",
+                //     hint: "eg: 60",
+                //     isValidator: false,
+                //     controller: weightController),
+                // SpacerHeight(h: 20),
                 RegularForm(
                   icon: 'assets/svg/new-age.svg',
                   title: "Umur",

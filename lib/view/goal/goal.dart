@@ -10,7 +10,6 @@ import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/button.dart';
-import 'package:revver/component/form.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';

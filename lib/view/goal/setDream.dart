@@ -94,7 +94,7 @@ class _SetDreamState extends State<SetDream> {
                       children: [
                         SpacerHeight(h: 100),
                         Text(
-                          "Set Your Dream",
+                          "Atur Mimpi Anda",
                           style: CustomFont(
                                   CustomColor.whiteColor, 32, FontWeight.w600)
                               .font,
@@ -129,14 +129,14 @@ class _SetDreamState extends State<SetDream> {
                                 children: [
                                   SpacerHeight(h: 20),
                                   RegularForm(
-                                    title: "What are you dream of?",
-                                    hint: "eg: New Smartphone, Traveling",
+                                    title: "Apa mimpi anda?",
+                                    hint: "eg: Smartphone Baru, Traveling",
                                     controller: nameController,
                                     isValidator: true,
                                   ),
                                   SpacerHeight(h: 20),
                                   RegularForm(
-                                    title: "How much is it?",
+                                    title: "Berapa banyak?",
                                     hint: "eg: 100000",
                                     controller: priceController,
                                     isValidator: true,
@@ -145,7 +145,7 @@ class _SetDreamState extends State<SetDream> {
                                   SpacerHeight(h: 20),
                                   DateTimePickerForm(
                                     icon: 'assets/svg/new-calendar-month.svg',
-                                    title: "When exactly do you want it?",
+                                    title: "Kapan mimpi anda ingin diwujudkan?",
                                     hint: "t",
                                     date: dateNow,
                                     callback: (x) {
@@ -155,7 +155,7 @@ class _SetDreamState extends State<SetDream> {
                                   SpacerHeight(h: 20),
                                   MultiLineForm(
                                     title:
-                                        "Describe why do you want it so bad?",
+                                        "Jelaskan kenapa anda menginginkannya?",
                                     hint: "eg: Remembering why you want it.",
                                     controller: descriptionController,
                                     isValidator: false,
@@ -166,7 +166,7 @@ class _SetDreamState extends State<SetDream> {
                                       : SizedBox(
                                           width: double.infinity,
                                           child: IconTextButton(
-                                            title: "Delete Your Dream",
+                                            title: "Hapus Mimpi Anda",
                                             iconTitle: "trash-can-solid.svg",
                                             buttonColor: CustomColor.redColor,
                                             func: () async {
