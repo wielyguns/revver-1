@@ -107,8 +107,9 @@ class _HomeState extends State<Home> {
                   bottomRight: Radius.circular(30),
                 ),
                 child: ParallaxImage(
+                  // image: AssetImage("assets/img/test-bg.jpeg"),
                   image: AssetImage("assets/img/revver-bg-1.png"),
-                  extent: 0,
+                  extent: 1,
                   child: Padding(
                     padding: EdgeInsets.all(35),
                     child: Column(

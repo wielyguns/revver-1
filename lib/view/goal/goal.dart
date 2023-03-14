@@ -306,13 +306,13 @@ class _GoalState extends State<Goal> {
                             Column(
                               children: [
                                 Text(
-                                  "Kanan",
+                                  "Kiri",
                                   style: CustomFont(CustomColor.oldGreyColor,
                                           12, FontWeight.w400)
                                       .font,
                                 ),
                                 Text(
-                                  kanan,
+                                  kiri,
                                   style: CustomFont(CustomColor.blackColor, 14,
                                           FontWeight.w600)
                                       .font,
@@ -322,13 +322,13 @@ class _GoalState extends State<Goal> {
                             Column(
                               children: [
                                 Text(
-                                  "Kiri",
+                                  "Kanan",
                                   style: CustomFont(CustomColor.oldGreyColor,
                                           12, FontWeight.w400)
                                       .font,
                                 ),
                                 Text(
-                                  kiri,
+                                  kanan,
                                   style: CustomFont(CustomColor.blackColor, 14,
                                           FontWeight.w600)
                                       .font,
@@ -399,13 +399,13 @@ class _GoalState extends State<Goal> {
                             Column(
                               children: [
                                 Text(
-                                  "Kanan",
+                                  "Kiri",
                                   style: CustomFont(CustomColor.oldGreyColor,
                                           12, FontWeight.w400)
                                       .font,
                                 ),
                                 Text(
-                                  kananLeft.toString(),
+                                  kiriLeft.toString(),
                                   style: CustomFont(CustomColor.blackColor, 14,
                                           FontWeight.w600)
                                       .font,
@@ -415,13 +415,13 @@ class _GoalState extends State<Goal> {
                             Column(
                               children: [
                                 Text(
-                                  "Kiri",
+                                  "Kanan",
                                   style: CustomFont(CustomColor.oldGreyColor,
                                           12, FontWeight.w400)
                                       .font,
                                 ),
                                 Text(
-                                  kiriLeft.toString(),
+                                  kananLeft.toString(),
                                   style: CustomFont(CustomColor.blackColor, 14,
                                           FontWeight.w600)
                                       .font,
@@ -519,13 +519,13 @@ class _GoalState extends State<Goal> {
                             Column(
                               children: [
                                 Text(
-                                  "Kanan",
+                                  "Kiri",
                                   style: CustomFont(CustomColor.oldGreyColor,
                                           12, FontWeight.w400)
                                       .font,
                                 ),
                                 Text(
-                                  kananPerDay.toString(),
+                                  kiriPerDay.toString(),
                                   style: CustomFont(CustomColor.blackColor, 14,
                                           FontWeight.w600)
                                       .font,
@@ -535,13 +535,13 @@ class _GoalState extends State<Goal> {
                             Column(
                               children: [
                                 Text(
-                                  "Kiri",
+                                  "Kanan",
                                   style: CustomFont(CustomColor.oldGreyColor,
                                           12, FontWeight.w400)
                                       .font,
                                 ),
                                 Text(
-                                  kiriPerDay.toString(),
+                                  kananPerDay.toString(),
                                   style: CustomFont(CustomColor.blackColor, 14,
                                           FontWeight.w600)
                                       .font,
