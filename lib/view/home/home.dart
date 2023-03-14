@@ -90,61 +90,186 @@ class _HomeState extends State<Home> {
     setState(() {});
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: RefreshIndicator(
+  //       onRefresh: _pullRefresh,
+  //       child: SingleChildScrollView(
+  //         controller: scrollController,
+  //         physics: BouncingScrollPhysics(),
+  //         child: Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             ClipRRect(
+  //               borderRadius: BorderRadius.only(
+  //                 bottomLeft: Radius.circular(30),
+  //                 bottomRight: Radius.circular(30),
+  //               ),
+  //               child: ParallaxImage(
+  //                 image: AssetImage("assets/img/test-bg.png"),
+  //                 // image: AssetImage("assets/img/revver-bg-1.png"),
+  //                 extent: 100,
+  //                 child: Padding(
+  //                   padding: EdgeInsets.all(35),
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       SpacerHeight(h: 20),
+  //                       headerWidget(),
+  //                       SpacerHeight(h: 20),
+  //                       WelcomeHeader(name: name ??= "..."),
+  //                       SpacerHeight(h: 20),
+  //                       HomeBanner(list: banner),
+  //                       SpacerHeight(h: 20),
+  //                       // SizedBox(
+  //                       //     height:
+  //                       //         ((CustomScreen(context).width - 70) / 5) * 2),
+  //                     ],
+  //                   ),
+  //                 ),
+  //                 controller: scrollController,
+  //               ),
+  //             ),
+  //             SpacerHeight(h: 40),
+  //             Padding(
+  //               padding: EdgeInsets.symmetric(horizontal: 35),
+  //               child: HomeMenu(),
+  //             ),
+  //             SpacerHeight(h: 40),
+  //             ProductSlider(
+  //               product: product,
+  //               callback: (x) {
+  //                 setState(() {});
+  //               },
+  //               callbackPop: () => callback(),
+  //             ),
+  //             SpacerHeight(h: 40),
+  //             NewsSlider(news: news),
+  //             SpacerHeight(h: 20),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
+    double w = CustomScreen(context).width;
+    double x = w - 70;
+    double y = x / 5;
+    double z = y * 2;
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: _pullRefresh,
-        child: SingleChildScrollView(
+        child: CustomScrollView(
           controller: scrollController,
           physics: BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-                child: ParallaxImage(
-                  // image: AssetImage("assets/img/test-bg.jpeg"),
-                  image: AssetImage("assets/img/revver-bg-1.png"),
-                  extent: 1,
-                  child: Padding(
-                    padding: EdgeInsets.all(35),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SpacerHeight(h: 20),
-                        headerWidget(),
-                        SpacerHeight(h: 20),
-                        WelcomeHeader(name: name ??= "..."),
-                        SpacerHeight(h: 20),
-                        HomeBanner(list: banner),
-                      ],
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Color(0xFF212121),
+              elevation: 0,
+              expandedHeight: z + 185,
+              stretch: true,
+              pinned: true,
+              centerTitle: true,
+              title: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: headerWidget(),
+              ),
+              flexibleSpace: FlexibleSpaceBar(
+                stretchModes: [
+                  StretchMode.fadeTitle,
+                  StretchMode.zoomBackground,
+                ],
+                background: Container(
+                  padding: EdgeInsets.all(35),
+                  width: MediaQuery.of(context).size.width,
+                  height: z + 185,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/img/revver-bg-1.png"),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  controller: scrollController,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SpacerHeight(h: 40),
+                      // headerWidget(),
+                      SpacerHeight(h: 20),
+                      WelcomeHeader(name: name ??= "..."),
+                      SpacerHeight(h: 20),
+                      HomeBanner(list: banner),
+                      SpacerHeight(h: 20),
+                      // SizedBox(
+                      //     height:
+                      //         ((CustomScreen(context).width - 70) / 5) * 2),
+                    ],
+                  ),
                 ),
               ),
-              SpacerHeight(h: 40),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: HomeMenu(),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                ((context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // ClipRRect(
+                      //   borderRadius: BorderRadius.only(
+                      //     bottomLeft: Radius.circular(30),
+                      //     bottomRight: Radius.circular(30),
+                      //   ),
+                      //   child: ParallaxImage(
+                      //     image: AssetImage("assets/img/test-bg.png"),
+                      //     // image: AssetImage("assets/img/revver-bg-1.png"),
+                      //     extent: 100,
+                      //     child: Padding(
+                      //       padding: EdgeInsets.all(35),
+                      //       child: Column(
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           SpacerHeight(h: 20),
+                      //           headerWidget(),
+                      //           SpacerHeight(h: 20),
+                      //           WelcomeHeader(name: name ??= "..."),
+                      //           SpacerHeight(h: 20),
+                      //           HomeBanner(list: banner),
+                      //           SpacerHeight(h: 20),
+                      //           // SizedBox(
+                      //           //     height:
+                      //           //         ((CustomScreen(context).width - 70) / 5) * 2),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     controller: scrollController,
+                      //   ),
+                      // ),
+                      SpacerHeight(h: 40),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 35),
+                        child: HomeMenu(),
+                      ),
+                      SpacerHeight(h: 40),
+                      ProductSlider(
+                        product: product,
+                        callback: (x) {
+                          setState(() {});
+                        },
+                        callbackPop: () => callback(),
+                      ),
+                      SpacerHeight(h: 40),
+                      NewsSlider(news: news),
+                      SpacerHeight(h: 20),
+                    ],
+                  );
+                }),
               ),
-              SpacerHeight(h: 40),
-              ProductSlider(
-                product: product,
-                callback: (x) {
-                  setState(() {});
-                },
-                callbackPop: () => callback(),
-              ),
-              SpacerHeight(h: 40),
-              NewsSlider(news: news),
-              SpacerHeight(h: 20),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
