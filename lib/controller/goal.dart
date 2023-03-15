@@ -123,3 +123,28 @@ deleteRecordProgress(id) async {
 
   return res;
 }
+
+postGoalImage(String id, image, name) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  int res;
+
+  Map<String, String> data;
+  data = {
+    'id': id,
+  };
+
+  String url = "https://admin.revveracademy.com/api/v1/goal/store-image";
+  Uri parseUrl = Uri.parse(url);
+
+  var request = http.MultipartRequest('POST', parseUrl);
+  request.headers['Authorization'] = "Bearer $token";
+  var file = await http.MultipartFile.fromPath("image", image, filename: name);
+  request.fields.addAll(data);
+  request.files.add(file);
+
+  await request.send().then((response) {
+    res = response.statusCode;
+  });
+  return res;
+}
