@@ -62,6 +62,7 @@ postNote(String title, type, text, List<NoteList> note_list) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   String url = "https://admin.revveracademy.com/api/v1/note";
+  // String url = "https://webhook.site/de55e299-bc7b-4796-93be-6265d097047f";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.post(
@@ -99,6 +100,7 @@ patchNote(String id, title, type, text, List<NoteList> note_list) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   String url = "https://admin.revveracademy.com/api/v1/note/$id";
+  // String url = "https://webhook.site/de55e299-bc7b-4796-93be-6265d097047f";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.patch(

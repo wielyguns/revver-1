@@ -24,8 +24,9 @@ class _SetDreamState extends State<SetDream> {
   final formKey = GlobalKey<FormState>();
   DateTime dateNow = DateTime.now();
   int id;
+  String priceValue = "0";
   TextEditingController nameController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
+  // TextEditingController priceController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
   getData() async {
@@ -40,7 +41,7 @@ class _SetDreamState extends State<SetDream> {
           setState(() {
             id = val['data']['id'];
             nameController.text = val['data']['target_title'];
-            priceController.text = val['data']['target_point'].toString();
+            priceValue = val['data']['target_point'].toString();
             dateNow =
                 DateFormat('yyyy-MM-dd').parse(val['data']['target_date']);
             descriptionController.text = val['data']['target_description'];
@@ -135,15 +136,22 @@ class _SetDreamState extends State<SetDream> {
                                     isValidator: true,
                                   ),
                                   SpacerHeight(h: 20),
-                                  RegularForm(
+                                  CurrencyForm(
                                     title: "Berapa banyak?",
                                     hint: "eg: 100000",
-                                    controller: priceController,
+                                    formValue: priceValue,
                                     isValidator: true,
-                                    keyboardType: TextInputType.number,
+                                    keyboardType:
+                                        TextInputType.numberWithOptions(
+                                            decimal: true),
+                                    callback: (val) {
+                                      setState(() {
+                                        priceValue = val;
+                                      });
+                                    },
                                   ),
                                   SpacerHeight(h: 20),
-                                  DateTimePickerForm(
+                                  DateTimeOnlyPickerForm(
                                     icon: 'assets/svg/new-calendar-month.svg',
                                     title: "Kapan mimpi anda ingin diwujudkan?",
                                     hint: "t",
@@ -170,6 +178,7 @@ class _SetDreamState extends State<SetDream> {
                                             iconTitle: "trash-can-solid.svg",
                                             buttonColor: CustomColor.redColor,
                                             func: () async {
+                                              // deleteConfirmation(id);
                                               await deleteGoal(id).then((val) {
                                                 if (val['status'] == 200) {
                                                   customSnackBar(context, false,
@@ -191,6 +200,9 @@ class _SetDreamState extends State<SetDream> {
                                     child: CustomButton(
                                       title: "Simpan Mimpi Anda",
                                       func: () async {
+                                        onLoading(context);
+                                        String newPrice = priceValue.replaceAll(
+                                            RegExp(r'[^0-9]'), '');
                                         if (!formKey.currentState.validate()) {
                                           customSnackBar(context, true,
                                               "Complete the form first!");
@@ -201,11 +213,12 @@ class _SetDreamState extends State<SetDream> {
                                             //patch
                                             await patchGoal(
                                               nameController.text,
-                                              priceController.text,
+                                              newPrice,
                                               date,
                                               descriptionController.text,
                                               id,
                                             ).then((val) {
+                                              Navigator.pop(context);
                                               if (val['status'] == 200) {
                                                 customSnackBar(context, false,
                                                     val['status'].toString());
@@ -219,10 +232,11 @@ class _SetDreamState extends State<SetDream> {
                                             // post
                                             await postGoal(
                                               nameController.text,
-                                              priceController.text,
+                                              newPrice,
                                               date,
                                               descriptionController.text,
                                             ).then((val) {
+                                              Navigator.pop(context);
                                               if (val['status'] == 200) {
                                                 customSnackBar(context, false,
                                                     val['status'].toString());
@@ -294,6 +308,51 @@ class _SetDreamState extends State<SetDream> {
         //   ),
         // ),
       ),
+    );
+  }
+
+  deleteConfirmation(glid) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Peringatan'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Apakah anda yakin ingin menghapus Mimpi anda?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Tidak',
+                style: TextStyle(color: Colors.red),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Ya'),
+              onPressed: () async {
+                await deleteGoal(glid).then((val) {
+                  if (val['status'] == 200) {
+                    Navigator.of(context).pop();
+                    customSnackBar(context, false, val['status'].toString());
+                    GoRouter.of(context).pop();
+                  } else {
+                    Navigator.of(context).pop();
+                    customSnackBar(context, true, val['status'].toString());
+                  }
+                });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

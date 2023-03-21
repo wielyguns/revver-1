@@ -91,10 +91,10 @@ class _RecordProgressState extends State<RecordProgress> {
                         widget.id.toString())
                     .then((val) {
                   if (val['status'] == 200) {
-                    customSnackBar(context, false, val['status'].toString());
+                    customSnackBar(context, false, "Sukses Record Progress");
                     GoRouter.of(context).pop();
                   } else {
-                    customSnackBar(context, true, val['status'].toString());
+                    customSnackBar(context, true, "Gagal Record Progress");
                   }
                 });
               }

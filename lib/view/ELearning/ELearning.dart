@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/header.dart';
+import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/ELearning.dart';
 import 'package:revver/globals.dart';
@@ -39,25 +40,6 @@ class _ELearningState extends State<ELearning> {
     super.initState();
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: CustomHeader(
-  //       title: "E-Learning",
-  //       isPop: true,
-  //     ),
-  //     body: (isLoad)
-  //         ? Center(child: CupertinoActivityIndicator())
-  //         : SingleChildScrollView(
-  //             child: Column(
-  //               children: [
-  //                 listWidget(),
-  //               ],
-  //             ),
-  //           ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -75,13 +57,6 @@ class _ELearningState extends State<ELearning> {
           padding: EdgeInsets.only(left: 20, right: 20, top: 20),
           child: Column(
             children: [
-              // SearchForm(
-              //   controller: searchController,
-              //   callback: () {
-              //     getData();
-              //   },
-              // ),
-              // SpacerHeight(h: 20),
               (isLoad)
                   ? Center(child: CupertinoActivityIndicator())
                   : GridView.count(
@@ -116,7 +91,6 @@ class _ELearningState extends State<ELearning> {
           children: [
             (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
             listItem(list.thumbnail, list.name, list.id),
-            // SpacerHeight(h: 20),
           ],
         );
       },
@@ -267,11 +241,19 @@ class _ELearningState extends State<ELearning> {
             padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
             child: InkWell(
               onTap: () {
-                cart.addToCart(
-                    productId: id,
-                    unitPrice: price,
-                    productName: name,
-                    productDetailsObject: image);
+                var itemExist = cart.findItemIndexFromCart(id);
+                if (itemExist != null) {
+                  var index = cart.getSpecificItemFromCart(id).itemCartIndex;
+                  cart.incrementItemToCart(index);
+                  customSnackBar(context, false, "$name masuk ke keranjang");
+                } else {
+                  cart.addToCart(
+                      productId: id,
+                      unitPrice: price,
+                      productName: name,
+                      productDetailsObject: image);
+                  customSnackBar(context, false, "$name masuk ke keranjang");
+                }
               },
               child: Container(
                 height: 30,

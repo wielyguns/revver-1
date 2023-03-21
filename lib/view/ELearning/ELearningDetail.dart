@@ -6,6 +6,7 @@ import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:indonesia/indonesia.dart';
 import 'package:revver/component/header.dart';
+import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/ELearning.dart';
 import 'package:revver/globals.dart';
@@ -177,12 +178,24 @@ class _ELearningDetailState extends State<ELearningDetail> {
                 padding: EdgeInsets.all(10),
                 minSize: 50,
                 onPressed: () {
-                  cart.addToCart(
-                      productId: widget.id,
-                      unitPrice: price,
-                      productName: name,
-                      productDetailsObject: thumbnail,
-                      quantity: qty);
+                  var itemExist = cart.findItemIndexFromCart(widget.id);
+                  if (itemExist != null) {
+                    var index =
+                        cart.getSpecificItemFromCart(widget.id).itemCartIndex;
+                    for (var i = 0; i < qty; i++) {
+                      cart.incrementItemToCart(index);
+                    }
+
+                    customSnackBar(context, false, "$name masuk ke keranjang");
+                  } else {
+                    cart.addToCart(
+                        productId: widget.id,
+                        unitPrice: price,
+                        productName: name,
+                        productDetailsObject: thumbnail,
+                        quantity: qty);
+                    customSnackBar(context, false, "$name masuk ke keranjang");
+                  }
                 },
                 color: CustomColor.brownColor,
                 child: Row(

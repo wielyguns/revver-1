@@ -20,6 +20,9 @@ class _NoteState extends State<Note> {
   bool isLoad = true;
   List<n.Note> note = [];
   getData() async {
+    setState(() {
+      isLoad = true;
+    });
     await getNote().then((val) {
       setState(() {
         note = val;
@@ -29,7 +32,7 @@ class _NoteState extends State<Note> {
   }
 
   callback() {
-    if (!GoRouter.of(context).location.contains("/note-detail")) {
+    if (!GoRouter.of(context).location.contains("note-detail")) {
       getData();
       GoRouter.of(context).removeListener(callback);
     }

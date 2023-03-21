@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:revver/globals.dart';
+import 'package:intl/intl.dart';
 
 class RegularForm extends StatelessWidget {
   RegularForm(
@@ -593,6 +596,125 @@ class SearchForm extends StatelessWidget {
   }
 }
 
+class DateTimeOnlyPickerForm extends StatefulWidget {
+  DateTimeOnlyPickerForm(
+      {Key key, this.title, this.hint, this.date, this.callback, this.icon})
+      : super(key: key);
+  final String title;
+  final String hint;
+  String icon;
+  DateTime date;
+  final Function(DateTime) callback;
+
+  @override
+  State<DateTimeOnlyPickerForm> createState() => _DateTimeOnlyPickerFormState();
+}
+
+class _DateTimeOnlyPickerFormState extends State<DateTimeOnlyPickerForm> {
+  String dateString;
+  @override
+  void initState() {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String formatted = formatter.format(widget.date);
+    setState(() {
+      dateString = formatted;
+    });
+    // print(formatted);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        TextFormField(
+          readOnly: true,
+          onTap: () => _showDialog(),
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
+          decoration: InputDecoration(
+            hintText: dateString,
+            prefixIcon: (widget.icon == null)
+                ? null
+                : SvgPicture.asset(
+                    widget.icon,
+                    width: 28,
+                    height: 28,
+                    fit: BoxFit.scaleDown,
+                    color: CustomColor.brownColor,
+                  ),
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
+            contentPadding: EdgeInsets.all(15),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  _showDialog() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (BuildContext context) => Container(
+        height: 200,
+        color: CustomColor.whiteColor,
+        child: SafeArea(
+          top: false,
+          child: CupertinoDatePicker(
+            initialDateTime: widget.date,
+            mode: CupertinoDatePickerMode.date,
+            use24hFormat: true,
+            onDateTimeChanged: (DateTime newDate) {
+              setState(() {
+                widget.date = newDate;
+                widget.callback(newDate);
+              });
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class DateTimePickerForm extends StatefulWidget {
   DateTimePickerForm(
       {Key key, this.title, this.hint, this.date, this.callback, this.icon})
@@ -696,6 +818,117 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CurrencyForm extends StatelessWidget {
+  CurrencyForm(
+      {Key key,
+      this.icon,
+      this.title,
+      this.hint,
+      this.formValue,
+      this.controller,
+      this.isValidator,
+      this.keyboardType,
+      this.callback,
+      this.readOnly})
+      : super(key: key);
+  String icon;
+  final String title;
+  final String hint;
+  String formValue;
+  final TextEditingController controller;
+  final TextInputType keyboardType;
+  final bool isValidator;
+  bool readOnly;
+  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+    decimalDigits: 0,
+    symbol: 'Rp ',
+  );
+  final Function(String) callback;
+
+  @override
+  Widget build(BuildContext context) {
+    readOnly ??= false;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: CustomFont.regular12),
+        SizedBox(height: 10),
+        TextFormField(
+          readOnly: readOnly,
+          keyboardType: keyboardType,
+          style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
+          initialValue: _formatter.format(formValue),
+          inputFormatters: <TextInputFormatter>[_formatter],
+          onChanged: (val) {
+            callback(val);
+          },
+          decoration: InputDecoration(
+            prefixIcon: (icon == null)
+                ? null
+                : SvgPicture.asset(
+                    icon,
+                    width: 28,
+                    height: 28,
+                    fit: BoxFit.scaleDown,
+                    color: CustomColor.brownColor,
+                  ),
+            hintText: hint,
+            hintStyle:
+                CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
+            contentPadding: EdgeInsets.all(15),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.brownColor),
+            ),
+            errorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            focusedErrorBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.redColor),
+            ),
+            disabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  width: 1.5,
+                  style: BorderStyle.solid,
+                  color: CustomColor.oldGreyColor),
+            ),
+          ),
+          validator: (value) {
+            if (isValidator) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your $title';
+              }
+              return null;
+            } else {
+              return null;
+            }
+          },
+        ),
+      ],
     );
   }
 }

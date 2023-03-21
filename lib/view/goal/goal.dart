@@ -76,18 +76,22 @@ class _GoalState extends State<Goal> {
     var img =
         await picker.pickImage(source: media, maxHeight: 480, maxWidth: 640);
     _onLoading();
-    await postGoalImage(id.toString(), img.path, img.name).then((val) {
-      if (val == 200) {
-        customSnackBar(context, false, val.toString());
-        Navigator.pop(context);
-        setState(() {
-          image = img;
-        });
-      } else {
-        customSnackBar(context, true, val.toString());
-        Navigator.pop(context);
-      }
-    });
+    if (img == null) {
+      Navigator.pop(context);
+    } else {
+      await postGoalImage(id.toString(), img.path, img.name).then((val) {
+        if (val == 200) {
+          customSnackBar(context, false, val.toString());
+          Navigator.pop(context);
+          setState(() {
+            image = img;
+          });
+        } else {
+          customSnackBar(context, true, val.toString());
+          Navigator.pop(context);
+        }
+      });
+    }
   }
 
   getData() async {
@@ -150,6 +154,9 @@ class _GoalState extends State<Goal> {
       kiriPerDay = kiriLeft / int.parse(tdate);
       kananPerDay = kananLeft / int.parse(tdate);
       sponsorPerDay = sponsorLeft / int.parse(tdateS);
+      kiriLeft = double.parse(kiriLeft.toStringAsFixed(0));
+      kananLeft = double.parse(kananLeft.toStringAsFixed(0));
+      sponsorLeft = double.parse(sponsorLeft.toStringAsFixed(0));
       kiriPerDay = double.parse(kiriPerDay.toStringAsFixed(0));
       kananPerDay = double.parse(kananPerDay.toStringAsFixed(0));
       sponsorPerDay = double.parse(sponsorPerDay.toStringAsFixed(0));
@@ -242,8 +249,8 @@ class _GoalState extends State<Goal> {
                                   radius: CustomScreen(context).width - 305,
                                 )
                               : CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      avatar ??= "assets/img/revver-bg-1.png"),
+                                  backgroundImage: NetworkImage(avatar ??=
+                                      "https://wallpaperaccess.com/full/733834.png"),
                                   radius: CustomScreen(context).width - 305,
                                 ),
                         ),
@@ -380,7 +387,7 @@ class _GoalState extends State<Goal> {
                           ),
                         )
                       : SizedBox(),
-                  SpacerHeight(h: 20),
+                  (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
                   (isDream)
                       ? Container(
                           decoration: BoxDecoration(
@@ -488,7 +495,7 @@ class _GoalState extends State<Goal> {
                           ),
                         )
                       : SizedBox(),
-                  SpacerHeight(h: 20),
+                  (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
                   (isDream)
                       ? Container(
                           decoration: BoxDecoration(
@@ -529,7 +536,7 @@ class _GoalState extends State<Goal> {
                           ),
                         )
                       : SizedBox(),
-                  SpacerHeight(h: 20),
+                  (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
                   (isDream)
                       ? Container(
                           decoration: BoxDecoration(
@@ -626,117 +633,147 @@ class _GoalState extends State<Goal> {
                         )
                       : SizedBox(),
                   (isDream) ? SpacerHeight(h: 40) : SpacerHeight(h: 0),
-                  Row(
-                    children: [
-                      Text(
-                        "Progress History",
-                        style: CustomFont(
-                                CustomColor.brownColor, 16, FontWeight.w700)
-                            .font,
-                      ),
-                    ],
-                  ),
-                  SpacerHeight(h: 20),
-                  (goal.isEmpty)
-                      ? Padding(
-                          padding: EdgeInsets.only(bottom: 20, top: 20),
-                          child: Text("No Record Progress!"),
-                        )
-                      : ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: goal.length,
-                          itemBuilder: ((context, index) {
-                            g.Goal gl = goal[index];
-                            String kiri = gl.kiri.toString();
-                            String kanan = gl.kanan.toString();
-                            String sponsor = gl.sponsor.toString();
-                            return Column(
+                  (isDream)
+                      ? Column(
+                          children: [
+                            Row(
                               children: [
-                                Slidable(
-                                  endActionPane: ActionPane(
-                                    motion: ScrollMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        onPressed: (val) {
-                                          deleteConfirmation(gl.id);
-                                        },
-                                        backgroundColor:
-                                            CustomColor.backgroundColor,
-                                        foregroundColor: CustomColor.brownColor,
-                                        label: "Delete Record",
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              "assets/svg/new-gold.svg"),
-                                          SpacerWidth(w: 10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "My Progress",
-                                                style: CustomFont(
-                                                        CustomColor.blackColor,
-                                                        14,
-                                                        FontWeight.w600)
-                                                    .font,
-                                              ),
-                                              Text(
-                                                "Ki: $kiri | Ka: $kanan | Sponsor: $sponsor",
-                                                style: CustomFont(
-                                                        CustomColor
-                                                            .oldGreyColor,
-                                                        9,
-                                                        FontWeight.w500)
-                                                    .font,
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.calendar_month,
-                                            color: CustomColor.oldGreyColor,
-                                            size: 12,
-                                          ),
-                                          SpacerWidth(w: 5),
-                                          Text(
-                                            gl.converted_date,
-                                            style: CustomFont(
-                                                    CustomColor.oldGreyColor,
-                                                    9,
-                                                    FontWeight.w300)
-                                                .font,
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Divider(
-                                  height: 30,
-                                  thickness: 1,
-                                  color: CustomColor.oldGreyColor,
+                                Text(
+                                  "Progress History",
+                                  style: CustomFont(CustomColor.brownColor, 16,
+                                          FontWeight.w700)
+                                      .font,
                                 ),
                               ],
-                            );
-                          }),
-                        ),
+                            ),
+                            SpacerHeight(h: 20),
+                            (goal.isEmpty)
+                                ? Padding(
+                                    padding:
+                                        EdgeInsets.only(bottom: 20, top: 20),
+                                    child: Text("No Record Progress!"),
+                                  )
+                                : ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: goal.length,
+                                    itemBuilder: ((context, index) {
+                                      g.Goal gl = goal[index];
+                                      String kiri = gl.kiri.toString();
+                                      String kanan = gl.kanan.toString();
+                                      String sponsor = gl.sponsor.toString();
+                                      return Column(
+                                        children: [
+                                          Slidable(
+                                            endActionPane: ActionPane(
+                                              motion: ScrollMotion(),
+                                              children: [
+                                                SlidableAction(
+                                                  onPressed: (val) {
+                                                    deleteConfirmation(gl.id);
+                                                  },
+                                                  backgroundColor: CustomColor
+                                                      .backgroundColor,
+                                                  foregroundColor:
+                                                      CustomColor.brownColor,
+                                                  label: "Delete Record",
+                                                ),
+                                              ],
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        "assets/svg/new-gold.svg"),
+                                                    SpacerWidth(w: 10),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          "My Progress",
+                                                          style: CustomFont(
+                                                                  CustomColor
+                                                                      .blackColor,
+                                                                  14,
+                                                                  FontWeight
+                                                                      .w600)
+                                                              .font,
+                                                        ),
+                                                        Text(
+                                                          "Ki: $kiri | Ka: $kanan | Sponsor: $sponsor",
+                                                          style: CustomFont(
+                                                                  CustomColor
+                                                                      .oldGreyColor,
+                                                                  9,
+                                                                  FontWeight
+                                                                      .w500)
+                                                              .font,
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.calendar_month,
+                                                      color: CustomColor
+                                                          .oldGreyColor,
+                                                      size: 12,
+                                                    ),
+                                                    SpacerWidth(w: 5),
+                                                    Text(
+                                                      gl.converted_date,
+                                                      style: CustomFont(
+                                                              CustomColor
+                                                                  .oldGreyColor,
+                                                              9,
+                                                              FontWeight.w300)
+                                                          .font,
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Divider(
+                                            height: 30,
+                                            thickness: 1,
+                                            color: CustomColor.oldGreyColor,
+                                          ),
+                                        ],
+                                      );
+                                    }),
+                                  ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            SizedBox(
+                              width: double.infinity,
+                              child: IconTextButton(
+                                title: "Buat Mimpi",
+                                buttonColor: CustomColor.brownColor,
+                                func: () {
+                                  GoRouter.of(context).push("/set-dream");
+                                  GoRouter.of(context).addListener(callbackSD);
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        )
                 ],
               ),
             ),
