@@ -177,18 +177,18 @@ class _SetDreamState extends State<SetDream> {
                                             title: "Hapus Mimpi Anda",
                                             iconTitle: "trash-can-solid.svg",
                                             buttonColor: CustomColor.redColor,
-                                            func: () async {
-                                              // deleteConfirmation(id);
-                                              await deleteGoal(id).then((val) {
-                                                if (val['status'] == 200) {
-                                                  customSnackBar(context, false,
-                                                      val['status'].toString());
-                                                  GoRouter.of(context).pop();
-                                                } else {
-                                                  customSnackBar(context, true,
-                                                      val['status'].toString());
-                                                }
-                                              });
+                                            func: () {
+                                              deleteConfirmation(id);
+                                              // await deleteGoal(id).then((val) {
+                                              //   if (val['status'] == 200) {
+                                              //     customSnackBar(context, false,
+                                              //         val['status'].toString());
+                                              //     GoRouter.of(context).pop();
+                                              //   } else {
+                                              //     customSnackBar(context, true,
+                                              //         val['status'].toString());
+                                              //   }
+                                              // });
                                             },
                                           ),
                                         ),
