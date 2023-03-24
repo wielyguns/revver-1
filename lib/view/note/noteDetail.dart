@@ -75,23 +75,12 @@ class _NoteDetailState extends State<NoteDetail> {
   @override
   Widget build(BuildContext context) {
     String tup = type.toUpperCase();
+    if (tup == "CHECKBOX") {
+      tup = "CHECKLIST";
+    }
     return KeyboardDismisser(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        // appBar: StandartHeader(
-        //   title: tup ??= "",
-        //   isPop: true,
-        //   svgName: "trash-can-solid.svg",
-        //   func: () async {
-        //     await deleteNote(id).then((val) {
-        //       if (val['status'] == 200) {
-        //         GoRouter.of(context).pop();
-        //       } else {
-        //         customSnackBar(context, true, val['status']);
-        //       }
-        //     });
-        //   },
-        // ),
         appBar: AppBar(
           leading: CupertinoNavigationBarBackButton(onPressed: () {
             GoRouter.of(context).pop();
@@ -167,7 +156,6 @@ class _NoteDetailState extends State<NoteDetail> {
                             if (isNumeric(widget.id)) {
                               // patch
                               int len = note_list.length;
-                              ;
                               await patchNote(
                                       id.toString(),
                                       titleController.text,

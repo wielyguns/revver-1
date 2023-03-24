@@ -38,7 +38,8 @@ class _CheckoutState extends State<Checkout> {
   TextEditingController contactController = TextEditingController();
   TextEditingController zipCodeController = TextEditingController();
 
-  String clientKey = "SB-Mid-client-gPdyvJ-T4J3doP8T";
+  // String clientKey = "SB-Mid-client-gPdyvJ-T4J3doP8T"; //Development
+  String clientKey = "Mid-client-mMuJwfBMRezwrVON"; //Production
   String url = "https://api.sandbox.midtrans.com";
 
   MidtransSDK _midtrans;
@@ -92,36 +93,11 @@ class _CheckoutState extends State<Checkout> {
             colorPrimary: CustomColor.brownColor,
             colorPrimaryDark: CustomColor.brownColor,
             colorSecondary: CustomColor.backgroundColor),
-        enableLog: true,
+        enableLog: false,
       ),
     );
     _midtrans?.setUIKitCustomSetting(
         skipCustomerDetailsPages: true, showPaymentStatus: true);
-    // _midtrans.setTransactionFinishedCallback((result) async {
-    //   if (result.isTransactionCanceled) {
-    //     customSnackBar(context, true, "Transaction Canceled");
-    //   } else {
-    //     await postOrderStore(
-    //             customer_id,
-    //             result.orderId,
-    //             firstNameController.text,
-    //             lastNameController.text,
-    //             addressController.text,
-    //             contactController.text,
-    //             selectedProvince.id.toString(),
-    //             selectedCity.id.toString(),
-    //             zipCodeController.text)
-    //         .then((val) {
-    //       if (val['status'] == 200) {
-    //         cart.deleteAllCart();
-    //         String id = val['data']['orders_dt'][0]['order_id'].toString();
-    //         GoRouter.of(context).push('/invoice/$id/false');
-    //       } else {
-    //         customSnackBar(context, true, val['status'].toString());
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   @override

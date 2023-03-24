@@ -81,11 +81,9 @@ class _GoalState extends State<Goal> {
     } else {
       await postGoalImage(id.toString(), img.path, img.name).then((val) {
         if (val == 200) {
+          getData();
           customSnackBar(context, false, val.toString());
           Navigator.pop(context);
-          setState(() {
-            image = img;
-          });
         } else {
           customSnackBar(context, true, val.toString());
           Navigator.pop(context);

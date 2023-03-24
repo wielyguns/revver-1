@@ -103,28 +103,66 @@ class _MyDownlineState extends State<MyDownline> {
                                         ),
                                         SpacerWidth(w: 10),
                                         Expanded(
-                                          child: Text(
-                                            mem.name ??= "",
-                                            style: CustomFont(
-                                                    CustomColor.blackColor,
-                                                    18,
-                                                    FontWeight.w600)
-                                                .font,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 2,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                mem.name ??= "",
+                                                style: CustomFont(
+                                                        CustomColor.blackColor,
+                                                        14,
+                                                        FontWeight.w600)
+                                                    .font,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                              ),
+                                              Text(
+                                                mem.stage_name ??= "",
+                                                style: CustomFont(
+                                                        CustomColor
+                                                            .oldGreyColor,
+                                                        12,
+                                                        FontWeight.w600)
+                                                    .font,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 2,
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         SpacerWidth(w: 10),
-                                        Text(
-                                          mem.stage_name ??= "",
-                                          style: CustomFont(
-                                                  CustomColor.oldGreyColor,
-                                                  14,
-                                                  FontWeight.w600)
-                                              .font,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                        ),
+                                        (mem.current_task != "null")
+                                            ? Container(
+                                                padding: EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                  color: CustomColor.redColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: Text(
+                                                  "Review Needed",
+                                                  style: CustomFont(
+                                                          CustomColor
+                                                              .whiteColor,
+                                                          10,
+                                                          FontWeight.w600)
+                                                      .font,
+                                                ),
+                                              )
+                                            : SizedBox(),
+                                        // Text(
+                                        //   mem.stage_name ??= "",
+                                        //   style: CustomFont(
+                                        //           CustomColor.oldGreyColor,
+                                        //           14,
+                                        //           FontWeight.w600)
+                                        //       .font,
+                                        //   overflow: TextOverflow.ellipsis,
+                                        //   maxLines: 2,
+                                        // ),
                                         SpacerWidth(w: 10),
                                       ],
                                     ),

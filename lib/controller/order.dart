@@ -8,9 +8,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 generateTokenMidtrans(String orderId, double totalPrice) async {
-  String serverKey = "SB-Mid-server-5UKRWMkpzEb1Ds9ERKd6uo7Z";
+  // String serverKey = "SB-Mid-server-5UKRWMkpzEb1Ds9ERKd6uo7Z"; //Development
+  // String url = 'https://app.sandbox.midtrans.com/snap/v1/transactions'; //Development
 
-  String url = 'https://app.sandbox.midtrans.com/snap/v1/transactions';
+  String serverKey = "Mid-server-IvvAI0yd9sKQ1mgMUvveavfT"; //Production
+  String url = 'https://app.midtrans.com/snap/v1/transactions'; //Production
 
   var authstring = base64.encode(utf8.encode(serverKey));
   var uri = Uri.parse(url);

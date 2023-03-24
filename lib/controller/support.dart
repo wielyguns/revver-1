@@ -37,6 +37,7 @@ getSupportMember() async {
       sponsor_id: data['sponsor_id'],
       stage_id: data['stage_id'],
       stage_name: data['stage']['name'],
+      current_task: data['current_task'].toString(),
     ));
   }
 

@@ -140,7 +140,7 @@ class _InvoiceState extends State<Invoice> {
                               ),
                               SpacerHeight(h: 20),
                               Text(
-                                "4945 Forest Avenue, New York\n10004, United States\n646-888-6885\nemail@email.com\nwww.website.com",
+                                "Jl. Letjen S.Parman No.106, RT.3 RW.5\nTj.Duren Selatan, Grogol Petamburan,\nJakarta Barat 11470",
                                 style: CustomFont.bold10,
                               ),
                               SpacerHeight(h: 20),

@@ -33,6 +33,13 @@ class _AccountState extends State<Account> {
     });
   }
 
+  callback() {
+    if (!GoRouter.of(context).location.contains("profile")) {
+      getHeader();
+      GoRouter.of(context).removeListener(callback);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -133,9 +140,10 @@ class _AccountState extends State<Account> {
                       children: [
                         Expanded(
                           child: ChangePasswordButton(
-                            title: "Profil",
+                            title: "Edit Profil",
                             func: () {
                               GoRouter.of(context).push("/profile");
+                              GoRouter.of(context).addListener(callback);
                             },
                           ),
                         ),

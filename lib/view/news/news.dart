@@ -24,6 +24,7 @@ class _NewsState extends State<News> {
     await getNews().then((val) {
       setState(() {
         news = val;
+        news.sort((a, b) => b.created_at.compareTo(a.created_at));
       });
     });
   }

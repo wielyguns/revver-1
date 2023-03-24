@@ -596,8 +596,8 @@ class SearchForm extends StatelessWidget {
   }
 }
 
-class DateTimeOnlyPickerForm extends StatefulWidget {
-  DateTimeOnlyPickerForm(
+class DateOnlyPickerForm extends StatefulWidget {
+  DateOnlyPickerForm(
       {Key key, this.title, this.hint, this.date, this.callback, this.icon})
       : super(key: key);
   final String title;
@@ -607,10 +607,10 @@ class DateTimeOnlyPickerForm extends StatefulWidget {
   final Function(DateTime) callback;
 
   @override
-  State<DateTimeOnlyPickerForm> createState() => _DateTimeOnlyPickerFormState();
+  State<DateOnlyPickerForm> createState() => _DateOnlyPickerFormState();
 }
 
-class _DateTimeOnlyPickerFormState extends State<DateTimeOnlyPickerForm> {
+class _DateOnlyPickerFormState extends State<DateOnlyPickerForm> {
   String dateString;
   @override
   void initState() {
@@ -807,7 +807,7 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
           top: false,
           child: CupertinoDatePicker(
             initialDateTime: widget.date,
-            mode: CupertinoDatePickerMode.date,
+            mode: CupertinoDatePickerMode.dateAndTime,
             use24hFormat: true,
             onDateTimeChanged: (DateTime newDate) {
               setState(() {

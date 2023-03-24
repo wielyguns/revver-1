@@ -34,3 +34,42 @@ void onLoading(
     },
   );
 }
+
+void deleteConfirmation(
+  BuildContext context,
+  String title,
+  String text,
+  Function func,
+) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title ??= 'Peringatan'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(text),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text(
+              'Tidak',
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Ya'),
+            onPressed: func,
+          ),
+        ],
+      );
+    },
+  );
+}

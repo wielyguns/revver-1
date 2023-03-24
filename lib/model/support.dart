@@ -10,6 +10,7 @@ class Member {
   int sponsor_id;
   int stage_id;
   String stage_name;
+  String current_task;
   Member({
     this.id,
     this.name,
@@ -17,6 +18,7 @@ class Member {
     this.sponsor_id,
     this.stage_id,
     this.stage_name,
+    this.current_task,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class Member {
       'sponsor_id': sponsor_id,
       'stage_id': stage_id,
       'stage_name': stage_name,
+      'current_task': current_task,
     };
   }
 
@@ -38,6 +41,7 @@ class Member {
       sponsor_id: map['sponsor_id'] as int,
       stage_id: map['stage_id'] as int,
       stage_name: map['stage_name'] as String,
+      current_task: map['current_task'] as String,
     );
   }
 

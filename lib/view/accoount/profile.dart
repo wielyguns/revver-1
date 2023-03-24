@@ -178,45 +178,6 @@ class _ProfileState extends State<Profile> {
                     )
                   ],
                 ),
-                // SpacerHeight(h: 20),
-                // image != null
-                //     ? GestureDetector(
-                //         onTap: () {
-                //           getImage(ImageSource.gallery);
-                //         },
-                //         child: SizedBox(
-                //           height: 80,
-                //           width: 80,
-                //           child: Stack(
-                //             clipBehavior: Clip.none,
-                //             fit: StackFit.expand,
-                //             children: [
-                //               CircleAvatar(
-                //                 backgroundImage: FileImage(File(image.path)),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       )
-                //     : GestureDetector(
-                //         onTap: () {
-                //           getImage(ImageSource.gallery);
-                //         },
-                //         child: SizedBox(
-                //           height: 80,
-                //           width: 80,
-                //           child: Stack(
-                //             clipBehavior: Clip.none,
-                //             fit: StackFit.expand,
-                //             children: [
-                //               CircleAvatar(
-                //                 backgroundImage: NetworkImage(avatar ??=
-                //                     "https://wallpaperaccess.com/full/733834.png"),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //       ),
                 SpacerHeight(h: 5),
                 RegularForm(
                   icon: 'assets/svg/new-user-edit.svg',
