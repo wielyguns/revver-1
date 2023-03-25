@@ -158,10 +158,10 @@ class _LeadMeetingState extends State<LeadMeeting> {
                           "1")
                       .then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                     }
                   });
                 } else {
@@ -175,10 +175,10 @@ class _LeadMeetingState extends State<LeadMeeting> {
                     "1",
                   ).then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                     }
                   });
                 }

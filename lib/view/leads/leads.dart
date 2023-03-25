@@ -90,6 +90,12 @@ class _LeadsState extends State<Leads> {
     }
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -106,68 +112,72 @@ class _LeadsState extends State<Leads> {
           isPop: false,
         ),
         body: SafeArea(
-          child: (isLoad)
-              ? Center(child: CupertinoActivityIndicator())
-              : (lead.isEmpty)
-                  ? Center(child: Text("Data lead tidak tersedia."))
-                  : SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: 35),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SpacerHeight(h: 20),
-                          Container(
-                            padding: EdgeInsets.all(20),
-                            decoration: BoxDecoration(
-                                color: CustomColor.whiteColor,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Column(
-                              children: [
-                                Text("Ringkasan Leads",
-                                    style: CustomFont(CustomColor.brownColor,
-                                            20, FontWeight.w700)
-                                        .font),
-                                SpacerHeight(h: 20),
-                                LeadsOverview(
-                                  cold: cold.length.toDouble(),
-                                  avarage: avarage,
-                                  converted: converted.length.toDouble(),
-                                  hot: hot.length.toDouble(),
-                                  potential: potential,
-                                  underAvarage: underAvarage,
-                                  warm: warm.length.toDouble(),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SpacerHeight(h: 20),
-                          Row(
+            child: (isLoad)
+                ? Center(child: CupertinoActivityIndicator())
+                : (lead.isEmpty)
+                    ? Center(child: Text("Data lead tidak tersedia."))
+                    : RefreshIndicator(
+                        onRefresh: _pullRefresh,
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          padding: EdgeInsets.symmetric(horizontal: 35),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: SearchForm(
-                                  controller: searchController,
-                                  callback: () {
-                                    getData();
-                                  },
+                              SpacerHeight(h: 20),
+                              Container(
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                    color: CustomColor.whiteColor,
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Column(
+                                  children: [
+                                    Text("Ringkasan Leads",
+                                        style: CustomFont(
+                                                CustomColor.brownColor,
+                                                20,
+                                                FontWeight.w700)
+                                            .font),
+                                    SpacerHeight(h: 20),
+                                    LeadsOverview(
+                                      cold: cold.length.toDouble(),
+                                      avarage: avarage,
+                                      converted: converted.length.toDouble(),
+                                      hot: hot.length.toDouble(),
+                                      potential: potential,
+                                      underAvarage: underAvarage,
+                                      warm: warm.length.toDouble(),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              SpacerWidth(w: 10),
-                              InkWell(
-                                onTap: (() {
-                                  filterModal(context);
-                                }),
-                                child: Icon(Icons.filter_list),
+                              SpacerHeight(h: 20),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: SearchForm(
+                                      controller: searchController,
+                                      callback: () {
+                                        getData();
+                                      },
+                                    ),
+                                  ),
+                                  SpacerWidth(w: 10),
+                                  InkWell(
+                                    onTap: (() {
+                                      filterModal(context);
+                                    }),
+                                    child: Icon(Icons.filter_list),
+                                  ),
+                                ],
                               ),
+                              SpacerHeight(h: 20),
+                              leadsList(),
+                              SpacerHeight(h: 60),
                             ],
                           ),
-                          SpacerHeight(h: 20),
-                          leadsList(),
-                          SpacerHeight(h: 60),
-                        ],
-                      ),
-                    ),
-        ),
+                        ),
+                      )),
         floatingActionButton: SizedBox(
           height: 40,
           width: 40,
@@ -792,7 +802,7 @@ class _LeadsState extends State<Leads> {
                   InkWell(
                     onTap: (() {
                       setState(() {
-                        selectedFilterFastScore = "avarage";
+                        selectedFilterFastScore = "average";
                       });
                       getData();
                       Navigator.pop(context);
@@ -816,7 +826,7 @@ class _LeadsState extends State<Leads> {
                   InkWell(
                     onTap: (() {
                       setState(() {
-                        selectedFilterFastScore = "underAvarage";
+                        selectedFilterFastScore = "underAverage";
                       });
                       getData();
                       Navigator.pop(context);

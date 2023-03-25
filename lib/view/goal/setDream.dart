@@ -350,10 +350,10 @@ class _SetDreamState extends State<SetDream> {
         //             descriptionController.text,
         //           ).then((val) {
         //             if (val['status'] == 200) {
-        //               customSnackBar(context, false, val['status'].toString());
+        //               customSnackBar(context, false, "Sukses");
         //               GoRouter.of(context).pop();
         //             } else {
-        //               customSnackBar(context, true, val['status'].toString());
+        //               customSnackBar(context, true, "Gagal");
         //             }
         //           });
         //         } else {
@@ -365,10 +365,10 @@ class _SetDreamState extends State<SetDream> {
         //             descriptionController.text,
         //           ).then((val) {
         //             if (val['status'] == 200) {
-        //               customSnackBar(context, false, val['status'].toString());
+        //               customSnackBar(context, false, "Sukses");
         //               GoRouter.of(context).pop();
         //             } else {
-        //               customSnackBar(context, true, val['status'].toString());
+        //               customSnackBar(context, true, "Gagal");
         //             }
         //           });
         //         }
@@ -410,11 +410,11 @@ class _SetDreamState extends State<SetDream> {
                 await deleteGoal(glid).then((val) {
                   if (val['status'] == 200) {
                     Navigator.of(context).pop();
-                    customSnackBar(context, false, val['status'].toString());
+                    customSnackBar(context, false, "Sukses");
                     GoRouter.of(context).pop();
                   } else {
                     Navigator.of(context).pop();
-                    customSnackBar(context, true, val['status'].toString());
+                    customSnackBar(context, true, "Gagal");
                   }
                 });
               },

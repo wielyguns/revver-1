@@ -37,6 +37,12 @@ class _ProductState extends State<Product> {
     });
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -49,44 +55,46 @@ class _ProductState extends State<Product> {
     final double itemWidth = size.width / 2;
     return KeyboardDismisser(
       child: Scaffold(
-        appBar: CustomHeader(
-          title: "Product",
-          // svgName: "new-cart.svg",
-          // route: "/cart",
-          isPop: true,
-        ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Column(
-            children: [
-              SearchForm(
-                controller: searchController,
-                callback: () {
-                  getData();
-                },
-              ),
-              SpacerHeight(h: 20),
-              (isLoad)
-                  ? Center(child: CupertinoActivityIndicator())
-                  : GridView.count(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio: (itemWidth / 250),
-                      children: List.generate(product.length, (index) {
-                        p.Product prod = product[index];
-                        return _sliderBox(
-                            prod.product_image, prod.name, prod.price, prod.id);
-                      }),
-                    ),
-              SpacerHeight(h: 20),
-            ],
+          appBar: CustomHeader(
+            title: "Product",
+            // svgName: "new-cart.svg",
+            // route: "/cart",
+            isPop: true,
           ),
-        ),
-      ),
+          body: RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+              child: Column(
+                children: [
+                  SearchForm(
+                    controller: searchController,
+                    callback: () {
+                      getData();
+                    },
+                  ),
+                  SpacerHeight(h: 20),
+                  (isLoad)
+                      ? Center(child: CupertinoActivityIndicator())
+                      : GridView.count(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                          childAspectRatio: (itemWidth / 250),
+                          children: List.generate(product.length, (index) {
+                            p.Product prod = product[index];
+                            return _sliderBox(prod.product_image, prod.name,
+                                prod.price, prod.id);
+                          }),
+                        ),
+                  SpacerHeight(h: 20),
+                ],
+              ),
+            ),
+          )),
     );
   }
 

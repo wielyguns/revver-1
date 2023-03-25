@@ -136,10 +136,10 @@ class _PersonalEventState extends State<PersonalEvent> {
                           "0")
                       .then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                     }
                   });
                 } else {
@@ -153,10 +153,10 @@ class _PersonalEventState extends State<PersonalEvent> {
                     "0",
                   ).then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                     }
                   });
                 }

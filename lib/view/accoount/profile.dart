@@ -56,6 +56,12 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -78,180 +84,184 @@ class _ProfileState extends State<Profile> {
           backgroundColor: CustomColor.backgroundColor,
           elevation: 0,
         ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 35),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                SpacerHeight(h: 20),
-                Stack(
-                  children: [
-                    Container(
-                      height: 140,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/img/revver-bg.jpg'),
-                          fit: BoxFit.cover,
+        body: RefreshIndicator(
+          onRefresh: _pullRefresh,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(horizontal: 35),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  SpacerHeight(h: 20),
+                  Stack(
+                    children: [
+                      Container(
+                        height: 140,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/img/revver-bg.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Edit Profile",
-                          style: CustomFont(
-                                  CustomColor.whiteColor, 32, FontWeight.w600)
-                              .font,
+                        child: Center(
+                          child: Text(
+                            "Edit Profile",
+                            style: CustomFont(
+                                    CustomColor.whiteColor, 32, FontWeight.w600)
+                                .font,
+                          ),
                         ),
                       ),
-                    ),
-                    Column(
-                      children: [
-                        SpacerHeight(h: 100),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: CustomColor.whiteColor,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              padding: EdgeInsets.all(5),
-                              height: 80,
-                              width: 80,
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                fit: StackFit.expand,
-                                children: [
-                                  image != null
-                                      ? GestureDetector(
-                                          onTap: () {
-                                            getImage(ImageSource.gallery);
-                                          },
-                                          child: SizedBox(
-                                            height: 80,
-                                            width: 80,
-                                            child: Stack(
-                                              clipBehavior: Clip.none,
-                                              fit: StackFit.expand,
-                                              children: [
-                                                CircleAvatar(
-                                                  backgroundImage: FileImage(
-                                                      File(image.path)),
-                                                ),
-                                              ],
+                      Column(
+                        children: [
+                          SpacerHeight(h: 100),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: CustomColor.whiteColor,
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                padding: EdgeInsets.all(5),
+                                height: 80,
+                                width: 80,
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  fit: StackFit.expand,
+                                  children: [
+                                    image != null
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              getImage(ImageSource.gallery);
+                                            },
+                                            child: SizedBox(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                clipBehavior: Clip.none,
+                                                fit: StackFit.expand,
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundImage: FileImage(
+                                                        File(image.path)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : GestureDetector(
+                                            onTap: () {
+                                              getImage(ImageSource.gallery);
+                                            },
+                                            child: SizedBox(
+                                              height: 80,
+                                              width: 80,
+                                              child: Stack(
+                                                clipBehavior: Clip.none,
+                                                fit: StackFit.expand,
+                                                children: [
+                                                  CircleAvatar(
+                                                    backgroundImage:
+                                                        NetworkImage(avatar ??=
+                                                            "https://wallpaperaccess.com/full/733834.png"),
+                                                  ),
+                                                  Icon(
+                                                    Icons.edit,
+                                                    size: 20,
+                                                    color:
+                                                        CustomColor.whiteColor,
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        )
-                                      : GestureDetector(
-                                          onTap: () {
-                                            getImage(ImageSource.gallery);
-                                          },
-                                          child: SizedBox(
-                                            height: 80,
-                                            width: 80,
-                                            child: Stack(
-                                              clipBehavior: Clip.none,
-                                              fit: StackFit.expand,
-                                              children: [
-                                                CircleAvatar(
-                                                  backgroundImage: NetworkImage(
-                                                      avatar ??=
-                                                          "https://wallpaperaccess.com/full/733834.png"),
-                                                ),
-                                                Icon(
-                                                  Icons.edit,
-                                                  size: 20,
-                                                  color: CustomColor.whiteColor,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  SpacerHeight(h: 5),
+                  RegularForm(
+                    icon: 'assets/svg/new-user-edit.svg',
+                    title: "Full Name",
+                    hint: "Your Full Name",
+                    isValidator: false,
+                    controller: nameController,
+                  ),
+                  SpacerHeight(h: 20),
+                  RegularForm(
+                    icon: 'assets/svg/new-user.svg',
+                    title: "Username",
+                    hint: "Your Username",
+                    isValidator: false,
+                    controller: usernameController,
+                  ),
+                  SpacerHeight(h: 20),
+                  RegularForm(
+                    icon: 'assets/svg/new-id-card.svg',
+                    title: "Sponsor ID",
+                    hint: "Your Sponsor ID",
+                    isValidator: false,
+                    controller: sponsorIdController,
+                    readOnly: true,
+                  ),
+                  SpacerHeight(h: 20),
+                  RegularForm(
+                    icon: 'assets/svg/new-phone.svg',
+                    title: "Phone",
+                    hint: "Your Phone",
+                    isValidator: false,
+                    controller: phoneController,
+                  ),
+                  SpacerHeight(h: 20),
+                  RegularForm(
+                    icon: 'assets/svg/new-email.svg',
+                    title: "Email",
+                    hint: "Your Email",
+                    isValidator: false,
+                    readOnly: true,
+                    controller: emailController,
+                  ),
+                  SpacerHeight(h: 20),
+                  RegularForm(
+                    icon: 'assets/svg/new-email.svg',
+                    title: "Secondary Email",
+                    hint: "Your Secondary Email",
+                    isValidator: false,
+                    controller: secondaryEmailController,
+                  ),
+                  SpacerHeight(h: 30),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: IconTextButton(
+                          buttonColor: CustomColor.backgroundColor,
+                          borderColor: CustomColor.brownColor,
+                          textColor: CustomColor.brownColor,
+                          title: "Delete Account",
+                          func: () async {
+                            await deleteAccount(id).then((val) {
+                              if (val['status'] == 200) {
+                                GoRouter.of(context).go('/login');
+                              } else {
+                                customSnackBar(context, true, val['message']);
+                              }
+                            });
+                          },
                         ),
-                      ],
-                    )
-                  ],
-                ),
-                SpacerHeight(h: 5),
-                RegularForm(
-                  icon: 'assets/svg/new-user-edit.svg',
-                  title: "Full Name",
-                  hint: "Your Full Name",
-                  isValidator: false,
-                  controller: nameController,
-                ),
-                SpacerHeight(h: 20),
-                RegularForm(
-                  icon: 'assets/svg/new-user.svg',
-                  title: "Username",
-                  hint: "Your Username",
-                  isValidator: false,
-                  controller: usernameController,
-                ),
-                SpacerHeight(h: 20),
-                RegularForm(
-                  icon: 'assets/svg/new-id-card.svg',
-                  title: "Sponsor ID",
-                  hint: "Your Sponsor ID",
-                  isValidator: false,
-                  controller: sponsorIdController,
-                  readOnly: true,
-                ),
-                SpacerHeight(h: 20),
-                RegularForm(
-                  icon: 'assets/svg/new-phone.svg',
-                  title: "Phone",
-                  hint: "Your Phone",
-                  isValidator: false,
-                  controller: phoneController,
-                ),
-                SpacerHeight(h: 20),
-                RegularForm(
-                  icon: 'assets/svg/new-email.svg',
-                  title: "Email",
-                  hint: "Your Email",
-                  isValidator: false,
-                  readOnly: true,
-                  controller: emailController,
-                ),
-                SpacerHeight(h: 20),
-                RegularForm(
-                  icon: 'assets/svg/new-email.svg',
-                  title: "Secondary Email",
-                  hint: "Your Secondary Email",
-                  isValidator: false,
-                  controller: secondaryEmailController,
-                ),
-                SpacerHeight(h: 30),
-                Row(
-                  children: [
-                    Expanded(
-                      child: IconTextButton(
-                        buttonColor: CustomColor.backgroundColor,
-                        borderColor: CustomColor.brownColor,
-                        textColor: CustomColor.brownColor,
-                        title: "Delete Account",
-                        func: () async {
-                          await deleteAccount(id).then((val) {
-                            if (val['status'] == 200) {
-                              GoRouter.of(context).go('/login');
-                            } else {
-                              customSnackBar(context, true, val['message']);
-                            }
-                          });
-                        },
                       ),
-                    ),
-                  ],
-                ),
-                SpacerHeight(h: 20),
-              ],
+                    ],
+                  ),
+                  SpacerHeight(h: 20),
+                ],
+              ),
             ),
           ),
         ),

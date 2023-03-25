@@ -34,6 +34,12 @@ class _ELearningState extends State<ELearning> {
     });
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     getData();
@@ -52,28 +58,31 @@ class _ELearningState extends State<ELearning> {
           route: "/cart",
           isPop: true,
         ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Column(
-            children: [
-              (isLoad)
-                  ? Center(child: CupertinoActivityIndicator())
-                  : GridView.count(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 20,
-                      childAspectRatio: (itemWidth / 300),
-                      children: List.generate(eLearning.length, (index) {
-                        e.ELearning prod = eLearning[index];
-                        return _sliderBox(
-                            prod.thumbnail, prod.name, prod.price, prod.id);
-                      }),
-                    ),
-              SpacerHeight(h: 20),
-            ],
+        body: RefreshIndicator(
+          onRefresh: _pullRefresh,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: Column(
+              children: [
+                (isLoad)
+                    ? Center(child: CupertinoActivityIndicator())
+                    : GridView.count(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        childAspectRatio: (itemWidth / 300),
+                        children: List.generate(eLearning.length, (index) {
+                          e.ELearning prod = eLearning[index];
+                          return _sliderBox(
+                              prod.thumbnail, prod.name, prod.price, prod.id);
+                        }),
+                      ),
+                SpacerHeight(h: 20),
+              ],
+            ),
           ),
         ),
       ),

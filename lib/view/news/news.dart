@@ -29,6 +29,12 @@ class _NewsState extends State<News> {
     });
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
@@ -42,38 +48,42 @@ class _NewsState extends State<News> {
         title: "News & Updates",
         isPop: true,
       ),
-      body: (news == null)
-          ? Center(child: CupertinoActivityIndicator())
-          : ListView.separated(
-              itemCount: news.length,
-              itemBuilder: (context, index) {
-                n.News nws = news[index];
-                return Column(
-                  children: [
-                    (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
-                    newsWidget(
-                      nws.image ??=
-                          "https://wallpaperaccess.com/full/733834.png",
-                      nws.title ??= "...",
-                      nws.created_at ??= "...",
-                      nws.id ??= 0,
+      body: RefreshIndicator(
+        onRefresh: _pullRefresh,
+        child: (news == null)
+            ? Center(child: CupertinoActivityIndicator())
+            : ListView.separated(
+                physics: BouncingScrollPhysics(),
+                itemCount: news.length,
+                itemBuilder: (context, index) {
+                  n.News nws = news[index];
+                  return Column(
+                    children: [
+                      (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
+                      newsWidget(
+                        nws.image ??=
+                            "https://wallpaperaccess.com/full/733834.png",
+                        nws.title ??= "...",
+                        nws.created_at ??= "...",
+                        nws.id ??= 0,
+                      ),
+                      (index == news.length - 1)
+                          ? SpacerHeight(h: 20)
+                          : SizedBox(),
+                    ],
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                    child: Divider(
+                      thickness: 2,
+                      color: CustomColor.brownColor.withOpacity(0.5),
                     ),
-                    (index == news.length - 1)
-                        ? SpacerHeight(h: 20)
-                        : SizedBox(),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-                  child: Divider(
-                    thickness: 2,
-                    color: CustomColor.brownColor.withOpacity(0.5),
-                  ),
-                );
-              },
-            ),
+                  );
+                },
+              ),
+      ),
     );
   }
 

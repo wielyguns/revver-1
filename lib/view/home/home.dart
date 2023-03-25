@@ -86,6 +86,10 @@ class _HomeState extends State<Home> {
 
   Future<void> _pullRefresh() async {
     await Future.delayed(Duration(seconds: 1));
+    getDataHeader();
+    getNewsList();
+    getProductList();
+    getBanner();
     setState(() {});
   }
 

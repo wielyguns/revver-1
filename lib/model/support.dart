@@ -94,3 +94,39 @@ class Indicator {
   factory Indicator.fromJson(String source) =>
       Indicator.fromMap(json.decode(source) as Map<String, dynamic>);
 }
+
+class CurrentTask {
+  int current_task_id;
+  String current_task_title;
+  String current_task_content;
+  int current_task_status;
+  CurrentTask({
+    this.current_task_id,
+    this.current_task_title,
+    this.current_task_content,
+    this.current_task_status,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'current_task_id': current_task_id,
+      'current_task_title': current_task_title,
+      'current_task_content': current_task_content,
+      'current_task_status': current_task_status,
+    };
+  }
+
+  factory CurrentTask.fromMap(Map<String, dynamic> map) {
+    return CurrentTask(
+      current_task_id: map['current_task_id'] as int,
+      current_task_title: map['current_task_title'] as String,
+      current_task_content: map['current_task_content'] as String,
+      current_task_status: map['current_task_status'] as int,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory CurrentTask.fromJson(String source) =>
+      CurrentTask.fromMap(json.decode(source) as Map<String, dynamic>);
+}

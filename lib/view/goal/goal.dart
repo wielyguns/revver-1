@@ -194,6 +194,12 @@ class _GoalState extends State<Goal> {
     }
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     Timer.run(() {
@@ -217,562 +223,569 @@ class _GoalState extends State<Goal> {
       ),
       body: (isLoad)
           ? Center(child: CupertinoActivityIndicator())
-          : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 35),
-              child: Column(
-                children: [
-                  SpacerHeight(h: 20),
-                  Container(
-                    height: MediaQuery.of(context).size.height -
-                        (MediaQuery.of(context).padding.top + kToolbarHeight) -
-                        kBottomNavigationBarHeight -
-                        150,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF3A515F),
-                      borderRadius: BorderRadius.circular(20),
-                      // color: CustomColor.brownColor,
-                      image: DecorationImage(
-                        image: AssetImage("assets/img/revver-bg.jpg"),
-                        opacity: 0.1,
-                        fit: BoxFit.cover,
+          : RefreshIndicator(
+              onRefresh: _pullRefresh,
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 35),
+                child: Column(
+                  children: [
+                    SpacerHeight(h: 20),
+                    Container(
+                      height: MediaQuery.of(context).size.height -
+                          (MediaQuery.of(context).padding.top +
+                              kToolbarHeight) -
+                          kBottomNavigationBarHeight -
+                          150,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF3A515F),
+                        borderRadius: BorderRadius.circular(20),
+                        // color: CustomColor.brownColor,
+                        image: DecorationImage(
+                          image: AssetImage("assets/img/revver-bg.jpg"),
+                          opacity: 0.1,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: image != null
+                                ? CircleAvatar(
+                                    backgroundImage:
+                                        FileImage(File(image.path)),
+                                    radius: CustomScreen(context).width - 305,
+                                  )
+                                : CircleAvatar(
+                                    backgroundImage: NetworkImage(avatar ??=
+                                        "https://wallpaperaccess.com/full/733834.png"),
+                                    radius: CustomScreen(context).width - 305,
+                                  ),
+                          ),
+                          radialGauge(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    target_title ??= "Your Dream",
+                                    style: CustomFont(CustomColor.whiteColor,
+                                            22, FontWeight.w700)
+                                        .font,
+                                  ),
+                                  Text(
+                                    "Deadline in $tdate Days",
+                                    style: CustomFont(CustomColor.brownColor,
+                                            16, FontWeight.w400)
+                                        .font,
+                                  ),
+                                  SizedBox(height: 5),
+                                  InkWell(
+                                    onTap: (() {
+                                      introduction();
+                                    }),
+                                    child: Icon(
+                                      Icons.info,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: image != null
-                              ? CircleAvatar(
-                                  backgroundImage: FileImage(File(image.path)),
-                                  radius: CustomScreen(context).width - 305,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: NetworkImage(avatar ??=
-                                      "https://wallpaperaccess.com/full/733834.png"),
-                                  radius: CustomScreen(context).width - 305,
+                    SpacerHeight(h: 20),
+                    (isDream)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: CustomColor.backgroundColor,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 0,
+                                  blurRadius: 13,
+                                  offset: Offset(0, 3),
                                 ),
-                        ),
-                        radialGauge(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              ],
+                            ),
+                            child: Column(
                               children: [
+                                SizedBox(height: 15),
                                 Text(
-                                  target_title ??= "Your Dream",
-                                  style: CustomFont(CustomColor.whiteColor, 22,
+                                  "Current",
+                                  style: CustomFont(CustomColor.brownColor, 16,
                                           FontWeight.w700)
                                       .font,
                                 ),
-                                Text(
-                                  "Deadline in $tdate Days",
-                                  style: CustomFont(CustomColor.brownColor, 16,
-                                          FontWeight.w400)
-                                      .font,
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Kiri",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          kiri ??= "",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Kanan",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          kanan ??= "",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Sponsor",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          sponsor_count ??= "",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 5),
-                                InkWell(
-                                  onTap: (() {
-                                    introduction();
-                                  }),
-                                  child: Icon(
-                                    Icons.info,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(height: 20),
+                                SizedBox(height: 15),
                               ],
                             ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  SpacerHeight(h: 20),
-                  (isDream)
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: CustomColor.backgroundColor,
-                            borderRadius: BorderRadius.circular(15.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
-                                spreadRadius: 0,
-                                blurRadius: 13,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
+                          )
+                        : SizedBox(),
+                    (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
+                    (isDream)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: CustomColor.backgroundColor,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 0,
+                                  blurRadius: 13,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Total Pair ",
+                                      style: CustomFont(CustomColor.brownColor,
+                                              16, FontWeight.w700)
+                                          .font,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      totalPair.toString(),
+                                      style: CustomFont(CustomColor.blackColor,
+                                              16, FontWeight.w700)
+                                          .font,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Kiri",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          kiriLeft.toString(),
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Kanan",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          kananLeft.toString(),
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Sponsor",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          sponsorLeft.toString(),
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 15),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
+                    (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
+                    (isDream)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: CustomColor.backgroundColor,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 0,
+                                  blurRadius: 13,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 15),
+                                Text(
+                                  "Sisa Target Date Sponsor",
+                                  style: CustomFont(CustomColor.brownColor, 16,
+                                          FontWeight.w700)
+                                      .font,
+                                ),
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      tdateS,
+                                      style: CustomFont(CustomColor.blackColor,
+                                              16, FontWeight.w700)
+                                          .font,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 15),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
+                    (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
+                    (isDream)
+                        ? Container(
+                            decoration: BoxDecoration(
+                              color: CustomColor.backgroundColor,
+                              borderRadius: BorderRadius.circular(15.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 0,
+                                  blurRadius: 13,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 15),
+                                Text(
+                                  "Min Pair per Day",
+                                  style: CustomFont(CustomColor.brownColor, 16,
+                                          FontWeight.w700)
+                                      .font,
+                                ),
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Kiri",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          kiriPerDay.toString(),
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Kanan",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          kananPerDay.toString(),
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          "Sponsor",
+                                          style: CustomFont(
+                                                  CustomColor.oldGreyColor,
+                                                  12,
+                                                  FontWeight.w400)
+                                              .font,
+                                        ),
+                                        Text(
+                                          sponsorPerDay.toString(),
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  14,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 15),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
+                    (isDream) ? SpacerHeight(h: 40) : SpacerHeight(h: 0),
+                    (isDream)
+                        ? Column(
                             children: [
-                              SizedBox(height: 15),
-                              Text(
-                                "Current",
-                                style: CustomFont(CustomColor.brownColor, 16,
-                                        FontWeight.w700)
-                                    .font,
-                              ),
-                              SizedBox(height: 15),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Kiri",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        kiri ??= "",
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Kanan",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        kanan ??= "",
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Sponsor",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        sponsor_count ??= "",
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 15),
-                            ],
-                          ),
-                        )
-                      : SizedBox(),
-                  (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
-                  (isDream)
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: CustomColor.backgroundColor,
-                            borderRadius: BorderRadius.circular(15.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
-                                spreadRadius: 0,
-                                blurRadius: 13,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Total Pair ",
+                                    "Progress History",
                                     style: CustomFont(CustomColor.brownColor,
                                             16, FontWeight.w700)
                                         .font,
                                   ),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    totalPair.toString(),
-                                    style: CustomFont(CustomColor.blackColor,
-                                            16, FontWeight.w700)
-                                        .font,
-                                  ),
                                 ],
                               ),
-                              SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Kiri",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        kiriLeft.toString(),
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Kanan",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        kananLeft.toString(),
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Sponsor",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        sponsorLeft.toString(),
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 15),
+                              SpacerHeight(h: 20),
+                              (goal.isEmpty)
+                                  ? Padding(
+                                      padding:
+                                          EdgeInsets.only(bottom: 20, top: 20),
+                                      child: Text("No Record Progress!"),
+                                    )
+                                  : ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: goal.length,
+                                      itemBuilder: ((context, index) {
+                                        g.Goal gl = goal[index];
+                                        String kiri = gl.kiri.toString();
+                                        String kanan = gl.kanan.toString();
+                                        String sponsor = gl.sponsor.toString();
+                                        return Column(
+                                          children: [
+                                            Slidable(
+                                              endActionPane: ActionPane(
+                                                motion: ScrollMotion(),
+                                                children: [
+                                                  SlidableAction(
+                                                    onPressed: (val) {
+                                                      deleteConfirmation(gl.id);
+                                                    },
+                                                    backgroundColor: CustomColor
+                                                        .backgroundColor,
+                                                    foregroundColor:
+                                                        CustomColor.brownColor,
+                                                    label: "Delete Record",
+                                                  ),
+                                                ],
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          "assets/svg/new-gold.svg"),
+                                                      SpacerWidth(w: 10),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            "My Progress",
+                                                            style: CustomFont(
+                                                                    CustomColor
+                                                                        .blackColor,
+                                                                    14,
+                                                                    FontWeight
+                                                                        .w600)
+                                                                .font,
+                                                          ),
+                                                          Text(
+                                                            "Ki: $kiri | Ka: $kanan | Sponsor: $sponsor",
+                                                            style: CustomFont(
+                                                                    CustomColor
+                                                                        .oldGreyColor,
+                                                                    9,
+                                                                    FontWeight
+                                                                        .w500)
+                                                                .font,
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.calendar_month,
+                                                        color: CustomColor
+                                                            .oldGreyColor,
+                                                        size: 12,
+                                                      ),
+                                                      SpacerWidth(w: 5),
+                                                      Text(
+                                                        gl.converted_date,
+                                                        style: CustomFont(
+                                                                CustomColor
+                                                                    .oldGreyColor,
+                                                                9,
+                                                                FontWeight.w300)
+                                                            .font,
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 30,
+                                              thickness: 1,
+                                              color: CustomColor.oldGreyColor,
+                                            ),
+                                          ],
+                                        );
+                                      }),
+                                    ),
                             ],
-                          ),
-                        )
-                      : SizedBox(),
-                  (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
-                  (isDream)
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: CustomColor.backgroundColor,
-                            borderRadius: BorderRadius.circular(15.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
-                                spreadRadius: 0,
-                                blurRadius: 13,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
+                          )
+                        : Column(
                             children: [
-                              SizedBox(height: 15),
-                              Text(
-                                "Sisa Target Date Sponsor",
-                                style: CustomFont(CustomColor.brownColor, 16,
-                                        FontWeight.w700)
-                                    .font,
-                              ),
-                              SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    tdateS,
-                                    style: CustomFont(CustomColor.blackColor,
-                                            16, FontWeight.w700)
-                                        .font,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 15),
-                            ],
-                          ),
-                        )
-                      : SizedBox(),
-                  (isDream) ? SpacerHeight(h: 20) : SpacerHeight(h: 0),
-                  (isDream)
-                      ? Container(
-                          decoration: BoxDecoration(
-                            color: CustomColor.backgroundColor,
-                            borderRadius: BorderRadius.circular(15.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.5),
-                                spreadRadius: 0,
-                                blurRadius: 13,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 15),
-                              Text(
-                                "Min Pair per Day",
-                                style: CustomFont(CustomColor.brownColor, 16,
-                                        FontWeight.w700)
-                                    .font,
-                              ),
-                              SizedBox(height: 15),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Kiri",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        kiriPerDay.toString(),
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Kanan",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        kananPerDay.toString(),
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Sponsor",
-                                        style: CustomFont(
-                                                CustomColor.oldGreyColor,
-                                                12,
-                                                FontWeight.w400)
-                                            .font,
-                                      ),
-                                      Text(
-                                        sponsorPerDay.toString(),
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                14,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 15),
-                            ],
-                          ),
-                        )
-                      : SizedBox(),
-                  (isDream) ? SpacerHeight(h: 40) : SpacerHeight(h: 0),
-                  (isDream)
-                      ? Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Progress History",
-                                  style: CustomFont(CustomColor.brownColor, 16,
-                                          FontWeight.w700)
-                                      .font,
+                              SizedBox(
+                                width: double.infinity,
+                                child: IconTextButton(
+                                  title: "Buat Mimpi",
+                                  buttonColor: CustomColor.brownColor,
+                                  func: () {
+                                    GoRouter.of(context).push("/set-dream");
+                                    GoRouter.of(context)
+                                        .addListener(callbackSD);
+                                  },
                                 ),
-                              ],
-                            ),
-                            SpacerHeight(h: 20),
-                            (goal.isEmpty)
-                                ? Padding(
-                                    padding:
-                                        EdgeInsets.only(bottom: 20, top: 20),
-                                    child: Text("No Record Progress!"),
-                                  )
-                                : ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: goal.length,
-                                    itemBuilder: ((context, index) {
-                                      g.Goal gl = goal[index];
-                                      String kiri = gl.kiri.toString();
-                                      String kanan = gl.kanan.toString();
-                                      String sponsor = gl.sponsor.toString();
-                                      return Column(
-                                        children: [
-                                          Slidable(
-                                            endActionPane: ActionPane(
-                                              motion: ScrollMotion(),
-                                              children: [
-                                                SlidableAction(
-                                                  onPressed: (val) {
-                                                    deleteConfirmation(gl.id);
-                                                  },
-                                                  backgroundColor: CustomColor
-                                                      .backgroundColor,
-                                                  foregroundColor:
-                                                      CustomColor.brownColor,
-                                                  label: "Delete Record",
-                                                ),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                        "assets/svg/new-gold.svg"),
-                                                    SpacerWidth(w: 10),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          "My Progress",
-                                                          style: CustomFont(
-                                                                  CustomColor
-                                                                      .blackColor,
-                                                                  14,
-                                                                  FontWeight
-                                                                      .w600)
-                                                              .font,
-                                                        ),
-                                                        Text(
-                                                          "Ki: $kiri | Ka: $kanan | Sponsor: $sponsor",
-                                                          style: CustomFont(
-                                                                  CustomColor
-                                                                      .oldGreyColor,
-                                                                  9,
-                                                                  FontWeight
-                                                                      .w500)
-                                                              .font,
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Icon(
-                                                      Icons.calendar_month,
-                                                      color: CustomColor
-                                                          .oldGreyColor,
-                                                      size: 12,
-                                                    ),
-                                                    SpacerWidth(w: 5),
-                                                    Text(
-                                                      gl.converted_date,
-                                                      style: CustomFont(
-                                                              CustomColor
-                                                                  .oldGreyColor,
-                                                              9,
-                                                              FontWeight.w300)
-                                                          .font,
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          Divider(
-                                            height: 30,
-                                            thickness: 1,
-                                            color: CustomColor.oldGreyColor,
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                                  ),
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              child: IconTextButton(
-                                title: "Buat Mimpi",
-                                buttonColor: CustomColor.brownColor,
-                                func: () {
-                                  GoRouter.of(context).push("/set-dream");
-                                  GoRouter.of(context).addListener(callbackSD);
-                                },
                               ),
-                            ),
-                            SizedBox(height: 20),
-                          ],
-                        )
-                ],
+                              SizedBox(height: 20),
+                            ],
+                          )
+                  ],
+                ),
               ),
             ),
       bottomNavigationBar: (!isDream)
@@ -865,11 +878,11 @@ class _GoalState extends State<Goal> {
               onPressed: () async {
                 await deleteRecordProgress(glid).then((val) {
                   if (val['status'] == 200) {
-                    customSnackBar(context, false, val['status'].toString());
+                    customSnackBar(context, false, "Sukses");
                     Navigator.of(context).pop();
                     getData();
                   } else {
-                    customSnackBar(context, true, val['status'].toString());
+                    customSnackBar(context, true, "Gagal");
                   }
                 });
               },
