@@ -464,16 +464,20 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                                   child: CustomButton(
                                     title: "Delete Account",
                                     color: CustomColor.redColor,
-                                    func: () async {
-                                      await deleteLeads(id).then((val) {
-                                        if (val['status'] == 200) {
-                                          customSnackBar(context, false,
-                                              val['status'].toString());
-                                          GoRouter.of(context).pop();
-                                        } else {
-                                          customSnackBar(context, true,
-                                              val['status'].toString());
-                                        }
+                                    func: () {
+                                      deleteConfirmation(context, "Peringatan",
+                                          'Apakah anda yakin ingin menghapus Lead ini?',
+                                          () async {
+                                        await deleteLeads(id).then((val) {
+                                          if (val['status'] == 200) {
+                                            customSnackBar(context, false,
+                                                val['status'].toString());
+                                            GoRouter.of(context).pop();
+                                          } else {
+                                            customSnackBar(context, true,
+                                                val['status'].toString());
+                                          }
+                                        });
                                       });
                                     },
                                   ),

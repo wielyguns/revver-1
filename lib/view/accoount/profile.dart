@@ -246,13 +246,17 @@ class _ProfileState extends State<Profile> {
                           borderColor: CustomColor.brownColor,
                           textColor: CustomColor.brownColor,
                           title: "Delete Account",
-                          func: () async {
-                            await deleteAccount(id).then((val) {
-                              if (val['status'] == 200) {
-                                GoRouter.of(context).go('/login');
-                              } else {
-                                customSnackBar(context, true, val['message']);
-                              }
+                          func: () {
+                            deleteConfirmation(context, "Peringatan",
+                                'Apakah anda yakin ingin menghapus Lead ini?',
+                                () async {
+                              await deleteAccount(id).then((val) {
+                                if (val['status'] == 200) {
+                                  GoRouter.of(context).go('/login');
+                                } else {
+                                  customSnackBar(context, true, val['message']);
+                                }
+                              });
                             });
                           },
                         ),

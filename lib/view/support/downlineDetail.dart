@@ -49,42 +49,6 @@ class _DownlineDetailState extends State<DownlineDetail> {
         }
         isLoad = false;
       });
-      // if (val['data']['current_task'] == null) {
-      //   setState(() {
-      //     current_task = false;
-      //     id = val['data']['id'];
-      //     name = val['data']['name'];
-      //     photo = val['data']['photo'];
-      //     stageName = val['data']['stage']['name'];
-
-      //     isLoad = false;
-      //   });
-      // } else {
-      //   setState(() {
-      //     current_task = true;
-      //     id = val['data']['id'];
-      //     name = val['data']['name'];
-      //     photo = val['data']['photo'];
-      //     stageName = val['data']['stage']['name'];
-      //     current_task_id = val['data']['current_task']['id'];
-      //     current_task_title =
-      //         val['data']['current_task']['indicator']['title'];
-      //     current_task_content =
-      //         val['data']['current_task']['indicator']['content'];
-      //     current_task_status =
-      //         val['data']['current_task']['indicator']['status'];
-      //     if (current_task_status == 0) {
-      //       sStatus = "Unfinish";
-      //     }
-      //     if (current_task_status == 1) {
-      //       sStatus = "Pending";
-      //     }
-      //     if (current_task_status == 2) {
-      //       sStatus = "Finish";
-      //     }
-      //     isLoad = false;
-      //   });
-      // }
     });
   }
 
@@ -193,6 +157,7 @@ class _DownlineDetailState extends State<DownlineDetail> {
                   SpacerHeight(h: 20),
                   (currentTask.isNotEmpty)
                       ? ListView.builder(
+                          shrinkWrap: true,
                           itemCount: currentTask.length,
                           itemBuilder: ((context, index) {
                             CurrentTask ct = currentTask[index];
