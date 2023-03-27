@@ -262,6 +262,12 @@ class _GoalState extends State<Goal> {
                                     radius: CustomScreen(context).width - 305,
                                   ),
                           ),
+                          Center(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.black.withOpacity(0.5),
+                              radius: CustomScreen(context).width - 305,
+                            ),
+                          ),
                           radialGauge(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,

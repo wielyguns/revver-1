@@ -612,19 +612,14 @@ class DateOnlyPickerForm extends StatefulWidget {
 
 class _DateOnlyPickerFormState extends State<DateOnlyPickerForm> {
   String dateString;
+
   @override
-  void initState() {
+  Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd');
     final String formatted = formatter.format(widget.date);
     setState(() {
       dateString = formatted;
     });
-    // print(formatted);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -730,8 +725,15 @@ class DateTimePickerForm extends StatefulWidget {
 }
 
 class _DateTimePickerFormState extends State<DateTimePickerForm> {
+  String dateString;
+
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
+    final String formatted = formatter.format(widget.date);
+    setState(() {
+      dateString = formatted;
+    });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -742,7 +744,7 @@ class _DateTimePickerFormState extends State<DateTimePickerForm> {
           onTap: () => _showDialog(),
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
-            hintText: widget.date.toString(),
+            hintText: dateString,
             prefixIcon: (widget.icon == null)
                 ? null
                 : SvgPicture.asset(

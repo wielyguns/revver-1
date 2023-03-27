@@ -564,13 +564,11 @@ class _LeadsState extends State<Leads> {
                                     color: CustomColor.blueColor,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Expanded(
-                                    child: Text(
-                                      selectedCityName[0].name,
-                                      style: CustomFont(CustomColor.whiteColor,
-                                              12, FontWeight.w600)
-                                          .font,
-                                    ),
+                                  child: Text(
+                                    selectedCityName[0].name,
+                                    style: CustomFont(CustomColor.whiteColor,
+                                            12, FontWeight.w600)
+                                        .font,
                                   ),
                                 ),
                         ],

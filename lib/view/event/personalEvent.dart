@@ -38,7 +38,7 @@ class _PersonalEventState extends State<PersonalEvent> {
       setState(() {
         meeting_id = val['data']['id'].toString();
         eventNameController.text = val['data']['name'];
-        dateNow = DateFormat("yyyy-MM-dd hh:mm:ss").parse(val['data']['date']);
+        dateNow = DateFormat("yyyy-MM-dd HH:mm:ss").parse(val['data']['date']);
         eventDescriptionController.text = val['data']['description'];
         eventLocationController.text = val['data']['location'];
         isLoad = false;
@@ -130,7 +130,7 @@ class _PersonalEventState extends State<PersonalEvent> {
                           meeting_id,
                           "1",
                           eventNameController.text,
-                          DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                          DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                           eventDescriptionController.text,
                           eventLocationController.text,
                           "0")
@@ -147,7 +147,7 @@ class _PersonalEventState extends State<PersonalEvent> {
                   await postMeeting(
                     "1",
                     eventNameController.text,
-                    DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                    DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                     eventDescriptionController.text,
                     eventLocationController.text,
                     "0",

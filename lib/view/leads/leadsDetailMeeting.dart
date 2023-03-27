@@ -43,8 +43,8 @@ class _LeadsDetailMeetingState extends State<LeadsDetailMeeting> {
             Appointment(
               id: x[i].id,
               subject: val[i].name,
-              startTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(x[i].date),
-              endTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(x[i].date),
+              startTime: DateFormat("yyyy-MM-dd HH:mm:ss").parse(x[i].date),
+              endTime: DateFormat("yyyy-MM-dd HH:mm:ss").parse(x[i].date),
               color: CustomColor.brownColor,
             ),
           );

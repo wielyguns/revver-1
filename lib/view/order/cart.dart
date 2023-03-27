@@ -102,7 +102,7 @@ class _CartState extends State<Cart> {
                       textColor: CustomColor.brownColor,
                       func: () {
                         GoRouter.of(context).go("/homepage/0");
-                        GoRouter.of(context).push("/product");
+                        GoRouter.of(context).push("/e-learning");
                       },
                     ),
                   ),
