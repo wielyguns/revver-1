@@ -13,36 +13,25 @@ class Plan extends StatefulWidget {
 
 class _PlanState extends State<Plan> {
   String data;
-  bool isLoad = true;
-  getData() async {
-    await getPlan().then((val) {
-      setState(() {
-        data = val['data'];
-        isLoad = false;
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomHeader(
-        title: "Plan",
-        isPop: true,
-      ),
-      body: (isLoad)
-          ? Center(child: CupertinoActivityIndicator())
-          : SfPdfViewer.asset(
-              "assets/pdf/plan.pdf",
-              scrollDirection: PdfScrollDirection.horizontal,
-              pageLayoutMode: PdfPageLayoutMode.single,
-            ),
-    );
+    return OrientationBuilder(builder: ((context, orientation) {
+      return Scaffold(
+        appBar: (orientation == Orientation.portrait)
+            ? CustomHeader(
+                title: "Plan",
+                isPop: true,
+              )
+            : null,
+        body: SfPdfViewer.asset(
+          (orientation == Orientation.portrait)
+              ? "assets/pdf/plan.pdf"
+              : "assets/pdf/plan.pdf",
+          scrollDirection: PdfScrollDirection.horizontal,
+          pageLayoutMode: PdfPageLayoutMode.single,
+        ),
+      );
+    }));
   }
 }

@@ -139,7 +139,7 @@ class _PersonalEventState extends State<PersonalEvent> {
                       customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, "Sukses");
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 } else {
@@ -156,7 +156,7 @@ class _PersonalEventState extends State<PersonalEvent> {
                       customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, "Sukses");
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 }

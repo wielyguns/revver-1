@@ -1,17 +1,61 @@
+// ignore_for_file: must_be_immutable
+
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revver/component/spacer.dart';
+import 'package:revver/controller/home.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/model/banner.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-// ignore: must_be_immutable
-class HomeBanner extends StatelessWidget {
-  HomeBanner({Key key, this.list}) : super(key: key);
+class HomeBanner extends StatefulWidget {
+  HomeBanner({Key key}) : super(key: key);
+
+  @override
+  State<HomeBanner> createState() => _HomeBannerState();
+}
+
+class _HomeBannerState extends State<HomeBanner> {
+  Timer _timer;
   List list;
-  int i = 1;
-  final controller = PageController(viewportFraction: 1, keepPage: true);
+  int i = 0;
+  PageController controller =
+      PageController(viewportFraction: 1, keepPage: true, initialPage: 0);
+
+  getBanner() async {
+    await getHomeBanner().then((val) {
+      setState(() {
+        list = val;
+      });
+      _timer = Timer.periodic(Duration(seconds: 5), (Timer timer) {
+        if (i < list.length) {
+          i++;
+        } else {
+          i = 0;
+        }
+        controller.animateToPage(
+          i,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getBanner();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {

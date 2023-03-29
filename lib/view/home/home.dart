@@ -29,7 +29,6 @@ class _HomeState extends State<Home> {
   String name;
   String avatar;
   List product;
-  List banner;
   List news;
 
   getDataHeader() async {
@@ -38,14 +37,6 @@ class _HomeState extends State<Home> {
         name = val['data']['name'];
         avatar = val['data']['avatar'];
         // print(val);
-      });
-    });
-  }
-
-  getBanner() async {
-    await getHomeBanner().then((val) {
-      setState(() {
-        banner = val;
       });
     });
   }
@@ -80,7 +71,6 @@ class _HomeState extends State<Home> {
     getDataHeader();
     getNewsList();
     getProductList();
-    getBanner();
     super.initState();
   }
 
@@ -89,7 +79,6 @@ class _HomeState extends State<Home> {
     getDataHeader();
     getNewsList();
     getProductList();
-    getBanner();
     setState(() {});
   }
 
@@ -140,7 +129,7 @@ class _HomeState extends State<Home> {
                       SpacerHeight(h: 20),
                       WelcomeHeader(name: name ??= "..."),
                       SpacerHeight(h: 20),
-                      HomeBanner(list: banner),
+                      HomeBanner(),
                       SpacerHeight(h: 20),
                     ],
                   ),
