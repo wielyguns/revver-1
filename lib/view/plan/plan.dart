@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/plan.dart';
@@ -28,12 +29,15 @@ class _PlanState extends State<Plan> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CustomColor.brownColor,
-      appBar: CustomHeader(
-        title: "Plan",
-        isPop: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: CupertinoNavigationBarBackButton(
+            color: CustomColor.whiteColor,
+            onPressed: () => GoRouter.of(context).pop()),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(25),
         child: Column(
           children: [
             Expanded(
