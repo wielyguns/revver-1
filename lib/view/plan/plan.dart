@@ -6,9 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:revver/component/header.dart';
 import 'package:revver/component/spacer.dart';
-import 'package:revver/controller/plan.dart';
 import 'package:revver/globals.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
@@ -43,8 +41,8 @@ class _PlanState extends State<Plan> {
       body: Stack(
         children: [
           Container(
-            height: CustomScreen(context).height,
-            width: CustomScreen(context).width,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/img/BG-POTRAIT.jpg"),
@@ -71,7 +69,7 @@ class _PlanState extends State<Plan> {
                       ],
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(15),
                       child: SfPdfViewer.asset(
                         "assets/pdf/SLIDE-MARKETING-PLAN-POTRAIT-20230330.pdf",
                         controller: _pdfViewerController,
@@ -125,9 +123,7 @@ class _PlanState extends State<Plan> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => GoToLandScape(
-                              goToLandscape: true,
-                            ),
+                            builder: (context) => GoToLandScape(),
                           ),
                         );
                       }),
@@ -158,11 +154,14 @@ class PlanLandscapeMode extends StatefulWidget {
 }
 
 class _PlanLandscapeModeState extends State<PlanLandscapeMode> {
+  PdfViewerController _pdfViewerController1;
+
   @override
   void initState() {
+    _pdfViewerController1 = PdfViewerController();
     super.initState();
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
     ]);
   }
 
@@ -185,8 +184,8 @@ class _PlanLandscapeModeState extends State<PlanLandscapeMode> {
       body: Stack(
         children: [
           Container(
-            height: CustomScreen(context).height,
-            width: CustomScreen(context).width,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("assets/img/BG LANDSCAPE.jpg"),
@@ -200,6 +199,8 @@ class _PlanLandscapeModeState extends State<PlanLandscapeMode> {
               aspectRatio: 23.2 / 9,
               child: SfPdfViewer.asset(
                 "assets/pdf/SLIDE-MARKETING-PLAN-LANDSCAPE-20230330.pdf",
+                canShowScrollHead: false,
+                controller: _pdfViewerController1,
                 scrollDirection: PdfScrollDirection.horizontal,
                 pageLayoutMode: PdfPageLayoutMode.single,
               ),
@@ -212,8 +213,7 @@ class _PlanLandscapeModeState extends State<PlanLandscapeMode> {
 }
 
 class GoToLandScape extends StatefulWidget {
-  GoToLandScape({Key key, this.goToLandscape}) : super(key: key);
-  bool goToLandscape;
+  GoToLandScape({Key key}) : super(key: key);
 
   @override
   State<GoToLandScape> createState() => _GoToLandScapeState();
@@ -232,7 +232,9 @@ class _GoToLandScapeState extends State<GoToLandScape> {
           Timer(
             Duration(milliseconds: 1000),
             (() {
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              GoRouter.of(context).pop();
+              GoRouter.of(context).push("/plan");
             }),
           );
         });
