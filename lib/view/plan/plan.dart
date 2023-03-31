@@ -1,7 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,12 +21,35 @@ class _PlanState extends State<Plan> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+    ]);
     _pdfViewerController = PdfViewerController();
     super.initState();
   }
 
   @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    return OrientationBuilder(
+      builder: ((context, orientation) {
+        return (orientation == Orientation.portrait)
+            ? potraitMode()
+            : landscapeMode();
+      }),
+    );
+  }
+
+  potraitMode() {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -51,9 +72,9 @@ class _PlanState extends State<Plan> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 0, left: 25, right: 25, bottom: 25),
+            padding: EdgeInsets.only(top: 75, left: 25, right: 25, bottom: 25),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AspectRatio(
                   aspectRatio: 9 / 16,
@@ -120,12 +141,9 @@ class _PlanState extends State<Plan> {
                     SpacerWidth(w: 10),
                     GestureDetector(
                       onTap: (() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => GoToLandScape(),
-                          ),
-                        );
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.landscapeLeft,
+                        ]);
                       }),
                       child: Padding(
                         padding: EdgeInsets.all(5),
@@ -144,43 +162,10 @@ class _PlanState extends State<Plan> {
       ),
     );
   }
-}
 
-class PlanLandscapeMode extends StatefulWidget {
-  const PlanLandscapeMode({Key key}) : super(key: key);
-
-  @override
-  State<PlanLandscapeMode> createState() => _PlanLandscapeModeState();
-}
-
-class _PlanLandscapeModeState extends State<PlanLandscapeMode> {
-  PdfViewerController _pdfViewerController1;
-
-  @override
-  void initState() {
-    _pdfViewerController1 = PdfViewerController();
-    super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-    ]);
-  }
-
-  @override
-  dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  landscapeMode() {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       body: Stack(
         children: [
           Container(
@@ -196,58 +181,38 @@ class _PlanLandscapeModeState extends State<PlanLandscapeMode> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 36),
             child: AspectRatio(
-              aspectRatio: 23.2 / 9,
-              child: SfPdfViewer.asset(
-                "assets/pdf/SLIDE-MARKETING-PLAN-LANDSCAPE-20230330.pdf",
-                canShowScrollHead: false,
-                controller: _pdfViewerController1,
-                scrollDirection: PdfScrollDirection.horizontal,
-                pageLayoutMode: PdfPageLayoutMode.single,
-              ),
-            ),
+                aspectRatio: 23.2 / 9,
+                child: Stack(
+                  children: [
+                    SfPdfViewer.asset(
+                      "assets/pdf/SLIDE-MARKETING-PLAN-LANDSCAPE-20230330.pdf",
+                      canShowScrollHead: false,
+                      scrollDirection: PdfScrollDirection.horizontal,
+                      pageLayoutMode: PdfPageLayoutMode.single,
+                    ),
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: InkWell(
+                        onTap: () {
+                          SystemChrome.setPreferredOrientations([
+                            DeviceOrientation.portraitUp,
+                          ]);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(
+                            Icons.fullscreen_exit,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
           ),
         ],
       ),
-    );
-  }
-}
-
-class GoToLandScape extends StatefulWidget {
-  GoToLandScape({Key key}) : super(key: key);
-
-  @override
-  State<GoToLandScape> createState() => _GoToLandScapeState();
-}
-
-class _GoToLandScapeState extends State<GoToLandScape> {
-  @override
-  void initState() {
-    Timer(
-      Duration(milliseconds: 500),
-      (() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PlanLandscapeMode()),
-        ).whenComplete(() {
-          Timer(
-            Duration(milliseconds: 1000),
-            (() {
-              // Navigator.pop(context);
-              GoRouter.of(context).pop();
-              GoRouter.of(context).push("/plan");
-            }),
-          );
-        });
-      }),
-    );
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: CustomColor.backgroundColor,
-      body: Center(child: CupertinoActivityIndicator()),
     );
   }
 }
