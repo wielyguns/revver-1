@@ -82,7 +82,7 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
-  adaptive_icon_background: "#C30000"
+  adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/img/transparent-logo.png"
   image_path_android: "assets/img/big-logo.png"
   image_path_ios: "assets/img/big-logo.png"
