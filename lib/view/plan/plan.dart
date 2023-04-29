@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +18,7 @@ class Plan extends StatefulWidget {
 }
 
 class _PlanState extends State<Plan> {
+  bool isLoad = true;
   String data;
   PdfViewerController _pdfViewerController;
 
@@ -27,6 +30,11 @@ class _PlanState extends State<Plan> {
       DeviceOrientation.portraitUp,
     ]);
     _pdfViewerController = PdfViewerController();
+    Timer(Duration(milliseconds: 1000), (() {
+      setState(() {
+        isLoad = false;
+      });
+    }));
     super.initState();
   }
 
@@ -90,21 +98,32 @@ class _PlanState extends State<Plan> {
                       ],
                     ),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: SfPdfViewer.asset(
-                        "assets/pdf/SLIDE-MARKETING-PLAN-POTRAIT-20230330.pdf",
-                        controller: _pdfViewerController,
-                        canShowScrollHead: false,
-                        onPageChanged: (x) {
-                          setState(() {});
-                        },
-                        onDocumentLoaded: (x) {
-                          setState(() {});
-                        },
-                        scrollDirection: PdfScrollDirection.horizontal,
-                        pageLayoutMode: PdfPageLayoutMode.single,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(15),
+                        child: Stack(
+                          children: [
+                            SfPdfViewer.asset(
+                              "assets/pdf/SLIDE-MARKETING-PLAN-POTRAIT-01.pdf",
+                              controller: _pdfViewerController,
+                              canShowScrollHead: false,
+                              onDocumentLoaded: (x) {
+                                setState(() {});
+                              },
+                              onPageChanged: (x) {
+                                setState(() {});
+                              },
+                              scrollDirection: PdfScrollDirection.horizontal,
+                              pageLayoutMode: PdfPageLayoutMode.single,
+                            ),
+                            (isLoad)
+                                ? Container(
+                                    color: CustomColor.backgroundColor,
+                                    child: Center(
+                                      child: CupertinoActivityIndicator(),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
+                        )),
                   ),
                 ),
                 SpacerHeight(h: 20),
@@ -185,7 +204,7 @@ class _PlanState extends State<Plan> {
                 child: Stack(
                   children: [
                     SfPdfViewer.asset(
-                      "assets/pdf/SLIDE-MARKETING-PLAN-LANDSCAPE-20230330.pdf",
+                      "assets/pdf/SLIDE-MARKETING-PLAN-LANDSCAPE-01.pdf",
                       canShowScrollHead: false,
                       scrollDirection: PdfScrollDirection.horizontal,
                       pageLayoutMode: PdfPageLayoutMode.single,
