@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -61,6 +62,9 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
   List<Disease> disease = [];
   Disease selectedDisease;
 
+  List<String> gender = ['Male', 'Female'];
+  String selectedGender;
+
   XFile image;
   final ImagePicker picker = ImagePicker();
   String avatar;
@@ -100,6 +104,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         ambition = val['data']['status_ambition'];
         supel = val['data']['status_supel'];
         teachable = val['data']['status_teachable'];
+        selectedGender = val['data']['gender'];
 
         avatar = val['data']['image'];
       });
@@ -289,12 +294,14 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       ),
                       SpacerHeight(h: 10),
                       RegularForm(
+                        icon: 'assets/svg/new-user-edit.svg',
                         title: "Full Name",
                         hint: "Your Full Name",
                         controller: nameController,
                       ),
                       SpacerHeight(h: 20),
                       StringDropdown(
+                        icon: 'assets/svg/new-user.svg',
                         title: "Lead Status",
                         hint: "Lead Status",
                         list: leadStatus,
@@ -378,26 +385,38 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // SizedBox(
+                          //   width: CustomScreen(context).width / 4,
+                          //   child: RegularForm(
+                          //     title: "Height",
+                          //     hint: "eg: 160",
+                          //     controller: heightController,
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   width: CustomScreen(context).width / 4,
+                          //   child: RegularForm(
+                          //     title: "Weight",
+                          //     hint: "eg: 60",
+                          //     controller: weightController,
+                          //   ),
+                          // ),
                           SizedBox(
-                            width: CustomScreen(context).width / 4,
-                            child: RegularForm(
-                              title: "Height",
-                              hint: "eg: 160",
-                              controller: heightController,
+                            width: CustomScreen(context).width / 2,
+                            child: StringDropdown(
+                              title: "Jenis Kelamin",
+                              hint: "Male / Female",
+                              list: gender,
+                              value: selectedGender,
+                              callback: (val) {
+                                selectedGender = val;
+                              },
                             ),
                           ),
                           SizedBox(
                             width: CustomScreen(context).width / 4,
                             child: RegularForm(
-                              title: "Weight",
-                              hint: "eg: 60",
-                              controller: weightController,
-                            ),
-                          ),
-                          SizedBox(
-                            width: CustomScreen(context).width / 4,
-                            child: RegularForm(
-                              title: "Age",
+                              title: "Umur",
                               hint: "eg: 20",
                               controller: ageController,
                             ),
@@ -406,25 +425,27 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                       ),
                       SpacerHeight(h: 20),
                       RegularForm(
-                        title: "Phone",
+                        icon: 'assets/svg/new-phone.svg',
+                        title: "Nomor Telepon",
                         hint: "Your Phone",
                         controller: phoneController,
                       ),
                       SpacerHeight(h: 20),
-                      provinceDropdown("Province", "Your Province", province,
+                      provinceDropdown("Provinsi", "Your Province", province,
                           selectedProvince),
                       (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
                       (city.isEmpty)
                           ? SizedBox()
                           : cityDropdown(
-                              "City",
+                              "Kota",
                               "Your City",
                               city,
                               selectedCity,
                             ),
                       SpacerHeight(h: 20),
                       RegularForm(
-                        title: "Address",
+                        icon: 'assets/svg/new-location.svg',
+                        title: "Alamat",
                         hint: "Your Address",
                         controller: addressController,
                       ),
@@ -443,16 +464,20 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                                   child: CustomButton(
                                     title: "Delete Account",
                                     color: CustomColor.redColor,
-                                    func: () async {
-                                      await deleteLeads(id).then((val) {
-                                        if (val['status'] == 200) {
-                                          customSnackBar(context, false,
-                                              val['status'].toString());
-                                          GoRouter.of(context).pop();
-                                        } else {
-                                          customSnackBar(context, true,
-                                              val['status'].toString());
-                                        }
+                                    func: () {
+                                      deleteConfirmation(context, "Peringatan",
+                                          'Apakah anda yakin ingin menghapus Lead ini?',
+                                          () async {
+                                        await deleteLeads(id).then((val) {
+                                          if (val['status'] == 200) {
+                                            customSnackBar(context, false,
+                                                val['status'].toString());
+                                            GoRouter.of(context).pop();
+                                          } else {
+                                            customSnackBar(context, true,
+                                                val['status'].toString());
+                                          }
+                                        });
                                       });
                                     },
                                   ),
@@ -492,6 +517,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                   selectedDisease.id.toString(),
                   imgpath,
                   imgname,
+                  selectedGender,
                 ).then((val) {
                   if (val == 200) {
                     customSnackBar(context, false, val.toString());
@@ -520,6 +546,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
                   selectedDisease.id.toString(),
                   imgpath,
                   imgname,
+                  selectedGender,
                 ).then((val) {
                   if (val == 200) {
                     customSnackBar(context, false, val.toString());
@@ -550,6 +577,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(
@@ -574,6 +602,13 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
@@ -631,6 +666,7 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(
@@ -652,6 +688,13 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
@@ -731,6 +774,13 @@ class _LeadsDetailFormState extends State<LeadsDetailForm> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-id-card.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),

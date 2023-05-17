@@ -37,6 +37,7 @@ getSupportMember() async {
       sponsor_id: data['sponsor_id'],
       stage_id: data['stage_id'],
       stage_name: data['stage']['name'],
+      current_task: data['current_task'].toString(),
     ));
   }
 
@@ -49,11 +50,8 @@ patchSupport(id) async {
   String url = "https://admin.revveracademy.com/api/v1/vital-sign/$id";
 
   Uri parseUrl = Uri.parse(url);
-  final response = await http.patch(parseUrl, headers: {
-    "Authorization": "Bearer $token",
-  }, body: {
-    "indicator_id": "1",
-  });
+  final response =
+      await http.patch(parseUrl, headers: {"Authorization": "Bearer $token"});
   var res = jsonDecode(response.body);
   return res;
 }
@@ -64,9 +62,8 @@ getSupportMemberDetail(id) async {
   String url = "https://admin.revveracademy.com/api/v1/vital-sign/member/$id";
 
   Uri parseUrl = Uri.parse(url);
-  final response = await http.get(parseUrl, headers: {
-    "Authorization": "Bearer $token",
-  });
+  final response =
+      await http.get(parseUrl, headers: {"Authorization": "Bearer $token"});
   var res = jsonDecode(response.body);
   return res;
 }
@@ -74,7 +71,7 @@ getSupportMemberDetail(id) async {
 patchSupportMember(id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/vital-sign/$id";
+  String url = "https://admin.revveracademy.com/api/v1/vital-sign/member/$id";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.patch(parseUrl, headers: {

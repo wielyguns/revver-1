@@ -8,13 +8,13 @@ class CustomScreen {
 }
 
 class CustomColor {
-  static Color backgroundColor = Color(0xffF2F2F2);
+  static Color backgroundColor = Color(0xFFF2F2F2);
   static Color blackColor = Color(0xff000000);
   static Color goldColor = Color(0xffF0A500);
-  static Color brownColor = Color(0xffD5A068);
+  static Color brownColor = Color(0xFFD5A068);
   static Color oldGreyColor = Color(0xffA7A7A7);
   static Color greyColor = Color(0xffDBDBDB);
-  static Color whiteColor = Color(0xffFAFAFA);
+  static Color whiteColor = Color(0xFFFAFAFA);
   static Color purpleColor = Color(0xffBB6BD9);
   static Color blueColor = Color(0xff2D9CDB);
   static Color redColor = Color(0xffFF0000);

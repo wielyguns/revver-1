@@ -38,7 +38,7 @@ class _PersonalEventState extends State<PersonalEvent> {
       setState(() {
         meeting_id = val['data']['id'].toString();
         eventNameController.text = val['data']['name'];
-        dateNow = DateFormat("yyyy-MM-dd hh:mm:ss").parse(val['data']['date']);
+        dateNow = DateFormat("yyyy-MM-dd HH:mm:ss").parse(val['data']['date']);
         eventDescriptionController.text = val['data']['description'];
         eventLocationController.text = val['data']['location'];
         isLoad = false;
@@ -64,7 +64,7 @@ class _PersonalEventState extends State<PersonalEvent> {
       child: Scaffold(
         appBar: CustomHeader(
           isPop: true,
-          title: (widget.id == 000) ? "Create Event" : "Edit Event",
+          title: (widget.id == 000) ? "Buat Event" : "Edit Event",
         ),
         body: (isLoad)
             ? Center(child: CupertinoActivityIndicator())
@@ -79,14 +79,15 @@ class _PersonalEventState extends State<PersonalEvent> {
                           child: Column(
                             children: [
                               RegularForm(
-                                title: "Event Name",
-                                hint: "eg: Meeting with new project",
+                                title: "Nama Event",
+                                hint: "eg: Meeting proyek baru",
                                 controller: eventNameController,
                                 isValidator: true,
                               ),
                               SpacerHeight(h: 20),
                               DateTimePickerForm(
-                                title: "Event Date",
+                                icon: 'assets/svg/new-calendar-month.svg',
+                                title: "Tanggal Event",
                                 hint: "t",
                                 date: dateNow,
                                 callback: (x) {
@@ -95,14 +96,15 @@ class _PersonalEventState extends State<PersonalEvent> {
                               ),
                               SpacerHeight(h: 20),
                               MultiLineForm(
-                                title: "Event Description",
-                                hint: "eg: Presentation to the new prospect",
+                                title: "Description Event",
+                                hint: "eg: Persentasi proyek baru",
                                 controller: eventDescriptionController,
                                 isValidator: false,
                               ),
                               SpacerHeight(h: 20),
-                              MultiLineForm(
-                                title: "Event Location",
+                              RegularForm(
+                                icon: 'assets/svg/new-location.svg',
+                                title: "Lokasi Event",
                                 hint: "eg: Coffee Shop Tunjungan Plaza",
                                 controller: eventLocationController,
                                 isValidator: false,
@@ -128,16 +130,16 @@ class _PersonalEventState extends State<PersonalEvent> {
                           meeting_id,
                           "1",
                           eventNameController.text,
-                          DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                          DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                           eventDescriptionController.text,
                           eventLocationController.text,
                           "0")
                       .then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 } else {
@@ -145,16 +147,16 @@ class _PersonalEventState extends State<PersonalEvent> {
                   await postMeeting(
                     "1",
                     eventNameController.text,
-                    DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                    DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                     eventDescriptionController.text,
                     eventLocationController.text,
                     "0",
                   ).then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 }

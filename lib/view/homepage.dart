@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
+// ignore_for_file: prefer_const_constructors_in_immutables, must_be_immutable
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:revver/globals.dart';
 import 'package:revver/view/accoount/account.dart';
 import 'package:revver/view/event/event.dart';
@@ -9,7 +11,10 @@ import 'package:revver/view/home/home.dart';
 import 'package:revver/view/leads/leads.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-// ignore: must_be_immutable
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  return;
+}
+
 class Homepage extends StatefulWidget {
   Homepage({Key key, this.index}) : super(key: key);
   int index;
@@ -27,8 +32,45 @@ class _HomepageState extends State<Homepage> {
     Account(),
   ];
 
+  notification() async {
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
+
+      FirebaseMessaging.instance.getInitialMessage().then((message) {
+        if (message != null) {
+          final redirectRoute = message.data['route'];
+          GoRouter.of(context).push(redirectRoute);
+        }
+      });
+
+      FirebaseMessaging.onMessage.listen((message) {
+        if (message != null) {
+          final redirectRoute = message.data['route'];
+          GoRouter.of(context).push(redirectRoute);
+        }
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((message) {
+        if (message != null) {
+          final redirectRoute = message.data['route'];
+          GoRouter.of(context).push(redirectRoute);
+        }
+      });
+    }
+  }
+
   @override
   void initState() {
+    notification();
     super.initState();
     if (widget.index != null) {
       setState(() {

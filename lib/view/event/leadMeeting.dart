@@ -40,7 +40,7 @@ class _LeadMeetingState extends State<LeadMeeting> {
       setState(() {
         meeting_id = val['data']['id'].toString();
         eventNameController.text = val['data']['name'];
-        dateNow = DateFormat("yyyy-MM-dd hh:mm:ss").parse(val['data']['date']);
+        dateNow = DateFormat("yyyy-MM-dd HH:mm:ss").parse(val['data']['date']);
         eventDescriptionController.text = val['data']['description'];
         eventLocationController.text = val['data']['location'];
         lead_id = val['data']['lead_id'].toString();
@@ -152,16 +152,16 @@ class _LeadMeetingState extends State<LeadMeeting> {
                           meeting_id,
                           lead_id,
                           eventNameController.text,
-                          DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                          DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                           eventDescriptionController.text,
                           eventLocationController.text,
                           "1")
                       .then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 } else {
@@ -169,16 +169,16 @@ class _LeadMeetingState extends State<LeadMeeting> {
                   await postMeeting(
                     lead_id,
                     eventNameController.text,
-                    DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                    DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                     eventDescriptionController.text,
                     eventLocationController.text,
                     "1",
                   ).then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 }

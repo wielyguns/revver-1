@@ -42,8 +42,8 @@ class _EventState extends State<Event> {
               notes: "2",
               id: val[i].id,
               subject: val[i].name,
-              startTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
-              endTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
+              startTime: DateFormat("yyyy-MM-dd HH:mm:ss").parse(val[i].date),
+              endTime: DateFormat("yyyy-MM-dd HH:mm:ss").parse(val[i].date),
               color: CustomColor.brownColor,
             ),
           );
@@ -59,8 +59,8 @@ class _EventState extends State<Event> {
                   id: val[i].id,
                   subject: val[i].name,
                   startTime:
-                      DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
-                  endTime: DateFormat("yyyy-MM-dd hh:mm:ss").parse(val[i].date),
+                      DateFormat("yyyy-MM-dd HH:mm:ss").parse(val[i].date),
+                  endTime: DateFormat("yyyy-MM-dd HH:mm:ss").parse(val[i].date),
                   color: (val[i].is_meeting == 0)
                       ? CustomColor.goldColor
                       : CustomColor.oldGreyColor),

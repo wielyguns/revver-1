@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -51,7 +52,7 @@ class _LoginState extends State<Login> {
                   ),
                   SpacerHeight(h: 20),
                   Text(
-                    "Hello!",
+                    "Halo!",
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -95,14 +96,14 @@ class _LoginState extends State<Login> {
                             ),
                             SpacerHeight(h: 10),
                             Text(
-                              "Already have an account? Please, login!",
+                              "Sudah punya akun? Silahkan masuk!",
                               style: CustomFont(CustomColor.oldGreyColor, 12,
                                       FontWeight.w400)
                                   .font,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
-                              icon: Icons.mail,
+                              icon: 'assets/svg/new-email.svg',
                               title: "Email",
                               hint: "Your Email",
                               isValidator: true,
@@ -111,7 +112,7 @@ class _LoginState extends State<Login> {
                             ),
                             SpacerHeight(h: 20),
                             PasswordForm(
-                              icon: Icons.key,
+                              icon: 'assets/svg/new-password.svg',
                               title: "Password",
                               hint: "Your Password",
                               visible: password,
@@ -128,6 +129,7 @@ class _LoginState extends State<Login> {
                                     customSnackBar(context, true,
                                         "Complete the form first!");
                                   } else {
+                                    _onLoading();
                                     String email = emailController.text;
                                     String password = passwordController.text;
                                     await loginLoad(email, password).then(
@@ -151,9 +153,11 @@ class _LoginState extends State<Login> {
                                           }
                                           await FirebaseMessaging.instance
                                               .subscribeToTopic("event");
+                                          Navigator.pop(context);
                                           GoRouter.of(context)
                                               .go("/homepage/0");
                                         } else {
+                                          Navigator.pop(context);
                                           customSnackBar(
                                               context, true, val['message']);
                                         }
@@ -181,7 +185,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 SpacerWidth(w: 5),
                                 Text(
-                                  "Remember Me?",
+                                  "Ingat saya?",
                                   style: CustomFont(CustomColor.blackColor, 12,
                                           FontWeight.w400)
                                       .font,
@@ -192,14 +196,14 @@ class _LoginState extends State<Login> {
                             Row(
                               children: [
                                 Text(
-                                  "Don't have an account yet? ",
+                                  "Belum punya akun? ",
                                   style: CustomFont(CustomColor.blackColor, 12,
                                           FontWeight.w400)
                                       .font,
                                 ),
                                 GestureDetector(
                                   child: Text(
-                                    "Register here!",
+                                    "Daftar sekarang!",
                                     style: CustomFont(CustomColor.brownColor,
                                             12, FontWeight.w400)
                                         .font,
@@ -257,6 +261,21 @@ class _LoginState extends State<Login> {
         //   ),
         // ),
       ),
+    );
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Container(
+          height: CustomScreen(context).height,
+          width: CustomScreen(context).width,
+          color: Colors.black.withOpacity(0.1),
+          child: Center(child: CupertinoActivityIndicator()),
+        );
+      },
     );
   }
 }

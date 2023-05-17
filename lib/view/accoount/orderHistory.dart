@@ -24,10 +24,17 @@ class _OrderHistoryState extends State<OrderHistory> {
     await getAccountOrder().then((val) {
       setState(() {
         order = val;
+        order.sort((a, b) => b.id.compareTo(a.id));
         dataSource = OrderDataSource(order: order);
         isLoad = false;
       });
     });
+  }
+
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getOrderList();
+    setState(() {});
   }
 
   @override
@@ -47,63 +54,67 @@ class _OrderHistoryState extends State<OrderHistory> {
           ? Center(child: CupertinoActivityIndicator())
           : Padding(
               padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-              child: SfDataGrid(
-                verticalScrollPhysics: BouncingScrollPhysics(),
-                horizontalScrollPhysics: BouncingScrollPhysics(),
-                onCellTap: ((details) {
-                  if (details.rowColumnIndex.rowIndex != 0) {
-                    int selectedRowIndex = details.rowColumnIndex.rowIndex - 1;
-                    var row =
-                        dataSource.effectiveRows.elementAt(selectedRowIndex);
-                    String val = row.getCells()[0].value.toString();
-                    GoRouter.of(context).push('/invoice/$val/true');
-                  }
-                }),
-                // frozenColumnsCount: 1,
-                source: dataSource,
-                columnWidthMode: ColumnWidthMode.fill,
-                columns: <GridColumn>[
-                  GridColumn(
-                      columnName: 'orderId',
-                      label: Container(
-                          padding: EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Order ID',
-                            style: CustomFont.bold12,
-                            overflow: TextOverflow.ellipsis,
-                          ))),
-                  GridColumn(
-                      columnName: 'designation',
-                      label: Container(
-                          padding: EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Amount',
-                            overflow: TextOverflow.ellipsis,
-                            style: CustomFont.bold12,
-                          ))),
-                  GridColumn(
-                      columnName: 'date',
-                      label: Container(
-                          padding: EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          child: Text(
-                            'Date',
-                            style: CustomFont.bold12,
-                            overflow: TextOverflow.ellipsis,
-                          ))),
-                  // GridColumn(
-                  //     columnName: 'status',
-                  //     label: Container(
-                  //         padding: EdgeInsets.all(8.0),
-                  //         alignment: Alignment.center,
-                  //         child: Text(
-                  //           'Status',
-                  //           style: CustomFont.bold12,
-                  //           overflow: TextOverflow.ellipsis,
-                  //         ))),
-                ],
+              child: RefreshIndicator(
+                onRefresh: _pullRefresh,
+                child: SfDataGrid(
+                  verticalScrollPhysics: BouncingScrollPhysics(),
+                  horizontalScrollPhysics: BouncingScrollPhysics(),
+                  onCellTap: ((details) {
+                    if (details.rowColumnIndex.rowIndex != 0) {
+                      int selectedRowIndex =
+                          details.rowColumnIndex.rowIndex - 1;
+                      var row =
+                          dataSource.effectiveRows.elementAt(selectedRowIndex);
+                      String val = row.getCells()[0].value.toString();
+                      GoRouter.of(context).push('/invoice/$val/true');
+                    }
+                  }),
+                  // frozenColumnsCount: 1,
+                  source: dataSource,
+                  columnWidthMode: ColumnWidthMode.fill,
+                  columns: <GridColumn>[
+                    GridColumn(
+                        columnName: 'orderId',
+                        label: Container(
+                            padding: EdgeInsets.all(8.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Order ID',
+                              style: CustomFont.bold12,
+                              overflow: TextOverflow.ellipsis,
+                            ))),
+                    GridColumn(
+                        columnName: 'designation',
+                        label: Container(
+                            padding: EdgeInsets.all(8.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Amount',
+                              overflow: TextOverflow.ellipsis,
+                              style: CustomFont.bold12,
+                            ))),
+                    GridColumn(
+                        columnName: 'date',
+                        label: Container(
+                            padding: EdgeInsets.all(8.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Date',
+                              style: CustomFont.bold12,
+                              overflow: TextOverflow.ellipsis,
+                            ))),
+                    // GridColumn(
+                    //     columnName: 'status',
+                    //     label: Container(
+                    //         padding: EdgeInsets.all(8.0),
+                    //         alignment: Alignment.center,
+                    //         child: Text(
+                    //           'Status',
+                    //           style: CustomFont.bold12,
+                    //           overflow: TextOverflow.ellipsis,
+                    //         ))),
+                  ],
+                ),
               ),
             ),
     );

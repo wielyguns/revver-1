@@ -73,6 +73,9 @@ class _SaveToLeadState extends State<SaveToLead> {
   List<Disease> disease = [];
   Disease selectedDisease;
 
+  List<String> gender = ['Male', 'Female'];
+  String selectedGender;
+
   XFile image;
   final ImagePicker picker = ImagePicker();
   String avatar;
@@ -274,26 +277,38 @@ class _SaveToLeadState extends State<SaveToLead> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // SizedBox(
+                          //   width: CustomScreen(context).width / 4,
+                          //   child: RegularForm(
+                          //     title: "Height",
+                          //     hint: "eg: 160",
+                          //     controller: heightController,
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   width: CustomScreen(context).width / 4,
+                          //   child: RegularForm(
+                          //     title: "Weight",
+                          //     hint: "eg: 60",
+                          //     controller: weightController,
+                          //   ),
+                          // ),
                           SizedBox(
-                            width: CustomScreen(context).width / 4,
-                            child: RegularForm(
-                              title: "Height",
-                              hint: "eg: 160",
-                              controller: heightController,
+                            width: CustomScreen(context).width / 2,
+                            child: StringDropdown(
+                              title: "Jenis Kelamin",
+                              hint: "Male / Female",
+                              list: gender,
+                              value: selectedGender,
+                              callback: (val) {
+                                selectedGender = val;
+                              },
                             ),
                           ),
                           SizedBox(
                             width: CustomScreen(context).width / 4,
                             child: RegularForm(
-                              title: "Weight",
-                              hint: "eg: 60",
-                              controller: weightController,
-                            ),
-                          ),
-                          SizedBox(
-                            width: CustomScreen(context).width / 4,
-                            child: RegularForm(
-                              title: "Age",
+                              title: "Umur",
                               hint: "eg: 20",
                               controller: ageController,
                             ),
@@ -302,25 +317,25 @@ class _SaveToLeadState extends State<SaveToLead> {
                       ),
                       SpacerHeight(h: 20),
                       RegularForm(
-                        title: "Phone",
+                        title: "Nomor Telepon",
                         hint: "Your Phone",
                         controller: phoneController,
                       ),
                       SpacerHeight(h: 20),
-                      provinceDropdown("Province", "Your Province", province,
+                      provinceDropdown("Provinsi", "Your Province", province,
                           selectedProvince),
                       (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
                       (city.isEmpty)
                           ? SizedBox()
                           : cityDropdown(
-                              "City",
+                              "Kota",
                               "Your City",
                               city,
                               selectedCity,
                             ),
                       SpacerHeight(h: 20),
                       RegularForm(
-                        title: "Address",
+                        title: "Alamat",
                         hint: "Your Address",
                         controller: addressController,
                       ),
@@ -361,10 +376,11 @@ class _SaveToLeadState extends State<SaveToLead> {
                 selectedDisease.id.toString(),
                 imgpath,
                 imgname,
+                selectedGender,
               ).then((val) {
                 if (val == 200) {
                   customSnackBar(context, false, val.toString());
-                  GoRouter.of(context).push('/homepage/0');
+                  GoRouter.of(context).go('/homepage/0');
                 } else {
                   customSnackBar(context, true, val.toString());
                 }

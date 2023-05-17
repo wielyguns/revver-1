@@ -33,7 +33,7 @@ class HomeMenu extends StatelessWidget {
                   context, "assets/svg/support-new.svg", "Support", "/support"),
               detailMenu(
                   context, "assets/svg/report-new.svg", "Report", "/report"),
-              detailMenu(context, "assets/svg/report-new.svg", "Revver",
+              detailMenu(context, "assets/svg/revver-icon.svg", "Revver",
                   "/company-profile"),
             ],
           ),

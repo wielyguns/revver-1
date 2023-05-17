@@ -366,7 +366,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 35),
           child: Text(
-            "Product Recommendations",
+            "Rekomendasi Produk",
             style: CustomFont(CustomColor.brownColor, 16, FontWeight.bold).font,
           ),
         ),
@@ -375,7 +375,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
             ? Center(
                 child: Padding(
                 padding: EdgeInsets.all(20),
-                child: Text("Product Recommendation is Empty"),
+                child: Text("Rekomendasi Produk Kosong"),
               ))
             : SizedBox(
                 width: CustomScreen(context).width,
@@ -393,7 +393,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
                           return Row(
                             children: [
                               (0 == index)
-                                  ? SizedBox(width: 20)
+                                  ? SizedBox(width: 35)
                                   : SizedBox(width: 0),
                               _sliderBox(
                                 context,
@@ -403,7 +403,7 @@ class _EHealthDetailState extends State<EHealthDetail> {
                                 prod.product_price ??= 0,
                                 prod.id ??= 0,
                               ),
-                              SizedBox(width: 20),
+                              SizedBox(width: 35),
                             ],
                           );
                         },

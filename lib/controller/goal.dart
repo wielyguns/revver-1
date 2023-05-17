@@ -15,7 +15,6 @@ getGoal() async {
     "Authorization": "Bearer $token",
   });
   var res = jsonDecode(response.body);
-
   return res;
 }
 
@@ -38,10 +37,10 @@ getReferralRate() async {
   return list;
 }
 
-deleteGoal() async {
+deleteGoal(id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/goal/1";
+  String url = "https://admin.revveracademy.com/api/v1/goal/$id";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.delete(parseUrl, headers: {
@@ -72,11 +71,11 @@ postGoal(
   return res;
 }
 
-patchGoal(
-    String target_title, target_point, target_date, target_description) async {
+patchGoal(String target_title, target_point, target_date, target_description,
+    target_id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/goal/1";
+  String url = "https://admin.revveracademy.com/api/v1/goal/$target_id";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.patch(parseUrl, headers: {
@@ -92,19 +91,60 @@ patchGoal(
   return res;
 }
 
-postRecordProgress(String rrate_id, qty) async {
+postRecordProgress(String kanan, kiri, sponsor, id) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
-  String url = "https://admin.revveracademy.com/api/v1/goal/progress/1";
+  String url = "https://admin.revveracademy.com/api/v1/goal/progress/$id";
+  // String url = "https://webhook.site/9bffa78b-30ad-4a52-9564-00106f2ce9ee";
 
   Uri parseUrl = Uri.parse(url);
   final response = await http.post(parseUrl, headers: {
     "Authorization": "Bearer $token",
   }, body: {
-    "referral_rate_id[0]": rrate_id,
-    "qty[0]": qty,
+    "kanan": kanan.isNotEmpty ? kanan : "0",
+    "kiri": kiri.isNotEmpty ? kiri : "0",
+    "sponsor": sponsor.isNotEmpty ? sponsor : "0",
   });
   var res = jsonDecode(response.body);
 
+  return res;
+}
+
+deleteRecordProgress(id) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  String url = "https://admin.revveracademy.com/api/v1/goal/history/$id";
+
+  Uri parseUrl = Uri.parse(url);
+  final response = await http.delete(parseUrl, headers: {
+    "Authorization": "Bearer $token",
+  });
+  var res = jsonDecode(response.body);
+
+  return res;
+}
+
+postGoalImage(String id, image, name) async {
+  final prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token');
+  int res;
+
+  Map<String, String> data;
+  data = {
+    'id': id,
+  };
+
+  String url = "https://admin.revveracademy.com/api/v1/goal/store-image";
+  Uri parseUrl = Uri.parse(url);
+
+  var request = http.MultipartRequest('POST', parseUrl);
+  request.headers['Authorization'] = "Bearer $token";
+  var file = await http.MultipartFile.fromPath("image", image, filename: name);
+  request.fields.addAll(data);
+  request.files.add(file);
+
+  await request.send().then((response) {
+    res = response.statusCode;
+  });
   return res;
 }

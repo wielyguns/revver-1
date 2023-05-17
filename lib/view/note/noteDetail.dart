@@ -31,7 +31,7 @@ class _NoteDetailState extends State<NoteDetail> {
   List<NoteList> note_list = [];
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers = [];
 
   getData(i) async {
     await getNoteDetail(i).then((val) {
@@ -75,23 +75,12 @@ class _NoteDetailState extends State<NoteDetail> {
   @override
   Widget build(BuildContext context) {
     String tup = type.toUpperCase();
+    if (tup == "CHECKBOX") {
+      tup = "CHECKLIST";
+    }
     return KeyboardDismisser(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        // appBar: StandartHeader(
-        //   title: tup ??= "",
-        //   isPop: true,
-        //   svgName: "trash-can-solid.svg",
-        //   func: () async {
-        //     await deleteNote(id).then((val) {
-        //       if (val['status'] == 200) {
-        //         GoRouter.of(context).pop();
-        //       } else {
-        //         customSnackBar(context, true, val['status']);
-        //       }
-        //     });
-        //   },
-        // ),
         appBar: AppBar(
           leading: CupertinoNavigationBarBackButton(onPressed: () {
             GoRouter.of(context).pop();
@@ -163,39 +152,48 @@ class _NoteDetailState extends State<NoteDetail> {
                         child: CustomButton(
                           title: "Save",
                           func: () async {
+                            onLoading(context);
                             if (isNumeric(widget.id)) {
                               // patch
+                              int len = note_list.length;
                               await patchNote(
                                       id.toString(),
                                       titleController.text,
                                       type.toLowerCase(),
-                                      descriptionController.text,
+                                      (type.toLowerCase() == "checkbox")
+                                          ? "$len Items"
+                                          : descriptionController.text,
                                       note_list)
                                   .then((val) {
                                 if (val["status"] == 200) {
+                                  Navigator.pop(context);
                                   GoRouter.of(context).pop();
                                 } else {
+                                  Navigator.pop(context);
                                   customSnackBar(context, true, val['status']);
                                 }
                               });
                             } else {
                               // add
                               if (type == "checkbox" && note_list.isEmpty) {
+                                Navigator.pop(context);
                                 customSnackBar(
-                                    context, true, "Add Item First!");
+                                    context, true, "Tambah Item Dahulu!");
                               } else {
                                 int len = note_list.length;
                                 await postNote(
                                         titleController.text,
                                         type.toLowerCase(),
-                                        (type == "checkbox")
+                                        (type.toLowerCase() == "checkbox")
                                             ? "$len Items"
                                             : descriptionController.text,
                                         note_list)
                                     .then((val) {
                                   if (val["status"] == 200) {
+                                    Navigator.pop(context);
                                     GoRouter.of(context).pop();
                                   } else {
+                                    Navigator.pop(context);
                                     customSnackBar(
                                         context, true, val['status']);
                                   }
@@ -210,52 +208,6 @@ class _NoteDetailState extends State<NoteDetail> {
                   )
                 ],
               ),
-        // bottomNavigationBar: Container(
-        //   color: Colors.transparent,
-        //   padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-        //   child: CustomButton(
-        //     title: "Save",
-        //     func: () async {
-        //       if (isNumeric(widget.id)) {
-        //         // patch
-        //         await patchNote(
-        //                 id.toString(),
-        //                 titleController.text,
-        //                 type.toLowerCase(),
-        //                 descriptionController.text,
-        //                 note_list)
-        //             .then((val) {
-        //           if (val["status"] == 200) {
-        //             GoRouter.of(context).pop();
-        //           } else {
-        //             customSnackBar(context, true, val['status']);
-        //           }
-        //         });
-        //       } else {
-        //         // add
-        //         if (type == "checkbox" && note_list.isEmpty) {
-        //           customSnackBar(context, true, "Add Item First!");
-        //         } else {
-        //           int len = note_list.length;
-        //           await postNote(
-        //                   titleController.text,
-        //                   type.toLowerCase(),
-        //                   (type == "checkbox")
-        //                       ? "$len Items"
-        //                       : descriptionController.text,
-        //                   note_list)
-        //               .then((val) {
-        //             if (val["status"] == 200) {
-        //               GoRouter.of(context).pop();
-        //             } else {
-        //               customSnackBar(context, true, val['status']);
-        //             }
-        //           });
-        //         }
-        //       }
-        //     },
-        //   ),
-        // ),
       ),
     );
   }
@@ -280,167 +232,179 @@ class _NoteDetailState extends State<NoteDetail> {
             controller: titleController,
             decoration: InputDecoration(
               border: InputBorder.none,
-              hintText: 'Note Title',
+              hintText: 'Judul',
               hintStyle:
                   CustomFont(CustomColor.oldGreyColor, 18, FontWeight.bold)
                       .font,
             ),
             style: CustomFont(CustomColor.blackColor, 18, FontWeight.bold).font,
           ),
-          (type.toLowerCase() == "text")
-              ? Column(
-                  children: [
-                    TextField(
-                      maxLines: 999,
-                      controller: descriptionController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: 'eg: Catatan Hari Ini',
-                        hintStyle:
-                            CustomFont(CustomColor.oldGreyColor, 14, null).font,
-                      ),
-                      style: CustomFont(CustomColor.blackColor, 14, null).font,
-                    )
-                  ],
-                )
-              : (note_list.isNotEmpty)
-                  ? Column(
-                      children: [
-                        ListView.builder(
-                          padding: EdgeInsets.zero,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: note_list.length,
-                          itemBuilder: ((context, index) {
-                            NoteList nl = note_list[index];
-                            _controllers
-                                .add(TextEditingController(text: nl.text));
-                            return Column(
-                              children: [
-                                (index == 0) ? SpacerHeight(h: 10) : SizedBox(),
-                                SizedBox(
-                                  height: 28,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                        height: 28,
-                                        width: 28,
-                                        child: Transform.scale(
-                                          scale: 1.2,
-                                          child: Checkbox(
-                                            shape: CircleBorder(),
-                                            value: nl.is_check == 1,
-                                            onChanged: (val) {
-                                              if (val) {
-                                                setState(() {
-                                                  nl.is_check = 1;
-                                                });
-                                              } else {
-                                                setState(() {
-                                                  nl.is_check = 0;
-                                                });
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                      SpacerWidth(w: 5),
-                                      Expanded(
-                                        child: TextField(
-                                          onChanged: (val) {
-                                            setState(() {
-                                              nl.text = val;
-                                            });
-                                          },
-                                          controller: _controllers[index],
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                          ),
-                                          style: CustomFont(
-                                                  CustomColor.oldGreyColor,
-                                                  14,
-                                                  null)
-                                              .font,
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            note_list.removeWhere(
-                                                (item) => item.text == nl.text);
-                                          });
-                                        },
-                                        child: Icon(
-                                          Icons.close,
-                                          size: 18,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SpacerHeight(h: 10),
-                              ],
-                            );
-                          }),
-                        ),
-                        SpacerHeight(h: 10),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                setState(() {
-                                  note_list.add(NoteList(
-                                    text: "New Item",
-                                    is_check: 0,
-                                  ));
-                                });
-                              },
-                              child: Row(
-                                children: [
-                                  SpacerWidth(w: 33),
-                                  Text(
-                                    "+ Add Item",
-                                    style: CustomFont(
-                                            CustomColor.oldGreyColor, 14, null)
-                                        .font,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              note_list.add(NoteList(
-                                text: "New Item",
-                                is_check: 0,
-                              ));
-                            });
-                          },
-                          child: Row(
-                            children: [
-                              SpacerWidth(w: 33),
-                              Text(
-                                "+ Add Item",
-                                style: CustomFont(
-                                        CustomColor.oldGreyColor, 14, null)
-                                    .font,
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
+          (type.toLowerCase() == "text") ? textContent() : checklistContent(),
         ],
       ),
     );
+  }
+
+  textContent() {
+    return Column(
+      children: [
+        TextField(
+          maxLines: 999,
+          controller: descriptionController,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: 'eg: Catatan Hari Ini',
+            hintStyle: CustomFont(CustomColor.oldGreyColor, 14, null).font,
+          ),
+          style: CustomFont(CustomColor.blackColor, 14, null).font,
+        )
+      ],
+    );
+  }
+
+  checklistContent() {
+    int lastID = 0;
+    if (note_list.isNotEmpty) {
+      int len = note_list.length - 1;
+      lastID = note_list[len].id;
+    }
+    return (note_list.isNotEmpty)
+        ? Column(
+            children: [
+              ListView.builder(
+                padding: EdgeInsets.zero,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: note_list.length,
+                itemBuilder: ((context, index) {
+                  NoteList nl = note_list[index];
+                  _controllers.add(TextEditingController(text: nl.text));
+                  return Column(
+                    children: [
+                      (index == 0) ? SpacerHeight(h: 10) : SizedBox(),
+                      SizedBox(
+                        height: 28,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              height: 28,
+                              width: 28,
+                              child: Transform.scale(
+                                scale: 1.2,
+                                child: Checkbox(
+                                  shape: CircleBorder(),
+                                  value: nl.is_check == 1,
+                                  onChanged: (val) {
+                                    if (val) {
+                                      setState(() {
+                                        nl.is_check = 1;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        nl.is_check = 0;
+                                      });
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                            SpacerWidth(w: 5),
+                            Expanded(
+                              child: TextField(
+                                onChanged: (val) {
+                                  setState(() {
+                                    nl.text = val;
+                                  });
+                                },
+                                controller: _controllers[index],
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                ),
+                                style: CustomFont(
+                                        CustomColor.oldGreyColor, 14, null)
+                                    .font,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _controllers = [];
+                                  note_list
+                                      .removeWhere((item) => item.id == nl.id);
+                                });
+                              },
+                              child: Icon(
+                                Icons.close,
+                                size: 18,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SpacerHeight(h: 10),
+                    ],
+                  );
+                }),
+              ),
+              SpacerHeight(h: 10),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        note_list.add(
+                          NoteList(
+                            id: lastID + 1,
+                            text: "Item Baru",
+                            is_check: 0,
+                          ),
+                        );
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        SpacerWidth(w: 33),
+                        Text(
+                          "+ Tambah Item",
+                          style: CustomFont(CustomColor.oldGreyColor, 14, null)
+                              .font,
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SpacerHeight(h: 30),
+            ],
+          )
+        : Column(
+            children: [
+              SpacerHeight(h: 10),
+              InkWell(
+                onTap: () {
+                  _controllers = [];
+                  setState(() {
+                    note_list.add(NoteList(
+                      id: lastID + 1,
+                      text: "Item Baru",
+                      is_check: 0,
+                    ));
+                  });
+                },
+                child: Row(
+                  children: [
+                    SpacerWidth(w: 33),
+                    Text(
+                      "+ Tambah Item",
+                      style:
+                          CustomFont(CustomColor.oldGreyColor, 14, null).font,
+                    )
+                  ],
+                ),
+              ),
+            ],
+          );
   }
 }

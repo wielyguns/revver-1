@@ -56,6 +56,12 @@ class _MyProgressState extends State<MyProgress> {
     });
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     getData();
@@ -66,183 +72,188 @@ class _MyProgressState extends State<MyProgress> {
   Widget build(BuildContext context) {
     return (isLoad)
         ? Center(child: CupertinoActivityIndicator())
-        : SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-                  decoration: BoxDecoration(
-                    color: CustomColor.blackColor,
-                    borderRadius: BorderRadius.circular(20),
+        : RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: CustomColor.blackColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(
+                      children: [
+                        radialGauge(),
+                        Text(
+                          "Journey To Champion",
+                          style: CustomFont(
+                                  CustomColor.whiteColor, 18, FontWeight.w600)
+                              .font,
+                        ),
+                        Text(
+                          name,
+                          style: CustomFont(
+                                  CustomColor.oldGreyColor, 16, FontWeight.w600)
+                              .font,
+                        ),
+                        SpacerHeight(h: 20),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    children: [
-                      radialGauge(),
-                      Text(
-                        "Journey To Champion",
-                        style: CustomFont(
-                                CustomColor.whiteColor, 18, FontWeight.w600)
-                            .font,
-                      ),
-                      Text(
-                        name,
-                        style: CustomFont(
-                                CustomColor.oldGreyColor, 16, FontWeight.w600)
-                            .font,
-                      ),
-                      SpacerHeight(h: 20),
-                    ],
-                  ),
-                ),
-                SpacerHeight(h: 20),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35),
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: indicator.length,
-                    itemBuilder: ((context, index) {
-                      Indicator indi = indicator[index];
-                      String status;
-                      if (indi.status == 0) {
-                        status = "Unfinish";
-                      }
-                      if (indi.status == 1) {
-                        status = "Pending";
-                      }
-                      if (indi.status == 2) {
-                        status = "Finish";
-                      }
-                      return ExpandableNotifier(
-                        child: Column(
-                          children: [
-                            Expandable(
-                              collapsed: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(indi.title,
-                                          style: CustomFont(
-                                                  CustomColor.blackColor,
-                                                  16,
-                                                  FontWeight.w600)
-                                              .font),
-                                      ExpandableButton(
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Divider(
-                                    thickness: 2,
-                                    color:
-                                        CustomColor.brownColor.withOpacity(0.5),
-                                  )
-                                ],
-                              ),
-                              expanded: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(indi.title,
-                                          style: CustomFont(
-                                                  CustomColor.blackColor,
-                                                  16,
-                                                  FontWeight.w600)
-                                              .font),
-                                      ExpandableButton(
-                                        child: Icon(
-                                          Icons.remove,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Divider(
-                                    thickness: 2,
-                                    color:
-                                        CustomColor.brownColor.withOpacity(0.5),
-                                  ),
-                                  Html(data: indi.content),
-                                  SpacerHeight(h: 5),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Status: $status",
-                                        style: CustomFont(
-                                                CustomColor.blackColor,
-                                                12,
-                                                FontWeight.w600)
-                                            .font,
-                                      ),
-                                      Container(
-                                        height: 30,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: CupertinoButton(
-                                          padding: EdgeInsets.all(1),
-                                          onPressed: (indi.status == 0)
-                                              ? () async {
-                                                  await patchSupport(indi
-                                                          .vital_indicator_progress_id)
-                                                      .then((val) {
-                                                    if (val['status'] == 200) {
-                                                      getData();
-                                                    } else {
-                                                      customSnackBar(
-                                                          context,
-                                                          true,
-                                                          val['status']
-                                                              .toString());
-                                                    }
-                                                  });
-                                                }
-                                              : null,
-                                          color: CustomColor.brownColor,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                "Finish Task",
-                                                style: CustomFont(
-                                                        CustomColor.whiteColor,
-                                                        9,
-                                                        FontWeight.w600)
-                                                    .font,
-                                              ),
-                                            ],
+                  SpacerHeight(h: 20),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35),
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: indicator.length,
+                      itemBuilder: ((context, index) {
+                        Indicator indi = indicator[index];
+                        String status;
+                        if (indi.status == 0) {
+                          status = "Unfinish";
+                        }
+                        if (indi.status == 1) {
+                          status = "Pending";
+                        }
+                        if (indi.status == 2) {
+                          status = "Finish";
+                        }
+                        return ExpandableNotifier(
+                          child: Column(
+                            children: [
+                              Expandable(
+                                collapsed: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(indi.title,
+                                            style: CustomFont(
+                                                    CustomColor.blackColor,
+                                                    16,
+                                                    FontWeight.w600)
+                                                .font),
+                                        ExpandableButton(
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 20,
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SpacerHeight(h: 20),
-                                ],
+                                      ],
+                                    ),
+                                    Divider(
+                                      thickness: 2,
+                                      color: CustomColor.brownColor
+                                          .withOpacity(0.5),
+                                    )
+                                  ],
+                                ),
+                                expanded: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(indi.title,
+                                            style: CustomFont(
+                                                    CustomColor.blackColor,
+                                                    16,
+                                                    FontWeight.w600)
+                                                .font),
+                                        ExpandableButton(
+                                          child: Icon(
+                                            Icons.remove,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      thickness: 2,
+                                      color: CustomColor.brownColor
+                                          .withOpacity(0.5),
+                                    ),
+                                    Html(data: indi.content),
+                                    SpacerHeight(h: 5),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Status: $status",
+                                          style: CustomFont(
+                                                  CustomColor.blackColor,
+                                                  12,
+                                                  FontWeight.w600)
+                                              .font,
+                                        ),
+                                        Container(
+                                          height: 30,
+                                          width: 120,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: CupertinoButton(
+                                            padding: EdgeInsets.all(1),
+                                            onPressed: (indi.status == 0)
+                                                ? () async {
+                                                    await patchSupport(indi
+                                                            .vital_indicator_progress_id)
+                                                        .then((val) {
+                                                      if (val['status'] ==
+                                                          200) {
+                                                        getData();
+                                                      } else {
+                                                        customSnackBar(
+                                                            context,
+                                                            true,
+                                                            val['status']
+                                                                .toString());
+                                                      }
+                                                    });
+                                                  }
+                                                : null,
+                                            color: CustomColor.brownColor,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "Finish Task",
+                                                  style: CustomFont(
+                                                          CustomColor
+                                                              .whiteColor,
+                                                          9,
+                                                          FontWeight.w600)
+                                                      .font,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SpacerHeight(h: 20),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
                   ),
-                ),
-                SpacerHeight(h: 20),
-              ],
+                  SpacerHeight(h: 20),
+                ],
+              ),
             ),
           );
   }

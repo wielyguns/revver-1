@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,25 +25,18 @@ class _HomeState extends State<Home> {
   String notificationCounter = "99";
   var cart = FlutterCart();
 
-  final controller = PageController(viewportFraction: 0.8, keepPage: true);
+  ScrollController scrollController = ScrollController(initialScrollOffset: 1);
   String name;
+  String avatar;
   List product;
-  List banner;
   List news;
 
   getDataHeader() async {
     await getHomeHeader().then((val) {
       setState(() {
         name = val['data']['name'];
+        avatar = val['data']['avatar'];
         // print(val);
-      });
-    });
-  }
-
-  getBanner() async {
-    await getHomeBanner().then((val) {
-      setState(() {
-        banner = val;
       });
     });
   }
@@ -73,159 +68,171 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    super.initState();
     getDataHeader();
     getNewsList();
     getProductList();
-    getBanner();
+    super.initState();
+  }
+
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getDataHeader();
+    getNewsList();
+    getProductList();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    double w = CustomScreen(context).width;
+    double x = w - 70;
+    double y = x / 5;
+    double z = y * 2;
     return Scaffold(
-      appBar: AppBar(
-        title: Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: Image.asset(
-            "assets/img/revver-horizontal.png",
-            width: CustomScreen(context).width / 2.5,
-          ),
-        ),
-        actions: [
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).push("/cart");
-                  GoRouter.of(context).addListener(callback());
-                },
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: SvgPicture.asset(
-                        "assets/svg/cart-shopping-solid.svg",
-                        height: 20,
-                      ),
-                    ),
-                    // Positioned(
-                    //   right: 0,
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(1),
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.red,
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     constraints: const BoxConstraints(
-                    //       minWidth: 15,
-                    //       minHeight: 15,
-                    //     ),
-                    //     child: Center(
-                    //       child: Text(
-                    //         cart.getCartItemCount().toString(),
-                    //         style: CustomFont.badge,
-                    //         textAlign: TextAlign.center,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
-                  ],
-                ),
+      body: RefreshIndicator(
+        onRefresh: _pullRefresh,
+        child: CustomScrollView(
+          controller: scrollController,
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Color(0xFF212121),
+              elevation: 0,
+              expandedHeight: z + 185,
+              stretch: true,
+              pinned: true,
+              centerTitle: true,
+              title: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: headerWidget(),
               ),
-              SpacerWidth(w: 5),
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).push("/notification");
-                },
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: SvgPicture.asset(
-                        "assets/svg/bell-solid.svg",
-                        height: 20,
-                      ),
+              flexibleSpace: FlexibleSpaceBar(
+                stretchModes: [
+                  StretchMode.fadeTitle,
+                  StretchMode.zoomBackground,
+                ],
+                background: Container(
+                  padding: EdgeInsets.all(35),
+                  width: MediaQuery.of(context).size.width,
+                  height: z + 185,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/img/revver-bg-1.png"),
+                      fit: BoxFit.cover,
                     ),
-                    // Positioned(
-                    //   right: 0,
-                    //   child: Container(
-                    //     padding: const EdgeInsets.all(1),
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.red,
-                    //       borderRadius: BorderRadius.circular(10),
-                    //     ),
-                    //     constraints: const BoxConstraints(
-                    //       minWidth: 15,
-                    //       minHeight: 15,
-                    //     ),
-                    //     child: Center(
-                    //       child: Text(
-                    //         '99',
-                    //         style: CustomFont.badge,
-                    //         textAlign: TextAlign.center,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // )
-                  ],
-                ),
-              ),
-              SpacerWidth(w: 5),
-              GestureDetector(
-                onTap: () {
-                  GoRouter.of(context).push("/homepage/3");
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(5),
-                  child: SvgPicture.asset(
-                    "assets/svg/user-solid.svg",
-                    height: 20,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SpacerHeight(h: 40),
+                      SpacerHeight(h: 20),
+                      WelcomeHeader(name: name ??= "..."),
+                      SpacerHeight(h: 20),
+                      HomeBanner(),
+                      SpacerHeight(h: 20),
+                    ],
                   ),
                 ),
               ),
-              SpacerWidth(w: 35),
-            ],
-          ),
-        ],
-        backgroundColor: CustomColor.backgroundColor,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SpacerHeight(h: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: WelcomeHeader(name: name ??= "..."),
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SpacerHeight(h: 40),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 35),
+                    child: HomeMenu(),
+                  ),
+                  SpacerHeight(h: 40),
+                  ProductSlider(
+                    product: product,
+                    callback: (x) {
+                      setState(() {});
+                    },
+                    callbackPop: () => callback(),
+                  ),
+                  SpacerHeight(h: 40),
+                  NewsSlider(news: news),
+                  SpacerHeight(h: 20),
+                ],
               ),
-              SpacerHeight(h: 20),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: HomeBanner(list: banner),
-              ),
-              SpacerHeight(h: 40),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 35),
-                child: HomeMenu(),
-              ),
-              SpacerHeight(h: 40),
-              ProductSlider(
-                product: product,
-                callback: (x) {
-                  setState(() {});
-                },
-                callbackPop: () => callback(),
-              ),
-              SpacerHeight(h: 40),
-              NewsSlider(news: news),
-              SpacerHeight(h: 20),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  headerWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Image.asset(
+          "assets/img/revver-white.png",
+          width: CustomScreen(context).width / 2.5,
+        ),
+        Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push("/cart");
+                GoRouter.of(context).addListener(callback());
+              },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: SvgPicture.asset(
+                      "assets/svg/new-cart.svg",
+                      height: 20,
+                      color: CustomColor.whiteColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SpacerWidth(w: 5),
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push("/notification");
+              },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: SvgPicture.asset(
+                      "assets/svg/bell-solid.svg",
+                      height: 20,
+                      color: CustomColor.whiteColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SpacerWidth(w: 5),
+            GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push("/homepage/3");
+              },
+              child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Container(
+                    height: 22,
+                    width: 22,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                      image: DecorationImage(
+                          image: NetworkImage(avatar ??=
+                              "https://wallpaperaccess.com/full/733834.png"),
+                          fit: BoxFit.cover),
+                    ),
+                  )),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

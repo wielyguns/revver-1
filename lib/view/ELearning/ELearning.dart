@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cart/flutter_cart.dart';
 import 'package:go_router/go_router.dart';
+import 'package:indonesia/indonesia.dart';
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:revver/component/header.dart';
+import 'package:revver/component/snackbar.dart';
 import 'package:revver/component/spacer.dart';
 import 'package:revver/controller/ELearning.dart';
 import 'package:revver/globals.dart';
@@ -16,6 +20,7 @@ class ELearning extends StatefulWidget {
 }
 
 class _ELearningState extends State<ELearning> {
+  var cart = FlutterCart();
   bool isLoad = true;
   List<e.ELearning> eLearning;
 
@@ -29,6 +34,12 @@ class _ELearningState extends State<ELearning> {
     });
   }
 
+  Future<void> _pullRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    getData();
+    setState(() {});
+  }
+
   @override
   void initState() {
     getData();
@@ -37,20 +48,44 @@ class _ELearningState extends State<ELearning> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomHeader(
-        title: "E-Learning",
-        isPop: true,
-      ),
-      body: (isLoad)
-          ? Center(child: CupertinoActivityIndicator())
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  listWidget(),
-                ],
-              ),
+    var size = MediaQuery.of(context).size;
+    final double itemWidth = size.width / 2;
+    return KeyboardDismisser(
+      child: Scaffold(
+        appBar: CustomHeader(
+          title: "E-Learning",
+          svgName: "new-cart.svg",
+          route: "/cart",
+          isPop: true,
+        ),
+        body: RefreshIndicator(
+          onRefresh: _pullRefresh,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+            child: Column(
+              children: [
+                (isLoad)
+                    ? Center(child: CupertinoActivityIndicator())
+                    : GridView.count(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        childAspectRatio: (itemWidth / 300),
+                        children: List.generate(eLearning.length, (index) {
+                          e.ELearning prod = eLearning[index];
+                          return _sliderBox(
+                              prod.thumbnail, prod.name, prod.price, prod.id);
+                        }),
+                      ),
+                SpacerHeight(h: 20),
+              ],
             ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -65,7 +100,6 @@ class _ELearningState extends State<ELearning> {
           children: [
             (index == 0) ? SpacerHeight(h: 20) : SizedBox(),
             listItem(list.thumbnail, list.name, list.id),
-            // SpacerHeight(h: 20),
           ],
         );
       },
@@ -133,6 +167,121 @@ class _ELearningState extends State<ELearning> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  _sliderBox(String image, String name, int price, int id) {
+    var size = MediaQuery.of(context).size;
+    final double itemWidth = size.width / 2;
+    return Container(
+      width: itemWidth,
+      decoration: BoxDecoration(
+        color: CustomColor.whiteColor,
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 0,
+            blurRadius: 13,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: (() => GoRouter.of(context).push('/e-learning-detail/$id')),
+            child: Container(
+              width: itemWidth,
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 0,
+                    blurRadius: 13,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    child: Text(
+                      name,
+                      style: CustomFont(
+                              CustomColor.blackColor, 14, FontWeight.w700)
+                          .font,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  SpacerHeight(h: 5),
+                  Text(
+                    rupiah(price),
+                    style:
+                        CustomFont(CustomColor.brownColor, 14, FontWeight.w400)
+                            .font,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+            child: InkWell(
+              onTap: () {
+                var itemExist = cart.findItemIndexFromCart(id);
+                if (itemExist != null) {
+                  var index = cart.getSpecificItemFromCart(id).itemCartIndex;
+                  cart.incrementItemToCart(index);
+                  customSnackBar(context, false, "$name masuk ke keranjang");
+                } else {
+                  cart.addToCart(
+                      productId: id,
+                      unitPrice: price,
+                      productName: name,
+                      productDetailsObject: image);
+                  customSnackBar(context, false, "$name masuk ke keranjang");
+                }
+              },
+              child: Container(
+                height: 30,
+                decoration: BoxDecoration(
+                  color: CustomColor.brownColor,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Text(
+                    "Add to Cart",
+                    style:
+                        CustomFont(CustomColor.whiteColor, 10, FontWeight.w600)
+                            .font,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

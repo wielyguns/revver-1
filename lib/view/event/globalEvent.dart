@@ -35,7 +35,7 @@ class _GlobalEventState extends State<GlobalEvent> {
     await getEventDetail(wid).then((val) {
       setState(() {
         name = val['data']['name'];
-        date = DateFormat("yyyy-MM-dd hh:mm:ss").parse(val['data']['date']);
+        date = DateFormat("yyyy-MM-dd HH:mm:ss").parse(val['data']['date']);
         description = val['data']['description'];
         long_description = val['data']['long_description'];
         slug = val['data']['slug'];

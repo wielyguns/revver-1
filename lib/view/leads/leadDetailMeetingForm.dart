@@ -41,7 +41,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
       setState(() {
         meeting_id = val['data']['id'].toString();
         eventNameController.text = val['data']['name'];
-        dateNow = DateFormat("yyyy-MM-dd hh:mm:ss").parse(val['data']['date']);
+        dateNow = DateFormat("yyyy-MM-dd HH:mm:ss").parse(val['data']['date']);
         eventDescriptionController.text = val['data']['description'];
         eventLocationController.text = val['data']['location'];
       });
@@ -106,6 +106,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                       ),
                       SpacerHeight(h: 20),
                       RegularForm(
+                        icon: 'assets/svg/new-user.svg',
                         title: "Related to Lead",
                         hint: "",
                         controller: leadNameController,
@@ -114,6 +115,7 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                       ),
                       SpacerHeight(h: 20),
                       DateTimePickerForm(
+                        icon: 'assets/svg/new-calendar-month.svg',
                         title: "Event Date",
                         hint: "t",
                         date: dateNow,
@@ -129,7 +131,8 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                         isValidator: false,
                       ),
                       SpacerHeight(h: 20),
-                      MultiLineForm(
+                      RegularForm(
+                        icon: 'assets/svg/new-location.svg',
                         title: "Event Location",
                         hint: "eg: Coffee Shop Tunjungan Plaza",
                         controller: eventLocationController,
@@ -155,16 +158,16 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                           meeting_id,
                           lead_id,
                           eventNameController.text,
-                          DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                          DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                           eventDescriptionController.text,
                           eventLocationController.text,
                           "1")
                       .then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 } else {
@@ -172,16 +175,16 @@ class _LeadsDetailMeetingFormState extends State<LeadsDetailMeetingForm> {
                   await postMeeting(
                     lead_id,
                     eventNameController.text,
-                    DateFormat("yyyy-MM-dd hh:mm:ss").format(dateNow),
+                    DateFormat("yyyy-MM-dd HH:mm:ss").format(dateNow),
                     eventDescriptionController.text,
                     eventLocationController.text,
                     "1",
                   ).then((val) {
                     if (val['status'] == 200) {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, false, "Sukses");
                       GoRouter.of(context).pop();
                     } else {
-                      customSnackBar(context, false, val['status'].toString());
+                      customSnackBar(context, true, "Gagal");
                     }
                   });
                 }

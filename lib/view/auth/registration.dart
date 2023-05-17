@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
@@ -54,7 +55,7 @@ class _RegistrationState extends State<Registration> {
                   ),
                   SpacerHeight(h: 20),
                   Text(
-                    "Hello!",
+                    "Halo!",
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -90,14 +91,14 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 10),
                           Text(
-                            "Don't have an account yet? Register here!",
+                            "Tidak punya akun? Daftar sekarang!",
                             style: CustomFont(CustomColor.oldGreyColor, 12,
                                     FontWeight.w400)
                                 .font,
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.person,
+                            icon: 'assets/svg/new-user.svg',
                             title: "Full Name",
                             hint: "Your Full Name",
                             isValidator: true,
@@ -105,7 +106,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.person,
+                            icon: 'assets/svg/new-user.svg',
                             title: "Username",
                             hint: "Your Username",
                             isValidator: true,
@@ -113,7 +114,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.email,
+                            icon: 'assets/svg/new-email.svg',
                             title: "Email",
                             hint: "Your Email",
                             isValidator: true,
@@ -121,7 +122,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.phone,
+                            icon: 'assets/svg/new-phone.svg',
                             title: "Phone",
                             hint: "Your Phone",
                             isValidator: true,
@@ -129,7 +130,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           RegularForm(
-                            icon: Icons.card_travel,
+                            icon: 'assets/svg/new-id-card.svg',
                             title: "Sponsor ID",
                             hint: "Your Sponsor ID",
                             isValidator: false,
@@ -137,7 +138,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           PasswordForm(
-                            icon: Icons.key,
+                            icon: 'assets/svg/new-password.svg',
                             title: "Password",
                             hint: "Your Password",
                             visible: password,
@@ -146,7 +147,7 @@ class _RegistrationState extends State<Registration> {
                           ),
                           SpacerHeight(h: 20),
                           PasswordForm(
-                            icon: Icons.key,
+                            icon: 'assets/svg/new-password.svg',
                             title: "Confirm Password",
                             hint: "Your Confirm Password",
                             visible: password,
@@ -157,14 +158,14 @@ class _RegistrationState extends State<Registration> {
                           Row(
                             children: [
                               Text(
-                                "Don't have an account yet? ",
+                                "Sudah punya akun? ",
                                 style: CustomFont(CustomColor.blackColor, 12,
                                         FontWeight.w400)
                                     .font,
                               ),
                               GestureDetector(
                                 child: Text(
-                                  "Login here!",
+                                  "Masuk sekarang!",
                                   style: CustomFont(CustomColor.brownColor, 12,
                                           FontWeight.w400)
                                       .font,
@@ -185,6 +186,7 @@ class _RegistrationState extends State<Registration> {
                                   customSnackBar(context, true,
                                       "Complete the form first!");
                                 } else {
+                                  _onLoading();
                                   String name = nameController.text;
                                   String username = usernameController.text;
                                   String email = emailController.text;
@@ -207,8 +209,10 @@ class _RegistrationState extends State<Registration> {
                                         if (val['status'] == 200) {
                                           customSnackBar(context, false,
                                               val['message'].toString());
+                                          Navigator.pop(context);
                                           GoRouter.of(context).go("/login");
                                         } else {
+                                          Navigator.pop(context);
                                           customSnackBar(context, true,
                                               val['message'].toString());
                                         }
@@ -270,6 +274,21 @@ class _RegistrationState extends State<Registration> {
         //   ),
         // ),
       ),
+    );
+  }
+
+  void _onLoading() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Container(
+          height: CustomScreen(context).height,
+          width: CustomScreen(context).width,
+          color: Colors.black.withOpacity(0.1),
+          child: Center(child: CupertinoActivityIndicator()),
+        );
+      },
     );
   }
 }

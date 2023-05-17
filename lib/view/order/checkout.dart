@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -37,7 +38,8 @@ class _CheckoutState extends State<Checkout> {
   TextEditingController contactController = TextEditingController();
   TextEditingController zipCodeController = TextEditingController();
 
-  String clientKey = "SB-Mid-client-gPdyvJ-T4J3doP8T";
+  // String clientKey = "SB-Mid-client-gPdyvJ-T4J3doP8T"; //Development
+  String clientKey = "Mid-client-mMuJwfBMRezwrVON"; //Production
   String url = "https://api.sandbox.midtrans.com";
 
   MidtransSDK _midtrans;
@@ -91,36 +93,11 @@ class _CheckoutState extends State<Checkout> {
             colorPrimary: CustomColor.brownColor,
             colorPrimaryDark: CustomColor.brownColor,
             colorSecondary: CustomColor.backgroundColor),
-        enableLog: true,
+        enableLog: false,
       ),
     );
     _midtrans?.setUIKitCustomSetting(
         skipCustomerDetailsPages: true, showPaymentStatus: true);
-    // _midtrans.setTransactionFinishedCallback((result) async {
-    //   if (result.isTransactionCanceled) {
-    //     customSnackBar(context, true, "Transaction Canceled");
-    //   } else {
-    //     await postOrderStore(
-    //             customer_id,
-    //             result.orderId,
-    //             firstNameController.text,
-    //             lastNameController.text,
-    //             addressController.text,
-    //             contactController.text,
-    //             selectedProvince.id.toString(),
-    //             selectedCity.id.toString(),
-    //             zipCodeController.text)
-    //         .then((val) {
-    //       if (val['status'] == 200) {
-    //         cart.deleteAllCart();
-    //         String id = val['data']['orders_dt'][0]['order_id'].toString();
-    //         GoRouter.of(context).push('/invoice/$id/false');
-    //       } else {
-    //         customSnackBar(context, true, val['status'].toString());
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   @override
@@ -164,44 +141,49 @@ class _CheckoutState extends State<Checkout> {
                         child: Column(
                           children: [
                             RegularForm(
-                              title: "First Name",
-                              hint: "Your First Name",
+                              icon: 'assets/svg/new-user-edit.svg',
+                              title: "Nama Depan",
+                              hint: "Nama Depan Anda",
                               controller: firstNameController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
-                              title: "Last Name",
-                              hint: "Your Last Name",
+                              icon: 'assets/svg/new-user.svg',
+                              title: "Nama Belakang",
+                              hint: "Nama Belakang Anda",
                               controller: lastNameController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
-                              title: "Address",
-                              hint: "Your Address",
+                              icon: 'assets/svg/new-location.svg',
+                              title: "Alamat",
+                              hint: "Alamat Anda",
                               controller: addressController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
                             RegularForm(
-                              title: "Contact",
-                              hint: "Your Contact",
+                              icon: 'assets/svg/new-email.svg',
+                              title: "Kontak",
+                              hint: "Kontak Anda",
                               controller: contactController,
                               isValidator: true,
                             ),
                             SpacerHeight(h: 20),
-                            provinceDropdown("Province", "Your Province",
+                            provinceDropdown("Provinsi", "Provinsi Anda",
                                 province, selectedProvince, true),
                             (city.isEmpty) ? SizedBox() : SpacerHeight(h: 20),
                             (city.isEmpty)
                                 ? SizedBox()
-                                : cityDropdown("City", "Your City", city,
+                                : cityDropdown("Kota", "Kota Anda", city,
                                     selectedCity, true),
                             SpacerHeight(h: 20),
                             RegularForm(
-                              title: "Zip Code",
-                              hint: "Your Zip Code",
+                              icon: 'assets/svg/new-post-office.svg',
+                              title: "Kode Pos",
+                              hint: "Kode Pos Anda",
                               controller: zipCodeController,
                               isValidator: true,
                             ),
@@ -233,7 +215,7 @@ class _CheckoutState extends State<Checkout> {
                           children: [
                             SpacerHeight(h: 35),
                             Text(
-                              "Your Order Summary",
+                              "Ringkasan Pesanan Anda",
                               style: CustomFont(CustomColor.blackColor, 20,
                                       FontWeight.w600)
                                   .font,
@@ -378,7 +360,7 @@ class _CheckoutState extends State<Checkout> {
                             SizedBox(
                               width: double.infinity,
                               child: IconTextButton(
-                                title: "Back To Cart",
+                                title: "Kembali ke Keranjang",
                                 buttonColor: CustomColor.whiteColor,
                                 borderColor: CustomColor.brownColor,
                                 textColor: CustomColor.brownColor,
@@ -428,6 +410,7 @@ class _CheckoutState extends State<Checkout> {
         Text(title, style: CustomFont.regular12),
         SizedBox(height: 10),
         DropdownButtonFormField(
+          isExpanded: true,
           value: selectedItem,
           items: list.map((v) {
             return DropdownMenuItem(
@@ -462,6 +445,13 @@ class _CheckoutState extends State<Checkout> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),
@@ -552,6 +542,13 @@ class _CheckoutState extends State<Checkout> {
           style: CustomFont(CustomColor.blackColor, 15, FontWeight.w400).font,
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: SvgPicture.asset(
+              'assets/svg/new-city.svg',
+              width: 28,
+              height: 28,
+              fit: BoxFit.scaleDown,
+              color: CustomColor.brownColor,
+            ),
             hintStyle:
                 CustomFont(CustomColor.oldGreyColor, 15, FontWeight.w400).font,
             contentPadding: EdgeInsets.all(10),

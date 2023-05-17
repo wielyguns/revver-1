@@ -15,12 +15,12 @@ class WelcomeHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Hello $name",
+            "Halo $name",
             overflow: TextOverflow.ellipsis,
             style: CustomFont(CustomColor.brownColor, 24, FontWeight.bold).font,
           ),
           Text(
-            "How are you today?",
+            "Bagaimana kabarmu hari ini?",
             style: CustomFont(CustomColor.oldGreyColor, 12, null).font,
           ),
         ],
